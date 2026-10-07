@@ -1,0 +1,13 @@
+freq,split,features,placebo,models,periods,ic,ic_placebo,difference,difference_t,t_critical
+2W,test,narr_lda,narr_lda_placebo,7,42,0.00657484,0.00687386,-0.000299019,-0.0190751,2.24611
+2W,test_2022_23,narr_lda,narr_lda_placebo,7,28,0.0221253,0.00666238,0.015463,0.768223,2.39114
+2W,test_2024,narr_lda,narr_lda_placebo,7,14,-0.0245261,0.00729682,-0.031823,-1.58772,2.61016
+2W,validation,narr_lda,narr_lda_placebo,7,27,0.0164175,0.00400046,0.012417,0.622572,2.29434
+M,test,narr_lda,narr_lda_placebo,7,21,0.0123253,0.0119528,0.000372563,0.0184975,2.39114
+M,test_2022_23,narr_lda,narr_lda_placebo,7,14,0.0250892,0.0171577,0.00793147,0.25777,2.61016
+M,test_2024,narr_lda,narr_lda_placebo,7,7,-0.0132024,0.00154284,-0.0147453,-0.414605,3.2671
+M,validation,narr_lda,narr_lda_placebo,7,14,-0.0197309,-0.00153891,-0.018192,-0.817851,2.61016
+W,test,narr_lda,narr_lda_placebo,7,81,0.00481428,0.00757746,-0.00276319,-0.316708,2.10759
+W,test_2022_23,narr_lda,narr_lda_placebo,7,54,0.00975015,0.00560699,0.00414316,0.371184,2.18202
+W,test_2024,narr_lda,narr_lda_placebo,7,27,-0.00505747,0.0115184,-0.0165759,-1.28137,2.29434
+W,validation,narr_lda,narr_lda_placebo,7,53,-0.01126,-0.000221715,-0.0110383,-1.11401,2.18625

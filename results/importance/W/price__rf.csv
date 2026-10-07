@@ -1,0 +1,9 @@
+feature,importance,kind
+beta,0.11024383355139389,impurity_share
+ivol,0.16872527233537343,impurity_share
+vol_21,0.12304750492126766,impurity_share
+mom_12_1,0.1460219374639122,impurity_share
+rev_21,0.11547769661424027,impurity_share
+rev_5,0.12019854641969634,impurity_share
+size,0.10654215504001785,impurity_share
+max_21,0.10974305365409838,impurity_share

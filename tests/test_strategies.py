@@ -1,0 +1,68 @@
+"""The portfolio rules as the backtests call them: ties, flat forecasts, excess returns."""
+import numpy as np
+import pandas as pd
+
+from ftm.portfolio import strategies
+
+
+def test_flat_forecast_takes_no_view():
+    score, cap = np.full(50, 0.3), np.arange(1.0, 51.0)
+    for name in strategies.LONG_SHORT:
+        assert not strategies.weights_for(name, score, cap).any()
+    assert np.allclose(strategies.weights_for("long_ew", score, cap), 1 / 50)
+    assert np.allclose(strategies.weights_for("long_vw", score, cap), cap / cap.sum())
+
+
+def test_ties_are_broken_by_a_fixed_order_not_by_position():
+    score = np.r_[np.zeros(80), np.ones(20)]            # the bottom decile lies inside a tie
+    order = np.random.default_rng(3).random(100)
+    w = strategies.weights_for("ls_ew", score, None, order=order)
+    assert np.isclose(w[w > 0].sum(), 1) and np.isclose(w[w < 0].sum(), -1)
+    assert (w[:80] <= 0).all() and (w[80:] >= 0).all()
+    # Short: the ten tied stocks with the lowest order. Long: the ten highest of the top group.
+    assert set(np.flatnonzero(w < 0)) == set(np.argsort(order[:80])[:10])
+    assert set(np.flatnonzero(w > 0)) == set(80 + np.argsort(order[80:])[-10:])
+    assert set(np.flatnonzero(w < 0)) != set(range(10))                 # not the first ten
+    # Without an order the default is the same on every call.
+    again = [strategies.weights_for("ls_ew", score, None) for _ in range(2)]
+    np.testing.assert_array_equal(*again)
+
+
+def tied_frame(periods=8, stocks=60, seed=2):
+    rng = np.random.default_rng(seed)
+    dates = pd.date_range("2020-01-31", periods=periods, freq="ME")
+    n = periods * stocks
+    return pd.DataFrame({"date": np.repeat(dates, stocks), "permno": np.tile(np.arange(stocks), periods),
+                         "pred": np.tile(np.r_[np.zeros(40), np.ones(20)], periods),     # two values
+                         "ret": rng.normal(0.01, 0.05, n), "rf": 0.001, "me": rng.uniform(1, 10, n)})
+
+
+def test_a_forecast_that_does_not_change_does_not_trade():
+    out = strategies.backtests(tied_frame(), ("ls_ew", "long_ew"), cost_bps=10.0)
+    for name, g in out.groupby("strategy"):
+        held = g.sort_values("date")
+        assert held["turnover"].iloc[0] > 0.49                      # the portfolio is built once
+        # afterwards it only rebalances the drift of its weights with returns
+        assert held["turnover"].iloc[1:].max() < 0.1, name
+
+
+def test_a_strategy_does_not_depend_on_the_others_evaluated_with_it():
+    frame = tied_frame(seed=5)
+    alone = strategies.backtests(frame, ("ls_ew",))
+    together = strategies.backtests(frame, ("long_vw", "rank", "ls_ew", "long_ew"))
+    together = together[together["strategy"] == "ls_ew"].reset_index(drop=True)
+    pd.testing.assert_frame_equal(alone, together)
+
+
+def test_backtests_excess_and_benchmarks():
+    rng = np.random.default_rng(1)
+    dates = pd.date_range("2020-01-31", periods=6, freq="ME")
+    frame = pd.DataFrame({"date": np.repeat(dates, 30), "permno": np.tile(np.arange(30), 6),
+                          "pred": rng.normal(size=180), "ret": rng.normal(0.01, 0.05, 180),
+                          "rf": 0.001, "me": rng.uniform(1, 10, 180)})
+    out = strategies.backtests(frame, ("ls_ew", "long_ew", "univ_ew"), cost_bps=10.0)
+    by = {name: g.set_index("date") for name, g in out.groupby("strategy")}
+    assert np.allclose(by["ls_ew"]["excess"], by["ls_ew"]["net"])
+    assert np.allclose(by["long_ew"]["excess"], by["long_ew"]["net"] - 0.001)
+    assert np.allclose(by["univ_ew"]["gross"], frame.groupby("date")["ret"].mean())
+    assert np.isclose(by["ls_ew"]["cost"].iloc[0], 2 * 1.0 * 10 / 1e4)   # builds 2 of gross from cash

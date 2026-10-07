@@ -1,0 +1,23 @@
+{
+ "freq": "W",
+ "features": "firm_minilm",
+ "model": "sipca",
+ "blocks": [
+  "firm_minilm"
+ ],
+ "n_features": 61,
+ "settings_tried": 6,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "validation_r2": -5.468248250384278e-05,
+ "train_r2": 7.609564294908111e-06,
+ "seconds_tune": 2.7,
+ "seconds_final": 0.2
+}

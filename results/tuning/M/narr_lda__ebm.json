@@ -1,0 +1,36 @@
+{
+ "freq": "M",
+ "features": "narr_lda",
+ "model": "ebm",
+ "blocks": [
+  "narr_lda"
+ ],
+ "n_features": 60,
+ "settings_tried": 2,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "interactions": 0,
+  "max_bins": 64,
+  "max_interaction_bins": 16,
+  "learning_rate": 0.02,
+  "max_rounds": 1,
+  "early_stopping_rounds": 0,
+  "outer_bags": 4,
+  "inner_bags": 0,
+  "min_samples_leaf": 20,
+  "max_leaves": 2,
+  "smoothing_rounds": 50,
+  "bag_exclude": 0.2,
+  "max_rows": 100000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 8.373922236737386e-06,
+ "train_r2": 3.403689573155955e-05,
+ "seconds_tune": 8.0,
+ "seconds_final": 1.1
+}

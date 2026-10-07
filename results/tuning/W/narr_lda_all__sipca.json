@@ -1,0 +1,23 @@
+{
+ "freq": "W",
+ "features": "narr_lda_all",
+ "model": "sipca",
+ "blocks": [
+  "narr_lda_all"
+ ],
+ "n_features": 60,
+ "settings_tried": 6,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "validation_r2": 3.974635589543141e-06,
+ "train_r2": -2.6535584329856476e-07,
+ "seconds_tune": 3.4,
+ "seconds_final": 0.2
+}

@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "price",
+ "model": "ridge",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 25,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 0.33401346934964615
+ },
+ "validation_r2": 0.00010970752194294775,
+ "train_r2": 0.0004886558451772105,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

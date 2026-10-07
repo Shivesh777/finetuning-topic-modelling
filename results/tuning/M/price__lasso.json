@@ -1,0 +1,24 @@
+{
+ "freq": "M",
+ "features": "price",
+ "model": "lasso",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 40,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 0.00024868301383950856,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 3.717934259528377e-05,
+ "train_r2": 0.0004618862220573394,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

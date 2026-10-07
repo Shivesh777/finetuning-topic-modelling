@@ -1,0 +1,51 @@
+{
+ "name": "finbert",
+ "model": "weights",
+ "topics": 20,
+ "articles_labelled": 529657,
+ "articles_fit": 140209,
+ "articles_later": 103684,
+ "fit_until": "2019-12-31",
+ "vocabulary": 10000,
+ "npmi_training": 0.2967,
+ "npmi_later": 0.2094,
+ "diversity_top10": 0.835,
+ "stability_share_kept": null,
+ "stability_adjusted_rand": null,
+ "largest_topic_share": 0.2138,
+ "effective_topics": 11.6,
+ "firm_articles": 726280,
+ "shock_reliability": {
+  "training_50_per_day": {
+   "mean": 0.2181,
+   "median": 0.1201,
+   "lowest_topic": -0.0214
+  },
+  "training_100_per_day": {
+   "mean": 0.2834,
+   "median": 0.1579,
+   "lowest_topic": -0.0142
+  },
+  "training_all_per_day": {
+   "mean": 0.32,
+   "median": 0.1962,
+   "lowest_topic": -0.027
+  },
+  "later_50_per_day": {
+   "mean": 0.224,
+   "median": 0.2434,
+   "lowest_topic": 0.0061
+  },
+  "later_100_per_day": {
+   "mean": 0.3294,
+   "median": 0.3526,
+   "lowest_topic": 0.0171
+  },
+  "later_all_per_day": {
+   "mean": 0.3819,
+   "median": 0.4138,
+   "lowest_topic": 0.023
+  }
+ },
+ "seconds": 41
+}

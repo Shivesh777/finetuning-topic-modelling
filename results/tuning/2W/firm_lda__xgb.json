@@ -1,0 +1,31 @@
+{
+ "freq": "2W",
+ "features": "firm_lda",
+ "model": "xgb",
+ "blocks": [
+  "firm_lda"
+ ],
+ "n_features": 61,
+ "settings_tried": 4,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "max_depth": 1,
+  "learning_rate": 0.05,
+  "n_estimators": 83,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 7.541985788839245e-05,
+ "train_r2": 0.00023039156627668866,
+ "seconds_tune": 1.8,
+ "seconds_final": 0.4
+}

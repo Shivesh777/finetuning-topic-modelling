@@ -1,0 +1,18 @@
+# Python 3.10 or newer. These are lower bounds. The results were produced with Python 3.10,
+# numpy 2.2.6, pandas 2.3.3, scipy 1.15.3, scikit-learn 1.7.2, xgboost 3.2.0 and
+# interpret-core 0.7.8; the tests also pass with Python 3.13, pandas 3.0 and scikit-learn 1.9.
+numpy>=2.0
+pandas>=2.2
+pyarrow>=15
+scipy>=1.13
+scikit-learn>=1.5
+xgboost>=2.1
+interpret-core>=0.7.8          # explainable boosting machine
+joblib>=1.4
+requests>=2.31
+pytest>=8.0
+
+# Topic models (scripts 03 and 04 only)
+tomotopy>=0.13                  # Gibbs-sampled LDA; without it scripts/04 falls back to scikit-learn
+sentence-transformers>=3.0     # brings torch and transformers
+# onnxruntime>=1.18             # only for scripts/03b_classify_topics.py

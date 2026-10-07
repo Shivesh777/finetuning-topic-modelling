@@ -1,0 +1,24 @@
+{
+ "freq": "W",
+ "features": "all_minilm",
+ "model": "ipca",
+ "blocks": [
+  "price",
+  "narr_minilm",
+  "firm_minilm"
+ ],
+ "n_features": 129,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 5
+ },
+ "validation_r2": -0.00014579819598781185,
+ "train_r2": 1.258604815368436e-06,
+ "seconds_tune": 4.1,
+ "seconds_final": 2.7
+}

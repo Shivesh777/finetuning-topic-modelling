@@ -1,0 +1,27 @@
+# --- licensed data: never commit, whatever the size --------------------------------------
+# CRSP / WRDS returns and everything stock-level that is derived from them.
+data/crsp/
+data/panels/
+data/predictions/
+data/models/
+
+# --- third-party article text (rebuild with scripts/01 and 02, or take it from the team zip)
+data/news/
+
+# --- large derived files (over GitHub's 100 MB limit) -------------------------------------
+data/topics/embeddings/
+data/topics/encoders/
+*.npy
+!tests/**/*.npy
+
+# --- downloads, caches, scratch -------------------------------------------------------------
+data/raw/
+.cache/
+.sync/
+logs/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+*.zip

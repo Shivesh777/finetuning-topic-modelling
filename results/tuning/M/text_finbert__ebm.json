@@ -1,0 +1,37 @@
+{
+ "freq": "M",
+ "features": "text_finbert",
+ "model": "ebm",
+ "blocks": [
+  "narr_finbert",
+  "firm_finbert"
+ ],
+ "n_features": 41,
+ "settings_tried": 2,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "interactions": 10,
+  "max_bins": 64,
+  "max_interaction_bins": 16,
+  "learning_rate": 0.02,
+  "max_rounds": 52,
+  "early_stopping_rounds": 0,
+  "outer_bags": 4,
+  "inner_bags": 0,
+  "min_samples_leaf": 20,
+  "max_leaves": 2,
+  "smoothing_rounds": 50,
+  "bag_exclude": 0.2,
+  "max_rows": 100000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.002845499696568332,
+ "train_r2": 0.01030798823610446,
+ "seconds_tune": 5.1,
+ "seconds_final": 1.7
+}

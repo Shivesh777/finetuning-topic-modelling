@@ -1,0 +1,20 @@
+{
+ "freq": "M",
+ "features": "firm_lda",
+ "model": "ols",
+ "blocks": [
+  "firm_lda"
+ ],
+ "n_features": 61,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": -0.000686309865644219,
+ "train_r2": 0.0009933495188577668,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

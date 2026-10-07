@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "firm_lda",
+ "model": "ridge",
+ "blocks": [
+  "firm_lda"
+ ],
+ "n_features": 61,
+ "settings_tried": 25,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 4.854095395131893
+ },
+ "validation_r2": -1.4762843869586817e-06,
+ "train_r2": 4.7264988148887355e-06,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "price",
+ "model": "ridge",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 25,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 33.401433343064426
+ },
+ "validation_r2": -8.840060497172786e-06,
+ "train_r2": 1.0506457224668253e-05,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

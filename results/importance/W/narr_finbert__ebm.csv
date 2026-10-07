@@ -1,0 +1,31 @@
+feature,importance,kind
+narr_finbert_t00,5.773532572175332e-05,mean_abs_contribution
+narr_finbert_t01,2.2648318108551925e-05,mean_abs_contribution
+narr_finbert_t02,5.8582941701531176e-05,mean_abs_contribution
+narr_finbert_t03,5.9791202669823846e-05,mean_abs_contribution
+narr_finbert_t04,7.524949182041334e-05,mean_abs_contribution
+narr_finbert_t05,3.3690811795870215e-05,mean_abs_contribution
+narr_finbert_t06,0.00012472263692269754,mean_abs_contribution
+narr_finbert_t07,7.859318013743471e-05,mean_abs_contribution
+narr_finbert_t08,4.3103635431204864e-05,mean_abs_contribution
+narr_finbert_t09,8.904330534217892e-05,mean_abs_contribution
+narr_finbert_t10,3.4070315638531944e-05,mean_abs_contribution
+narr_finbert_t11,2.433981894917076e-05,mean_abs_contribution
+narr_finbert_t12,1.0607266096677098e-05,mean_abs_contribution
+narr_finbert_t13,0.00011889919277625335,mean_abs_contribution
+narr_finbert_t14,2.281577690474749e-05,mean_abs_contribution
+narr_finbert_t15,6.626937034170842e-05,mean_abs_contribution
+narr_finbert_t16,4.482782394311082e-05,mean_abs_contribution
+narr_finbert_t17,0.00013460909345572734,mean_abs_contribution
+narr_finbert_t18,8.49218667661173e-05,mean_abs_contribution
+narr_finbert_t19,0.00011670966591566523,mean_abs_contribution
+narr_finbert_t01 & narr_finbert_t09,9.050978126502323e-05,mean_abs_contribution
+narr_finbert_t01 & narr_finbert_t13,5.795256277785373e-05,mean_abs_contribution
+narr_finbert_t01 & narr_finbert_t18,4.569140123438532e-05,mean_abs_contribution
+narr_finbert_t02 & narr_finbert_t05,9.246827551543723e-05,mean_abs_contribution
+narr_finbert_t02 & narr_finbert_t06,7.731124564967681e-05,mean_abs_contribution
+narr_finbert_t03 & narr_finbert_t11,5.755216054880554e-05,mean_abs_contribution
+narr_finbert_t04 & narr_finbert_t05,5.33786770178107e-05,mean_abs_contribution
+narr_finbert_t05 & narr_finbert_t11,6.332974001487337e-05,mean_abs_contribution
+narr_finbert_t11 & narr_finbert_t13,6.930634289520185e-05,mean_abs_contribution
+narr_finbert_t12 & narr_finbert_t15,9.687728761624007e-05,mean_abs_contribution

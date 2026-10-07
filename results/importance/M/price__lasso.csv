@@ -1,0 +1,9 @@
+feature,coef,importance,kind
+beta,0.0005745855140552489,0.00028727616388835985,mean_abs_contribution
+ivol,-0.000510320438690753,0.00025534050368099687,mean_abs_contribution
+vol_21,-0.0,0.0,mean_abs_contribution
+mom_12_1,0.00038345012867695605,0.00019152798214918147,mean_abs_contribution
+rev_21,-0.0003468936800143377,0.00017380468775258788,mean_abs_contribution
+rev_5,-0.0015401959803448117,0.0007708872191388223,mean_abs_contribution
+size,0.0,0.0,mean_abs_contribution
+max_21,-0.0,0.0,mean_abs_contribution

@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "narr_finbert",
+ "model": "ridge",
+ "blocks": [
+  "narr_finbert"
+ ],
+ "n_features": 20,
+ "settings_tried": 25,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 0.03340135337228794
+ },
+ "validation_r2": 0.0011101217131000984,
+ "train_r2": 0.0015272808614764655,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

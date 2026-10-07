@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "firm_lda",
+ "model": "ipca",
+ "blocks": [
+  "firm_lda"
+ ],
+ "n_features": 61,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 1
+ },
+ "validation_r2": -8.705334807390663e-05,
+ "train_r2": 2.275980693811075e-05,
+ "seconds_tune": 2.2,
+ "seconds_final": 0.1
+}

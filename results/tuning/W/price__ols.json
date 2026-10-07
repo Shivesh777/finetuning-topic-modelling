@@ -1,0 +1,20 @@
+{
+ "freq": "W",
+ "features": "price",
+ "model": "ols",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 1,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {},
+ "validation_r2": -3.905444562857241e-06,
+ "train_r2": 0.000235766166123752,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

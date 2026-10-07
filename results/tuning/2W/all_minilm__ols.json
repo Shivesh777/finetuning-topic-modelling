@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "all_minilm",
+ "model": "ols",
+ "blocks": [
+  "price",
+  "narr_minilm",
+  "firm_minilm"
+ ],
+ "n_features": 129,
+ "settings_tried": 1,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {},
+ "validation_r2": -0.002604390544586277,
+ "train_r2": 0.0045156360141794805,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.3
+}

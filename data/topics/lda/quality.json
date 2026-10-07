@@ -1,0 +1,53 @@
+{
+ "name": "lda",
+ "model": "lda",
+ "topics": 60,
+ "articles_labelled": 529657,
+ "articles_fit": 140209,
+ "articles_later": 103684,
+ "fit_until": "2019-12-31",
+ "vocabulary": 10000,
+ "npmi_training": 0.5844,
+ "npmi_later": 0.3678,
+ "diversity_top10": 0.8367,
+ "stability_share_kept": 0.5808,
+ "stability_adjusted_rand": 0.4693,
+ "largest_topic_share": 0.1267,
+ "effective_topics": 40.1,
+ "firm_articles": 726280,
+ "npmi_training_by_probability": 0.3513,
+ "npmi_later_by_probability": 0.2366,
+ "shock_reliability": {
+  "training_50_per_day": {
+   "mean": 0.2128,
+   "median": 0.1507,
+   "lowest_topic": -0.3191
+  },
+  "training_100_per_day": {
+   "mean": 0.2783,
+   "median": 0.2171,
+   "lowest_topic": -0.7728
+  },
+  "training_all_per_day": {
+   "mean": 0.3044,
+   "median": 0.2718,
+   "lowest_topic": -1.2037
+  },
+  "later_50_per_day": {
+   "mean": 0.217,
+   "median": 0.1495,
+   "lowest_topic": -0.0807
+  },
+  "later_100_per_day": {
+   "mean": 0.3079,
+   "median": 0.2219,
+   "lowest_topic": -0.0861
+  },
+  "later_all_per_day": {
+   "mean": 0.3539,
+   "median": 0.2587,
+   "lowest_topic": -0.1413
+  }
+ },
+ "seconds": 619
+}

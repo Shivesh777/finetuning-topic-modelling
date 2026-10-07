@@ -1,0 +1,28 @@
+{
+ "freq": "2W",
+ "features": "price",
+ "model": "rf",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 3,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": -0.00043964936626417206,
+ "train_r2": 0.001446537080753485,
+ "seconds_tune": 3.0,
+ "seconds_final": 0.5
+}

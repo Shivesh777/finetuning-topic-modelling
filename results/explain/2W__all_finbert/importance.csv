@@ -1,0 +1,60 @@
+term,block,importance,share
+rev_21,price,0.000432738,0.0745183
+narr_finbert_t07,narr,0.000249155,0.042905
+mom_12_1 & firm_finbert_news_t11,mixed pair,0.000222938,0.0383903
+narr_finbert_t13,narr,0.000217752,0.0374974
+narr_finbert_t18,narr,0.000211386,0.036401
+narr_finbert_t06,narr,0.000198437,0.0341712
+narr_finbert_t04,narr,0.000197617,0.03403
+mom_12_1 & firm_finbert_news_t17,mixed pair,0.000177993,0.0306507
+vol_21 & firm_finbert_news_t03,mixed pair,0.000175158,0.0301626
+beta & firm_finbert_news_t17,mixed pair,0.00017473,0.0300889
+narr_finbert_t08,narr,0.000174337,0.0300212
+mom_12_1 & firm_finbert_news_t16,mixed pair,0.000169017,0.029105
+narr_finbert_t03,narr,0.000168016,0.0289326
+ivol,price,0.000164028,0.0282459
+size,price,0.000140609,0.024213
+narr_finbert_t17,narr,0.00013604,0.0234263
+max_21 & firm_finbert_news_t03,mixed pair,0.000134607,0.0231796
+vol_21 & firm_finbert_news_t17,mixed pair,0.000130516,0.0224751
+narr_finbert_t19,narr,0.00013013,0.0224086
+ivol & firm_finbert_news_t17,mixed pair,0.000129064,0.0222251
+ivol & firm_finbert_news_t03,mixed pair,0.000127301,0.0219215
+narr_finbert_t01,narr,0.000124822,0.0214946
+max_21,price,0.000120747,0.0207929
+rev_5,price,0.000120049,0.0206726
+firm_finbert_news_t02,firm,0.000117374,0.0202121
+narr_finbert_t09,narr,0.000116686,0.0200936
+narr_finbert_t02,narr,0.000101096,0.0174088
+vol_21,price,8.39388e-05,0.0144544
+narr_finbert_t15,narr,8.11982e-05,0.0139825
+narr_finbert_t14,narr,8.09496e-05,0.0139397
+mom_12_1 & firm_finbert_news_t01,mixed pair,7.27906e-05,0.0125347
+firm_finbert_news_t15,firm,7.1968e-05,0.012393
+firm_finbert_news_t19,firm,6.64464e-05,0.0114422
+firm_finbert_news_t18,firm,6.2187e-05,0.0107087
+firm_finbert_news_t13,firm,5.99211e-05,0.0103185
+mom_12_1,price,5.91888e-05,0.0101924
+firm_finbert_news_t07,firm,5.85972e-05,0.0100905
+firm_finbert_news_t06,firm,4.97841e-05,0.00857291
+firm_finbert_news_t05,firm,4.68215e-05,0.00806274
+narr_finbert_t05,narr,4.58461e-05,0.00789478
+narr_finbert_t00,narr,3.96584e-05,0.00682924
+narr_finbert_t11,narr,3.85077e-05,0.00663109
+narr_finbert_t12,narr,3.81234e-05,0.00656492
+firm_finbert_news_count,firm,3.48276e-05,0.00599737
+firm_finbert_news_t09,firm,3.47854e-05,0.00599011
+beta,price,2.54395e-05,0.00438073
+narr_finbert_t10,narr,2.22763e-05,0.00383602
+firm_finbert_news_t10,firm,2.12763e-05,0.00366382
+firm_finbert_news_t04,firm,1.9597e-05,0.00337464
+firm_finbert_news_t17,firm,1.83952e-05,0.00316769
+firm_finbert_news_t11,firm,1.63033e-05,0.00280745
+firm_finbert_news_t03,firm,1.52105e-05,0.00261928
+firm_finbert_news_t08,firm,1.49884e-05,0.00258103
+firm_finbert_news_t14,firm,1.3157e-05,0.00226566
+firm_finbert_news_t00,firm,1.24505e-05,0.002144
+firm_finbert_news_t16,firm,1.20832e-05,0.00208075
+firm_finbert_news_t12,firm,1.05022e-05,0.0018085
+narr_finbert_t16,narr,1.01014e-05,0.00173948
+firm_finbert_news_t01,firm,7.47516e-06,0.00128724

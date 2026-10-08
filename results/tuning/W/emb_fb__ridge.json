@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "emb_fb",
+ "model": "ridge",
+ "blocks": [
+  "emb_fb"
+ ],
+ "n_features": 64,
+ "settings_tried": 25,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 30.617413059956146
+ },
+ "validation_r2": -5.3997069038302925e-09,
+ "train_r2": 4.65320181064488e-06,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

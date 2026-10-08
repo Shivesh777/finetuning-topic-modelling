@@ -1,0 +1,27 @@
+{
+ "freq": "W",
+ "features": "px_news",
+ "model": "sipca",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "emb_fb",
+  "npx"
+ ],
+ "n_features": 91,
+ "settings_tried": 6,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.3
+ },
+ "validation_r2": -0.0001697523958583691,
+ "train_r2": -3.8012961223188313e-06,
+ "seconds_tune": 5.0,
+ "seconds_final": 0.8
+}

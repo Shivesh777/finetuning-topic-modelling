@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "emb_fb",
+ "model": "ipca",
+ "blocks": [
+  "emb_fb"
+ ],
+ "n_features": 64,
+ "settings_tried": 4,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "n_factors": 2
+ },
+ "validation_r2": 1.5007730128191454e-05,
+ "train_r2": 3.300595734989642e-05,
+ "seconds_tune": 1.7,
+ "seconds_final": 0.1
+}

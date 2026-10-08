@@ -1,0 +1,9 @@
+feature,coef,importance,kind
+fb_tone_1,-1.5707886874066144e-06,4.003182591861798e-07,mean_abs_contribution
+fb_tone_5,-8.143031358061921e-07,3.757969325395822e-07,mean_abs_contribution
+fb_tone_21,-1.5936142545435033e-06,7.99376710497831e-07,mean_abs_contribution
+fb_tone_252,1.795899632793843e-06,8.93050949582856e-07,mean_abs_contribution
+fb_surprise_21,-2.7327044523693726e-06,1.3645856093341672e-06,mean_abs_contribution
+news_log_n5,2.8150799246197776e-07,1.3957971343589014e-07,mean_abs_contribution
+news_log_n21,8.508341463173201e-08,4.252310300710724e-08,mean_abs_contribution
+news_abnormal_21,6.012294845597171e-07,3.0038037438300244e-07,mean_abs_contribution

@@ -1,6 +1,6 @@
 """Tables with statistical inference, from the per-period series of scripts/07_evaluate.py.
 
-    python scripts/08_report.py [--freq M 2W W]
+    python scripts/08_report.py [--freq M 2W W] [--tables forecast strategies ...]
 
 Writes to results/tables/ (every number that FINDINGS.md quotes comes from these files or
 from results/data_audit/). The tables are computed by ftm/evaluation/report.py, whose
@@ -58,12 +58,21 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--freq", nargs="+", default=list(config.FREQUENCIES))
+    ap.add_argument("--tables", nargs="+", help="compute only these tables; the tables they are "
+                    "built from are read from results/tables/ when not computed in the same run")
     a = ap.parse_args()
     out = config.RESULTS / "tables"
     out.mkdir(parents=True, exist_ok=True)
     ppy_of = {freq: metrics.PERIODS_PER_YEAR[freq] for freq in a.freq}
     series, returns, factors_of = report.load(config.RESULTS / "series", a.freq)
-    made = {}                                   # tables that later tables are built from
+    import pandas as pd
+
+    class Made(dict):                           # tables that later tables are built from
+        def __missing__(self, name):
+            self[name] = pd.read_csv(out / f"{name}.csv")
+            return self[name]
+
+    made = Made()
     recipes = {
         "forecast": lambda: report.forecast_table(series, ppy_of),
         "strategies": lambda: report.strategy_table(returns, factors_of, ppy_of),
@@ -81,7 +90,12 @@ def main():
         "topic_models": lambda: report.topic_table(config.TOPICS),
     }
     failed = []
+    unknown = set(a.tables or []) - set(recipes)
+    if unknown:
+        raise SystemExit(f"unknown tables: {', '.join(sorted(unknown))}")
     for name, recipe in recipes.items():
+        if a.tables and name not in a.tables:
+            continue
         path = out / f"{name}.csv"
         try:
             table = made[name] = recipe()

@@ -1,0 +1,21 @@
+{
+ "freq": "M",
+ "features": "text_lda_s63",
+ "model": "ols",
+ "blocks": [
+  "narr_lda_s63",
+  "firm_lda"
+ ],
+ "n_features": 121,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": -0.009379202414927956,
+ "train_r2": 0.007539745067707826,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

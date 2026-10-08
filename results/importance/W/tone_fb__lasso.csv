@@ -1,0 +1,9 @@
+feature,coef,importance,kind
+fb_tone_1,0.0,0.0,mean_abs_contribution
+fb_tone_5,-1.3734639478548923e-05,6.330123538713873e-06,mean_abs_contribution
+fb_tone_21,-0.0,0.0,mean_abs_contribution
+fb_tone_252,0.0,0.0,mean_abs_contribution
+fb_surprise_21,-0.0001180920689647824,5.8992845519506515e-05,mean_abs_contribution
+news_log_n5,-0.0,0.0,mean_abs_contribution
+news_log_n21,-6.387501755987297e-05,3.195225044315354e-05,mean_abs_contribution
+news_abnormal_21,-0.0,0.0,mean_abs_contribution

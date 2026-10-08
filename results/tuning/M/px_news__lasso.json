@@ -1,0 +1,28 @@
+{
+ "freq": "M",
+ "features": "px_news",
+ "model": "lasso",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "emb_fb",
+  "npx"
+ ],
+ "n_features": 91,
+ "settings_tried": 40,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 0.0004230730416211036,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 1.0389865714111046e-05,
+ "train_r2": 0.00024624546312534967,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

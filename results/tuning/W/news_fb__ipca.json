@@ -1,0 +1,24 @@
+{
+ "freq": "W",
+ "features": "news_fb",
+ "model": "ipca",
+ "blocks": [
+  "tone_fb",
+  "tone_lm",
+  "emb_fb"
+ ],
+ "n_features": 77,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 1
+ },
+ "validation_r2": 4.752614023662005e-06,
+ "train_r2": 2.141563073654318e-06,
+ "seconds_tune": 1.8,
+ "seconds_final": 0.1
+}

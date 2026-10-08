@@ -1,0 +1,12 @@
+signal,features,block,feature,sign,validation_ic,combined
+sig_fb1,tone_fb,tone_fb,fb_tone_1,1,-0.015341610497408606,False
+sig_fb5,tone_fb,tone_fb,fb_tone_5,1,-0.016685524028918163,False
+sig_fb21,tone_fb,tone_fb,fb_tone_21,1,-0.004061439735682429,False
+sig_fbsurp,tone_fb,tone_fb,fb_surprise_21,1,-0.007592738248019287,False
+sig_lm1,tone_lm,tone_lm,lm_tone_1,1,0.009446512999462305,True
+sig_lm5,tone_lm,tone_lm,lm_tone_5,1,-0.0031569948888380515,False
+sig_lm21,tone_lm,tone_lm,lm_tone_21,1,0.006293029135585505,False
+sig_lmsurp,tone_lm,tone_lm,lm_surprise_21,1,0.007801254642563622,False
+sig_abn,tone_fb,tone_fb,news_abnormal_21,1,-0.009740242589864542,False
+sig_quietrev,px_tone,npx,rev5_quiet,-1,0.018071440473350582,False
+sig_newsdrift,px_tone,npx,rev5_news,1,-0.022495007551427845,False

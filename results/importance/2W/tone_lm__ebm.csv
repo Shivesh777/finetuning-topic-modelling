@@ -1,0 +1,16 @@
+feature,importance,kind
+lm_tone_1,5.204852913458901e-06,mean_abs_contribution
+lm_tone_5,5.8047508283474434e-05,mean_abs_contribution
+lm_tone_21,4.377855317454066e-05,mean_abs_contribution
+lm_tone_252,3.544894017504663e-05,mean_abs_contribution
+lm_surprise_21,8.351653176628032e-05,mean_abs_contribution
+lm_tone_1 & lm_tone_5,3.7373065746745724e-05,mean_abs_contribution
+lm_tone_1 & lm_tone_21,2.2890694665168585e-05,mean_abs_contribution
+lm_tone_1 & lm_tone_252,5.387819673972471e-05,mean_abs_contribution
+lm_tone_1 & lm_surprise_21,1.5136188969982571e-05,mean_abs_contribution
+lm_tone_5 & lm_tone_21,2.5940077088992046e-05,mean_abs_contribution
+lm_tone_5 & lm_tone_252,3.448830396022094e-05,mean_abs_contribution
+lm_tone_5 & lm_surprise_21,2.3210292784671927e-05,mean_abs_contribution
+lm_tone_21 & lm_tone_252,2.698848297157633e-05,mean_abs_contribution
+lm_tone_21 & lm_surprise_21,2.097579211410953e-05,mean_abs_contribution
+lm_tone_252 & lm_surprise_21,2.0779355812539868e-05,mean_abs_contribution

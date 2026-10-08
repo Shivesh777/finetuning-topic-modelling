@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "news_fb",
+ "model": "ols",
+ "blocks": [
+  "tone_fb",
+  "tone_lm",
+  "emb_fb"
+ ],
+ "n_features": 77,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": -0.0006574436460884403,
+ "train_r2": 0.0013628403290618651,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.1
+}

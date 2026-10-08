@@ -1,0 +1,23 @@
+{
+ "freq": "M",
+ "features": "px_tone",
+ "model": "ols",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "npx"
+ ],
+ "n_features": 27,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": -0.0006356961768214653,
+ "train_r2": 0.0010228550113422497,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.1
+}

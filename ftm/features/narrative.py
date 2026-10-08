@@ -37,7 +37,7 @@ def trading_day_attention(sums: pd.DataFrame, dates: pd.DatetimeIndex) -> pd.Dat
 
 def attention_shocks(theta: pd.DataFrame, window: int = config.SHOCK_WINDOW) -> np.ndarray:
     """(D, K) attention minus its mean over the previous `window` trading days."""
-    trailing = theta.rolling(window, min_periods=max(2, window - 2)).mean().shift(1)
+    trailing = theta.rolling(window, min_periods=min(window, max(2, window - 2))).mean().shift(1)
     return np.array(theta - trailing, dtype=np.float64)       # a writable copy
 
 

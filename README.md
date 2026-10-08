@@ -3,11 +3,13 @@
 Do the topics that financial news is about help to forecast stock returns?
 This repository builds daily topic attention from 1.26 million Nasdaq.com
 articles (2012 to 2024), turns it into stock-level features, and tests those
-features with eight forecasting models (and variants of them) and seven
-portfolio rules under a strict training / validation / test protocol. The short answer, on our data, is that
-we find no evidence that they do, in a test sample that could only have shown a
-large effect: `FINDINGS.md` says why and what the data would have to look like
-to say more.
+features with eight forecasting models (and variants of them) and eight
+portfolio rules under a strict training / validation / test protocol. A second
+part adds the tone of each firm's news (FinBERT, Loughran-McDonald), an
+embedding regression, tuned attention-shock windows and a cap-weighted tilt.
+The short answer, on our data, is that we find no evidence that the news
+forecasts returns, in a test sample that could only have shown a large effect:
+`FINDINGS.md` says why and what the data would have to look like to say more.
 
 It is a rebuild of our earlier project (latent Dirichlet allocation or
 sentence-embedding topics, IPCA, a Sharpe-optimised portfolio). The earlier
@@ -26,8 +28,9 @@ sections 2 and 9).
 ftm/                 the library
   config.py            paths, dates and the parameters the stages share
   data/                news extraction, article table, returns and universe
-  topics/              LDA, embedding clusters, classifier topics, quality measures
-  features/            price features, narrative exposures, firm-level news
+  topics/              LDA, embedding clusters, classifier topics, quality measures,
+                       article tone (FinBERT, Loughran-McDonald)
+  features/            price features, narrative exposures, firm-level news and tone
   panel.py             the stock-period panel (ranks, targets, missing data)
   models/              OLS, ridge, lasso, IPCA, sparse IPCA, XGBoost, random forest, EBM
   portfolio/           weights, risk model, backtest with costs, strategies
@@ -94,8 +97,20 @@ python scripts/04_fit_topics.py embedding --embeddings nolbert_ft_d150 --name no
 python scripts/05_build_panel.py --placebo lda     # monthly, biweekly and weekly panels
 python scripts/06_run_models.py            # tune, fit, forecast: 1,092 experiments, 70 min
 python scripts/06b_ensemble.py             # the ensemble of the eight base models, 1 min
+
+# second part (FINDINGS.md, section 10)
+python scripts/03d_sentiment.py            # FinBERT tone of 769,338 headlines, 90 min on 2 cores
+python scripts/05b_tune_shocks.py          # the attention-shock window on validation, 4 min
+python scripts/05_build_panel.py --shock-window 1 --freq W     # the chosen windows
+python scripts/05_build_panel.py --shock-window 63 --freq M
+python scripts/05_build_panel.py --tone                         # tone, embedding, news x price
+python scripts/06_run_models.py --models ols ridge lasso ipca sipca xgb rf ebm --features \
+    tone_fb tone_lm emb_fb news_fb px_tone px_news px_all      # and the *_s1 / *_s63 sets
+python scripts/06b_ensemble.py
+python scripts/06c_signals.py              # single-feature signals, combo, best10
+
 python scripts/07_evaluate.py              # forecast accuracy and backtests, 5 min
-python scripts/08_report.py                # tables in results/tables/
+python scripts/08_report.py                # tables in results/tables/ (--tables to split it)
 python scripts/09_explain.py               # EBM importances, shapes, ablations
 python scripts/10_audit.py                 # news coverage, stale rows, donor rows
 python scripts/11_missing_data_leak.py     # what the missing-data leak is worth

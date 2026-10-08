@@ -1,0 +1,26 @@
+{
+ "freq": "W",
+ "features": "all_lda_all_s1",
+ "model": "lasso",
+ "blocks": [
+  "price",
+  "narr_lda_all_s1",
+  "firm_lda_all"
+ ],
+ "n_features": 129,
+ "settings_tried": 40,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 0.0002954433433892479,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 0.0,
+ "train_r2": 0.0,
+ "seconds_tune": 0.2,
+ "seconds_final": 0.1
+}

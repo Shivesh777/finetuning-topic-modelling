@@ -18,6 +18,7 @@ NEWS = DATA / "news"               # de-duplicated article tables (third-party t
 TOPICS = DATA / "topics"           # one folder per topic model
 CRSP = DATA / "crsp"               # licensed return data (never committed)
 PANELS = DATA / "panels"           # stock-period feature panels (derived from CRSP)
+SENTIMENT = DATA / "sentiment"     # tone and FinBERT vectors of the firm-level articles
 RESULTS = Path(os.environ.get("FTM_RESULTS", ROOT / "results"))
 
 # --- sample --------------------------------------------------------------------------
@@ -53,6 +54,7 @@ ATTENTION_ARTICLES_PER_DAY = 150   # per-day sample of articles that enter daily
 ENCODER = "sentence-transformers/paraphrase-MiniLM-L3-v2"
 ENCODER_MAX_TOKENS = 64            # headline and the first sentences of the lead
 TOPIC_TEMPERATURE = 0.07           # softmax temperature of the article-to-topic weights
+TONE_PCA_DIM = 64                  # FinBERT headline vectors kept as this many principal components
 
 # --- features ------------------------------------------------------------------------
 UNIVERSE_SIZE = 1000               # largest stocks by market value at the end of June

@@ -1,0 +1,28 @@
+{
+ "freq": "2W",
+ "features": "emb_fb",
+ "model": "rf",
+ "blocks": [
+  "emb_fb"
+ ],
+ "n_features": 64,
+ "settings_tried": 3,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": -8.757458912711513e-05,
+ "train_r2": 0.0007946215538046086,
+ "seconds_tune": 9.8,
+ "seconds_final": 1.7
+}

@@ -1,0 +1,25 @@
+{
+ "freq": "W",
+ "features": "px_tone",
+ "model": "ipca",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "npx"
+ ],
+ "n_features": 27,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 5
+ },
+ "validation_r2": 0.00010047922911748941,
+ "train_r2": 0.00020416310999393783,
+ "seconds_tune": 0.3,
+ "seconds_final": 0.1
+}

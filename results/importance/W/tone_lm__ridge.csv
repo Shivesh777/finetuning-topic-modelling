@@ -1,0 +1,6 @@
+feature,coef,importance,kind
+lm_tone_1,1.329080852770683e-07,2.1695155414951303e-08,mean_abs_contribution
+lm_tone_5,-1.190455950099918e-06,4.4097576382047905e-07,mean_abs_contribution
+lm_tone_21,-5.237294465309564e-07,2.5513035853920896e-07,mean_abs_contribution
+lm_tone_252,3.216841531356783e-07,1.6017868943780132e-07,mean_abs_contribution
+lm_surprise_21,-9.647807569692076e-07,4.812055081755507e-07,mean_abs_contribution

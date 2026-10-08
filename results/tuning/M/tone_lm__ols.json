@@ -1,0 +1,20 @@
+{
+ "freq": "M",
+ "features": "tone_lm",
+ "model": "ols",
+ "blocks": [
+  "tone_lm"
+ ],
+ "n_features": 5,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": -0.00013965525091230724,
+ "train_r2": 0.00010785574615623794,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

@@ -1,0 +1,9 @@
+feature,importance,kind
+fb_tone_1,0.11558660005296628,impurity_share
+fb_tone_5,0.09961148334835707,impurity_share
+fb_tone_21,0.12810493709587084,impurity_share
+fb_tone_252,0.13065870186581402,impurity_share
+fb_surprise_21,0.1082419530641971,impurity_share
+news_log_n5,0.13661266372895794,impurity_share
+news_log_n21,0.13664072832626292,impurity_share
+news_abnormal_21,0.14454293251757389,impurity_share

@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "all_lda_s63",
+ "model": "ols",
+ "blocks": [
+  "price",
+  "narr_lda_s63",
+  "firm_lda"
+ ],
+ "n_features": 129,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": -0.009797941733327598,
+ "train_r2": 0.0082991267462722,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.1
+}

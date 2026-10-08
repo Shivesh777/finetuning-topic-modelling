@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "tone_fb",
+ "model": "ipca",
+ "blocks": [
+  "tone_fb"
+ ],
+ "n_features": 8,
+ "settings_tried": 4,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "n_factors": 1
+ },
+ "validation_r2": 2.2294161745595176e-06,
+ "train_r2": 1.911806369880864e-07,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

@@ -1,0 +1,23 @@
+{
+ "freq": "W",
+ "features": "tone_lm",
+ "model": "sipca",
+ "blocks": [
+  "tone_lm"
+ ],
+ "n_features": 5,
+ "settings_tried": 6,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "validation_r2": -2.0326256263913933e-05,
+ "train_r2": 3.5617993404679638e-06,
+ "seconds_tune": 1.1,
+ "seconds_final": 0.1
+}

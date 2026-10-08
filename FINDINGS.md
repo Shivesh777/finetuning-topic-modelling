@@ -4,11 +4,16 @@ Results of the run of 8 October 2026. 26 feature sets (two NoLBERT topic
 models among them), 15 models (the eight of the design, six of them also
 fitted on ranked returns, and the ensemble of the eight) and 3 rebalancing
 frequencies: 1,170 experiments, each traded under seven portfolio rules.
+A second part of the run (section 10) added the tone of the news, an
+embedding regression, tuned attention-shock windows, forecasts that fit
+nothing and a cap-weighted tilt: 552 more experiments, 1,722 in all, under
+eight rules. Sections 1 to 9 describe the main run; their tables are computed
+over its experiments only and did not change.
 Training 2013 to 2019, validation 2020 to 2021, test 2022 to 2024. From 2017
 on, only the part of each year for which our return file is complete is used
 (section 2.4), which leaves 21 test months (42 fortnights, 81 weeks), about a
 year and three quarters of returns. Every number below comes from a file under
-`results/` (section 12 says which).
+`results/` (section 13 says which).
 
 **How to read the numbers.**
 
@@ -104,7 +109,12 @@ year and three quarters of returns. Every number below comes from a file under
    as ours do would be expected to show 1.55, 1.70 and 1.85. The median is
    negative at every frequency. In 17 of the 21 combinations of rule and
    frequency the best result is below that benchmark, and no portfolio passes
-   a 10% false-discovery threshold.
+   a 10% false-discovery threshold. Counting the 552 experiments of section 10
+   as well (451 to 613 per frequency, eight rules), the best result is below
+   the benchmark in 15 of 24 combinations and above it in 9 (7 of them
+   monthly); only the monthly value-weighted long-short beats it clearly
+   (best 3.08 against 1.71, reality-check p = 0.004), and still nothing passes
+   the false-discovery threshold (section 10.6).
 
 7. **The real news does no better than misdated news.** Exposures to LDA
    attention and to the attention of 126 trading days earlier have the same
@@ -158,13 +168,50 @@ year and three quarters of returns. Every number below comes from a file under
     EBM has the best validation IC of the base models at every frequency
     (0.022, 0.023, 0.022) and 0.002, -0.005 and 0.005 in the test period.
 
+13. **The tone of the news did not add a forecasting signal** (section 10.2).
+    FinBERT tone of 769,338 headlines (a model that saw no text after 2010) and
+    Loughran-McDonald tone, over the last 1 to 252 days: the tone-only
+    experiments have a test IC of 0.002, 0.000 and -0.002. The test fixed in
+    advance, the price ensemble combined with the tone signal that validation
+    preferred and traded with the buffer, has a positive IC at all three
+    frequencies (0.011, 0.016, 0.019; none significant), about that of the
+    price ensemble alone (weekly much less: 0.030), and a net Sharpe ratio of
+    -0.01, -0.20 and -0.62. The
+    embedding regression of Chen, Kelly and Xiu (2022) on FinBERT headline
+    vectors has a positive IC biweekly and weekly (0.007, 0.005; not
+    significant) that its turnover of 155% to 169% a period more than eats.
+
+14. **Tuning the attention-shock window is the one improvement of the second
+    part, and it is not significant** (sections 10.1, 10.3). Validation chose
+    1-day shocks for weekly and 63-day shocks for monthly rebalancing. Over 132
+    and 135 paired experiments the test IC rises from 0.006 to 0.011 (weekly)
+    and from 0.003 to 0.014 (monthly), t = 1.1 and 1.2, and the net Sharpe
+    ratio rises in 75% and 65% of the pairs. Two validation choices reach a net
+    Sharpe ratio of 0.6 to 0.7 (section 10.4), with 95% intervals that include
+    zero (-0.73 to 2.03 and -0.54 to 1.44, buffered):
+    - weekly, price with every news block, EBM: 0.61, buffered 0.65; test IC
+      0.025 (t = 2.3), the first validation choice whose IC clears its
+      critical value. The same EBM on prices alone has a higher IC (0.030),
+      and the portfolio earned everything in 2022-23;
+    - monthly, 20 NoLBERT topics with 63-day shocks, IPCA: 0.68, buffered 0.57,
+      positive in both halves of the test period; IC t = 0.9; chosen within a
+      pool that was defined after the narrative-only test results were seen.
+
+15. **A cap-weighted tilt shows the market, not the news** (section 10.5).
+    Tilted towards the forecasts, the value-weighted universe has a net Sharpe
+    ratio of 0.46 to 0.60, against 0.47 to 0.61 for the universe itself, and
+    a median information ratio of -0.16 to -0.29.
+
 **What to present.** The two pre-specified headlines (item 1 and the ensemble
 protocol of item 3) with their intervals; the buffer as the one improvement
 that was adopted on the validation period (where its gain was significant at
 the weekly frequency) and then held up in the test period (item 2); NoLBERT as
 the cleanest text layer with no forecasting gain we can demonstrate (item 4);
-and the search statistics (item 6), which say what any single good-looking
-number in our tables is worth. Best-of results, such as a net Sharpe ratio of
+from the second part, the failed test of news tone (item 13), the tuned shock
+window as the one consistent gain, with the two validation choices at 0.6 to
+0.7 and their reservations (item 14), and the tilt as the honest answer to
+"start from the index" (item 15); and the search statistics (item 6), which
+say what any single good-looking number in our tables is worth. Best-of results, such as a net Sharpe ratio of
 2.21 for one monthly value-weighted portfolio, are not distinguishable from
 what 375 tries produce by chance (1.62 expected, p = 0.09) and should only be
 shown next to that benchmark.
@@ -176,8 +223,8 @@ of item 10), topic models fitted on the whole sample, and tuning on the
 evaluation months. They should not be quoted until they are reproduced under
 a protocol like this one.
 
-**How untouched is the test period?** Less than we would like. These are the
-results of the fourth pass over it.
+**How untouched is the test period?** Less than we would like. Sections 1 to 9
+are the results of the fourth pass over it, section 10 of a fifth.
 
 - After the first run, two reviews found that hiding missing returns from the
   model does not undo the selection of the stocks that have them, and that 7%
@@ -198,8 +245,13 @@ results of the fourth pass over it.
   to adopt was decided on the validation period and written down before the
   test period was looked at (section 9.1). The buffer was adopted and held up;
   the protocol built on the ensembles was adopted and did not.
+- In the second part (section 10) the shock windows and the protocol for the
+  news blocks were fixed on the validation period first (section 10.1). After
+  the narrative-only test results of the windows had been seen, the windows
+  were carried into the text and price-and-text sets and two selection pools
+  were added; section 10 says which numbers that touches.
 
-The conclusions of all four passes are the same. The outputs of the earlier
+The conclusions of all five passes are the same. The outputs of the earlier
 passes are not part of the repository.
 
 **Not repeated after the last fixes.** The audits of `scripts/10` to `12`
@@ -987,8 +1039,7 @@ For comparison, the sampling error of one experiment's test IC is 0.018,
 
 Only the XGBoost reruns are reported here (the EBM reruns used the earlier
 protocol and are left out); the forests were not rerun. Averaging a tree model
-over
-seeds would remove this noise at ten times the fitting time (section 11).
+over seeds would remove this noise at ten times the fitting time (section 12).
 
 ## 8. NoLBERT
 
@@ -1162,13 +1213,226 @@ Averages over all pairs, test period (`improvements.csv`, group "every"):
 
 ### 9.3 What stays in the pipeline
 
-All four variants stay as options: `ls_buf` is one of the seven portfolio
+All four variants stay as options: `ls_buf` is one of the eight portfolio
 rules, `scripts/06b_ensemble.py` builds the ensembles, the rank-target models
 are fitted by default, and `nolbert20` is one of the six topic models. The
 groups of sections 4 to 6 and the original headline keep the eight base models
 and the decile rule, so they remain comparable with the earlier runs.
 
-## 10. Opening the glass box
+## 10. Directional news, attention-shock windows and a cap-weighted tilt
+
+The topic features say what a firm is in the news about, not whether the news
+is good or bad, and the 5-day window of the attention shock was set without
+trying another. A second part of the run (8 October) added, under the same
+protocol:
+
+| | What | Experiments per frequency |
+|---|---|---|
+| Tone of each article | FinBERT (`ProsusAI/finbert`: trained on news of 2008 to 2010 and the Financial PhraseBank, so point-in-time for our sample) on the headlines of the 769,338 articles filed under at most three tickers, one of them in our universe: 21% positive, 14% negative, 64% neutral. Loughran-McDonald word counts on headline and lead (correlation with FinBERT's tone 0.23) | |
+| Tone features | `tone_fb`, `tone_lm`: tone of the firm's articles over the last 1, 5, 21 and 252 trading days (news up to the day before formation), the 21-day surprise against the 252-day tone, the amount of news and its abnormal level | 8 base models on `tone_fb`, `tone_lm` |
+| Embedding regression | `emb_fb`: the firm's mean FinBERT headline vector (64 principal components fitted on training-period articles, 78% of the variance) since the last rebalancing, with our models in the role of the linear forecaster of Chen, Kelly and Xiu (2022) | `emb_fb`, `news_fb` (all three blocks) |
+| News and past returns | `npx`: the 5- and 21-day returns of stocks with and without news in that window (Chan 2003: moves on news drift, moves without news reverse) and the returns times the tone | `px_tone`, `px_news`, `px_all` (price with the news blocks; `px_all` adds the NoLBERT text blocks) |
+| Signals | One feature as the forecast, with the sign the literature predicts: FinBERT and LM tone over 1, 5 and 21 days and their surprise, abnormal news, reversal without news, drift with news | 11 |
+| Combinations | `combo`: the price ensemble averaged with the tone signal that validation prefers. `best10`: the average of the ten base experiments (any feature set) with the highest validation IC | 2 |
+| Shock windows | Windows of 1, 5, 21 and 63 days compared on validation (section 10.1); the chosen windows, 1 day weekly and 63 days monthly, in the narrative, text and price-and-text sets of all six topic models | 144 weekly and monthly |
+| Tilt | `tilt_vw`: the value-weighted universe with each weight times (1 + s), s the forecast rank scaled to [-1, 1]; judged against the value-weighted universe | a portfolio rule, for every experiment |
+
+With ensembles that makes 552 new experiments, 1,722 in all (628 monthly, 466
+biweekly, 628 weekly). Firm-level news covers part of the universe: the share
+of stocks with an article in the last five trading days rises from 19% in
+2013 to 49% in 2022-23 and falls to 36% in 2024. The tables of sections 1 to 9
+are computed over the experiments of the main run only, and are unchanged.
+
+### 10.1 Decided on the validation period
+
+**Shock window.** For each frequency, topic model and window, the narrative
+exposures were rebuilt and OLS, ridge and lasso fitted and tuned as usual
+(`scripts/05b_tune_shocks.py`; window 5 reproduces the validation forecasts of
+the main run). Rule: the window with the highest validation IC averaged over
+the 18 fits, if it also beats 5 days for at least four of the six topic models.
+The rule was written down after this table had been seen; it differs from
+"highest average" only at the biweekly frequency, where 1 and 5 days are
+0.0002 apart.
+
+| Validation rank IC (18 fits) | 1 day | 5 days | 21 days | 63 days | Topic models better than 5 days (1 / 21 / 63) | Window |
+|---|---|---|---|---|---|---|
+| Monthly | -0.012 | -0.010 | -0.018 | -0.002 | 3 / 2 / 4 | 63 |
+| Biweekly | 0.007 | 0.006 | 0.000 | 0.003 | 3 / 2 / 3 | 5 (unchanged) |
+| Weekly | 0.007 | -0.001 | -0.002 | 0.002 | 6 / 4 / 4 | 1 |
+
+**News.** Fixed before any validation number: the primary test of this part is
+`combo` traded with the buffer, one per frequency. Read on validation before
+any test number of the news experiments:
+
+| Validation rank IC | Monthly | Biweekly | Weekly |
+|---|---|---|---|
+| Price and tone (`px_tone`) minus price, 8 models (t) | +0.001 (0.3) | +0.010 (1.2) | -0.003 (-1.6) |
+| `px_all` minus price (t) | +0.009 (0.7) | +0.015 (1.1) | -0.008 (-0.6) |
+| Best tone signal (t), the one `combo` uses | 21-day FinBERT tone +0.029 (2.9) | 1-day LM tone +0.009 (2.1) | 1-day LM tone +0.002 (0.4) |
+| Best base experiment on the news sets ("news") | `px_all`, lasso, 0.045 | `px_news`, EBM, 0.036 | `px_all`, EBM, 0.027 |
+
+Decisions: no tone block becomes a default (none adds to price by more than
+its noise, and weekly they subtract); the signs of the signals stay those of
+the literature although several have the opposite sign in validation;
+`combo` and `best10` cannot be selected in any pool, since their validation
+IC is partly that of a choice.
+
+After the narrative-only test results of the tuned windows had been seen, the
+windows were also used in the text and price-and-text sets, and two pools were
+added to the selection table: "shock" (base models on the tuned-window sets)
+and "any_all" (base models on every set). They are counted in every search
+statistic below.
+
+### 10.2 Tone does not forecast these returns
+
+| Test period | Monthly | Biweekly | Weekly |
+|---|---|---|---|
+| Tone blocks alone, average IC of 16 experiments (t) | 0.002 (0.3) | 0.000 (-0.1) | -0.002 (-1.2) |
+| The eight single tone signals: test IC, lowest to highest | -0.002 to 0.006 | -0.006 to 0.003 | -0.006 to 0.008 |
+| Embedding regression (`emb_fb`), average IC (t), positive of 8 | -0.009 (-2.5), 0 | 0.007 (1.6), 7 | 0.005 (1.9), 7 |
+| its turnover per period, decile long-short | 155% | 167% | 169% |
+| `px_tone` minus price, IC, average of 8 models (higher in) | +0.000 (5 of 8) | +0.004 (4) | -0.003 (0) |
+| `px_all` minus price | +0.007 (7) | -0.004 (3) | -0.004 (2) |
+| **Primary test: `combo`**, IC (t) | 0.011 (0.5) | 0.016 (1.0) | 0.019 (1.5) |
+| its net Sharpe ratio, buffered (95% interval) | -0.01 (-1.21 to 1.72) | -0.20 (-1.36 to 0.93) | -0.62 (-2.26 to 0.69) |
+| the price ensemble alone: IC, net Sharpe buffered | 0.010, -0.04 | 0.016, -0.18 | 0.030, 0.21 |
+| `best10`: IC, net Sharpe buffered | 0.009, 0.29 | -0.002, -0.91 | 0.001, -0.32 |
+
+- **A day after publication, the tone of a headline says nothing about the
+  next week's or month's return of these stocks.** The monthly signal that
+  validation liked (21-day FinBERT tone, 0.029) has 0.006 in the test period.
+  This is what the literature leads one to expect for the largest stocks:
+  news tone is priced within a day or two, and what predictability remains
+  sits in small stocks (Tetlock, Saar-Tsechansky and Macskassy 2008; Ke, Kelly
+  and Xiu 2019). Our articles carry dates without times, so we cannot trade
+  on the day of the news.
+- **The embedding regression** has a positive IC in 7 of 8 models at the
+  biweekly and weekly frequencies (not significant) and a negative one in all
+  8 monthly (t = -2.5, beyond the critical value in that direction). Its
+  forecasts change with every article, and at 155% to 169% turnover per period
+  the costs take more than the signal.
+- **News added to prices does not raise the IC**, except in the monthly
+  `px_all`, which contains the tuned narrative block (section 10.3).
+- **The primary test fails.** `combo` has a positive IC at all three
+  frequencies, about that of the price ensemble alone (monthly 0.011 against
+  0.010, biweekly 0.016 against 0.016, weekly 0.019 against 0.030), and loses
+  money after costs. `best10`, the validation choice spread over ten
+  experiments, has a test IC of about zero.
+
+### 10.3 The tuned shock windows help, without significance
+
+`improvements.csv`, comparison "shock_window", group "every": each experiment
+of the eight base models on a narrative, text or price-and-text set against
+the same experiment with the 5-day window.
+
+| Test period | Monthly (63 days) | Weekly (1 day) |
+|---|---|---|
+| Pairs | 135 | 132 |
+| IC, 5 days and tuned (t of the difference) | 0.003 and 0.014 (1.2) | 0.006 and 0.011 (1.1) |
+| Net long-short return, a year (t) | +2.6% (0.8) | +4.9% (1.4) |
+| Median net Sharpe, 5 days and tuned | -0.07 and 0.13 | -0.24 and 0.11 |
+| Pairs with a higher net Sharpe | 65% | 75% |
+| IC difference in 2022-23 and in 2024 | +0.003 and +0.026 | +0.008 and -0.002 |
+| Topic models with a higher IC (narrative, text and price-and-text sets) | 5 of 6 (not MiniLM) | 5 of 6 (not LDA) |
+| Equal-weighted average of the 48 narrative-only portfolios: net Sharpe, 5 days and tuned | -0.02 and 0.69 | -0.63 and 0.31 |
+
+This is the most consistent improvement of the second part: the gain shows in
+validation (where the windows were chosen), in the test period, for five of
+six topic models at each frequency, and in the Sharpe ratios of most pairs.
+It is not significant (t statistics of 0.8 to 1.4 against critical values of
+2.1 to 2.4),
+and its timing differs: the monthly gain is in 2024, the weekly one in
+2022-23.
+
+The strongest test numbers of the whole run are here, and validation did not
+point to them: on the monthly narrative exposures to the 20 NoLBERT topics with
+63-day shocks, the eight models have an average test IC of 0.027 (7 positive,
+t = 3.4 against 2.39) and their average portfolio a net Sharpe ratio of 1.66;
+their ensemble, buffered, 1.76. Their validation ICs run from -0.05 to +0.065
+(the ensemble's is -0.009). Found after the fact among some fifty monthly
+feature sets, this is a lead for a later test, not a result.
+
+### 10.4 What validation chooses now, and the Sharpe ratios of 0.6 to 0.7
+
+| Pool (validation IC) | Monthly | Biweekly | Weekly |
+|---|---|---|---|
+| "any", the main run's headline | unchanged (section 1) | unchanged | unchanged |
+| "any_all", every base experiment | unchanged | unchanged | `all_lda_s1`, EBM (0.058): test IC 0.002, net Sharpe -0.39 |
+| "news" | `px_all`, lasso (0.045): IC -0.001, net -0.61 | `px_news`, EBM (0.036): IC 0.024 (1.3), net -0.07 | **`px_all`, EBM (0.027): IC 0.025 (2.3), net 0.61, buffered 0.65** |
+| "shock" | **`narr_nolbert20_s63`, IPCA (0.065): IC 0.018 (0.9), net 0.68, buffered 0.57** | (no tuned window) | `all_lda_s1`, EBM: as "any_all" |
+| "signal" | 21-day FinBERT tone (0.029): IC 0.006, net -0.82 | reversal without news (0.018): IC -0.006, net -2.43 | reversal without news (0.003): IC 0.004, net -1.96 |
+
+- **Weekly, price and all the news, EBM** is the first experiment chosen on
+  validation whose test IC clears its critical value (0.025, t = 2.31 against
+  2.11; Clark-West t = 1.9). Net Sharpe 0.61, buffered 0.65 (95% interval
+  -0.73 to 2.03), 9% a year with 14% volatility, maximum drawdown -13%. Three
+  things limit it. The same EBM on the price features alone has a higher IC
+  (0.030): the news does not add to the IC, and the Sharpe difference (0.76)
+  has a bootstrap p-value of 0.27. It earns everything in 2022-23 (IC 0.037,
+  buffered Sharpe 1.45) and loses in 2024 (IC 0.001, -1.08). And it is one of
+  the 47 rows of the selection table (several of them the same experiment),
+  of which two or so would clear a 5% critical value by chance.
+- **Monthly, 20 NoLBERT topics with 63-day shocks, IPCA** (the "shock" pool)
+  is positive in both halves of the test period (net 0.70 and 0.66), but its
+  IC is not significant (t = 0.9) and the pool was defined after the
+  narrative-only test results had been seen.
+- **Biweekly** nothing beats the main run's choice (price and FinBERT text,
+  XGBoost: net 0.37, buffered 0.41).
+
+So a net Sharpe ratio of 0.6 to 0.7 is reached by validation choices at two
+frequencies, with intervals that include zero and with the reservations
+above. None of them can be presented as a demonstrated edge.
+
+### 10.5 The cap-weighted tilt shows the market
+
+| Test period | Monthly | Biweekly | Weekly |
+|---|---|---|---|
+| Value-weighted universe, net Sharpe | 0.52 | 0.61 | 0.47 |
+| `tilt_vw`, median over the base experiments: net Sharpe | 0.50 | 0.60 | 0.46 |
+| information ratio against the universe (positive in) | -0.16 (38%) | -0.27 (34%) | -0.29 (38%) |
+| tracking error, turnover per period | 2.2%, 20% | 2.5%, 17% | 2.6%, 12% |
+| experiments with an alpha t above 2 | 7 of 400 | 2 of 256 | 1 of 400 |
+
+Tilting the index towards the forecasts leaves its Sharpe ratio where the
+market put it: 0.46 to 0.60 total. The median information ratio is 0.07, 0.13
+and 0.31 before costs (the weekly one is mostly the price reversal of section
+4.6) and negative after. The tilt is a fair way to implement a signal
+without shorting, if it is reported against the index; its total Sharpe ratio
+is not evidence of skill.
+
+### 10.6 The search, with everything
+
+`multiple_testing.csv`, pool "all": 613 experiments monthly, 451 biweekly, 613
+weekly, under eight rules.
+
+- The best result is below what the best of that many portfolios without
+  skill would show in 15 of the 24 combinations of rule and frequency: all 8
+  biweekly, 6 of 8 weekly and 1 of 8 monthly.
+- The monthly value-weighted long-short portfolios are the one place where the
+  best result beats the search: 3.08 net (price, 20 NoLBERT topics with 63-day
+  shocks, ridge) against 1.71 expected without skill, reality-check p = 0.004,
+  SPA p = 0.003. The monthly tilt (best 2.24 against 1.66, SPA p = 0.017) and
+  value-weighted long-only rule (2.33 against 1.74, SPA p = 0.045) point the
+  same way. With 24 combinations searched, a p-value of 0.004 is about 0.1
+  after a Bonferroni correction.
+- No experiment passes a 10% false-discovery threshold in any combination.
+
+### 10.7 Reading
+
+- The directional news we can measure, headline tone and headline vectors a
+  day after publication, does not forecast the returns of large stocks over
+  the next week or month. The literature puts that effect in the first days
+  and in small stocks; testing it needs time-stamped news and daily trading.
+- The window of the attention shock matters more than anything else tried in
+  this part: one day for weekly rebalancing and a quarter for monthly. The gain
+  is consistent and not significant, and the best monthly numbers came from
+  it.
+- Net Sharpe ratios of 0.6 to 0.7 exist among validation choices; their
+  intervals include zero, they are concentrated in one half of the test
+  period, and the search statistics, apart from the monthly value-weighted
+  portfolios, say that numbers like them are what this many trials produce.
+
+## 11. Opening the glass box
 
 For each frequency `scripts/09_explain.py` takes the EBM on price and text
 features with the best validation IC and reports term importance, shape
@@ -1207,7 +1471,7 @@ significant. The earlier project's ablation (deleting one narrative from the
 fitted IPCA) has the same form. It should be redone on this panel before it
 is quoted.
 
-## 11. Limits, and what to do next
+## 12. Limits, and what to do next
 
 **Limits of what was done.**
 
@@ -1225,12 +1489,25 @@ is quoted.
 - *Firm-news features are noise for 39% to 51% of the rows* (section 2.3).
 - *Text features partly re-encode prices*: a narrative exposure is a function
   of the stock's past returns.
-- *No text component is fully point-in-time*: FinBERT (2022) and MiniLM (2021)
-  were published after the training period, and NoLBERT's adaptation used
-  text up to September 2020 (section 8.1).
+- *Few text components are point-in-time*: the FinBERT topic classifier
+  (2022) and MiniLM (2021) were published after the training period, and
+  NoLBERT's adaptation used text up to September 2020 (section 8.1). The
+  FinBERT tone model of section 10 (text to 2010) and the Loughran-McDonald
+  dictionary (2014 release) are the exceptions.
+- *News dates carry no time of day*, so every news feature waits a day, and
+  the tone of section 10 is measured on headlines only.
 - *One seed per experiment* (section 7.1).
 
 **What to do next, roughly by how much it could change the conclusions.**
+
+- **A fresh test of the tuned attention shocks.** Section 10.3 is the one lead
+  of the second part: one-day shocks weekly, 63-day shocks monthly, and the
+  20 NoLBERT topics among them. Fixing these choices now and testing them on
+  months the project has not used (the January-to-June months that a complete
+  return file brings back, or 2025) is the cleanest next test.
+- **News at the speed it is priced.** Tone did not forecast a day after
+  publication. Time-stamped news with daily (or open-to-close) returns, and
+  the smaller stocks the literature finds it in, are what a tone test needs.
 
 - **A complete return file.** With daily returns for every list member, the 40
   monthly periods that are left out come back (15 of them in the test period),
@@ -1255,7 +1532,7 @@ is quoted.
 - **The audits again.** Rerun `scripts/10` to `12` under the final rules, and
   add an evaluation of firm-news features on covered firms only.
 
-## 12. Where each number comes from
+## 13. Where each number comes from
 
 | Section | File |
 |---|---|
@@ -1276,7 +1553,8 @@ is quoted.
 | 7.1 | `results/data_audit/tuning_noise.csv`, `results/tables/forecast.csv` |
 | 8 | `results/encoders/nolbert_ft/`, `results/tables/`; section 8.3 from the teammate's other pipeline |
 | 9 | `results/tables/improvements.csv`, `selection.csv`, `strategies.csv` |
-| 10 | `results/explain/<freq>__<features>/`, `results/tables/tuning.csv` |
+| 10 | `results/tuning/shock_window.csv`, `results/tuning/<freq>/signals.csv` and `pool.csv`; `results/tables/improvements.csv` (shock_window), `landscape.csv`, `text_vs_price.csv`, `selection.csv` (pools news, shock, signal, any_all), `strategies.csv` (tilt_vw), `multiple_testing.csv` (pool all); the validation comparisons of section 10.1 from the validation rows of `forecast.csv` and `results/series/<freq>_forecast.parquet`; the coverage of firm news computed with `ftm/features/tone.py` |
+| 11 | `results/explain/<freq>__<features>/`, `results/tables/tuning.csv` |
 
 Counts and medians "over experiments" are taken over the rows of these tables.
 The split of the weekly price IC by the sign of the market return (section

@@ -1,0 +1,88 @@
+feature,importance,kind
+fb_tone_1,2.3341683168138046e-05,mean_abs_contribution
+fb_tone_5,5.2788726453191774e-05,mean_abs_contribution
+fb_tone_21,9.026849499251514e-06,mean_abs_contribution
+fb_tone_252,1.6596224408680472e-05,mean_abs_contribution
+fb_surprise_21,1.1431656230130694e-05,mean_abs_contribution
+news_log_n5,1.6818110084490372e-05,mean_abs_contribution
+news_log_n21,3.0177692843199058e-05,mean_abs_contribution
+news_abnormal_21,1.0090192519248193e-05,mean_abs_contribution
+lm_tone_1,7.924877888266787e-06,mean_abs_contribution
+lm_tone_5,5.939883419682781e-05,mean_abs_contribution
+lm_tone_21,2.264393272362503e-05,mean_abs_contribution
+lm_tone_252,8.055987686058847e-06,mean_abs_contribution
+lm_surprise_21,1.5589266851288414e-05,mean_abs_contribution
+emb_fb_00,1.7332043000712867e-05,mean_abs_contribution
+emb_fb_01,6.107838811288734e-06,mean_abs_contribution
+emb_fb_02,3.2072686528665453e-05,mean_abs_contribution
+emb_fb_03,7.949756127449713e-06,mean_abs_contribution
+emb_fb_04,1.551955080616291e-05,mean_abs_contribution
+emb_fb_05,3.8409283617658345e-06,mean_abs_contribution
+emb_fb_06,5.738579333715054e-06,mean_abs_contribution
+emb_fb_07,1.2212405301765146e-05,mean_abs_contribution
+emb_fb_08,7.71701797584096e-06,mean_abs_contribution
+emb_fb_09,1.9590335066708503e-05,mean_abs_contribution
+emb_fb_10,1.3899734053789865e-05,mean_abs_contribution
+emb_fb_11,4.026754847188033e-05,mean_abs_contribution
+emb_fb_12,2.7803731057397125e-05,mean_abs_contribution
+emb_fb_13,6.219423112858773e-05,mean_abs_contribution
+emb_fb_14,4.67013422703031e-06,mean_abs_contribution
+emb_fb_15,8.169177465970019e-06,mean_abs_contribution
+emb_fb_16,3.8204350139871045e-05,mean_abs_contribution
+emb_fb_17,3.4282078511190985e-05,mean_abs_contribution
+emb_fb_18,5.425119038836834e-05,mean_abs_contribution
+emb_fb_19,9.096305445931071e-06,mean_abs_contribution
+emb_fb_20,4.181282180245364e-05,mean_abs_contribution
+emb_fb_21,1.5789221048857266e-05,mean_abs_contribution
+emb_fb_22,4.842557286156896e-05,mean_abs_contribution
+emb_fb_23,3.182559728982357e-05,mean_abs_contribution
+emb_fb_24,1.0934591111494744e-05,mean_abs_contribution
+emb_fb_25,1.2728587318715001e-05,mean_abs_contribution
+emb_fb_26,7.15247304384216e-06,mean_abs_contribution
+emb_fb_27,7.630912835207759e-06,mean_abs_contribution
+emb_fb_28,6.390872160724968e-06,mean_abs_contribution
+emb_fb_29,1.7765383101207336e-05,mean_abs_contribution
+emb_fb_30,1.0845864823243379e-05,mean_abs_contribution
+emb_fb_31,9.902841967944966e-06,mean_abs_contribution
+emb_fb_32,3.347721661062658e-05,mean_abs_contribution
+emb_fb_33,6.030725881225643e-05,mean_abs_contribution
+emb_fb_34,2.61171148491594e-05,mean_abs_contribution
+emb_fb_35,2.2306058404313388e-05,mean_abs_contribution
+emb_fb_36,3.698609744199974e-05,mean_abs_contribution
+emb_fb_37,3.654325314053301e-05,mean_abs_contribution
+emb_fb_38,1.3213163077498498e-05,mean_abs_contribution
+emb_fb_39,1.4443926057322543e-05,mean_abs_contribution
+emb_fb_40,4.1656460701756945e-05,mean_abs_contribution
+emb_fb_41,1.5078335320598616e-05,mean_abs_contribution
+emb_fb_42,1.874022950822875e-05,mean_abs_contribution
+emb_fb_43,2.437941414085996e-05,mean_abs_contribution
+emb_fb_44,3.38170991544061e-05,mean_abs_contribution
+emb_fb_45,1.3807370214626864e-05,mean_abs_contribution
+emb_fb_46,1.5910677203630197e-05,mean_abs_contribution
+emb_fb_47,3.058519815587529e-05,mean_abs_contribution
+emb_fb_48,1.3061463893840187e-05,mean_abs_contribution
+emb_fb_49,9.41264490896338e-06,mean_abs_contribution
+emb_fb_50,7.59011263334193e-06,mean_abs_contribution
+emb_fb_51,2.8608091284512502e-05,mean_abs_contribution
+emb_fb_52,2.1015276056725986e-05,mean_abs_contribution
+emb_fb_53,4.373657447815823e-06,mean_abs_contribution
+emb_fb_54,1.1718227098207595e-05,mean_abs_contribution
+emb_fb_55,3.264294156387127e-05,mean_abs_contribution
+emb_fb_56,7.905585394294972e-06,mean_abs_contribution
+emb_fb_57,2.4745969731878335e-05,mean_abs_contribution
+emb_fb_58,3.793950823791975e-05,mean_abs_contribution
+emb_fb_59,1.5890365917804844e-05,mean_abs_contribution
+emb_fb_60,1.637240657665064e-05,mean_abs_contribution
+emb_fb_61,1.2648618428241293e-05,mean_abs_contribution
+emb_fb_62,8.28523377698008e-06,mean_abs_contribution
+emb_fb_63,7.531381569122676e-05,mean_abs_contribution
+fb_tone_21 & emb_fb_12,1.8372600887843697e-05,mean_abs_contribution
+emb_fb_09 & emb_fb_58,1.0289993242233622e-05,mean_abs_contribution
+emb_fb_12 & emb_fb_29,1.219480031112172e-05,mean_abs_contribution
+emb_fb_13 & emb_fb_45,1.598726777667867e-05,mean_abs_contribution
+emb_fb_13 & emb_fb_63,2.197439737939775e-05,mean_abs_contribution
+emb_fb_23 & emb_fb_48,1.2216317510968448e-05,mean_abs_contribution
+emb_fb_29 & emb_fb_32,1.7020405050635695e-05,mean_abs_contribution
+emb_fb_31 & emb_fb_48,1.0074086545417804e-05,mean_abs_contribution
+emb_fb_48 & emb_fb_58,1.7136491564963823e-05,mean_abs_contribution
+emb_fb_59 & emb_fb_61,6.228580169650249e-06,mean_abs_contribution

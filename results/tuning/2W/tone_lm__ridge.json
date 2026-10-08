@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "tone_lm",
+ "model": "ridge",
+ "blocks": [
+  "tone_lm"
+ ],
+ "n_features": 5,
+ "settings_tried": 25,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 27.917554475778655
+ },
+ "validation_r2": 3.0969016828752416e-07,
+ "train_r2": 5.368521087678602e-07,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

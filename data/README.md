@@ -12,6 +12,7 @@ so zipping `data/` is enough to hand the project to a teammate.
 | `topics/embeddings/` | Per-article vectors: sentence embeddings (`03_embed.py`) or class probabilities (`03b_classify_topics.py`), with the article ids | scripts 03 | No (hundreds of MB) |
 | `topics/encoders/` | Adapted encoders, such as NoLBERT (`03c_finetune_encoder.py`; the teammate's is `nolbert_ft`, 434 MB) | script 03c | No |
 | `topics/<model>/` | A fitted topic model and what the panels need from it (see below): `lda`, `lda_all`, `minilm`, `finbert`, `nolbert`, `nolbert20` | `04_fit_topics.py` | Yes |
+| `sentiment/` | Per firm-level article: FinBERT tone probabilities and headline vectors (768 dimensions, and 64 principal components), Loughran-McDonald word counts, with the article ids; `finbert_pca.npz` holds the principal components (fitted on training-period articles). The FinBERT model is exported to `sentiment/model/` | `03d_sentiment.py` | Only `finbert_pca.npz` (the rest is large or rebuilt in 90 minutes) |
 | `panels/<freq>/` | Stock-period panels: `index.parquet` and one `.npy` per feature block | `05_build_panel.py` | **No (derived from CRSP)** |
 | `predictions/<freq>/` | Forecasts of every experiment for the validation and test rows | `06_run_models.py` | **No (derived from CRSP)** |
 | `models/<freq>/` | Fitted EBMs, for the explanations | `06_run_models.py` | **No** |

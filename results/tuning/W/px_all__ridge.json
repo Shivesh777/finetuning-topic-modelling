@@ -1,0 +1,28 @@
+{
+ "freq": "W",
+ "features": "px_all",
+ "model": "ridge",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "emb_fb",
+  "npx",
+  "narr_nolbert_s1",
+  "firm_nolbert"
+ ],
+ "n_features": 212,
+ "settings_tried": 25,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 1.3511161252090182
+ },
+ "validation_r2": 0.00017180134190897256,
+ "train_r2": 0.0008654053283605467,
+ "seconds_tune": 0.7,
+ "seconds_final": 0.6
+}

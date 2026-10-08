@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "tone_lm",
+ "model": "ipca",
+ "blocks": [
+  "tone_lm"
+ ],
+ "n_features": 5,
+ "settings_tried": 4,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "n_factors": 1
+ },
+ "validation_r2": 3.0679705909086863e-07,
+ "train_r2": 1.438051899782522e-10,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.0
+}

@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "all_finbert_s63",
+ "model": "ols",
+ "blocks": [
+  "price",
+  "narr_finbert_s63",
+  "firm_finbert"
+ ],
+ "n_features": 49,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": 0.0002687073850939914,
+ "train_r2": 0.0028968409607104117,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

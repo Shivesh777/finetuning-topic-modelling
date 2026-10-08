@@ -1,0 +1,25 @@
+{
+ "freq": "M",
+ "features": "px_tone",
+ "model": "ridge",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "npx"
+ ],
+ "n_features": 27,
+ "settings_tried": 25,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 1.7031362498378915
+ },
+ "validation_r2": 5.05943884714366e-05,
+ "train_r2": 0.00031454725870416755,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

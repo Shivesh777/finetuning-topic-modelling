@@ -1,0 +1,19 @@
+feature,importance,kind
+fb_tone_1,0.0001035017898263794,mean_abs_contribution
+fb_tone_5,0.00017256223950003487,mean_abs_contribution
+fb_tone_21,3.134310869971209e-05,mean_abs_contribution
+fb_tone_252,4.54573072570349e-05,mean_abs_contribution
+fb_surprise_21,2.324655895927183e-05,mean_abs_contribution
+news_log_n5,3.52265474358994e-05,mean_abs_contribution
+news_log_n21,8.987038051173633e-05,mean_abs_contribution
+news_abnormal_21,3.700810272674426e-05,mean_abs_contribution
+fb_tone_1 & fb_tone_5,3.0937815325563796e-05,mean_abs_contribution
+fb_tone_1 & fb_surprise_21,4.574672447820833e-05,mean_abs_contribution
+fb_tone_1 & news_log_n21,2.1365627543446362e-05,mean_abs_contribution
+fb_tone_1 & news_abnormal_21,3.216700474658161e-05,mean_abs_contribution
+fb_tone_5 & fb_tone_252,2.9844801030501303e-05,mean_abs_contribution
+fb_tone_5 & news_log_n5,3.481240788546043e-05,mean_abs_contribution
+fb_tone_5 & news_log_n21,3.78711660192734e-05,mean_abs_contribution
+fb_tone_5 & news_abnormal_21,2.9424479903639554e-05,mean_abs_contribution
+fb_tone_252 & news_abnormal_21,3.239101923535711e-05,mean_abs_contribution
+news_log_n21 & news_abnormal_21,3.628490822883191e-05,mean_abs_contribution

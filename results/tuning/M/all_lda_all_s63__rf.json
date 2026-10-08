@@ -1,0 +1,30 @@
+{
+ "freq": "M",
+ "features": "all_lda_all_s63",
+ "model": "rf",
+ "blocks": [
+  "price",
+  "narr_lda_all_s63",
+  "firm_lda_all"
+ ],
+ "n_features": 129,
+ "settings_tried": 3,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": -0.00047960444590011697,
+ "train_r2": 0.0047948262729735625,
+ "seconds_tune": 10.9,
+ "seconds_final": 1.8
+}

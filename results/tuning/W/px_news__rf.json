@@ -1,0 +1,32 @@
+{
+ "freq": "W",
+ "features": "px_news",
+ "model": "rf",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "emb_fb",
+  "npx"
+ ],
+ "n_features": 91,
+ "settings_tried": 3,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 7.269489661898554e-06,
+ "train_r2": 0.0006034294011656449,
+ "seconds_tune": 13.1,
+ "seconds_final": 2.3
+}

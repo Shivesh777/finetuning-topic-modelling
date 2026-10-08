@@ -86,7 +86,7 @@ def donor_rows(market: Market, freq: str) -> pd.DataFrame:
     day, col = index["form_day"].to_numpy(), index["col"].to_numpy()
     bounds = np.flatnonzero(np.r_[True, day[1:] != day[:-1], True])
     rows = []
-    for name, (maker, _) in blocks.of_panel(market, names).items():
+    for name, (maker, _) in blocks.of_panel(market, names, freq).items():
         missing = np.concatenate([np.isnan(maker(int(day[a]))[col[a:b]]).any(axis=1)
                                   for a, b in zip(bounds[:-1], bounds[1:])])
         for split in config.SPLITS:

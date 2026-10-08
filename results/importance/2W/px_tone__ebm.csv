@@ -1,0 +1,38 @@
+feature,importance,kind
+beta,1.7388644900140786e-07,mean_abs_contribution
+ivol,0.0,mean_abs_contribution
+vol_21,2.2294844674678387e-07,mean_abs_contribution
+mom_12_1,0.0,mean_abs_contribution
+rev_21,8.762569044875994e-06,mean_abs_contribution
+rev_5,0.0,mean_abs_contribution
+size,1.3022118847525417e-06,mean_abs_contribution
+max_21,0.0,mean_abs_contribution
+fb_tone_1,4.6013161808539026e-07,mean_abs_contribution
+fb_tone_5,4.0149999067980385e-08,mean_abs_contribution
+fb_tone_21,0.0,mean_abs_contribution
+fb_tone_252,0.0,mean_abs_contribution
+fb_surprise_21,0.0,mean_abs_contribution
+news_log_n5,1.0336365833824315e-06,mean_abs_contribution
+news_log_n21,7.093714890537205e-07,mean_abs_contribution
+news_abnormal_21,4.130319937642107e-07,mean_abs_contribution
+lm_tone_1,6.8291055379938e-07,mean_abs_contribution
+lm_tone_5,0.0,mean_abs_contribution
+lm_tone_21,2.793439211492701e-07,mean_abs_contribution
+lm_tone_252,2.037492681932279e-07,mean_abs_contribution
+lm_surprise_21,1.1788104584874061e-06,mean_abs_contribution
+rev5_news,3.275788138415895e-07,mean_abs_contribution
+rev5_quiet,0.0,mean_abs_contribution
+rev21_news,0.0,mean_abs_contribution
+rev21_quiet,2.2788701638425082e-07,mean_abs_contribution
+rev5_x_fbtone5,8.39335285334091e-07,mean_abs_contribution
+rev21_x_fbtone21,5.881522210088339e-07,mean_abs_contribution
+ivol & fb_tone_1,0.0005627370846418462,mean_abs_contribution
+ivol & rev21_quiet,0.00047759761936910837,mean_abs_contribution
+vol_21 & lm_tone_1,0.0009290200560213361,mean_abs_contribution
+vol_21 & rev5_quiet,0.0006650743630146762,mean_abs_contribution
+vol_21 & rev21_quiet,0.0005819147581085055,mean_abs_contribution
+mom_12_1 & fb_tone_1,0.0011528220437639991,mean_abs_contribution
+mom_12_1 & lm_tone_1,0.001437317508097889,mean_abs_contribution
+rev_21 & lm_tone_1,0.0011309555830615109,mean_abs_contribution
+size & lm_tone_1,0.0006200297392808575,mean_abs_contribution
+max_21 & rev21_quiet,0.0003770131870970407,mean_abs_contribution

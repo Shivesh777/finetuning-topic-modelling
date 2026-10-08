@@ -1,0 +1,33 @@
+{
+ "freq": "W",
+ "features": "all_finbert_s1",
+ "model": "xgb",
+ "blocks": [
+  "price",
+  "narr_finbert_s1",
+  "firm_finbert"
+ ],
+ "n_features": 49,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "max_depth": 1,
+  "learning_rate": 0.05,
+  "n_estimators": 92,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.0002962293742582167,
+ "train_r2": 0.000822379314652788,
+ "seconds_tune": 4.4,
+ "seconds_final": 1.0
+}

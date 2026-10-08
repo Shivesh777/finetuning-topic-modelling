@@ -26,7 +26,8 @@ from scipy.stats import rankdata
 
 from .risk import FactorCovariance
 
-__all__ = ["quantile_long_short", "top_quantile", "rank_weighted", "neutralise", "mean_variance"]
+__all__ = ["quantile_long_short", "top_quantile", "rank_weighted", "tilted", "neutralise",
+           "mean_variance"]
 
 _CAP_PASSES = 50
 _CAP_TOL = 1e-6
@@ -105,6 +106,33 @@ def top_quantile(score: np.ndarray, q: int = 10, cap: np.ndarray | None = None) 
     members = order[-max(1, int(order.size // q)):]
     w[members] = _leg(members, cap)
     return w
+
+
+def tilted(score: np.ndarray, cap: np.ndarray, strength: float = 1.0) -> np.ndarray:
+    """Long-only weights proportional to cap_i * (1 + strength * s_i), summing to 1.
+
+    s_i is the rank of the score among the valid scores scaled to [-1, 1] (average rank for
+    ties), so strength = 1 holds the highest score at twice and the lowest at zero times
+    its market weight. Assets without a valid score keep their market weight (s = 0); a
+    cap that is missing or not positive is replaced by the median usable cap. A constant
+    score gives the market weights.
+    """
+    if not 0 <= strength <= 1:
+        raise ValueError("strength must lie in [0, 1] for the weights to stay long only")
+    score = np.asarray(score, dtype=float)
+    value = np.asarray(cap, dtype=float)
+    usable = np.isfinite(value) & (value > 0)
+    if not usable.any():
+        value = np.ones(score.shape[0])
+    else:
+        value = np.where(usable, value, np.median(value[usable]))
+    s = np.zeros(score.shape[0])
+    valid = np.isfinite(score)
+    if valid.sum() >= 2:
+        r = rankdata(score[valid])
+        s[valid] = 2.0 * (r - 1.0) / (valid.sum() - 1.0) - 1.0
+    w = value * (1.0 + strength * s)
+    return w / w.sum()
 
 
 def rank_weighted(score: np.ndarray) -> np.ndarray:

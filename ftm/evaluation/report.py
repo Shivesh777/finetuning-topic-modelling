@@ -34,6 +34,7 @@ from itertools import combinations
 from math import sqrt
 from pathlib import Path
 import json
+import re
 
 import numpy as np
 import pandas as pd
@@ -44,7 +45,13 @@ from ..portfolio.strategies import LONG_ONLY, LONG_SHORT
 from . import inference, metrics
 
 SUBPERIODS = {"test_2022_23": ("2022-01-01", "2023-12-31"), "test_2024": ("2024-01-01", "2024-12-31")}
-BENCHMARK_OF = {"long_ew": "univ_ew", "long_vw": "univ_vw"}
+BENCHMARK_OF = {"long_ew": "univ_ew", "long_vw": "univ_vw", "tilt_vw": "univ_vw"}
+NEWS_KINDS = ("tone", "emb", "news", "px")   # feature sets of the directional news blocks
+SHOCK_KINDS = ("narr_s", "text_s", "all_s")  # feature sets with the tuned attention-shock window
+# Kinds of feature set of the main run (FINDINGS.md, sections 1 to 9). The tables that
+# section quotes are computed over these kinds only, so that the extension of section 10
+# adds rows to them instead of changing them.
+MAIN_KINDS = ("price", "narr", "firm", "text", "all", "placebo")
 KEYS = ["freq", "split", "features", "model"]
 HEADLINE = "ls_ew"                   # the strategy used when one number per experiment is needed
 TEXT_ONLY = ("narr", "firm", "text")  # kinds of feature set without price features
@@ -93,8 +100,10 @@ def load(series_dir: Path, freqs) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
 
 
 def family(features: str) -> str:
-    """price, text (no price features), all (price and text) or control (the placebo)."""
-    return {"price": "price", "all": "all", "placebo": "control"}.get(experiments.kind(features), "text")
+    """price, text (no price features), all (price and text, the px_ sets included) or
+    control (the placebo)."""
+    return {"price": "price", "all": "all", "all_s": "all", "px": "all",
+            "placebo": "control"}.get(experiments.kind(features), "text")
 
 
 def _labelled(table: pd.DataFrame) -> pd.DataFrame:
@@ -105,6 +114,12 @@ def _labelled(table: pd.DataFrame) -> pd.DataFrame:
 def _base(table: pd.DataFrame) -> pd.DataFrame:
     """The rows of the eight models of the design (and the benchmark portfolios)."""
     return table[table["model"].isin(experiments.BASE_MODELS) | (table["features"] == "benchmark")]
+
+
+def _main(table: pd.DataFrame) -> pd.DataFrame:
+    """The rows of the feature sets of the main run (MAIN_KINDS) and the benchmark."""
+    return table[table["features"].map(experiments.kind).isin(MAIN_KINDS)
+                 | (table["features"] == "benchmark")]
 
 
 def _group_ic(part: pd.DataFrame) -> pd.Series:
@@ -172,23 +187,39 @@ def strategy_table(returns: pd.DataFrame, factors_of: dict, ppy_of: dict) -> pd.
 def selection_table(forecast: pd.DataFrame, strategy: pd.DataFrame) -> pd.DataFrame:
     """Per frequency: the experiment with the highest validation IC, and its test result.
 
-    Among the experiments of the eight base models: over all of them ("any", the
-    headline), within each family (price, text, all) and within each topic model
-    (topic_<name>). Two further pools: "any_variant", every experiment including the
-    rank-target models and the ensembles, and "ensemble", the ensembles alone. The placebo
-    is a control and cannot be selected."""
-    every = forecast[forecast["split"] == "validation"].dropna(subset=["ic_mean"])
-    every = every.assign(family=every["features"].map(family))
-    every = every[every["family"] != "control"]
-    val = every[every["model"].isin(experiments.BASE_MODELS)]
+    Main run (feature sets of MAIN_KINDS): among the experiments of the eight base models,
+    over all of them ("any", the headline), within each family (price, text, all) and
+    within each topic model (topic_<name>); "any_variant", every experiment of the main
+    run including the rank-target models and the ensembles; "ensemble", its ensembles.
+    Extension (FINDINGS.md, section 10): "news", the base models on the directional news
+    feature sets (NEWS_KINDS); "shock", the base models on the sets with the tuned
+    attention-shock window (SHOCK_KINDS); "signal", the single-feature signals
+    (experiments.SIGNALS); "any_all", the base models on every feature set. The placebo is
+    a control and cannot be selected, and neither can the two combinations of
+    scripts/06c_signals.py, which are made of validation choices (their validation IC is
+    partly that of the choice)."""
+    candidates = forecast[forecast["split"] == "validation"].dropna(subset=["ic_mean"])
+    candidates = candidates.assign(family=candidates["features"].map(family),
+                                   kind=candidates["features"].map(experiments.kind))
+    # combo and best10 are built from validation choices: their validation IC is not a
+    # forecast of their test IC, so they are not candidates (they are reported on their own)
+    candidates = candidates[(candidates["family"] != "control")
+                            & ~candidates["model"].isin([experiments.COMBO, experiments.POOL])]
+    base = candidates[candidates["model"].isin(experiments.BASE_MODELS)]
+    every = candidates[candidates["kind"].isin(MAIN_KINDS)]
+    val = base[base["kind"].isin(MAIN_KINDS)]
     by_topic = val.assign(family=val["features"].map(experiments.topic_model)).dropna(subset=["family"])
     by_topic["family"] = "topic_" + by_topic["family"]
     ensembles = every[every["model"] == experiments.ENSEMBLE]
+    best = lambda t, name: t.loc[t.groupby("freq")["ic_mean"].idxmax()].assign(family=name)
     picks = [val.loc[val.groupby(["freq", "family"])["ic_mean"].idxmax()],
-             val.loc[val.groupby("freq")["ic_mean"].idxmax()].assign(family="any"),
+             best(val, "any"),
              by_topic.loc[by_topic.groupby(["freq", "family"])["ic_mean"].idxmax()],
-             every.loc[every.groupby("freq")["ic_mean"].idxmax()].assign(family="any_variant"),
-             ensembles.loc[ensembles.groupby("freq")["ic_mean"].idxmax()].assign(family="ensemble")]
+             best(every, "any_variant"), best(ensembles, "ensemble"),
+             best(base[base["kind"].isin(NEWS_KINDS)], "news"),
+             best(base[base["kind"].isin(SHOCK_KINDS)], "shock"),
+             best(candidates[candidates["model"].isin(list(experiments.SIGNALS))], "signal"),
+             best(base, "any_all")]
     picks = pd.concat(picks)[["freq", "family", "features", "model", "ic_mean", "ic_t", "r2_oos_pct"]]
     picks = picks.rename(columns={c: f"validation_{c}" for c in ("ic_mean", "ic_t", "r2_oos_pct")})
     head = strategy[strategy["strategy"] == HEADLINE]
@@ -265,6 +296,8 @@ def paired(series: pd.DataFrame, returns: pd.DataFrame, ppy_of: dict) -> pd.Data
 def multiple_testing(returns: pd.DataFrame, ppy_of: dict) -> pd.DataFrame:
     """Per frequency and strategy: the best test-period result among all experiments, and
     what the search for it is worth. The placebo is a control and not part of the search.
+    pool "main" searches the experiments of the main run (MAIN_KINDS), pool "all" every
+    experiment, the extension of FINDINGS.md section 10 included.
 
     A long-only portfolio is measured against the universe with the same weighting, so its
     "Sharpe ratio" here is an information ratio: against zero it would pass for earning the
@@ -284,8 +317,11 @@ def multiple_testing(returns: pd.DataFrame, ppy_of: dict) -> pd.DataFrame:
     test = returns[returns["split"] == "test"]
     bench = {k: g.set_index("date")["excess"] for k, g in
              test[test["features"] == "benchmark"].groupby(["freq", "strategy"])}
-    searched = (test["features"] != "benchmark") & (test["features"].map(family) != "control")
-    for (freq, strategy), g in test[searched].groupby(["freq", "strategy"]):
+    real = (test["features"] != "benchmark") & (test["features"].map(family) != "control")
+    main = test["features"].map(experiments.kind).isin(MAIN_KINDS)
+    groups = [("main", g) for g in test[real & main].groupby(["freq", "strategy"])]
+    groups += [("all", g) for g in test[real].groupby(["freq", "strategy"])]
+    for pool, ((freq, strategy), g) in groups:
         wide = g.pivot(index="date", columns=["features", "model"], values="excess").sort_index()
         if wide.isna().any().any():
             raise ValueError(f"{freq} {strategy}: experiments cover different periods")
@@ -305,7 +341,7 @@ def multiple_testing(returns: pd.DataFrame, ppy_of: dict) -> pd.DataFrame:
         check = inference.reality_check(scaled.to_numpy(), n_boot=N_BOOT)
         t = np.array([inference.mean_test(held[c].to_numpy())["t"] for c in held])
         p = np.array([inference.p_value(value, len(held), two_sided=False) for value in t])
-        rows.append({"freq": freq, "strategy": strategy, "experiments": wide.shape[1],
+        rows.append({"pool": pool, "freq": freq, "strategy": strategy, "experiments": wide.shape[1],
                      "with_position": held.shape[1], "periods": len(held),
                      "best_features": best[0], "best_model": best[1],
                      "best_sharpe_net": per_period[best] * annual,
@@ -330,14 +366,14 @@ def landscape(series: pd.DataFrame, returns: pd.DataFrame, factors_of: dict,
     sharpe_net next to sharpe_net_median, the median over the single portfolios.
     Experiments with a flat forecast are counted and left out of everything else. The
     groups by feature set, kind and topic model hold the eight base models; the grouping
-    by model has every model, variants included.
+    by model has every model, variants included, on the feature sets of the main run.
     """
     series = _labelled(series)
     spreads = _labelled(returns[(returns["strategy"] == HEADLINE) & (returns["features"] != "benchmark")])
     spreads = spreads[spreads.groupby(KEYS)["turnover"].transform("sum") > 0]
     rows = []
     for by in ("features", "kind", "topic_model", "model"):
-        base = (lambda t: t) if by == "model" else _base
+        base = (lambda t: _main(t)) if by == "model" else _base
         pick = ((lambda t: base(t)[base(t)["kind"].isin(TEXT_ONLY)]) if by == "topic_model"
                 else base)
         portfolios = dict(tuple(pick(spreads).groupby(["freq", "split", by])))
@@ -383,10 +419,10 @@ def contrasts(series: pd.DataFrame) -> pd.DataFrame:
 
         topic_model   every pair of topic models, on their text-only feature sets
         model         boosted trees, forest and EBM ("nonlinear") against the five linear
-                      models, over all feature sets but the placebo
+                      models, over the feature sets of the main run but the placebo
         kind          feature sets with price and text ("all") against price alone
     """
-    series = _labelled(_base(series))
+    series = _labelled(_base(_main(series)))
     series = series[series["kind"] != "placebo"].copy()
     series["class"] = np.where(series["model"].isin(NONLINEAR), "nonlinear", "linear")
     text_only = series[series["kind"].isin(TEXT_ONLY)]
@@ -458,9 +494,13 @@ def improvements_table(series: pd.DataFrame, returns: pd.DataFrame, ppy_of: dict
                       the eight, feature set by feature set
         buffer        the decile long-short portfolio with a buffer (ls_buf) against the one
                       without (ls_ew), for every experiment of the base models
+        shock_window  feature sets with the attention-shock window chosen on validation
+                      (narr_, text_ and all_<m>_s<w>) against the same sets with the
+                      window of the main run, model by model
 
     Pairs are formed within a feature set; group is the family of the feature set (price,
-    text, all) or "every". Real feature sets only: the placebo is left out.
+    text, all) or "every". Real feature sets only: the placebo is left out. The first three
+    comparisons use the feature sets of the main run (MAIN_KINDS).
 
     ic_base, ic_new: average rank IC of the two sides (for the ensemble, ic_base averages
     the members); ic_diff and ic_diff_t: the mean over periods of the per-period difference
@@ -492,6 +532,12 @@ def improvements_table(series: pd.DataFrame, returns: pd.DataFrame, ppy_of: dict
         features = sorted({k for k, _ in ic.columns})
         pairs = []                          # (comparison, features, new side, base sides, rule)
         for feat in features:
+            if experiments.kind(feat) in SHOCK_KINDS:
+                for model in experiments.BASE_MODELS:
+                    pairs.append(("shock_window", feat, (feat, model),
+                                  [(re.sub(r"_s\d+$", "", feat), model)], None))
+            if experiments.kind(feat) not in MAIN_KINDS:
+                continue
             for model in experiments.RANK_MODELS:
                 pairs.append(("rank_target", feat, (feat, model), [(feat, model[:-len("_rk")])],
                               None))

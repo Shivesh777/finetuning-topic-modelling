@@ -1,0 +1,23 @@
+{
+ "freq": "W",
+ "features": "text_finbert_s1",
+ "model": "ridge",
+ "blocks": [
+  "narr_finbert_s1",
+  "firm_finbert"
+ ],
+ "n_features": 41,
+ "settings_tried": 25,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 0.006932816150682198
+ },
+ "validation_r2": 0.0005185688905593455,
+ "train_r2": 0.0006519541982250576,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

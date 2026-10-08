@@ -1,0 +1,25 @@
+{
+ "freq": "M",
+ "features": "news_fb",
+ "model": "sipca",
+ "blocks": [
+  "tone_fb",
+  "tone_lm",
+  "emb_fb"
+ ],
+ "n_features": 77,
+ "settings_tried": 6,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "validation_r2": 7.69799848510111e-06,
+ "train_r2": 1.3849403557308904e-06,
+ "seconds_tune": 2.1,
+ "seconds_final": 0.1
+}

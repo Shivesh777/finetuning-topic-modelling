@@ -1,0 +1,42 @@
+{
+ "freq": "2W",
+ "features": "px_all",
+ "model": "ebm",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "emb_fb",
+  "npx",
+  "narr_nolbert",
+  "firm_nolbert"
+ ],
+ "n_features": 212,
+ "settings_tried": 2,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "interactions": 10,
+  "max_bins": 64,
+  "max_interaction_bins": 16,
+  "learning_rate": 0.02,
+  "max_rounds": 2000,
+  "early_stopping_rounds": 50,
+  "outer_bags": 4,
+  "inner_bags": 0,
+  "min_samples_leaf": 20,
+  "max_leaves": 2,
+  "smoothing_rounds": 50,
+  "bag_exclude": 0.2,
+  "max_rows": 100000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.000280051989179797,
+ "train_r2": 0.0013373073793180312,
+ "seconds_tune": 45.5,
+ "seconds_final": 25.5
+}

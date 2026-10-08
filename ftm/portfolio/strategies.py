@@ -10,6 +10,9 @@
               last year's daily returns, dollar neutral, with a cap per stock
     long_ew   the top decile only, equal weights
     long_vw   the top decile only, weighted by market value
+    tilt_vw   every stock, weight proportional to market value times (1 + s), where s is
+              the forecast rank scaled to [-1, 1]: the cap-weighted universe tilted towards
+              the forecasts ("enhanced indexing"), to be judged against univ_vw
     univ_ew   benchmark: every stock of the universe, equal weights
     univ_vw   benchmark: every stock of the universe, weighted by market value
 
@@ -25,10 +28,10 @@ import pandas as pd
 from .. import config
 from .backtest import run_backtest
 from .risk import factor_covariance
-from .weights import mean_variance, quantile_long_short, rank_weighted, top_quantile
+from .weights import mean_variance, quantile_long_short, rank_weighted, tilted, top_quantile
 
 LONG_SHORT = ("ls_ew", "ls_vw", "rank", "mvo", "ls_buf")
-LONG_ONLY = ("long_ew", "long_vw")
+LONG_ONLY = ("long_ew", "long_vw", "tilt_vw")
 BENCHMARKS = ("univ_ew", "univ_vw")
 STRATEGIES = LONG_SHORT + LONG_ONLY
 
@@ -63,6 +66,8 @@ def weights_for(strategy: str, score: np.ndarray, cap: np.ndarray, cov=None,
         return np.zeros(n) if strategy in LONG_SHORT else top_quantile(np.zeros(n), 1, cap)
     if strategy == "rank":
         return rank_weighted(score)
+    if strategy == "tilt_vw":
+        return tilted(score, cap)
     if strategy == "mvo":
         return mean_variance(score - finite.mean(), cov, gross=2.0,
                              max_abs=config.MVO_MAX_WEIGHT, neutral=np.ones(n))

@@ -87,10 +87,13 @@ Run the scripts in order. Times are for a 4-core laptop CPU.
 | 3 | `03_embed.py` | `data/topics/embeddings/` | 45 min on 2 cores (200 articles a second) |
 | 3b | `03b_classify_topics.py` (optional) | FinBERT class probabilities | 50 min on 2 cores |
 | 3c | `03c_finetune_encoder.py` (optional, GPU) | An adapted encoder in `data/topics/encoders/` | 150 min on one RTX 3060 (teammate's run) |
+| 3d | `03d_sentiment.py` | `data/sentiment/`: FinBERT tone and headline vectors, Loughran-McDonald counts | 90 min on 2 cores for 769,338 headlines (140 a second) |
 | 4 | `04_fit_topics.py` | `data/topics/<model>/` | LDA 10 min, applying it to every article 5 min, embedding clusters 3 min, classifier weights 1 min (as recorded in each `quality.json`) |
-| 5 | `05_build_panel.py` | `data/panels/<freq>/` | 2 min for all blocks and frequencies |
+| 5 | `05_build_panel.py` | `data/panels/<freq>/` | 2 min for all blocks and frequencies; `--tone` and `--shock-window W` add the blocks of section 3.3 |
+| 5b | `05b_tune_shocks.py` | `results/tuning/shock_window.csv` | 4 min |
 | 6 | `06_run_models.py` | `data/predictions/`, `data/models/`, `results/tuning/`, `results/importance/` | about 70 min for all 1,092 experiments (26 feature sets, 14 models) |
 | 6b | `06b_ensemble.py` | `data/predictions/<freq>/<features>__ens.*` | under 1 min |
+| 6c | `06c_signals.py` | Forecasts that fit nothing: single tone features, `combo`, `best10` | under 1 min |
 | 7 | `07_evaluate.py` | `results/series/` | 2 min |
 | 8 | `08_report.py` | `results/tables/` | under 1 min |
 | 9 | `09_explain.py` | `results/explain/` | under 1 min |
@@ -168,6 +171,31 @@ All models see the same articles and are fitted on training-period text only.
   Twenty is the number of FinBERT classes; it was fixed before any forecast was
   made with it.
 
+**Article tone** (`ftm/topics/sentiment.py`, `scripts/03d_sentiment.py`; not a
+topic model). Scored for the 769,338 articles that firm-level features can use
+(filed under at most 3 tickers, one of them a stock of our universe):
+
+- **FinBERT tone**: `ProsusAI/finbert` (Araci 2019; revision `4556d13`), BERT
+  further trained on Reuters financial news of 2008 to 2010 and fine-tuned on
+  the Financial PhraseBank (Malo et al. 2014), sentences of company news that
+  finance professionals labelled positive, negative or neutral. It saw no text
+  after 2010 and no return: **point-in-time** for our sample. Applied to the
+  headline (32 tokens), a single sentence like its training data. Tone =
+  P(positive) - P(negative). It runs with ONNX Runtime with 8-bit weights
+  except the second dense layer of each feed-forward block (which does not
+  survive rounding): on 512 of our headlines this keeps a correlation of 0.99
+  with the tone of the full model and the same label for 97%, at twice its
+  speed (8 bits everywhere: 0.90 and 88%). Of the scored headlines, 21% are
+  labelled positive, 14% negative and 64% neutral.
+- **FinBERT headline vectors**: the mean of FinBERT's last hidden layer over the
+  headline's tokens (768 dimensions), reduced to 64 principal components
+  (`TONE_PCA_DIM`) fitted on the 333,973 articles of the training period, which
+  keep 78% of the variance; the inputs of the embedding regression (section 3.3).
+- **Loughran-McDonald counts**: words, positive words and negative words of the
+  headline and lead, from the Loughran and McDonald (2011) dictionary as
+  shipped with `pysentiment2` (2014 release: 354 positive, 2,355 negative
+  words). Its tone correlates 0.23 with FinBERT's across articles.
+
 Daily attention of a topic is the mean of the day's article weights. Quality
 measures (`quality.py`): NPMI coherence of each topic's ten top terms, on
 training text and on later text; diversity of top terms; stability across two
@@ -206,9 +234,23 @@ feature.
 | `narr_<m>` | one per topic | Narrative exposure: exponentially weighted covariance (252 days, half-life 60, at least 120 returns) of the stock's daily return with the topic's attention shock. The shock is attention minus its mean over the previous 5 trading days, made orthogonal to the market return inside the window. News of non-trading days counts on the next trading day; a day with fewer than 20 articles has no reading |
 | `firm_<m>` | 1 + topics | The firm's own news over 21 trading days: log(1 + articles) and the share of them in each topic. Only articles filed under at most 3 tickers count. A firm with no article in the previous 126 trading days (`FIRM_COVERAGE_WINDOW`) is not covered by the source: its block is missing |
 | `narr_<m>_placebo` | one per topic | Narrative exposure to the attention shocks displaced by 126 trading days (the shock of day d-126 is paired with the return of day d) |
+| `narr_<m>_s<w>` | one per topic | `narr_<m>` with the shock taken over the previous w trading days instead of 5: w = 1 (weekly panels) and w = 63 (monthly), the windows chosen on validation by `05b_tune_shocks.py` (FINDINGS.md, section 10.1) |
+| `tone_fb` | 8 | FinBERT tone of the firm's headlines, averaged over its articles of the last 1, 5, 21 and 252 trading days (0 without news); surprise = 21-day minus 252-day tone; log(1 + articles) of the last 5 and 21 days; abnormal news = log(1 + 21-day count) - log(1 + 252-day count x 21/252) |
+| `tone_lm` | 5 | Loughran-McDonald tone, (positive - negative words) / (positive + negative words) summed over the firm's articles of the last 1, 5, 21 and 252 days, and its surprise |
+| `emb_fb` | 64 | Mean FinBERT headline vector (principal components) of the firm's articles of the last holding period: 5, 10 or 21 trading days (weekly, biweekly, monthly; zero without news): the embedding regression of Chen, Kelly and Xiu (2022), with our models as the forecaster |
+| `npx` | 6 | 5- and 21-day returns of stocks with news in that window and of stocks without (each zero in the other column), and the 5- and 21-day returns times the FinBERT tone of the same window |
+
+The four tone blocks (`ftm/features/tone.py`) use the coverage rule and timing of
+`firm_<m>`: articles filed under at most 3 tickers, dated up to the day before
+formation; a firm without an article in the previous 126 trading days is
+missing (donor features).
 
 Feature sets: `price`; `narr_<m>`; `firm_<m>`; `text_<m>` (both text blocks);
-`all_<m>` (price and text).
+`all_<m>` (price and text); `narr_`, `text_` and `all_<m>_s<w>` (the same with the
+tuned shock window, weekly and monthly); `tone_fb`, `tone_lm`, `emb_fb`;
+`news_fb` (the three together); `px_tone` (price, both tones and `npx`);
+`px_news` (`px_tone` and `emb_fb`); `px_all` (`px_news` with the NoLBERT
+narrative block, tuned window where there is one, and firm-news block).
 
 Targets: `ret` (return of the holding period), `y` (minus the risk-free
 return), `y_rel` (minus the cross-sectional mean of `y`). **Models are fitted
@@ -273,6 +315,14 @@ tuning included, and records how far the result moves (FINDINGS.md, section
 | `<model>_rk` | The model fitted on the cross-sectional rank of `y_rel`, scaled to [-1, 1] like the features (ties averaged), instead of `y_rel` itself, with the same grid and protocol. For `ols`, `ridge`, `lasso`, `ipca`, `sipca` and `xgb`; not for the forest and the EBM, which would add half an hour per run. Its forecasts are scores: R2 against returns means nothing for them, rank IC and portfolios do. `ftm.models.tuning.target_of` |
 | `ens` | The combination of the eight base models: in every period each model's forecast is turned into ranks scaled to [-1, 1] and the eight are averaged with equal weights. Nothing is estimated or chosen. `scripts/06b_ensemble.py` |
 
+**Forecasts that fit nothing** (`scripts/06c_signals.py`; FINDINGS.md, section 10):
+
+| Name | What it is |
+|---|---|
+| `sig_*` | One feature as the forecast, with the sign that the literature predicts: FinBERT tone over 1, 5, 21 days and its surprise (`sig_fb1`, `sig_fb5`, `sig_fb21`, `sig_fbsurp`); the same for Loughran-McDonald (`sig_lm*`); abnormal news (`sig_abn`); minus the 5-day return of stocks without news (`sig_quietrev`) and plus that of stocks with news (`sig_newsdrift`, Chan 2003). Stored under `tone_fb`, `tone_lm` or `px_tone` |
+| `combo` | Equal-weighted average of the within-period ranks of the price ensemble (`price`, `ens`) and of the tone signal with the best validation IC (`results/tuning/<freq>/signals.csv`). Stored as `px_tone__combo`. The primary test of the news round, traded with `ls_buf` |
+| `best10` | Equal-weighted average of the ranks of the ten base-model experiments with the highest validation IC, any feature set (`results/tuning/<freq>/pool.csv`). Stored as `px_pool__best10` |
+
 The eight base models (`experiments.BASE_MODELS`) make up every group of the
 landscape, contrast, halves, placebo and text-against-price tables, so these
 tables are comparable with the 432-experiment run. The variants are models of
@@ -295,6 +345,7 @@ leaves the long-short rules flat and the long-only rules in the universe.
 | `mvo` | Mean-variance weights for the forecasts with a 5-factor covariance of the last 252 daily returns; dollar neutral; at most 1% per stock |
 | `long_ew`, `long_vw` | The top decile only, compared with the equal- or value-weighted universe |
 | `ls_buf` | `ls_ew` with a buffer: a stock enters the long (short) leg in the top (bottom) decile and stays until it leaves the top (bottom) fifth (`BUFFER_QUANTILES = 5`), equal weights; the buy/hold spread of Novy-Marx and Velikov (2016). With nothing held it is `ls_ew`. Its legs vary in size |
+| `tilt_vw` | Every stock of the universe at its market weight times (1 + s), s = the forecast rank scaled to [-1, 1] (highest forecast at twice, lowest at zero times its market weight): the value-weighted universe tilted towards the forecast, "enhanced indexing". Judged against `univ_vw` by information ratio and alpha |
 
 Long-short rules have longs of +1 and shorts of -1. Turnover is half the sum of
 absolute weight changes after last period's weights have drifted with returns;
@@ -313,13 +364,13 @@ initial purchase. Each period (validation, test) starts from cash.
 | Sharpe ratio | Annualised mean over volatility of the per-period excess return; standard error of Mertens (2002); 95% interval from a stationary bootstrap (5,000 resamples) |
 | Alpha | Intercept on the three Fama-French factors compounded over the holding period, Newey-West t statistic |
 | Sharpe difference | Paired stationary bootstrap of two return series |
-| Reality check, SPA | White (2000) and Hansen (2005) across the 375 experiments on real features of a frequency (all models, variants included), on returns scaled to unit variance, so that the statistic is the best Sharpe ratio |
+| Reality check, SPA | White (2000) and Hansen (2005) across the experiments on real features of a frequency (all models, variants included), on returns scaled to unit variance, so that the statistic is the best Sharpe ratio. Pool `main`: the 375 experiments of the main run; pool `all`: every experiment, the second part included (613 monthly, 451 biweekly, 613 weekly) |
 | Expected best with no skill | The mean, over the bootstrap resamples of the reality check, of the best Sharpe ratio when every experiment's mean return is set to zero. It keeps the co-movement of the experiments, which the formula of Bailey and Lopez de Prado (2014) for independent trials does not |
 | False discovery rate | Benjamini-Hochberg adjustment of the one-sided p-values (positive mean, fixed-b) of the searched experiments |
 | Long-only portfolios | Also measured against the universe with the same weighting: active return, tracking error, information ratio, alpha and beta. In the multiple-testing table they are measured this way only, since against zero they would pass for earning the market's return |
 | Groups of experiments | `landscape.csv`: by feature set, kind of feature, topic model (its text-only sets) and model. The experiments of a group forecast the same returns, so the t statistic is that of the group's average IC per period, and the Sharpe ratio that of the equal-weighted average of the group's long-short portfolios |
 | Placebo | `placebo.csv`: IC of the narrative exposures minus IC of the placebo exposures, per period, averaged over the models with a forecast from both; Newey-West t statistic |
-| Improvements | `improvements.csv`: rank target against return target (per model and feature set), ensemble against the average of its eight members (per feature set), `ls_buf` against `ls_ew` (per experiment). Mean of the per-period difference in IC and in net long-short return, averaged over the pairs, with Newey-West t statistics; median Sharpe ratios of both sides, median paired difference, share of pairs improved, turnover of both |
+| Improvements | `improvements.csv`: rank target against return target (per model and feature set), ensemble against the average of its eight members (per feature set), `ls_buf` against `ls_ew` (per experiment), the tuned shock window against the window of 5 days (per model and feature set, `narr_`, `text_` and `all_<m>_s<w>` against the same set without the suffix). Mean of the per-period difference in IC and in net long-short return, averaged over the pairs, with Newey-West t statistics; median Sharpe ratios of both sides, median paired difference, share of pairs improved, turnover of both |
 | Group against group | `contrasts.csv`: average IC of one group minus that of another, per period (topic model against topic model on text-only sets; trees and EBM against linear models; price and text against price) |
 | Halves of the test period | `halves.csv`: a group's average IC in 2022-23 minus that in 2024, divided by the root of the sum of the two squared Newey-West standard errors |
 
@@ -332,11 +383,18 @@ headline. The candidates are the experiments of the eight base models on real
 features: 200 per frequency (25 feature sets) since the NoLBERT topic models
 were added, 136 before. The placebo is a control and cannot be selected.
 `selection.csv` applies the same rule within each family (price, text, price
-and text) and within each topic model, and to two further pools: `any_variant`
-(every experiment, variants included: 375 per frequency) and `ensemble` (the
-25 ensembles alone). Every other test result is shown for completeness and must
-be read with the multiple-testing rows, which count all 375 experiments of a
-frequency.
+and text) and within each topic model, and to further pools: `any_variant`
+(every experiment, variants included), `ensemble` (the ensembles alone),
+`news` (the base models on the directional news feature sets), `shock` (the
+base models on the sets with a tuned shock window), `signal` (the
+single-feature signals) and `any_all` (the base models on every feature set).
+The pools of the main run (`any`, the families, the topic models,
+`any_variant`, `ensemble`) hold its experiments only. `combo` and `best10` are
+made of validation choices, so their validation IC is partly that of the
+choice: they are not candidates of any pool and are reported on their own. Every other test result is shown for
+completeness and must be read with the multiple-testing rows, which count every
+experiment of a frequency. The counts of the news round are in FINDINGS.md,
+section 10.
 
 ## 4. Outputs
 
@@ -346,6 +404,9 @@ frequency.
 | `results/data_audit/firm_coverage.csv`, `stale_rows.csv`, `donor_rows.csv` | Share of the universe with firm-level news; stocks without recent returns; rows with donor features |
 | `results/data_audit/missing_data_leak.csv`, `tuning_noise.csv` | What the missing-data leak is worth; one experiment under ten seeds |
 | `results/tuning/<freq>/<features>__<model>.{csv,json,log}` | Validation score of every setting; the chosen one; run log |
+| `results/tuning/shock_window.csv` | Validation rank IC of the narrative exposures for every shock window, topic model and linear model |
+| `results/tuning/<freq>/signals.csv`, `pool.csv` | Validation IC of every single-feature signal (and which one `combo` uses); of every candidate of `best10` |
+| `data/sentiment/` (not in git but `finbert_pca.npz`) | Article ids, FinBERT probabilities and vectors, their principal components, Loughran-McDonald counts |
 | `results/importance/<freq>/<features>__<model>.csv` | Coefficients, mean absolute contributions or gain shares of the final model |
 | `results/series/<freq>_{forecast,returns}.parquet`, `<freq>_factors.csv` | Per-period series behind every table |
 | `results/tables/forecast.csv`, `strategies.csv` | Every experiment: forecast accuracy; every portfolio rule |
@@ -408,6 +469,10 @@ frequency.
   into our validation period; and it was adapted on our corpus while MiniLM
   was not, so the two encoders differ in two ways at once.
 - Tickers are matched to stocks through each stock's latest ticker.
+- FinBERT reads headlines only (the lead would make it four times slower on a
+  CPU), with 8-bit weights in most layers. The Loughran-McDonald counts use the
+  2014 dictionary. Neither tone is adjusted for the source (Zacks, Motley Fool
+  and RTTNews write very different headlines).
 - The 2024 news comes from a different scrape: 22 articles before February,
   fewer tickers (1,769 against 4,347 in 2023), headlines rebuilt from the
   article addresses, 24 weekdays with fewer than 20 articles.

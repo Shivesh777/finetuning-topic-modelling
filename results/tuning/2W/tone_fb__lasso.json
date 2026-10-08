@@ -1,0 +1,24 @@
+{
+ "freq": "2W",
+ "features": "tone_fb",
+ "model": "lasso",
+ "blocks": [
+  "tone_fb"
+ ],
+ "n_features": 8,
+ "settings_tried": 40,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 8.800870191136237e-05,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 0.0,
+ "train_r2": 0.0,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

@@ -1,0 +1,31 @@
+{
+ "freq": "2W",
+ "features": "tone_lm",
+ "model": "xgb",
+ "blocks": [
+  "tone_lm"
+ ],
+ "n_features": 5,
+ "settings_tried": 4,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "max_depth": 5,
+  "learning_rate": 0.05,
+  "n_estimators": 36,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.00020035298685161518,
+ "train_r2": 0.0019989972399742095,
+ "seconds_tune": 0.9,
+ "seconds_final": 0.2
+}

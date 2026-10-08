@@ -2,6 +2,8 @@
 
     python scripts/05_build_panel.py [--freq M 2W W] [--topics lda minilm ...] [--skip-price]
                                      [--placebo lda ...]
+    python scripts/05_build_panel.py --shock-window 1 --freq W [--topics ...]
+    python scripts/05_build_panel.py --tone [--freq ...]
 
 Each panel has one row per (formation day, investable stock) with the next
 period's return, and feature blocks stored as cross-sectional ranks (see
@@ -36,14 +38,26 @@ def main():
     ap.add_argument("--skip-price", action="store_true")
     ap.add_argument("--placebo", nargs="*", default=[],
                     help="topic models for which to add narr_<model>_placebo as well")
+    ap.add_argument("--shock-window", type=int,
+                    help="add only narr_<model>_s<W> blocks: shocks over W days (05b_tune_shocks)")
+    ap.add_argument("--tone", action="store_true",
+                    help="add only the tone_fb, tone_lm, emb_fb and npx blocks (03d_sentiment)")
     a = ap.parse_args()
     topics = a.topics
     if topics is None:
         topics = sorted(p.parent.name for p in config.TOPICS.glob("*/daily_sums.parquet"))
     market = Market.load()
-    makers = blocks.makers(market, topics, a.placebo, with_price=not a.skip_price)
+    if a.shock_window:
+        makers = {}
+        for model in topics:
+            name, maker, names = blocks.narrative_maker(market, model, a.shock_window)
+            makers[name] = (maker, names)
+    elif not a.tone:
+        makers = blocks.makers(market, topics, a.placebo, with_price=not a.skip_price)
     for freq in a.freq:
         t0 = time.time()
+        if a.tone:
+            makers = blocks.tone_makers(market, freq)
         folder = config.PANELS / freq
         panel = Panel.skeleton(market, freq)
         if (folder / "index.parquet").exists():

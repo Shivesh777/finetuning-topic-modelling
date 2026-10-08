@@ -1,0 +1,38 @@
+feature,importance,kind
+beta,3.0196288389483454e-05,mean_abs_contribution
+ivol,7.70921770988045e-05,mean_abs_contribution
+vol_21,2.9624869659851148e-05,mean_abs_contribution
+mom_12_1,4.116307308058973e-05,mean_abs_contribution
+rev_21,9.417344483438639e-05,mean_abs_contribution
+rev_5,7.032130574127624e-05,mean_abs_contribution
+size,4.5377443971941475e-05,mean_abs_contribution
+max_21,3.325146489033392e-05,mean_abs_contribution
+fb_tone_1,1.3701878014455283e-05,mean_abs_contribution
+fb_tone_5,1.1935920000124922e-05,mean_abs_contribution
+fb_tone_21,1.0091839668048306e-05,mean_abs_contribution
+fb_tone_252,2.1630202946370217e-05,mean_abs_contribution
+fb_surprise_21,2.1382550898733772e-05,mean_abs_contribution
+news_log_n5,1.2176542838398338e-05,mean_abs_contribution
+news_log_n21,2.4673333064120055e-05,mean_abs_contribution
+news_abnormal_21,2.499784490449835e-05,mean_abs_contribution
+lm_tone_1,1.1456369578847984e-05,mean_abs_contribution
+lm_tone_5,7.0073323270685596e-06,mean_abs_contribution
+lm_tone_21,9.17930132749908e-06,mean_abs_contribution
+lm_tone_252,1.4215453194225576e-05,mean_abs_contribution
+lm_surprise_21,1.4192392638103219e-05,mean_abs_contribution
+rev5_news,2.3138436700364527e-05,mean_abs_contribution
+rev5_quiet,4.3726273730495676e-05,mean_abs_contribution
+rev21_news,1.4373257530961232e-05,mean_abs_contribution
+rev21_quiet,3.779525450831822e-05,mean_abs_contribution
+rev5_x_fbtone5,7.993402440714848e-06,mean_abs_contribution
+rev21_x_fbtone21,3.178072613674906e-05,mean_abs_contribution
+beta & lm_tone_1,1.2675859708487525e-05,mean_abs_contribution
+beta & lm_tone_5,1.0931999180685786e-05,mean_abs_contribution
+beta & rev21_quiet,1.83000902747686e-05,mean_abs_contribution
+ivol & rev21_quiet,1.552048511344569e-05,mean_abs_contribution
+vol_21 & lm_tone_1,9.553470889602621e-06,mean_abs_contribution
+vol_21 & rev21_quiet,1.459475293172496e-05,mean_abs_contribution
+mom_12_1 & news_log_n5,9.79132217899573e-06,mean_abs_contribution
+rev_21 & rev21_quiet,2.699604694308514e-05,mean_abs_contribution
+rev_5 & size,2.2343489076745824e-05,mean_abs_contribution
+rev_5 & rev21_quiet,2.716505061078488e-05,mean_abs_contribution

@@ -1,0 +1,23 @@
+{
+ "freq": "W",
+ "features": "text_finbert_s1",
+ "model": "ipca",
+ "blocks": [
+  "narr_finbert_s1",
+  "firm_finbert"
+ ],
+ "n_features": 41,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 1
+ },
+ "validation_r2": 2.0580631752142864e-06,
+ "train_r2": -3.645958153164486e-07,
+ "seconds_tune": 0.9,
+ "seconds_final": 0.1
+}

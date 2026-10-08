@@ -1,0 +1,27 @@
+{
+ "freq": "W",
+ "features": "px_tone",
+ "model": "lasso",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "npx"
+ ],
+ "n_features": 27,
+ "settings_tried": 40,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 0.00018643293677101516,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 1.3763991123294517e-05,
+ "train_r2": 3.227489589074928e-05,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

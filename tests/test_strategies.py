@@ -11,6 +11,7 @@ def test_flat_forecast_takes_no_view():
         assert not strategies.weights_for(name, score, cap).any()
     assert np.allclose(strategies.weights_for("long_ew", score, cap), 1 / 50)
     assert np.allclose(strategies.weights_for("long_vw", score, cap), cap / cap.sum())
+    assert np.allclose(strategies.weights_for("tilt_vw", score, cap), cap / cap.sum())
 
 
 def test_ties_are_broken_by_a_fixed_order_not_by_position():
@@ -102,3 +103,15 @@ def test_buffer_trades_less_than_the_decile_rule():
     first = out[out["date"] == dates[0]].set_index("strategy")
     assert np.isclose(first.loc["ls_buf", "gross"], first.loc["ls_ew", "gross"])  # same start
     assert (out.loc[out["strategy"] == "ls_buf", "excess"] == out.loc[out["strategy"] == "ls_buf", "net"]).all()
+
+
+def test_tilt_holds_the_universe_tilted_towards_the_forecast():
+    cap, score = np.array([10.0, 20, 30, 40]), np.array([0.1, 0.4, 0.2, 0.3])
+    w = strategies.weights_for("tilt_vw", score, cap)
+    # ranks scaled to [-1, 1]: -1, 1, -1/3, 1/3 -> cap * (0, 2, 2/3, 4/3)
+    expected = np.array([0.0, 40.0, 20.0, 160 / 3])
+    assert np.allclose(w, expected / expected.sum()) and (w >= 0).all()
+    # a stock without a forecast keeps its market weight relative to the others' average
+    w = strategies.weights_for("tilt_vw", np.array([0.1, np.nan, 0.2, 0.3]), cap)
+    assert np.isclose(w.sum(), 1) and w[1] > 0 and w[0] == 0
+    assert "tilt_vw" in strategies.LONG_ONLY

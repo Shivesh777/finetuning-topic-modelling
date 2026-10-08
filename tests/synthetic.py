@@ -84,3 +84,42 @@ def make_news(days, permnos, n_topics=5, per_day=80, seed=1):
                          "topic": rng.integers(0, n_topics, m), "n": rng.integers(1, 4, m)})
     firm = firm.groupby(["date", "ticker", "topic"], as_index=False)["n"].sum()
     return sums, firm
+
+
+def make_sentiment(data, days, permnos, per_day=6, dim=4, seed=2):
+    """Articles, ticker links and their scores in the layout of data/news/ and
+    data/sentiment/ (scripts/03d_sentiment.py), for the stocks T<permno>; pure noise.
+    A few articles are filed under four tickers (too many for firm news) and some under
+    a ticker that is not in our universe."""
+    rng = np.random.default_rng(seed)
+    data = Path(data)
+    calendar = pd.date_range(days[0], days[-1])
+    date = np.sort(rng.choice(calendar, per_day * len(calendar)))
+    n = len(date)
+    tickers = np.array([f"T{p}" for p in permnos] + ["ZZZ"])
+    first = rng.choice(tickers, n)
+    many = rng.random(n) < 0.05
+    links = [pd.DataFrame({"article_id": np.arange(n), "ticker": first})]
+    for _ in range(3):
+        links.append(pd.DataFrame({"article_id": np.flatnonzero(many),
+                                   "ticker": rng.choice(tickers, many.sum())}))
+    links = pd.concat(links).drop_duplicates().sort_values(["article_id", "ticker"],
+                                                          ignore_index=True)
+    n_tickers = links.groupby("article_id").size().to_numpy().astype(np.int32)
+    (data / "news" / "articles").mkdir(parents=True, exist_ok=True)
+    pd.DataFrame({"article_id": np.arange(n), "date": date, "title": "headline",
+                  "lead": "lead", "n_tickers": n_tickers}).to_parquet(
+        data / "news" / "articles" / "all.parquet", index=False)
+    links.to_parquet(data / "news" / "links.parquet", index=False)
+    ids = np.flatnonzero((n_tickers <= 3) & np.isin(np.arange(n), links.loc[
+        links["ticker"] != "ZZZ", "article_id"]))
+    out = data / "sentiment"
+    out.mkdir(parents=True, exist_ok=True)
+    np.save(out / "ids.npy", ids)
+    probs = rng.dirichlet(np.ones(3), len(ids)).astype(np.float16)
+    np.save(out / "finbert_probs.npy", probs)
+    words = rng.integers(20, 90, len(ids))
+    np.save(out / "lm.npy", np.column_stack([words, rng.binomial(words, 0.02),
+                                             rng.binomial(words, 0.03)]).astype(np.int32))
+    np.save(out / "finbert_pca.npy", rng.normal(0, 1, (len(ids), dim)).astype(np.float16))
+    return {"ids": ids, "links": links, "date": date, "probs": probs}

@@ -30,7 +30,7 @@ import pandas as pd
 
 from ftm import config
 from ftm.evaluation import metrics
-from ftm.experiments import feature_sets
+from ftm.experiments import feature_sets, kind
 from ftm.panel import Panel
 from ftm.portfolio import strategies
 
@@ -39,10 +39,11 @@ SHAPES = 12
 
 
 def default_features(freq: str) -> str:
-    """The all_... feature set whose EBM did best in the validation period."""
+    """The all_<model> feature set (price and the two text blocks of one topic model, main
+    shock window) whose EBM did best in the validation period."""
     table = pd.read_csv(config.RESULTS / "tables" / "forecast.csv")
     table = table[(table["freq"] == freq) & (table["split"] == "validation")
-                  & (table["model"] == "ebm") & table["features"].str.startswith("all_")]
+                  & (table["model"] == "ebm") & (table["features"].map(kind) == "all")]
     return table.loc[table["ic_mean"].idxmax(), "features"]
 
 

@@ -1,0 +1,31 @@
+{
+ "freq": "M",
+ "features": "emb_fb",
+ "model": "xgb",
+ "blocks": [
+  "emb_fb"
+ ],
+ "n_features": 64,
+ "settings_tried": 4,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "max_depth": 1,
+  "learning_rate": 0.05,
+  "n_estimators": 1,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": -1.620355551024133e-05,
+ "train_r2": 1.9012614481228596e-05,
+ "seconds_tune": 1.2,
+ "seconds_final": 0.2
+}

@@ -1,0 +1,26 @@
+{
+ "freq": "2W",
+ "features": "px_all",
+ "model": "ols",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "emb_fb",
+  "npx",
+  "narr_nolbert",
+  "firm_nolbert"
+ ],
+ "n_features": 212,
+ "settings_tried": 1,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {},
+ "validation_r2": -0.0038160297983722558,
+ "train_r2": 0.004332507748704084,
+ "seconds_tune": 0.4,
+ "seconds_final": 0.2
+}

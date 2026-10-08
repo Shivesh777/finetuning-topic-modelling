@@ -11,6 +11,8 @@ data/news/
 # --- large derived files (over GitHub's 100 MB limit) -------------------------------------
 data/topics/embeddings/
 data/topics/encoders/
+data/sentiment/model/
+data/sentiment/*.done
 *.npy
 !tests/**/*.npy
 

@@ -1,0 +1,36 @@
+{
+ "freq": "M",
+ "features": "tone_fb",
+ "model": "ebm",
+ "blocks": [
+  "tone_fb"
+ ],
+ "n_features": 8,
+ "settings_tried": 2,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "interactions": 10,
+  "max_bins": 64,
+  "max_interaction_bins": 16,
+  "learning_rate": 0.02,
+  "max_rounds": 2000,
+  "early_stopping_rounds": 50,
+  "outer_bags": 4,
+  "inner_bags": 0,
+  "min_samples_leaf": 20,
+  "max_leaves": 2,
+  "smoothing_rounds": 50,
+  "bag_exclude": 0.2,
+  "max_rows": 100000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 5.536859288701734e-05,
+ "train_r2": 0.0003038029336579484,
+ "seconds_tune": 1.3,
+ "seconds_final": 0.8
+}

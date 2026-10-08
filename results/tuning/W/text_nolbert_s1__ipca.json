@@ -1,0 +1,23 @@
+{
+ "freq": "W",
+ "features": "text_nolbert_s1",
+ "model": "ipca",
+ "blocks": [
+  "narr_nolbert_s1",
+  "firm_nolbert"
+ ],
+ "n_features": 121,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 5
+ },
+ "validation_r2": 0.00014208922982039685,
+ "train_r2": 0.00034726475355095765,
+ "seconds_tune": 6.2,
+ "seconds_final": 6.7
+}

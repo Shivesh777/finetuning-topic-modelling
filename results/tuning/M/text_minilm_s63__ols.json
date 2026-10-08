@@ -1,0 +1,21 @@
+{
+ "freq": "M",
+ "features": "text_minilm_s63",
+ "model": "ols",
+ "blocks": [
+  "narr_minilm_s63",
+  "firm_minilm"
+ ],
+ "n_features": 121,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": 0.0008641543953890052,
+ "train_r2": 0.007375835208118353,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.0
+}

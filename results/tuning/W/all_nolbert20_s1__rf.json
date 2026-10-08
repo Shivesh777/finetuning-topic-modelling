@@ -1,0 +1,30 @@
+{
+ "freq": "W",
+ "features": "all_nolbert20_s1",
+ "model": "rf",
+ "blocks": [
+  "price",
+  "narr_nolbert20_s1",
+  "firm_nolbert20"
+ ],
+ "n_features": 49,
+ "settings_tried": 3,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.00010262779249203824,
+ "train_r2": 0.0011665524808364136,
+ "seconds_tune": 10.6,
+ "seconds_final": 1.8
+}

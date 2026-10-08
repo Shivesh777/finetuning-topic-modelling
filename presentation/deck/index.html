@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News attention and returns · MFE 230ZB</title>
+<link rel="stylesheet" href="css/deck.css">
+</head>
+<body>
+<div id="stage">
+
+<!-- ================================================================ title -->
+<section class="slide cover" data-sec="0" data-name="Title">
+  <div class="title"><span class="hook">Does news attention</span> <span class="claim">forecast stock returns?</span></div>
+  <div class="who-list">Jonathan · Swapnil · Kevin · Shivesh · Charishma</div>
+  <div class="panel-dark" data-chart="beads" data-noadvance><canvas></canvas><div class="when"></div>
+    <div class="cap">20 NoLBERT topics, one wire each; one row per month, Sep 2020 to Dec 2024. A bead: the topic took more of that month's news than its median share of the past 12 months.</div></div>
+</section>
+
+<!-- ================================================================ 1 recap (Jonathan) -->
+<section class="slide" data-sec="1" data-num="1.1" data-name="Three classes" data-steps="2" data-auto="600 2600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">1.1</span><span class="chip on">Recap</span><span class="who">Jonathan · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Third pass:</span> <span class="claim">the same question, rebuilt.</span></div>
+  <div class="ex" data-chart="stations"></div>
+</section>
+
+<section class="slide" data-sec="1" data-num="1.2" data-name="The delta" data-steps="4" data-auto="600 2000 3400 4800">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">1.2</span><span class="chip on">Recap</span><span class="who">Jonathan · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">The delta:</span> <span class="claim">four partly answered, two open.</span></div>
+  <div class="ex" data-chart="delta"></div>
+  <div class="xnote" data-step="4">New in 230ZB: a NoLBERT text layer (2, 3) · an interpretable EBM (4) · one protocol for every strategy (5)</div>
+</section>
+
+<!-- ================================================================ 2 look-ahead (Swapnil) -->
+<section class="slide" data-sec="2" data-num="2.1" data-name="Two biases" data-steps="2" data-auto="700 2600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">2.1</span><span class="chip on">NoLBERT</span><span class="chip">Look-ahead</span><span class="who">Swapnil · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Two biases:</span> <span class="claim">look-ahead and look-back.</span></div>
+  <div class="ex" data-chart="biases"></div>
+</section>
+
+<section class="slide" data-sec="2" data-num="2.2" data-name="Sealed in 1995" data-steps="3" data-auto="600 2700 4900">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">2.2</span><span class="chip on">NoLBERT</span><span class="chip">Look-ahead</span><span class="who">Swapnil · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Sealed in 1995:</span> <span class="claim">26 years before our test.</span></div>
+  <div class="ex" data-chart="sealed"></div>
+</section>
+
+<section class="slide" data-sec="2" data-num="2.3" data-name="Does the seal hold?" data-steps="1" data-auto="600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">2.3</span><span class="chip on">NoLBERT</span><span class="chip">Look-ahead</span><span class="who">Swapnil · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Does the seal hold?</span></div>
+  <div class="ex" data-chart="table2"></div>
+</section>
+
+<!-- ================================================================ 3 fine-tuning (Kevin) -->
+<section class="slide" data-sec="3" data-num="3.1" data-name="Find the partner" data-steps="1" data-auto="800">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">3.1</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Find the partner:</span> <span class="claim">8% to 89%.</span></div>
+  <div class="ex" data-chart="replay" data-noadvance-off></div>
+</section>
+
+<section class="slide" data-sec="3" data-num="3.2" data-name="What it read" data-steps="1" data-auto="1500">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip warn">Look-ahead</span><span class="who">Kevin · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">What it read,</span> <span class="claim">and when.</span></div>
+  <div class="ex short" data-chart="saw"></div>
+  <div class="xnote high">198,560 of 228,883 pairs · 6,205 steps of 32 · a 150-minute budget, under one pass · 230P news (FNSPID, from 2015)</div>
+  <div class="xnote" data-step="1"><span class="red">Cut 8 months into validation:</span> it can flatter validation, not test. Fix: re-adapt with an end-2019 cut.</div>
+</section>
+
+<section class="slide" data-sec="3" data-num="3.3" data-name="What it bought" data-steps="1" data-auto="600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">3.3</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">What it bought:</span> <span class="claim">stability, not forecasts.</span></div>
+  <div class="ex short" data-chart="stability"></div>
+  <div class="xnote high"><b>Most stable and most even 60-topic split.</b> Not the most coherent. The title grid uses the 20-topic version.</div>
+  <div class="xnote" data-step="1">Forecasting gain we can demonstrate: <b>none</b> (best text arm weekly and biweekly, inside noise).</div>
+</section>
+
+<!-- ================================================================ 4 glass box (Shivesh) -->
+<section class="slide" data-sec="4" data-num="4.1" data-name="A forecast you can read" data-steps="1" data-auto="600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">4.1</span><span class="chip on">Glass box</span><span class="who">Shivesh · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Glass box:</span> <span class="claim">a forecast you can read.</span></div>
+  <div class="ex short" data-chart="shapes"></div>
+  <div class="xnote high">EBM (Lou et al. 2013; Nori et al. 2019), as used for bond returns by Bell, Kakhbod, Lettau and Nazemi</div>
+  <div class="xnote">Weekly LDA model, 12 of 129 main effects. Validation stopped boosting after 3 rounds: the steps are small.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.2" data-name="Delete a block" data-steps="4" data-auto="700 2100 3500 4900">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">4.2</span><span class="chip on">Glass box</span><span class="who">Shivesh · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Importance</span> <span class="claim">is not usefulness.</span></div>
+  <div class="ex" data-chart="blocks"></div>
+  <div class="xnote">Every change is at most 0.012 in IC: inside noise and untested. On R² and Sharpe the order differs.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.3" data-name="Forecast to portfolio" data-steps="2" data-auto="700 2400">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">4.3</span><span class="chip on">Long/short</span><span class="who">Shivesh · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Long the top tenth,</span> <span class="claim">short the bottom.</span></div>
+  <div class="ex short" data-chart="portfolio"></div>
+  <div class="xnote high">Weekly LDA EBM, its first 16 test weeks: real forecast ranks, stocks unnamed.</div>
+  <div class="xnote">Buffer: enter in the top or bottom tenth; stay until leaving the top or bottom fifth.</div>
+</section>
+
+<!-- ================================================================ 5 results (Charishma) -->
+<section class="slide" data-sec="5" data-num="5.1" data-name="Three checks" data-steps="3" data-auto="600 2000 3400">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">5.1</span><span class="chip on">Results</span><span class="who">Charishma · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Three checks:</span> <span class="claim">none clears its bar.</span></div>
+  <div class="ex" data-chart="ladder"></div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.2" data-name="Validation vs test" data-steps="2" data-auto="700 3300">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">5.2</span><span class="chip on">Results</span><span class="who">Charishma · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Validation's favorites</span> <span class="claim">score about zero in test.</span></div>
+  <div class="ex short" data-chart="vdrop"></div>
+  <div class="xnote high" data-step="2">Adding 552 more experiments: 15 of 24 below; monthly value-weighted 3.08 vs 1.71, p = 0.004, ≈0.1 after Bonferroni.</div>
+  <div class="xnote" data-step="2">Nothing passes a 10% false-discovery threshold. A true Sharpe of about 2.4 would be detected 4 times in 5.</div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.3" data-name="What held up" data-steps="2" data-auto="600 2600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">5.3</span><span class="chip on">Results</span><span class="who">Charishma · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">What held up:</span> <span class="claim">trading less.</span></div>
+  <div class="ex short" data-chart="heldup"></div>
+  <div class="list" data-step="1">“It saves costs; it does not create a signal.” Adopted on validation before the test was seen.</div>
+  <div class="list l2" data-step="2"><b>Shock windows:</b> consistent, not significant. Two validation picks reach net Sharpe 0.6–0.7:<br>weekly: news adds no IC over price, all gains in 2022–23; monthly: pool set after test results were seen.<br><b>Tone:</b> no signal. <b>Tilt:</b> the index's own Sharpe.</div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.4" data-name="The next paper" data-steps="0">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">5.4</span><span class="chip on">Next</span><span class="who">Charishma · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">The next paper</span></div>
+  <ol class="next">
+    <li><b>A fresh test of the tuned shock windows</b> on months the project has not used (2025, or the Feb–Jun months a complete return file brings back).</li>
+    <li><b>News at the speed it is priced:</b> time-stamped news with daily returns, in the smaller stocks where tone shows up.</li>
+    <li><b>A complete return file:</b> the test sample grows by 70% to 95%.</li>
+    <li><b>A point-in-time news source:</b> firm-level results are limited by coverage, not models.</li>
+    <li><b>A clean NoLBERT comparison:</b> re-adapt with an end-2019 cut, adapt MiniLM the same way, then year by year. Plus a five-factor alpha.</li>
+  </ol>
+</section>
+
+<!-- ================================================================ closing -->
+<section class="slide cover" data-sec="0" data-name="Questions">
+  <div class="title"><span class="hook">What we can say:</span> <span class="claim">nothing large is there.</span></div>
+  <div class="who-list">What we cannot say: that nothing is there.<br><span class="grey">Questions.</span></div>
+  <div class="meta">github.com/Shivesh777/finetuning-topic-modelling</div>
+  <div class="panel-dark" data-chart="beads" data-noadvance><canvas></canvas><div class="when"></div>
+    <div class="cap">20 NoLBERT news topics, Sep 2020 to Dec 2024. A bead: a month in which the topic took more of the news than its median share of the previous 12 months.</div></div>
+</section>
+
+<!-- ================================================================ backup -->
+<section class="slide" data-sec="B" data-num="B1" data-name="Presidents check" data-steps="0">
+  <div class="edge">MFE 230ZB · backup</div>
+  <div class="tags"><span class="chip">B1</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Backup:</span> <span class="claim">the presidents check.</span></div>
+  <div class="ex" data-chart="presidents"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B2" data-name="Tone and tilt" data-steps="0">
+  <div class="edge">MFE 230ZB · backup</div>
+  <div class="tags"><span class="chip">B2</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Backup:</span> <span class="claim">tone and the index tilt.</span></div>
+  <ol class="next">
+    <li><b>Tone</b> (FinBERT, which saw no text after 2010, and Loughran-McDonald): tone-only test IC 0.002, 0.000, −0.002. The protocol fixed in advance: net Sharpe −0.01, −0.20, −0.62.</li>
+    <li><b>Embedding regression</b> on FinBERT headline vectors: IC 0.007 and 0.005 (biweekly, weekly), not significant; turnover of 155% to 169% a period eats it.</li>
+    <li><b>Cap-weighted tilt:</b> net Sharpe 0.46 to 0.60 against 0.47 to 0.61 for the index itself; median information ratio −0.16 to −0.29.</li>
+  </ol>
+</section>
+
+</div>
+<script src="js/data.js"></script>
+<script src="js/portfolio.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/charts-a.js"></script>
+<script src="js/charts-b.js"></script>
+<script src="js/deck.js"></script>
+</body>
+</html>

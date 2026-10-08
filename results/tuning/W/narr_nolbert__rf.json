@@ -1,0 +1,28 @@
+{
+ "freq": "W",
+ "features": "narr_nolbert",
+ "model": "rf",
+ "blocks": [
+  "narr_nolbert"
+ ],
+ "n_features": 60,
+ "settings_tried": 3,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 2.0927000241477423e-05,
+ "train_r2": 0.0009808585355661759,
+ "seconds_tune": 11.6,
+ "seconds_final": 2.0
+}

@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "narr_lda_all",
+ "model": "ridge_rk",
+ "blocks": [
+  "narr_lda_all"
+ ],
+ "n_features": 60,
+ "settings_tried": 25,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 33.40143760796398
+ },
+ "validation_r2": -3.2846806805597595e-06,
+ "train_r2": 5.6574850233137575e-05,
+ "seconds_tune": 0.2,
+ "seconds_final": 0.1
+}

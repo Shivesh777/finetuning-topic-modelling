@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "narr_nolbert20",
+ "model": "ipca",
+ "blocks": [
+  "narr_nolbert20"
+ ],
+ "n_features": 20,
+ "settings_tried": 4,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "n_factors": 2
+ },
+ "validation_r2": 0.00044757834244479877,
+ "train_r2": 0.0003395691121976796,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.0
+}

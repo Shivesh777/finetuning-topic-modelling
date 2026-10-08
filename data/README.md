@@ -10,7 +10,8 @@ so zipping `data/` is enough to hand the project to a teammate.
 | `news/articles/` | One row per unique article: date, headline, first 500 characters of the body. One file per quarter | `01_download_news.py`, `02_build_articles.py` | No (third-party text) |
 | `news/links.parquet` | The tickers each article is filed under | `02_build_articles.py` | No |
 | `topics/embeddings/` | Per-article vectors: sentence embeddings (`03_embed.py`) or class probabilities (`03b_classify_topics.py`), with the article ids | scripts 03 | No (hundreds of MB) |
-| `topics/<model>/` | A fitted topic model and what the panels need from it (see below) | `04_fit_topics.py` | Yes |
+| `topics/encoders/` | Adapted encoders, such as NoLBERT (`03c_finetune_encoder.py`; the teammate's is `nolbert_ft`, 434 MB) | script 03c | No |
+| `topics/<model>/` | A fitted topic model and what the panels need from it (see below): `lda`, `lda_all`, `minilm`, `finbert`, `nolbert`, `nolbert20` | `04_fit_topics.py` | Yes |
 | `panels/<freq>/` | Stock-period panels: `index.parquet` and one `.npy` per feature block | `05_build_panel.py` | **No (derived from CRSP)** |
 | `predictions/<freq>/` | Forecasts of every experiment for the validation and test rows | `06_run_models.py` | **No (derived from CRSP)** |
 | `models/<freq>/` | Fitted EBMs, for the explanations | `06_run_models.py` | **No** |
@@ -30,7 +31,7 @@ so zipping `data/` is enough to hand the project to a teammate.
 - **Embeddings** are large (400 MB per encoder) and are rebuilt by `scripts/03`.
 
 To make the zip smaller, leave out `panels/`, `predictions/` and `models/`:
-scripts 05 and 06 rebuild them from `crsp/` and `topics/` in about 40 minutes.
+scripts 05, 06 and 06b rebuild them from `crsp/` and `topics/` in about 70 minutes.
 
 ## Files of a topic model (`topics/<model>/`)
 

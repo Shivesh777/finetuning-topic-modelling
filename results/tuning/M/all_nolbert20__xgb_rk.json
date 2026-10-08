@@ -1,0 +1,33 @@
+{
+ "freq": "M",
+ "features": "all_nolbert20",
+ "model": "xgb_rk",
+ "blocks": [
+  "price",
+  "narr_nolbert20",
+  "firm_nolbert20"
+ ],
+ "n_features": 49,
+ "settings_tried": 4,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "max_depth": 3,
+  "learning_rate": 0.05,
+  "n_estimators": 15,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.000682607239857913,
+ "train_r2": 0.004126018064454118,
+ "seconds_tune": 1.2,
+ "seconds_final": 0.2
+}

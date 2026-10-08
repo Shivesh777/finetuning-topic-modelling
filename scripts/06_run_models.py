@@ -13,6 +13,9 @@ For each (frequency, feature set, model) the protocol is the same:
              and forecasts the TEST period, once. (The EBM is not refitted: its validated
              model forecasts the test period; see ftm/models/ebm.py.)
 
+Models named <model>_rk are fitted on the cross-sectional rank of the return instead of
+the return (ftm.models.tuning.target_of); their R2 in the tuning files is against ranks.
+
 Outputs
     data/predictions/<freq>/<features>__<model>.{validation,test}.npy   forecasts
     data/models/<freq>/<features>__ebm.joblib                           fitted EBMs
@@ -39,7 +42,7 @@ import numpy as np
 import pandas as pd
 
 from ftm import config, experiments
-from ftm.models.tuning import fit_for_test, get_model, tune
+from ftm.models.tuning import fit_for_test, get_model, target_of, tune
 from ftm.panel import Panel
 
 IMPORTANCE_ROWS = 50_000            # rows on which mean absolute contributions are measured
@@ -95,10 +98,10 @@ def run(freq: str, features: str, blocks: list[str], model_name: str, retry: boo
     log.write_text(stamp("started") + (stamp("tuned earlier, resumed") if tuned else ""))
 
     panel = Panel.load(config.PANELS / freq, blocks)
-    X, y = panel.X(blocks), panel.index["y_rel"].to_numpy()
-    period = panel.index["period"].to_numpy()
-    train, val, test = (panel.rows(s) for s in ("train", "validation", "test"))
     cls = get_model(model_name)
+    period = panel.index["period"].to_numpy()
+    X, y = panel.X(blocks), target_of(cls, panel.index["y_rel"].to_numpy(), period)
+    train, val, test = (panel.rows(s) for s in ("train", "validation", "test"))
     if not tuned:
         t0 = time.time()
         params, table, val_pred = tune(cls, X[train], y[train], X[val], y[val],

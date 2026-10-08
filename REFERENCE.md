@@ -86,10 +86,11 @@ Run the scripts in order. Times are for a 4-core laptop CPU.
 | 2 | `02_build_articles.py` | `data/news/`, `results/data_audit/news_coverage.csv` | 2 min |
 | 3 | `03_embed.py` | `data/topics/embeddings/` | 45 min on 2 cores (200 articles a second) |
 | 3b | `03b_classify_topics.py` (optional) | FinBERT class probabilities | 50 min on 2 cores |
-| 3c | `03c_finetune_encoder.py` (optional, GPU) | An adapted encoder | not run |
+| 3c | `03c_finetune_encoder.py` (optional, GPU) | An adapted encoder in `data/topics/encoders/` | 150 min on one RTX 3060 (teammate's run) |
 | 4 | `04_fit_topics.py` | `data/topics/<model>/` | LDA 10 min, applying it to every article 5 min, embedding clusters 3 min, classifier weights 1 min (as recorded in each `quality.json`) |
 | 5 | `05_build_panel.py` | `data/panels/<freq>/` | 2 min for all blocks and frequencies |
-| 6 | `06_run_models.py` | `data/predictions/`, `data/models/`, `results/tuning/`, `results/importance/` | 36 min for 432 experiments |
+| 6 | `06_run_models.py` | `data/predictions/`, `data/models/`, `results/tuning/`, `results/importance/` | about 70 min for all 1,092 experiments (26 feature sets, 14 models) |
+| 6b | `06b_ensemble.py` | `data/predictions/<freq>/<features>__ens.*` | under 1 min |
 | 7 | `07_evaluate.py` | `results/series/` | 2 min |
 | 8 | `08_report.py` | `results/tables/` | under 1 min |
 | 9 | `09_explain.py` | `results/explain/` | under 1 min |
@@ -143,9 +144,29 @@ All models see the same articles and are fitted on training-period text only.
   (`nickmuchi/optimum-finbert-tone-finetuned-finance-topic-classification`).
   Published in December 2022 and fine-tuned on a set of finance tweets
   released in September 2022: **not point-in-time**.
-- **NoLBERT** (optional, not run): `alikLab/NoLBERT` pinned to commit
-  `0b0359c`, a language model trained on text from 1976 to 1995 only. See
-  `scripts/03c_finetune_encoder.py`.
+- **`nolbert`**: NoLBERT (Kakhbod and Li 2025, `alikLab/NoLBERT`, a DeBERTa-v3
+  model of 109M parameters pretrained only on text from 1976 to 1995), adapted
+  into a sentence encoder by our teammate (run of 8 October 2026,
+  `results/encoders/nolbert_ft/train_log.json`): InfoNCE over two chunks of the
+  same article with in-batch negatives, temperature 0.05, every parameter
+  trained, learning rate 2e-5, batches of 32 pairs, 128 tokens, bf16, 150
+  minutes on one RTX 3060, 6,205 steps; held-out in-batch top-1 retrieval rose
+  from 0.08 to 0.89. Pairs were drawn from articles dated before 1 September
+  2020, so **eight months of our validation-period text entered the encoder**
+  (not the test period). A probe of pooling choices on 11,988 documents
+  (`nolbert_probe.json`) chose the mean of the last layer without whitening
+  (NPMI 0.343 against 0.268 to 0.282 for the alternatives). Articles (headline
+  and lead, 64 tokens) are embedded with that pooling and clustered exactly as
+  `minilm` is: 60 topics, spherical k-means, softmax weights at temperature
+  0.07. `scripts/03c_finetune_encoder.py` now carries the same recipe, with the
+  pair cutoff at the end of our training period by default.
+- **`nolbert20`**: the same NoLBERT article vectors clustered into 20 topics
+  instead of 60 (added in this repository, `04_fit_topics.py embedding
+  --embeddings nolbert_ft_d150 --name nolbert20 --topics 20`). With three times
+  as many articles per topic and day, its attention shocks are more reliable
+  (split-half 0.47 to 2019 and 0.50 after, against 0.28 and 0.34 for 60 topics).
+  Twenty is the number of FinBERT classes; it was fixed before any forecast was
+  made with it.
 
 Daily attention of a topic is the mean of the day's article weights. Quality
 measures (`quality.py`): NPMI coherence of each topic's ten top terms, on
@@ -245,6 +266,19 @@ draw: `scripts/12_tuning_noise.py` repeats an experiment with other seeds,
 tuning included, and records how far the result moves (FINDINGS.md, section
 7.1).
 
+**Variants** (added with the NoLBERT run; FINDINGS.md, section 9):
+
+| Name | What it is |
+|---|---|
+| `<model>_rk` | The model fitted on the cross-sectional rank of `y_rel`, scaled to [-1, 1] like the features (ties averaged), instead of `y_rel` itself, with the same grid and protocol. For `ols`, `ridge`, `lasso`, `ipca`, `sipca` and `xgb`; not for the forest and the EBM, which would add half an hour per run. Its forecasts are scores: R2 against returns means nothing for them, rank IC and portfolios do. `ftm.models.tuning.target_of` |
+| `ens` | The combination of the eight base models: in every period each model's forecast is turned into ranks scaled to [-1, 1] and the eight are averaged with equal weights. Nothing is estimated or chosen. `scripts/06b_ensemble.py` |
+
+The eight base models (`experiments.BASE_MODELS`) make up every group of the
+landscape, contrast, halves, placebo and text-against-price tables, so these
+tables are comparable with the 432-experiment run. The variants are models of
+their own in the per-experiment tables and in the search, and
+`improvements.csv` compares each with what it varies.
+
 ### 3.5 Portfolios (`ftm/portfolio/`)
 
 Formed at each formation day's close from that day's forecasts, held to the
@@ -260,6 +294,7 @@ leaves the long-short rules flat and the long-only rules in the universe.
 | `rank` | Every stock, weight proportional to its forecast rank minus the mean rank |
 | `mvo` | Mean-variance weights for the forecasts with a 5-factor covariance of the last 252 daily returns; dollar neutral; at most 1% per stock |
 | `long_ew`, `long_vw` | The top decile only, compared with the equal- or value-weighted universe |
+| `ls_buf` | `ls_ew` with a buffer: a stock enters the long (short) leg in the top (bottom) decile and stays until it leaves the top (bottom) fifth (`BUFFER_QUANTILES = 5`), equal weights; the buy/hold spread of Novy-Marx and Velikov (2016). With nothing held it is `ls_ew`. Its legs vary in size |
 
 Long-short rules have longs of +1 and shorts of -1. Turnover is half the sum of
 absolute weight changes after last period's weights have drifted with returns;
@@ -278,12 +313,13 @@ initial purchase. Each period (validation, test) starts from cash.
 | Sharpe ratio | Annualised mean over volatility of the per-period excess return; standard error of Mertens (2002); 95% interval from a stationary bootstrap (5,000 resamples) |
 | Alpha | Intercept on the three Fama-French factors compounded over the holding period, Newey-West t statistic |
 | Sharpe difference | Paired stationary bootstrap of two return series |
-| Reality check, SPA | White (2000) and Hansen (2005) across the 136 experiments on real features of a frequency, on returns scaled to unit variance, so that the statistic is the best Sharpe ratio |
+| Reality check, SPA | White (2000) and Hansen (2005) across the 375 experiments on real features of a frequency (all models, variants included), on returns scaled to unit variance, so that the statistic is the best Sharpe ratio |
 | Expected best with no skill | The mean, over the bootstrap resamples of the reality check, of the best Sharpe ratio when every experiment's mean return is set to zero. It keeps the co-movement of the experiments, which the formula of Bailey and Lopez de Prado (2014) for independent trials does not |
 | False discovery rate | Benjamini-Hochberg adjustment of the one-sided p-values (positive mean, fixed-b) of the searched experiments |
 | Long-only portfolios | Also measured against the universe with the same weighting: active return, tracking error, information ratio, alpha and beta. In the multiple-testing table they are measured this way only, since against zero they would pass for earning the market's return |
 | Groups of experiments | `landscape.csv`: by feature set, kind of feature, topic model (its text-only sets) and model. The experiments of a group forecast the same returns, so the t statistic is that of the group's average IC per period, and the Sharpe ratio that of the equal-weighted average of the group's long-short portfolios |
 | Placebo | `placebo.csv`: IC of the narrative exposures minus IC of the placebo exposures, per period, averaged over the models with a forecast from both; Newey-West t statistic |
+| Improvements | `improvements.csv`: rank target against return target (per model and feature set), ensemble against the average of its eight members (per feature set), `ls_buf` against `ls_ew` (per experiment). Mean of the per-period difference in IC and in net long-short return, averaged over the pairs, with Newey-West t statistics; median Sharpe ratios of both sides, median paired difference, share of pairs improved, turnover of both |
 | Group against group | `contrasts.csv`: average IC of one group minus that of another, per period (topic model against topic model on text-only sets; trees and EBM against linear models; price and text against price) |
 | Halves of the test period | `halves.csv`: a group's average IC in 2022-23 minus that in 2024, divided by the root of the sum of the two squared Newey-West standard errors |
 
@@ -292,11 +328,15 @@ length n^(1/3). Periods per year: 12, 26, 52.
 
 **Selection rule.** For each frequency the experiment with the highest mean
 rank IC in the validation period is "the" experiment; its test result is the
-headline. The candidates are the 136 experiments on real features; the placebo
-is a control and cannot be selected. `selection.csv` applies the same rule
-within each family (price, text, price and text) and within each topic model.
-Every other test result is shown for completeness and must be read with the
-multiple-testing rows, which count the same 136 experiments.
+headline. The candidates are the experiments of the eight base models on real
+features: 200 per frequency (25 feature sets) since the NoLBERT topic models
+were added, 136 before. The placebo is a control and cannot be selected.
+`selection.csv` applies the same rule within each family (price, text, price
+and text) and within each topic model, and to two further pools: `any_variant`
+(every experiment, variants included: 375 per frequency) and `ensemble` (the
+25 ensembles alone). Every other test result is shown for completeness and must
+be read with the multiple-testing rows, which count all 375 experiments of a
+frequency.
 
 ## 4. Outputs
 
@@ -311,6 +351,8 @@ multiple-testing rows, which count the same 136 experiments.
 | `results/tables/forecast.csv`, `strategies.csv` | Every experiment: forecast accuracy; every portfolio rule |
 | `results/tables/selection.csv`, `frequency.csv` | The experiments chosen on validation, and their portfolios |
 | `results/tables/landscape.csv`, `contrasts.csv`, `halves.csv` | Groups of experiments; group against group; 2022-23 against 2024 |
+| `results/tables/improvements.csv` | Rank targets, ensembles and the buffered portfolio against what they vary |
+| `results/encoders/nolbert_ft/` | The run record of the NoLBERT adaptation (configuration, training log, pooling probe); the weights (434 MB) are not in git |
 | `results/tables/placebo.csv`, `text_vs_price.csv` | Exposures against the placebo; text against price |
 | `results/tables/multiple_testing.csv`, `tuning.csv`, `topic_models.csv` | The best of all experiments, given the search; what tuning chose; topic quality |
 | `results/explain/` | Importance, shape functions and ablations of the chosen EBM |
@@ -324,7 +366,7 @@ multiple-testing rows, which count the same 136 experiments.
 | Topic models | Fitted on the text of the whole sample | Fitted on text up to 2019, applied forward |
 | News timing | Same-day | Lagged one trading day |
 | Articles per day | 120 | 150 (and every article, as a check) |
-| Model | Sparse IPCA with tuning on the out-of-sample months | Eight models under one validation protocol |
+| Model | Sparse IPCA with tuning on the out-of-sample months | Eight models under one validation protocol, six of them also fitted on ranked returns, and their ensemble |
 | Portfolio | Tangency portfolio of the factors, in-sample scaling | Sorted, ranked, mean-variance and long-only portfolios with costs |
 | Missing data | Visible to the model | Incomplete months dropped; remaining gaps hidden from the model (sections 2 and 3.3) |
 | Articles | FNSPID | FinMultiTime's list, which adds 2024, with the text of FNSPID (section 1) |
@@ -361,7 +403,10 @@ multiple-testing rows, which count the same 136 experiments.
 - One seed per experiment. For tree models on many features the seed moves a
   result as much as sampling error does (FINDINGS.md, section 7.1).
 - The MiniLM encoder was published in 2021 and the FinBERT classifier at the
-  end of 2022: neither is point-in-time. NoLBERT would be.
+  end of 2022: neither is point-in-time. NoLBERT's pretraining is (1976 to
+  1995), but its adaptation used articles up to 1 September 2020, eight months
+  into our validation period; and it was adapted on our corpus while MiniLM
+  was not, so the two encoders differ in two ways at once.
 - Tickers are matched to stocks through each stock's latest ticker.
 - The 2024 news comes from a different scrape: 22 articles before February,
   fewer tickers (1,769 against 4,347 in 2023), headlines rebuilt from the

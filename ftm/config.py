@@ -75,6 +75,9 @@ TUNE_TOLERANCE = 1e-5              # keep the simpler setting unless validation 
 
 # --- portfolios ----------------------------------------------------------------------
 QUANTILES = 10
+# ls_buf buys the top (sells the bottom) 1/QUANTILES and keeps a stock until it leaves the
+# top (bottom) 1/BUFFER_QUANTILES: the buy/hold spread of Novy-Marx and Velikov (2016).
+BUFFER_QUANTILES = 5
 COST_BPS = 10.0                    # one-way cost per dollar traded
 MVO_WINDOW = 252                   # trading days of the covariance used by mean-variance weights
 MVO_FACTORS = 5

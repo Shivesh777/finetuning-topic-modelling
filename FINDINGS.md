@@ -1,11 +1,14 @@
 # Findings
 
-Results of the run of 7 October 2026: 432 experiments (18 feature sets, 8
-models, 3 rebalancing frequencies). Training 2013 to 2019, validation 2020 to
-2021, test 2022 to 2024. From 2017 on, only the part of each year for which
-our return file is complete is used (section 2.4), which leaves 21 test months
-(42 fortnights, 81 weeks), about a year and three quarters of returns. Every
-number below comes from a file under `results/` (section 10 says which).
+Results of the run of 8 October 2026. 26 feature sets (two NoLBERT topic
+models among them), 15 models (the eight of the design, six of them also
+fitted on ranked returns, and the ensemble of the eight) and 3 rebalancing
+frequencies: 1,170 experiments, each traded under seven portfolio rules.
+Training 2013 to 2019, validation 2020 to 2021, test 2022 to 2024. From 2017
+on, only the part of each year for which our return file is complete is used
+(section 2.4), which leaves 21 test months (42 fortnights, 81 weeks), about a
+year and three quarters of returns. Every number below comes from a file under
+`results/` (section 12 says which).
 
 **How to read the numbers.**
 
@@ -20,30 +23,73 @@ number below comes from a file under `results/` (section 10 says which).
 - *Sharpe ratios* are annualised. *Net* means after 10 basis points per unit
   traded. *Turnover* is half the sum of absolute weight changes per period, so
   a long-short portfolio that replaces both legs has 200%.
-- *Decile long-short, equal weights* is the portfolio behind every Sharpe
-  ratio that does not name another rule.
+- *Decile long-short, equal weights* (`ls_ew`) is the portfolio behind every
+  Sharpe ratio that does not name another rule. *Buffered* (`ls_buf`) is the
+  same portfolio with a buffer: a stock enters a leg in the top (bottom) decile
+  and stays until it leaves the top (bottom) fifth.
+- *Base models*: OLS, ridge, lasso, IPCA, sparse IPCA, XGBoost, random forest,
+  EBM. The groups of sections 4 to 6 are made of them; the variants of section
+  9 are compared with them separately.
 
 ## 1. The short version
 
 1. **The topic features show no out-of-sample forecasting power.** At each
    frequency one experiment is chosen on the validation period (the highest
-   rank IC of 136 candidates) and evaluated on the test period:
+   rank IC of the 200 base experiments on real features) and evaluated on the
+   test period:
 
    | Rebalancing | Chosen on validation | Validation rank IC (t) | Test rank IC (t) | Long-short Sharpe, gross | net of costs | 95% interval, net |
    |---|---|---|---|---|---|---|
-   | Monthly | FinBERT text features, EBM | 0.063 (3.3) | -0.005 (-0.2) | 0.11 | -0.15 | -1.81 to 1.04 |
+   | Monthly | Price and NoLBERT text features, sparse IPCA | 0.068 (1.8) | 0.006 (0.1) | 0.05 | -0.05 | -1.18 to 1.62 |
    | Biweekly | Price and FinBERT text features, XGBoost | 0.058 (3.4) | 0.017 (0.8) | 0.79 | 0.37 | -1.18 to 1.89 |
    | Weekly | Price and LDA text features, EBM | 0.048 (2.3) | 0.010 (0.7) | -0.23 | -0.66 | -2.17 to 0.63 |
 
    | | Test R2 | Clark-West t | Return a year, gross | net | Volatility | Maximum drawdown | Turnover per period |
    |---|---|---|---|---|---|---|---|
-   | Monthly | -0.054% | 0.2 | 1.2% | -1.7% | 11.6% | -17% | 123% |
+   | Monthly | -0.020% | -0.0 | 1.2% | -1.3% | 25.9% | -31% | 106% |
    | Biweekly | -0.078% | 1.0 | 12.5% | 5.9% | 15.9% | -17% | 127% |
    | Weekly | -0.001% | -0.1 | -4.3% | -12.5% | 18.9% | -24% | 79% |
 
-   None differs from zero.
+   None differs from zero. Biweekly and weekly the choice is the same as in the
+   previous run; monthly, a NoLBERT experiment now has the highest validation IC.
 
-2. **The test can only rule out large effects.** The standard error of an
+2. **One improvement is real: trading less.** Decided on the validation period
+   before the test period was looked at, the buffered portfolio raises the net
+   return of the test period averaged over all 200 base experiments by 0.6%,
+   1.5% and 2.0% a year (monthly, biweekly, weekly; t = 2.0, 3.5 and 5.2, the
+   last two beyond their critical values), with a turnover a fifth to nearly
+   a third lower. For the three experiments above:
+
+   | Buffered | Sharpe, gross | net | Return a year, net | Maximum drawdown | Turnover per period |
+   |---|---|---|---|---|---|
+   | Monthly | 0.12 | 0.05 | 1.2% | -28% | 71% |
+   | Biweekly | 0.74 | 0.41 | 6.2% | -16% | 99% |
+   | Weekly | -0.04 | -0.33 | -5.6% | -17% | 46% |
+
+   It saves costs; it does not create a signal.
+
+3. **The other levers do little or nothing** (section 9). An ensemble of the
+   eight models has about the IC of its average member and a better net Sharpe
+   ratio than the average member in 60% to 72% of the feature sets. Fitting
+   the models on ranked returns raised the IC slightly in validation and by
+   less or not at all in the test period (differences of 0.000, -0.002 and
+   +0.002). Twenty NoLBERT topics instead of sixty make the attention shocks
+   more reliable (0.50 against 0.34 after 2019) and the forecasts no better
+   (higher only monthly, and not significantly). The protocol we fixed in advance for this run, the validation
+   choice among the 25 ensembles traded with the buffer, picks the FinBERT
+   text features at all three frequencies and loses (net Sharpe -0.21, -0.34,
+   -0.16).
+
+4. **NoLBERT is the best text arm at the higher frequencies, inside noise**
+   (section 8). Averaged over its text-only experiments, NoLBERT has the
+   highest test IC of the six topic models at the biweekly and weekly
+   frequencies (weekly 0.006, t = 1.4, 21 of 22 positive), ahead of each
+   other topic model in all ten such comparisons, none significant. Monthly it
+   is fifth of the six, ahead only of FinBERT, and in the seven months of 2024
+   its monthly IC (-0.031) is the second lowest, after FinBERT's. Our
+   teammate's numbers reproduce exactly on this machine.
+
+5. **The test can only rule out large effects.** The standard error of an
    annual Sharpe ratio is 0.75 to 0.80 at every frequency, because the clean
    test sample is 1.56 to 1.75 years long. A strategy would need a true Sharpe
    ratio of about 2.4 to be detected four times out of five, and a single
@@ -51,90 +97,87 @@ number below comes from a file under `results/` (section 10 says which).
    (weekly). The results say that nothing large is there. They cannot say
    that nothing is there.
 
-3. **Nothing else survives the count of what we tried.** The best of the 136
-   decile long-short portfolios per frequency has a net Sharpe ratio of 1.41
-   (monthly), 1.63 (biweekly) and 0.77 (weekly). The best of 136 portfolios
-   with no skill that move together as ours do would be expected to show
-   1.36, 1.56 and 1.63. The median is negative at every frequency (-0.18,
-   -0.54, -0.59). Across six portfolio rules and three frequencies no
-   portfolio passes a 10% false-discovery threshold.
+6. **Nothing survives the count of what we tried.** Over all 375 searched
+   experiments per frequency (variants included), the best decile long-short
+   portfolio has a net Sharpe ratio of 1.51 (monthly), 1.63 (biweekly) and
+   0.97 (weekly); the best of 375 portfolios with no skill that move together
+   as ours do would be expected to show 1.55, 1.70 and 1.85. The median is
+   negative at every frequency. In 17 of the 21 combinations of rule and
+   frequency the best result is below that benchmark, and no portfolio passes
+   a 10% false-discovery threshold.
 
-4. **The real news does no better than misdated news.** Stock exposures to LDA
-   attention and exposures to the attention of 126 trading days earlier have
-   the same test IC: the difference is 0.000 (t = 0.0) monthly, 0.000 (0.0)
-   biweekly and -0.003 (-0.3) weekly. Adding text to the price features is
-   never a significant improvement in rank IC or in squared error (0 of 90
-   paired comparisons each), and at the weekly frequency it lowers the IC in
-   all 30.
+7. **The real news does no better than misdated news.** Exposures to LDA
+   attention and to the attention of 126 trading days earlier have the same
+   test IC: a difference of 0.000 (t = 0.0) monthly, 0.000 (0.0) biweekly and
+   -0.003 (-0.3) weekly. Adding text to the price features is never a
+   significant improvement in rank IC or in squared error (0 of 134 paired
+   comparisons), and at the weekly frequency it lowers the IC in 42 of 44.
 
-5. **The one pattern that repeats is in past prices, and it is weak.** With the
-   eight price features alone, all eight models have a positive weekly IC in
-   the validation period, in the test period (0.014 to 0.031) and in both
+8. **The one pattern that repeats is in past prices, and it is weak.** With
+   the eight price features alone, all eight models have a positive weekly IC
+   in the validation period, in the test period (0.014 to 0.031) and in both
    halves of the test period. Their average test IC is 0.024 with t = 1.9,
-   below the critical value of 2.11. At 10 basis points per trade it earns
-   nothing (net Sharpe ratio -0.14 for the average portfolio), and part of it
-   is a tilt towards high-beta stocks in a rising market (section 4.6).
+   below the critical value of 2.11. Before costs the eight portfolios have
+   Sharpe ratios of up to 1.07; after costs between -0.67 and 0.17, and part of
+   the effect is a tilt towards high-beta stocks in a rising market (section
+   4.6).
 
-6. **The narrative exposures have a positive IC in 2022-23 and a negative one
-   in 2024.** This is the largest pattern in the text results (section 4.7). The 2024 news comes from
-   a second scrape with a different format, and seven months cannot separate
-   an effect of that change from ordinary variation.
+9. **The narrative exposures have a positive IC in 2022-23 and a negative one
+   in 2024** (section 4.7). The 2024 news comes from a second scrape with a
+   different format, and seven months cannot separate an effect of that change
+   from ordinary variation.
 
-7. **The data decide more than the models do.** Three defects of the data
-   would each have produced a result that is not there:
-   - *Missing returns.* Our return file has no recent daily returns for stocks
-     that are about to drop out of the list of the 1,000 largest. With the
-     usual "missing = median" convention, XGBoost on price features has a
-     monthly test IC of 0.029 (t = 2.2) and a long-short Sharpe ratio of about
-     2. Its IC in the months for which the file is complete is 0.009 (t =
-     0.5); fitted on those months only, the same specification has 0.016
-     (t = 0.6) and a Sharpe ratio of about zero.
-   - *News that is not point-in-time.* The articles were collected ticker by
-     ticker at the end of the sample. Companies that had disappeared by then
-     have none, and the most covered companies have only their latest ones
-     (Apple's begin in June 2022). About half of the stock-months have no
-     firm-level news of their own.
-   - *Wrong text.* In one of the two public sources, about 7% of the articles
-     of 2012 to 2023 carry a text that differs from the other source's, in
-     most cases the body of another article, often one written years later.
-     Topic models fitted on that "training-period" text had learned the words
-     covid and chatgpt.
+10. **The data decide more than the models do.** Three defects of the data
+    would each have produced a result that is not there (section 2):
+    - *Missing returns.* Our return file has no recent daily returns for stocks
+      that are about to drop out of the list of the 1,000 largest. With the
+      usual "missing = median" convention, XGBoost on price features has a
+      monthly test IC of 0.029 (t = 2.2) and a long-short Sharpe ratio of about
+      2. Its IC in the months for which the file is complete is 0.009 (t =
+      0.5); fitted on those months only, the same specification has 0.016
+      (t = 0.6) and a Sharpe ratio of about zero.
+    - *News that is not point-in-time.* The articles were collected ticker by
+      ticker at the end of the sample. Companies that had disappeared by then
+      have none, and the most covered companies have only their latest ones
+      (Apple's begin in June 2022). About half of the stock-months have no
+      firm-level news of their own.
+    - *Wrong text.* In one of the two public sources, about 7% of the articles
+      of 2012 to 2023 carry a text that differs from the other source's, in
+      most cases the body of another article, often one written years later.
+      Topic models fitted on that "training-period" text had learned the words
+      covid and chatgpt.
 
-8. **A single run of a flexible model is one draw from a wide distribution.**
-   Rerun with ten random seeds, XGBoost on price and LDA features has a monthly
-   test IC between -0.011 and 0.044 (t between -1.1 and 2.4). The seed of the
-   main run was the worst of the ten.
+11. **A single run of a flexible model is one draw from a wide distribution.**
+    Rerun with ten random seeds, XGBoost on price and LDA features has a
+    monthly test IC between -0.011 and 0.044 (t between -1.1 and 2.4). The
+    seed of the main run was the worst of the ten.
 
-9. **Weekly rebalancing gives more observations, not more certainty about the
-   Sharpe ratio.** Four times the periods leave the standard error of the
-   annual Sharpe ratio where it was, and the trading costs of the median
-   decile portfolio rise from 2.9% to 8.0% a year.
+12. **No topic model forecasts reliably better than another, and of the base
+    models the EBM is the one that validation flatters most.** FinBERT's classes look best in
+    validation and are last in the test period at all three frequencies. The
+    EBM has the best validation IC of the base models at every frequency
+    (0.022, 0.023, 0.022) and 0.002, -0.005 and 0.005 in the test period.
 
-10. **No topic model forecasts better than another.** In the validation period
-    the FinBERT classes look best, significantly better than LDA at the monthly
-    frequency (+0.032, t = 3.2) and just so at the weekly (+0.021, t = 2.19
-    against a critical value of 2.19). In the test period they are last at all
-    three frequencies. As topic models they do differ: LDA topics are the most
-    coherent when all models are judged by one rule, the MiniLM clusters are
-    the most even and the most stable, and the twenty FinBERT classes are
-    coarse.
-
-11. **The EBM looks best in validation and is among the worst in the test
-    period.** Its average IC over the 18 feature sets is 0.021 to 0.024 in
-    validation and -0.002, -0.008 and 0.002 in the test period. It stops
-    boosting where the validation error is lowest, so its validation numbers
-    flatter it. Trees and the EBM are not better than the linear models in the
-    test period (difference in IC +0.006, -0.001 and 0.000, all t below 1.2).
+**What to present.** The two pre-specified headlines (item 1 and the ensemble
+protocol of item 3) with their intervals; the buffer as the one improvement
+that was adopted on the validation period (where its gain was significant at
+the weekly frequency) and then held up in the test period (item 2); NoLBERT as
+the cleanest text layer with no forecasting gain we can demonstrate (item 4);
+and the search statistics (item 6), which say what any single good-looking
+number in our tables is worth. Best-of results, such as a net Sharpe ratio of
+2.21 for one monthly value-weighted portfolio, are not distinguishable from
+what 375 tries produce by chance (1.62 expected, p = 0.09) and should only be
+shown next to that benchmark.
 
 **What this means for the earlier project.** We did not re-run the earlier
 pipeline. From its code, its out-of-sample numbers came from a universe chosen
 with information from later in the year (a stronger form of the first defect
-above), topic models fitted on the whole sample, and tuning on the evaluation
-months. They should not be quoted until they are reproduced under a protocol
-like this one.
+of item 10), topic models fitted on the whole sample, and tuning on the
+evaluation months. They should not be quoted until they are reproduced under
+a protocol like this one.
 
 **How untouched is the test period?** Less than we would like. These are the
-results of the third pass over it.
+results of the fourth pass over it.
 
 - After the first run, two reviews found that hiding missing returns from the
   model does not undo the selection of the stocks that have them, and that 7%
@@ -144,25 +187,26 @@ results of the third pass over it.
   tolerance from 1e-4 to 1e-5 because the larger value almost always returned
   the first setting.
 - After the second run, three reviews found that the EBM that forecast the
-  test period was not the model that validation had chosen (it was refitted
-  with too few boosting rounds for its pairwise terms), that tied forecasts
-  were ordered by a shared random stream, and that t statistics were judged
-  by critical values too lenient for samples this short. We now use the
+  test period was not the model that validation had chosen, that tied
+  forecasts were ordered by a shared random stream, and that t statistics were
+  judged by critical values too lenient for samples this short. We now use the
   validated EBM itself, break ties by one fixed order, count a flat forecast
   as an IC of zero, and use small-sample critical values and a bootstrap for
-  the search.
+  the search. That made the headline worse (monthly net Sharpe ratio 0.08 to
+  -0.15, weekly -0.09 to -0.66).
+- In this run NoLBERT and the variants of section 9 were added. Which of them
+  to adopt was decided on the validation period and written down before the
+  test period was looked at (section 9.1). The buffer was adopted and held up;
+  the protocol built on the ensembles was adopted and did not.
 
-None of these changes was chosen by looking for a better test result. The
-last one made the headline worse (monthly net Sharpe ratio 0.08 before, -0.15
-now; weekly -0.09 before, -0.66 now; biweekly unchanged). The conclusions of
-all three passes are the same. The outputs of the earlier passes are not part
-of the repository.
+The conclusions of all four passes are the same. The outputs of the earlier
+passes are not part of the repository.
 
 **Not repeated after the last fixes.** The audits of `scripts/10` to `12`
-(`results/data_audit/`) were run before them. Their rank ICs for models other
-than the EBM are unaffected. Their Sharpe ratios used the earlier tie rule and
-are quoted here only roughly. The EBM rows of the seed experiment used the
-earlier EBM protocol and are left out of this document.
+(`results/data_audit/`) were run before the second run's fixes. Their rank ICs
+for models other than the EBM are unaffected. Their Sharpe ratios used the
+earlier tie rule and are quoted here only roughly. The EBM rows of the seed
+experiment used the earlier EBM protocol and are left out of this document.
 
 ## 2. Data
 
@@ -405,12 +449,14 @@ The models are fitted on 140,209 articles dated up to 2019 and label the same
 topics to all 1,255,289. The topic models are therefore in-sample for the
 training period of the return models and out of sample after 2019.
 
-| Model | Topics | Coherence (NPMI), training text | later text | Stability across seeds | Largest topic | Effective number of topics | Reliability of attention shocks, to 2019 | after 2019 |
-|---|---|---|---|---|---|---|---|---|
-| LDA | 60 | 0.58 | 0.37 | 58% | 12.7% | 40.1 | 0.30 | 0.35 |
-| MiniLM clusters | 60 | 0.49 | 0.34 | 67% | 4.3% | 53.6 | 0.25 | 0.32 |
-| FinBERT classes | 20 | 0.30 | 0.21 | fixed | 21.4% | 11.6 | 0.32 | 0.38 |
-| LDA, every article | 60 | 0.58 | 0.37 | 58% | 12.7% | 40.1 | 0.33 | 0.46 |
+| Model | Topics | Coherence (NPMI), training text | later text | Diversity of top words | Stability across seeds | Largest topic | Effective number of topics | Reliability of attention shocks, to 2019 | after 2019 |
+|---|---|---|---|---|---|---|---|---|---|
+| LDA | 60 | 0.58 | 0.37 | 0.84 | 58% | 12.7% | 40.1 | 0.30 | 0.35 |
+| MiniLM clusters | 60 | 0.49 | 0.34 | 0.83 | 67% | 4.3% | 53.6 | 0.25 | 0.32 |
+| FinBERT classes | 20 | 0.30 | 0.21 | 0.83 | fixed | 21.4% | 11.6 | 0.32 | 0.38 |
+| NoLBERT clusters | 60 | 0.48 | 0.31 | 0.76 | 69% | 4.0% | 54.0 | 0.28 | 0.34 |
+| NoLBERT, 20 clusters | 20 | 0.33 | 0.21 | 0.79 | 80% | 7.0% | 19.1 | 0.47 | 0.50 |
+| LDA, every article | 60 | 0.58 | 0.37 | 0.84 | 58% | 12.7% | 40.1 | 0.33 | 0.46 |
 
 - **Coherence depends on how top words are picked.** Above, every model's ten
   top words come from one rule (class-based TF-IDF over the topic's articles).
@@ -419,14 +465,25 @@ training period of the return models and out of sample after 2019.
   embedding clusters shows the clusters ahead by 0.14; on equal terms LDA is
   ahead by 0.09. The earlier project compared them the first way, which is
   why its BERT topics looked more coherent.
-- **Embedding clusters are more even and more stable**: the largest holds 4.3%
-  of articles against 12.7%, and 67% of articles keep their topic under
-  another seed against 58%.
+- **Embedding clusters are more even and more stable.** The largest MiniLM
+  topic holds 4.3% of articles against LDA's 12.7%, and 67% of articles keep
+  their topic under another seed against 58%. NoLBERT's clusters are the most
+  stable and the most even of the 60-topic models (69% kept, adjusted Rand
+  index 0.64 against 0.61 for MiniLM and 0.47 for LDA; largest topic 4.0%),
+  with the least diverse top words (0.76).
+- **Fewer topics, more reliable shocks.** With 20 clusters instead of 60, each
+  NoLBERT topic averages three times as many articles a day, and the
+  split-half reliability of its daily shocks rises from 0.28 to 0.47 before
+  2020 and from 0.34 to 0.50 after; the topics become broader and less
+  coherent (0.33 against 0.48).
 - **Coherence falls on later text** for every model (by 37% for LDA, 32% for
-  MiniLM, 29% for FinBERT): the topics are not refitted after 2019.
-- **Much of the corpus is templated.** Several topics of the LDA and MiniLM
-  models are automatic notices: ex-dividend reminders, moving-average alerts,
-  changes in ETF shares outstanding, option-chain summaries.
+  MiniLM, 29% for FinBERT, 36% for NoLBERT): the topics are not refitted after
+  2019.
+- **Much of the corpus is templated.** Several topics of every embedding and
+  LDA model are automatic notices: ex-dividend reminders, moving-average
+  alerts, changes in ETF shares outstanding, option-chain summaries. NoLBERT's
+  topic 3 (ETF commentary) has a later coherence of -0.21 and a stability of
+  0.02, and was left in, as the junk topics of the other models were.
 - **FinBERT's twenty classes are broad** (the largest takes 21% of articles;
   they are worth about 12 equally sized topics). The classifier was published
   in December 2022, fine-tuned on a set of finance tweets released that
@@ -435,12 +492,15 @@ training period of the return models and out of sample after 2019.
   (published in 2021, so not point-in-time either), spherical k-means and soft
   weights. Three things differ: one passage per article (headline and lead)
   instead of up to three, clusters fitted on training-period text only, and
-  150 instead of 120 articles a day.
+  150 instead of 120 articles a day. `nolbert` is built the same way from the
+  adapted NoLBERT encoder (section 8).
 
 **Reliability of attention shocks.** Each day's articles are split at random
 into two halves and the attention shock of a topic is computed from each half.
 The correlation of the two, stepped up to the full sample, says what share of
-the shock's variance is signal. For the LDA topics on every article:
+the shock's variance is signal. For the LDA topics on every article (the 150
+column is another random draw than the sample of the table above, hence 0.31
+against 0.30):
 
 | Articles per day | 50 | 100 | 150 | 300 | all |
 |---|---|---|---|---|---|
@@ -450,54 +510,53 @@ the shock's variance is signal. For the LDA topics on every article:
 At 150 articles a day two thirds of a typical topic's daily shock is sampling
 noise, so narrative exposures are noisy rankings of stocks. More articles help
 only where they exist: before 2020 there are too few a day for it to matter.
-And where they do raise reliability, the forecasts do not follow (section
-4.3).
+Where more articles or fewer topics raise reliability, the forecasts do not
+follow (sections 4.3 and 9).
 
 ## 4. Do the features forecast returns?
 
 ### 4.1 The landscape
 
-Average test-period rank IC of the experiments of each kind (over models and
-topic models). In brackets the t statistic of the group's average IC per
-period, which allows for the experiments of a group being forecasts of the
-same returns. Critical values: 2.39, 2.25, 2.11.
+Average test-period rank IC of the base experiments of each kind (over models
+and the six topic models). In brackets the t statistic of the group's average
+IC per period, which allows for the experiments of a group being forecasts of
+the same returns. Critical values: 2.39, 2.25, 2.11.
 
 | Features | Monthly | Biweekly | Weekly | Weekly: experiments with positive IC |
 |---|---|---|---|---|
 | Price only | 0.008 (0.4) | 0.011 (0.7) | 0.024 (1.9) | 8 of 8 |
-| Narrative exposures | 0.002 (0.2) | -0.003 (-0.5) | 0.001 (0.3) | 17 of 30 |
-| Firm-level news | -0.005 (-1.4) | 0.000 (-0.1) | 0.000 (0.1) | 16 of 31 |
-| Both text blocks | 0.001 (0.1) | -0.002 (-0.3) | 0.001 (0.1) | 19 of 30 |
-| Price and text | 0.009 (0.6) | 0.001 (0.1) | 0.011 (1.2) | 29 of 30 |
+| Narrative exposures | 0.002 (0.2) | -0.001 (-0.2) | 0.003 (0.6) | 28 of 44 |
+| Firm-level news | -0.002 (-0.4) | 0.000 (-0.1) | 0.001 (0.7) | 30 of 47 |
+| Both text blocks | -0.001 (-0.1) | 0.000 (0.0) | 0.002 (0.5) | 31 of 44 |
+| Price and text | 0.008 (0.6) | 0.002 (0.3) | 0.013 (1.6) | 43 of 44 |
 | Placebo exposures | 0.012 (0.8) | 0.008 (0.7) | 0.008 (1.2) | 6 of 7 |
 
 No group is distinguishable from zero. The text-only groups are below the
-placebo at every frequency. The standard error of one
-experiment's mean IC is about 0.018 monthly, 0.012 biweekly and 0.010 weekly
-(medians).
+placebo at every frequency. The standard error of one experiment's mean IC is
+about 0.018 monthly, 0.012 biweekly and 0.010 weekly (medians).
 
-Of the 405 single experiments with a forecast, 7 have a test t statistic
-beyond the critical value, 3 above it and 4 below; chance alone would give
-about 20. The three above are monthly random forests (on price and MiniLM
-text, on LDA exposures and on MiniLM text; IC 0.033 to 0.042).
+Of the 581 base experiments with a forecast, 15 have a test t statistic beyond
+the critical value, 11 above it and 4 below; chance alone would give about 29.
 
 ### 4.2 Validation does not carry over
 
-Across experiments the rank correlation between validation IC and test IC is
--0.30 (monthly), -0.28 (biweekly) and 0.06 (weekly). The ten experiments with
-the highest validation IC have an average test IC of -0.005, -0.008 and 0.002.
+Across the base experiments on real features the rank correlation between
+validation IC and test IC is -0.22 (monthly), -0.12 (biweekly) and 0.14
+(weekly). The ten experiments with the highest validation IC have an average
+test IC of -0.001, -0.010 and 0.004.
 
-In the validation period 13 experiments have a t statistic above the critical
-value. Eleven of them are EBMs or XGBoost models, the two models that stop
-boosting where the error on the validation rows is lowest. The 14 validation
-months (27 fortnights, 53 weeks) do three jobs: early stopping, the choice of
-hyperparameters and the choice between experiments. A high validation IC is
-weak evidence, and the test period says so.
+In the validation period 17 base experiments have a t statistic above the
+critical value. Twelve of them are EBMs or XGBoost models, the two models that
+stop boosting where the error on the validation rows is lowest. The 14
+validation months (27 fortnights, 53 weeks) do three jobs: early stopping, the
+choice of hyperparameters and the choice between experiments. A high
+validation IC is weak evidence, and the test period says so.
 
 ### 4.3 Topic model against topic model
 
-Average IC of the 24 text-only experiments of each topic model (exposures, firm
-news, both; eight models each), with the t statistic of the group average:
+Average IC of the text-only base experiments of each topic model (exposures,
+firm news, both; eight models each), with the t statistic of the group
+average:
 
 | Topic model | Validation: monthly | biweekly | weekly | Test: monthly | biweekly | weekly |
 |---|---|---|---|---|---|---|
@@ -505,16 +564,20 @@ news, both; eight models each), with the t statistic of the group average:
 | LDA, every article | -0.008 (-0.8) | 0.010 (1.0) | 0.001 (0.2) | -0.003 (-0.3) | 0.000 (0.0) | 0.002 (0.4) |
 | MiniLM clusters | -0.001 (-0.1) | 0.010 (1.4) | 0.005 (0.7) | 0.004 (0.7) | -0.004 (-0.6) | -0.001 (-0.1) |
 | FinBERT classes | 0.022 (1.8) | 0.016 (2.2) | 0.012 (1.4) | -0.009 (-0.6) | -0.005 (-1.0) | -0.001 (-0.2) |
+| NoLBERT clusters | 0.012 (2.6) | 0.010 (1.5) | 0.009 (2.1) | -0.003 (-0.4) | 0.003 (0.5) | 0.006 (1.4) |
+| NoLBERT, 20 clusters | 0.000 (0.0) | -0.007 (-0.8) | 0.007 (1.0) | 0.006 (0.5) | 0.001 (0.1) | 0.004 (0.7) |
 
-FinBERT against LDA, period by period (`contrasts.csv`):
+Topic model against topic model, period by period (`contrasts.csv`):
 
 | | Monthly | Biweekly | Weekly |
 |---|---|---|---|
-| Validation: difference in IC (t) | +0.032 (3.2) | +0.009 (1.2) | +0.021 (2.2) |
-| Test: difference in IC (t) | -0.014 (-0.9) | -0.008 (-1.7) | -0.004 (-0.7) |
+| FinBERT minus LDA, validation (t) | +0.032 (3.2) | +0.009 (1.2) | +0.021 (2.2) |
+| FinBERT minus LDA, test (t) | -0.014 (-0.9) | -0.008 (-1.7) | -0.004 (-0.7) |
+| NoLBERT minus LDA, validation (t) | +0.022 (1.8) | +0.003 (0.3) | +0.019 (3.1) |
+| NoLBERT minus LDA, test (t) | -0.008 (-0.8) | +0.001 (0.1) | +0.003 (0.7) |
 
-The experiment that validation selects for each topic model, among all 32 that
-use it, and its test result:
+The experiment that validation selects for each topic model, among all 32 base
+experiments that use it, and its test result:
 
 | Topic model | Rebalancing | Chosen on validation | Validation IC (t) | Test IC (t) | Net Sharpe |
 |---|---|---|---|---|---|
@@ -530,46 +593,53 @@ use it, and its test result:
 | FinBERT classes | Monthly | Text, EBM | 0.063 (3.3) | -0.005 (-0.2) | -0.15 |
 | FinBERT classes | Biweekly | Price and text, XGBoost | 0.058 (3.4) | 0.017 (0.8) | 0.37 |
 | FinBERT classes | Weekly | Text, EBM | 0.038 (1.6) | -0.022 (-2.6) | -2.41 |
+| NoLBERT clusters | Monthly | Price and text, sparse IPCA | 0.068 (1.8) | 0.006 (0.1) | -0.05 |
+| NoLBERT clusters | Biweekly | Price and text, EBM | 0.029 (1.4) | 0.008 (0.5) | 0.05 |
+| NoLBERT clusters | Weekly | Text, EBM | 0.028 (1.7) | 0.005 (0.5) | -0.20 |
+| NoLBERT, 20 clusters | Monthly | Price and text, sparse IPCA | 0.045 (0.9) | 0.007 (0.2) | -0.29 |
+| NoLBERT, 20 clusters | Biweekly | Text, EBM | 0.039 (1.7) | 0.005 (0.4) | -0.67 |
+| NoLBERT, 20 clusters | Weekly | Price and text, EBM | 0.035 (2.0) | 0.025 (1.6) | 0.10 |
 
-- **There is no order.** FinBERT features look best in validation and are last
-  in the test period at all three frequencies; LDA is at the bottom in
-  validation and first in the test period. Neither test-period difference is
-  significant. Of the twelve selected experiments one has a positive net
-  Sharpe ratio, and the one with a significant test IC has it with the wrong
-  sign.
-- **Every article instead of 150 a day changes nothing for the better.** The
-  attention shocks become more reliable (0.46 against 0.35 after 2019) and the
-  test ICs are not higher.
+- **There is no reliable order.** FinBERT features look best in validation and
+  are last in the test period at all three frequencies; LDA is at or next to
+  the bottom in validation and near the top in the test period. NoLBERT is
+  the exception to the reversal: fourth (biweekly) and second (weekly) in
+  validation and first in the test period at both, never significantly.
+- **More articles or fewer topics change nothing for the better.** Every
+  article instead of 150 a day, or 20 topics instead of 60, makes the
+  attention shocks more reliable, and the test ICs are not significantly
+  higher (20 topics are higher only monthly: 0.006 against -0.003, t = 1.3).
 - **A finance-specific classifier does not help.** The FinBERT classifier is
   the only component trained on labelled finance text, and it was published
-  inside the test period. Its classes are the worst of the four in the test
+  inside the test period. Its classes are the worst of the six in the test
   period.
-- **Why LDA and not BERT, when the earlier paper had it the other way?** The
-  differences between topic models here are noise around zero, in both
-  directions. The earlier ranking came from in-sample topic models and a
-  coherence comparison on unequal terms (section 3).
+- **Why not BERT over LDA, as in the earlier paper?** The differences between
+  topic models here are noise around zero, in both directions. The earlier
+  ranking came from in-sample topic models and a coherence comparison on
+  unequal terms (section 3).
 
 ### 4.4 Text against price
 
-For each model and topic model, the experiment with price and text features is
-compared with the same model on price features alone, period by period (32
-pairs per frequency, 30 of them with a forecast from both).
+For each model and topic model, the base experiment with price and text
+features is compared with the same model on price features alone, period by
+period (48 pairs per frequency, 44 or 45 of them with a forecast from both).
 
 | | Monthly | Biweekly | Weekly |
 |---|---|---|---|
-| Text raises the IC | 18 of 30 | 7 of 30 | 0 of 30 |
+| Text raises the IC | 24 of 45 | 12 of 45 | 2 of 44 |
 | significantly (t above the critical value) | 0 | 0 | 0 |
-| Text lowers the IC significantly | 1 | 0 | 0 |
-| Average change in IC | 0.000 | -0.010 | -0.013 |
+| Text lowers the IC significantly | 1 | 1 | 0 |
+| Average change in IC | -0.001 | -0.009 | -0.011 |
 | Lower squared error (Diebold-Mariano t > 2) | 0 | 0 | 0 |
-| Higher squared error (t < -2) | 2 | 1 | 2 |
-| Higher net Sharpe ratio | 17 of 30 | 10 of 30 | 10 of 30 |
+| Higher squared error (t < -2) | 3 | 1 | 2 |
+| Higher net Sharpe ratio | 27 of 45 | 17 of 45 | 18 of 44 |
 | significantly (bootstrap p < 0.05) | 1 | 2 | 0 |
+| significantly lower | 1 | 0 | 0 |
 
 Where prices carry something (weekly), 41 to 121 additional text features
-dilute it in every single case. Four of the 90 differences in Sharpe ratio are
-"significant" at 5% (three gains and one loss: monthly EBM with FinBERT
-features, -1.83 against 0.37), about the four or five that chance gives.
+dilute it in 42 of 44 cases. Four of the 134 differences in Sharpe ratio are
+"significant" at 5% (three gains, one loss), fewer than the six or seven that
+chance gives.
 
 ### 4.5 Placebo
 
@@ -577,7 +647,7 @@ The placebo block is the narrative exposure to the attention shocks of 126
 trading days earlier: the same construction with news that cannot be related
 to the day's returns. The comparison is paired: the IC of the exposures to LDA
 attention minus the IC of the placebo, per period, averaged over the seven
-models that produce a forecast from both.
+base models that produce a forecast from both.
 
 | Period | Rebalancing | Periods | IC, real exposures | IC, placebo | Difference | t |
 |---|---|---|---|---|---|---|
@@ -606,17 +676,18 @@ of earnings seasons.
 
 ### 4.6 The weekly price effect
 
-| Price features only | Validation IC | Test IC | Test t | 2022-23 | 2024 | Long-short Sharpe, gross | net | Turnover per week | Break-even cost (bp) |
-|---|---|---|---|---|---|---|---|---|---|
-| OLS | 0.020 | 0.027 | 1.6 | 0.025 | 0.031 | 0.91 | 0.05 | 122% | 10.6 |
-| Ridge | 0.022 | 0.027 | 1.7 | 0.025 | 0.031 | 0.96 | 0.03 | 128% | 10.3 |
-| Lasso | 0.002 | 0.021 | 1.4 | 0.020 | 0.023 | 1.05 | 0.17 | 143% | 11.9 |
-| IPCA | 0.026 | 0.031 | 1.9 | 0.033 | 0.027 | 1.07 | 0.13 | 131% | 11.4 |
-| Sparse IPCA | 0.004 | 0.014 | 0.9 | 0.013 | 0.015 | 0.03 | -0.20 | 49% | 1.2 |
-| XGBoost | 0.023 | 0.024 | 1.8 | 0.027 | 0.017 | 0.50 | -0.27 | 119% | 6.5 |
-| Random forest | 0.023 | 0.015 | 1.3 | 0.015 | 0.015 | 0.44 | -0.67 | 123% | 4.0 |
-| EBM | 0.025 | 0.030 | 2.1 | 0.032 | 0.025 | 0.76 | -0.15 | 128% | 8.4 |
-| Average of the eight | 0.018 | 0.024 | 1.9 | 0.024 | 0.023 | 0.93 | -0.14 | 118% | |
+| Price features only | Validation IC | Test IC | Test t | 2022-23 | 2024 | Long-short Sharpe, gross | net | Turnover per week | Break-even cost (bp) | Buffered: net | turnover |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| OLS | 0.020 | 0.027 | 1.6 | 0.025 | 0.031 | 0.91 | 0.05 | 122% | 10.6 | 0.09 | 89% |
+| Ridge | 0.022 | 0.027 | 1.7 | 0.025 | 0.031 | 0.96 | 0.03 | 128% | 10.3 | 0.16 | 95% |
+| Lasso | 0.002 | 0.021 | 1.4 | 0.020 | 0.023 | 1.05 | 0.17 | 143% | 11.9 | 0.06 | 110% |
+| IPCA | 0.026 | 0.031 | 1.9 | 0.033 | 0.027 | 1.07 | 0.13 | 131% | 11.4 | 0.23 | 99% |
+| Sparse IPCA | 0.004 | 0.014 | 0.9 | 0.013 | 0.015 | 0.03 | -0.20 | 49% | 1.2 | 0.12 | 26% |
+| XGBoost | 0.023 | 0.024 | 1.8 | 0.027 | 0.017 | 0.50 | -0.27 | 119% | 6.5 | -0.12 | 99% |
+| Random forest | 0.023 | 0.015 | 1.3 | 0.015 | 0.015 | 0.44 | -0.67 | 123% | 4.0 | -0.45 | 99% |
+| EBM | 0.025 | 0.030 | 2.1 | 0.032 | 0.025 | 0.76 | -0.15 | 128% | 8.4 | 0.01 | 96% |
+| Ensemble of the eight | 0.024 | 0.030 | 1.9 | 0.030 | 0.029 | 1.13 | 0.17 | 127% | 11.8 | 0.21 | 97% |
+| Average of the eight | 0.018 | 0.024 | 1.9 | 0.024 | 0.023 | 0.93 | -0.14 | 118% | | | |
 
 The last row gives the average IC, the t statistic of the average IC per week
 and the Sharpe ratio of the equal-weighted average of the eight portfolios.
@@ -632,9 +703,11 @@ and the Sharpe ratio of the equal-weighted average of the eight portfolios.
   momentum. The average portfolio has a market beta of 0.19 and its
   three-factor alpha before costs has t = 1.2. The average IC is 0.037 in the
   45 weeks in which the market rose and 0.007 in the 36 in which it fell.
-- It does not pay. Costs would have to stay below 1 to 12 basis points per
-  trade for the eight portfolios to break even, with a turnover above 110% a
-  week for all but one.
+- It does not pay much. Costs would have to stay below 1 to 12 basis points
+  per trade for the eight portfolios to break even, with a turnover above
+  110% a week for all but one. The ensemble of the eight and the buffer
+  together reach a net Sharpe ratio of 0.21; this combination was not chosen
+  in advance and is one of many.
 - Portfolios are formed at the closing prices that end the reversal signal,
   so bid-ask bounce is included.
 - At the monthly and biweekly frequencies the price features show nothing
@@ -643,16 +716,16 @@ and the Sharpe ratio of the equal-weighted average of the eight portfolios.
 ### 4.7 The two halves of the test period
 
 We decided before the first run to report 2022-23 and 2024 separately, because
-the 2024 news comes from a second scrape (section 2.1). Average IC by kind of
-feature set, with the t statistic of the group average:
+the 2024 news comes from a second scrape (section 2.1). Average IC of the base
+experiments by kind of feature set, with the t statistic of the group average:
 
 | Features | 2022-23: monthly | biweekly | weekly | 2024: monthly | biweekly | weekly |
 |---|---|---|---|---|---|---|
 | Price only | -0.014 (-0.6) | 0.005 (0.2) | 0.024 (1.4) | 0.050 (1.5) | 0.023 (0.8) | 0.023 (1.3) |
-| Narrative exposures | 0.011 (1.6) | 0.005 (0.7) | 0.007 (1.3) | -0.018 (-1.1) | -0.021 (-2.3) | -0.010 (-1.2) |
-| Firm-level news | -0.005 (-0.9) | -0.001 (-0.2) | 0.001 (0.7) | -0.005 (-2.0) | 0.001 (0.5) | -0.002 (-1.0) |
-| Both text blocks | 0.013 (1.7) | 0.006 (0.9) | 0.007 (1.2) | -0.024 (-1.3) | -0.018 (-1.8) | -0.011 (-1.5) |
-| Price and text | 0.005 (0.2) | 0.002 (0.2) | 0.015 (1.2) | 0.016 (1.6) | -0.003 (-0.3) | 0.003 (0.4) |
+| Narrative exposures | 0.016 (2.3) | 0.009 (1.2) | 0.010 (1.9) | -0.027 (-1.6) | -0.021 (-2.1) | -0.011 (-1.2) |
+| Firm-level news | -0.002 (-0.4) | -0.001 (-0.2) | 0.002 (0.9) | -0.001 (-0.2) | 0.001 (0.3) | 0.000 (-0.2) |
+| Both text blocks | 0.015 (1.8) | 0.009 (1.3) | 0.009 (1.9) | -0.032 (-1.9) | -0.018 (-1.8) | -0.011 (-1.4) |
+| Price and text | 0.008 (0.4) | 0.004 (0.3) | 0.016 (1.5) | 0.008 (0.9) | -0.001 (-0.1) | 0.005 (0.7) |
 | Placebo exposures | 0.017 (0.8) | 0.009 (0.5) | 0.006 (0.7) | 0.002 (0.1) | 0.007 (0.5) | 0.012 (1.6) |
 
 Periods: 14, 28 and 54 in 2022-23; 7, 14 and 27 in 2024. Critical values:
@@ -660,47 +733,47 @@ Periods: 14, 28 and 54 in 2022-23; 7, 14 and 27 in 2024. Critical values:
 
 Narrative exposures have a positive IC in 2022-23 and a negative one in 2024
 at all three frequencies. The test of the difference between the halves
-(`halves.csv`) gives z = 1.6, 2.2 and 1.7 for the exposures and 1.9, 2.0 and
-1.9 for both text blocks, against critical values of 3.27, 2.61 and 2.29 for
-halves this short. By topic model it is beyond the critical value in two of
-twelve cases (LDA biweekly, z = 3.5; MiniLM weekly, z = 2.7). The three chosen
-experiments of section 1 show the same: an IC of 0.029, 0.025 and 0.022 in
-2022-23 and of -0.072, 0.000 and -0.016 in 2024, with net Sharpe ratios of
-1.13, 0.68 and -0.11 against -6.12, -0.49 and -2.23.
+(`halves.csv`) gives z = 2.4, 2.4 and 2.0 for the exposures and 2.5, 2.3 and
+2.2 for both text blocks, against critical values of 3.27, 2.61 and 2.29 for
+halves this short. By topic model the 2022-23 IC is the higher one in 16 of 18
+cases and the difference is beyond the critical value in three (LDA biweekly,
+z = 3.5; NoLBERT monthly, 3.5; MiniLM weekly, 2.7). The three experiments of
+section 1 do not all follow the pattern: an IC of -0.014, 0.025 and 0.022 in
+2022-23 and of 0.047, 0.000 and -0.016 in 2024, with net Sharpe ratios of
+-0.25, 0.68 and -0.11 against 0.90, -0.49 and -2.23.
 
 So there is a break in the exposures, with the same sign at all three
-frequencies and in 10 of the 12 topic-model cases, and it is not individually
-significant. Two readings fit it:
+frequencies and in most topic models, and it is not individually significant
+for the groups. Two readings fit it:
 
 - *The second scrape.* In 2024 the headlines are rebuilt from addresses,
   coverage halves, tagging changes and about seven weeks of news are missing
-  (section 2.1). Topic models fitted on earlier text may read this
-  text differently.
+  (section 2.1). Topic models fitted on earlier text may read this text
+  differently.
 - *Ordinary variation.* An exposure is a loading on past co-movement.
   Forecasts built on loadings do well or badly for months at a time, as factor
   returns do. In the validation period the same exposures were not
-  distinguishable from zero (-0.003, 0.014 and 0.003; t = -0.3, 1.5 and 0.5),
-  and against the placebo they are not
+  distinguishable from zero, and against the placebo they are not
   significantly better in 2022-23 either (section 4.5).
 
-Seven months cannot separate the two. What can be said is that 2022-23 alone
-does not show a significant effect either: no text cell of that half reaches
-its critical value.
+Seven months cannot separate the two.
 
 ## 5. Portfolios
 
-Test period, over the experiments of each frequency that take a position. A
-flat forecast (27 lasso experiments in all) holds nothing under the long-short
-rules and the universe under the long-only rules, and is left out.
+Test period, over the base experiments of each frequency that take a position
+(placebo included). A flat forecast (43 lasso experiments in all) holds nothing
+under the long-short rules and the universe under the long-only rules, and is
+left out.
 
 | Rule | Median net Sharpe: monthly | biweekly | weekly | Positive net Sharpe: monthly | biweekly | weekly | Weekly: turnover per period | cost per year | volatility |
 |---|---|---|---|---|---|---|---|---|---|
-| Decile long-short, equal weights | -0.18 | -0.46 | -0.56 | 46 of 133 | 37 of 136 | 22 of 136 | 77% | 8.0% | 12.7% |
-| Decile long-short, value weights | -0.30 | -0.43 | -0.66 | 46 of 133 | 39 of 136 | 30 of 136 | 93% | 9.6% | 17.8% |
-| Rank-weighted long-short | -0.23 | -0.59 | -0.60 | 35 of 133 | 31 of 136 | 22 of 136 | 53% | 5.5% | 7.8% |
-| Mean-variance long-short | -0.65 | -1.07 | -1.67 | 37 of 133 | 8 of 136 | 4 of 136 | 62% | 6.5% | 3.5% |
-| Long-only top decile, equal weights | 0.39 | 0.40 | 0.27 | 133 of 133 | 136 of 136 | 133 of 136 | 41% | 4.2% | 22.3% |
-| Long-only top decile, value weights | 0.45 | 0.42 | 0.28 | 127 of 133 | 119 of 136 | 104 of 136 | 47% | 4.9% | 21.0% |
+| Decile long-short, equal weights | -0.21 | -0.36 | -0.48 | 68 of 192 | 59 of 195 | 44 of 194 | 79% | 8.2% | 12.1% |
+| The same, buffered | -0.12 | -0.24 | -0.27 | 79 of 192 | 68 of 195 | 56 of 194 | 49% | 5.1% | 11.3% |
+| Decile long-short, value weights | -0.26 | -0.46 | -0.56 | 75 of 192 | 54 of 195 | 52 of 194 | 93% | 9.6% | 17.8% |
+| Rank-weighted long-short | -0.23 | -0.44 | -0.52 | 54 of 192 | 53 of 195 | 42 of 194 | 53% | 5.5% | 7.6% |
+| Mean-variance long-short | -0.61 | -0.95 | -1.63 | 43 of 192 | 25 of 195 | 4 of 194 | 63% | 6.6% | 3.4% |
+| Long-only top decile, equal weights | 0.38 | 0.43 | 0.30 | 192 of 192 | 195 of 195 | 191 of 194 | 41% | 4.3% | 22.3% |
+| Long-only top decile, value weights | 0.48 | 0.43 | 0.32 | 183 of 192 | 173 of 195 | 154 of 194 | 47% | 4.9% | 21.0% |
 
 The universe itself, for reference (Sharpe ratio and maximum drawdown):
 
@@ -713,69 +786,69 @@ The universe itself, for reference (Sharpe ratio and maximum drawdown):
 - **The median long-short portfolio loses money after costs** at every
   frequency and under every rule: a forecast without information still trades.
   Before costs the median equal-weighted decile portfolio has a Sharpe ratio
-  of 0.05, 0.05 and 0.11; after costs it returns -2.5%, -5.0% and -7.2% a
-  year, with a median maximum drawdown of -13%, -17% and -18%. None of the
+  of 0.03, 0.09 and 0.28; after costs it returns -2.8%, -4.6% and -5.1% a
+  year, with a median maximum drawdown of -14%, -16% and -17%. None of the
   equal-weighted decile portfolios has a three-factor alpha with a t statistic
-  above the critical value; 14, 22 and 43 have one below its negative.
-- **Mean-variance weighting does worst.** It has the lowest volatility (3.5% a
-  year at the weekly frequency), so the same costs weigh most on it.
-- **The long-only rules earn the market's return and a little less.** Their
+  above the critical value except one biweekly; 19, 26 and 52 have one below
+  its negative.
+- **The buffer is the best long-short rule after costs** at every frequency
+  (section 9).
+- **Mean-variance weighting does worst.** Its costs are lower than the decile
+  rule's but its volatility is far lower (3.4% a year at the weekly
+  frequency), so costs weigh most against its risk.
+- **The long-only rules earn about the market's return.** Their
   Sharpe ratios are positive because the universe's is. Against the universe
   with the same weighting, the median information ratio of the equal-weighted
-  top decile is -0.20, -0.48 and -0.59, and that of the value-weighted top
-  decile 0.03, -0.19 and -0.30.
+  top decile is -0.22, -0.45 and -0.57, and that of the value-weighted top
+  decile 0.07, -0.17 and -0.22.
 
-**Counting the search.** Net Sharpe ratios of the 136 experiments (the placebo
-is a control and not part of the search). For the long-only rules the return
-is measured against the universe, so the Sharpe ratio is an information ratio.
-"Expected best with no skill" is the average best Sharpe ratio over 5,000
-bootstrap resamples in which every portfolio's mean return is set to zero and
-their co-movement is kept; "p of the best" is the share of resamples with a
-best at least as high (White's reality check).
+**Counting the search.** Net Sharpe ratios of the 375 experiments of each
+frequency, variants included (the placebo is a control and not part of the
+search). For the long-only rules the return is measured against the universe,
+so the Sharpe ratio is an information ratio. "Expected best with no skill" is
+the average best Sharpe ratio over 5,000 bootstrap resamples in which every
+portfolio's mean return is set to zero and their co-movement is kept; "p of
+the best" is the share of resamples with a best at least as high (White's
+reality check).
 
 | Rule | Rebalancing | Best | which is | Median | Expected best with no skill | p of the best | SPA p | Significant at 5%, unadjusted | At a 10% false discovery rate |
 |---|---|---|---|---|---|---|---|---|---|
-| Decile long-short, equal weights | Monthly | 1.41 | LDA text, random forest | -0.18 | 1.36 | 0.41 | 0.14 | 3 | 0 |
-| | Biweekly | 1.63 | LDA text, XGBoost | -0.54 | 1.56 | 0.39 | 0.42 | 1 | 0 |
-| | Weekly | 0.77 | Price and LDA text, IPCA | -0.59 | 1.63 | 0.99 | 0.74 | 0 | 0 |
-| Decile long-short, value weights | Monthly | 1.47 | MiniLM exposures, random forest | -0.31 | 1.48 | 0.47 | 0.56 | 2 | 0 |
-| | Biweekly | 1.50 | LDA exposures, random forest | -0.43 | 1.65 | 0.61 | 0.62 | 3 | 0 |
-| | Weekly | 1.45 | LDA firm news, random forest | -0.66 | 1.73 | 0.74 | 0.76 | 0 | 0 |
-| Rank-weighted long-short | Monthly | 0.95 | LDA exposures (every article), random forest | -0.24 | 1.31 | 0.84 | 0.58 | 0 | 0 |
-| | Biweekly | 1.22 | LDA text, XGBoost | -0.62 | 1.53 | 0.76 | 0.68 | 0 | 0 |
-| | Weekly | 0.56 | FinBERT text, IPCA | -0.61 | 1.54 | 1.00 | 0.94 | 0 | 0 |
-| Mean-variance long-short | Monthly | 1.19 | LDA exposures (every article), random forest | -0.64 | 1.50 | 0.76 | 0.69 | 0 | 0 |
-| | Biweekly | 1.13 | LDA exposures (every article), IPCA | -1.07 | 1.67 | 0.93 | 0.86 | 0 | 0 |
-| | Weekly | 0.51 | LDA exposures (every article), XGBoost | -1.70 | 1.77 | 1.00 | 0.98 | 0 | 0 |
-| Long-only, equal weights | Monthly | 1.32 | Price and MiniLM text, ridge | -0.21 | 1.41 | 0.55 | 0.48 | 0 | 0 |
-| | Biweekly | 1.09 | LDA firm news (every article), lasso | -0.51 | 1.60 | 0.90 | 0.87 | 0 | 0 |
-| | Weekly | 0.81 | Price and LDA text, IPCA | -0.59 | 1.70 | 0.99 | 0.86 | 0 | 0 |
-| Long-only, value weights | Monthly | 2.08 | Price and LDA text, ridge | 0.00 | 1.47 | 0.07 | 0.03 | 5 | 0 |
-| | Biweekly | 1.45 | FinBERT text, sparse IPCA | -0.25 | 1.67 | 0.67 | 0.42 | 3 | 0 |
-| | Weekly | 2.05 | LDA firm news, random forest | -0.32 | 1.80 | 0.26 | 0.38 | 1 | 0 |
+| Decile long-short, equal weights | Monthly | 1.51 | NoLBERT-20 firm news, XGBoost on ranks | -0.25 | 1.55 | 0.49 | 0.22 | 4 | 0 |
+| | Biweekly | 1.63 | LDA text, XGBoost | -0.50 | 1.70 | 0.52 | 0.56 | 2 | 0 |
+| | Weekly | 0.97 | Price and NoLBERT text, XGBoost | -0.37 | 1.85 | 0.99 | 0.91 | 0 | 0 |
+| Buffered decile long-short | Monthly | 1.46 | LDA exposures, random forest | -0.15 | 1.54 | 0.53 | 0.15 | 3 | 0 |
+| | Biweekly | 1.52 | LDA text, XGBoost | -0.34 | 1.67 | 0.61 | 0.66 | 1 | 0 |
+| | Weekly | 1.11 | Price and NoLBERT text, XGBoost | -0.23 | 1.79 | 0.97 | 0.88 | 0 | 0 |
+| Decile long-short, value weights | Monthly | 2.21 | Price and NoLBERT-20 text, OLS on ranks | -0.25 | 1.62 | 0.09 | 0.08 | 8 | 0 |
+| | Biweekly | 1.50 | LDA exposures, random forest | -0.47 | 1.83 | 0.77 | 0.40 | 7 | 0 |
+| | Weekly | 1.45 | LDA firm news, random forest | -0.58 | 1.92 | 0.87 | 0.87 | 0 | 0 |
+| Rank-weighted long-short | Monthly | 0.98 | NoLBERT-20 exposures, lasso on ranks | -0.27 | 1.49 | 0.91 | 0.74 | 0 | 0 |
+| | Biweekly | 1.22 | LDA text, XGBoost | -0.53 | 1.66 | 0.86 | 0.82 | 0 | 0 |
+| | Weekly | 0.70 | Price and NoLBERT text, XGBoost | -0.35 | 1.74 | 1.00 | 0.99 | 0 | 0 |
+| Mean-variance long-short | Monthly | 1.19 | LDA exposures (every article), random forest | -0.60 | 1.64 | 0.87 | 0.82 | 0 | 0 |
+| | Biweekly | 1.13 | NoLBERT firm news, XGBoost | -0.89 | 1.81 | 0.97 | 0.73 | 0 | 0 |
+| | Weekly | 0.66 | LDA exposures (every article), sparse IPCA on ranks | -1.38 | 1.95 | 1.00 | 1.00 | 0 | 0 |
+| Long-only, equal weights | Monthly | 1.73 | LDA text (every article), XGBoost on ranks | -0.28 | 1.61 | 0.35 | 0.41 | 1 | 0 |
+| | Biweekly | 1.09 | LDA firm news (every article), lasso | -0.54 | 1.76 | 0.97 | 0.96 | 0 | 0 |
+| | Weekly | 1.27 | NoLBERT-20 exposures, XGBoost | -0.56 | 1.90 | 0.96 | 0.97 | 0 | 0 |
+| Long-only, value weights | Monthly | 2.08 | Price and LDA text, ridge | -0.02 | 1.65 | 0.15 | 0.06 | 9 | 0 |
+| | Biweekly | 1.54 | NoLBERT-20 text, IPCA | -0.32 | 1.85 | 0.75 | 0.58 | 7 | 0 |
+| | Weekly | 2.05 | LDA firm news, random forest | -0.32 | 1.99 | 0.40 | 0.60 | 4 | 0 |
 
-(Medians here are over the searched experiments; the first table of this
-section also includes the placebo experiments that take a position: 7, 8 and
-7.)
+The best portfolio is below what the best of 375 unskilled portfolios would
+show in 17 of the 21 rows and nowhere significantly above it. The lowest
+p-values are 0.06 (SPA) and 0.09 (reality check), for two monthly
+value-weighted rules; no portfolio passes the false-discovery threshold.
 
-In 14 of the 18 rows the best portfolio is below what the best of as many
-unskilled portfolios would show, and in none is it significantly above. The
-lowest p-value of the eighteen rows is 0.07 (reality check) or 0.03
-(SPA) for the monthly value-weighted long-only rule, one of eighteen rows; no
-portfolio passes the false-discovery threshold. The control makes the same
-point from the other side: under the monthly rank-weighted rule a placebo
-portfolio (1.46) beats all 136 real ones, and under the monthly decile rule
-the best placebo portfolio (1.38) would be second.
-
-**The chosen experiments under every rule**, test period, net Sharpe ratio
-(for the long-only rules that of the portfolio itself, not against the
+**The experiments of section 1 under every rule**, test period, net Sharpe
+ratio (for the long-only rules that of the portfolio itself, not against the
 universe):
 
-| | Long-short EW | Long-short VW | Rank | Mean-variance | Long-only EW | Long-only VW | Max drawdown, long-short EW |
-|---|---|---|---|---|---|---|---|
-| Monthly: FinBERT text, EBM | -0.15 | -0.28 | -0.27 | -0.75 | 0.31 | 0.20 | -17% |
-| Biweekly: price and FinBERT text, XGBoost | 0.37 | -0.08 | 0.36 | -0.30 | 0.49 | 0.58 | -17% |
-| Weekly: price and LDA text, EBM | -0.66 | -0.72 | -0.59 | -1.07 | 0.32 | 0.34 | -24% |
+| | Long-short EW | Buffered | Long-short VW | Rank | Mean-variance | Long-only EW | Long-only VW | Max drawdown, long-short EW |
+|---|---|---|---|---|---|---|---|---|
+| Monthly: price and NoLBERT text, sparse IPCA | -0.05 | 0.05 | -0.26 | -0.13 | 0.10 | 0.37 | 0.16 | -31% |
+| Biweekly: price and FinBERT text, XGBoost | 0.37 | 0.41 | -0.08 | 0.36 | -0.30 | 0.49 | 0.58 | -17% |
+| Weekly: price and LDA text, EBM | -0.66 | -0.33 | -0.72 | -0.59 | -1.07 | 0.32 | 0.34 | -24% |
 
 ## 6. Monthly, biweekly or weekly?
 
@@ -786,11 +859,14 @@ universe):
 | Years of test data | 1.75 | 1.62 | 1.56 |
 | Standard error of a mean IC, test (median) | 0.018 | 0.012 | 0.010 |
 | Standard error of an annual Sharpe ratio (median) | 0.75 | 0.79 | 0.80 |
-| Median turnover per period, decile long-short | 119% | 91% | 77% |
-| Median cost per year, decile long-short | 2.9% | 4.7% | 8.0% |
-| Median Sharpe, decile long-short (placebo included): gross | 0.05 | 0.05 | 0.11 |
-| net | -0.18 | -0.46 | -0.56 |
-| Fitting time, 144 experiments (4 cores) | 8 min | 11 min | 17 min |
+| Median turnover per period, decile long-short | 119% | 89% | 79% |
+| buffered | 93% | 60% | 49% |
+| Median cost per year, decile long-short | 2.9% | 4.6% | 8.2% |
+| buffered | 2.2% | 3.1% | 5.1% |
+| Median net Sharpe, decile long-short | -0.21 | -0.36 | -0.48 |
+| buffered | -0.12 | -0.24 | -0.27 |
+| Median gross Sharpe, decile long-short | 0.03 | 0.09 | 0.28 |
+| Fitting time, all 364 fitted experiments (4 cores) | 15 min | 21 min | 33 min |
 
 - **More periods do not buy certainty about the Sharpe ratio.** Its standard
   error depends on the number of years, 0.75 to 0.80 here at any frequency.
@@ -798,10 +874,12 @@ universe):
   weekly IC and a monthly IC are different quantities, and what a strategy
   earns in a year is what matters.
 - **More rows do not help a model that has nothing to find.** With four times
-  the rows the validation period chooses no deeper trees, no more factors and
-  no more pairwise terms (section 7).
-- **Costs rise with the number of rebalances**, from 2.9% to 8.0% a year. They
-  take about 0.2 off the median Sharpe ratio monthly and about 0.7 weekly.
+  the rows the validation period still chooses mostly simple settings (section
+  7).
+- **Costs rise with the number of rebalances**, from 2.9% to 8.2% a year for
+  the median decile portfolio. They take about 0.2 off its Sharpe ratio
+  monthly and about 0.8 weekly, which is why the buffer helps most at the
+  higher frequencies.
 - **Weekly is where the only stable pattern is**, and it is a price pattern
   that does not survive costs.
 - A caution for the higher frequencies: in holding periods that reach into
@@ -812,60 +890,68 @@ universe):
 For this project the answer is that the frequency does not matter, because
 there is no signal for it to sharpen. The weekly panel is the place to look if
 a point-in-time news source becomes available: it has the most periods, and
-costs can be dealt with separately.
+costs can be dealt with by the buffer.
 
 ## 7. Models
 
-Average IC of each model over the 18 feature sets (the placebo included), with
-the t statistic of the average IC per period:
+Average IC of each model over the 26 feature sets (the placebo included), with
+the t statistic of the average IC per period. The eight base models first,
+then the variants of section 9:
 
-| Model | Validation: monthly | biweekly | weekly | Test: monthly | biweekly | weekly | Feature sets with positive test IC, of 18: M / 2W / W |
-|---|---|---|---|---|---|---|---|
-| OLS | -0.016 (-1.1) | 0.003 (0.6) | -0.002 (-0.3) | -0.003 (-0.6) | -0.001 (-0.1) | 0.005 (1.1) | 5 / 7 / 13 |
-| Ridge | -0.015 (-1.0) | 0.009 (0.9) | 0.001 (0.2) | 0.002 (0.4) | -0.004 (-0.5) | 0.007 (1.3) | 9 / 6 / 13 |
-| Lasso | 0.009 (0.6) | 0.009 (1.1) | 0.007 (1.1) | -0.003 (-0.3) | -0.004 (-0.6) | 0.004 (0.8) | 3 / 3 / 7 |
-| IPCA | 0.008 (0.5) | 0.001 (0.1) | -0.002 (-0.3) | 0.003 (0.2) | 0.005 (0.7) | 0.005 (1.4) | 9 / 13 / 12 |
-| Sparse IPCA | 0.014 (1.4) | 0.001 (0.0) | -0.006 (-0.7) | 0.002 (0.2) | 0.004 (0.4) | 0.001 (0.2) | 8 / 12 / 8 |
-| XGBoost | 0.003 (0.4) | 0.014 (2.6) | 0.008 (1.6) | 0.006 (1.1) | 0.002 (0.7) | 0.006 (1.9) | 12 / 9 / 16 |
-| Random forest | -0.006 (-0.5) | 0.010 (0.9) | 0.006 (1.0) | 0.013 (1.3) | 0.005 (0.8) | 0.007 (1.9) | 12 / 12 / 17 |
-| EBM | 0.021 (1.6) | 0.024 (2.3) | 0.022 (2.2) | -0.002 (-0.3) | -0.008 (-1.1) | 0.002 (0.3) | 8 / 5 / 9 |
+| Model | Validation: monthly | biweekly | weekly | Test: monthly | biweekly | weekly | Feature sets with positive test IC: M / 2W / W | Median net Sharpe, test: M / 2W / W |
+|---|---|---|---|---|---|---|---|---|
+| OLS | -0.012 (-1.6) | 0.000 (-0.1) | -0.002 (-0.4) | -0.003 (-0.5) | 0.000 (-0.1) | 0.005 (1.3) | 10 / 10 / 19 | -0.23 / -0.52 / -0.50 |
+| Ridge | -0.011 (-1.2) | 0.007 (0.7) | 0.003 (0.4) | 0.003 (0.4) | -0.001 (-0.2) | 0.008 (1.5) | 13 / 12 / 21 | 0.00 / -0.38 / -0.22 |
+| Lasso | 0.007 (0.7) | 0.010 (1.2) | 0.007 (1.3) | -0.005 (-0.4) | -0.004 (-0.5) | 0.004 (0.9) | 3 / 3 / 9 | -0.11 / -0.90 / -0.51 |
+| IPCA | 0.015 (1.2) | 0.001 (0.2) | 0.002 (0.4) | 0.002 (0.2) | 0.004 (0.8) | 0.005 (1.5) | 13 / 18 / 18 | -0.32 / -0.18 / -0.27 |
+| Sparse IPCA | 0.016 (1.5) | 0.000 (0.0) | -0.002 (-0.3) | 0.000 (0.0) | 0.003 (0.4) | 0.001 (0.3) | 11 / 16 / 14 | -0.30 / -0.16 / -0.28 |
+| XGBoost | 0.002 (0.3) | 0.012 (2.5) | 0.010 (1.8) | 0.004 (0.7) | 0.002 (0.7) | 0.008 (2.4) | 16 / 13 / 24 | -0.34 / -0.26 / -0.62 |
+| Random forest | -0.005 (-0.5) | 0.006 (0.6) | 0.006 (0.9) | 0.013 (1.4) | 0.006 (1.2) | 0.008 (2.0) | 19 / 20 / 24 | 0.02 / -0.36 / -0.67 |
+| EBM | 0.022 (2.5) | 0.023 (2.4) | 0.022 (2.2) | 0.002 (0.3) | -0.005 (-0.7) | 0.005 (0.9) | 16 / 11 / 17 | -0.35 / -0.77 / -0.90 |
+| Ensemble of the eight | 0.003 (0.4) | 0.010 (1.0) | 0.007 (0.9) | 0.004 (0.6) | 0.001 (0.1) | 0.008 (1.7) | 16 / 17 / 20 | -0.21 / -0.30 / -0.29 |
+| OLS on ranks | -0.014 (-1.9) | -0.002 (-0.3) | -0.002 (-0.4) | -0.004 (-0.6) | -0.001 (-0.1) | 0.008 (1.8) | 10 / 11 / 20 | -0.42 / -0.74 / -0.46 |
+| Ridge on ranks | -0.006 (-0.7) | 0.006 (0.8) | 0.005 (0.7) | -0.002 (-0.2) | -0.005 (-0.6) | 0.007 (1.4) | 11 / 6 / 22 | -0.15 / -0.61 / -0.23 |
+| Lasso on ranks | 0.011 (1.2) | 0.009 (2.1) | 0.011 (2.5) | 0.006 (0.5) | -0.005 (-0.6) | 0.008 (1.7) | 6 / 4 / 18 | -0.01 / -0.61 / -0.35 |
+| IPCA on ranks | 0.019 (1.7) | 0.008 (1.4) | 0.006 (1.1) | -0.003 (-0.4) | -0.003 (-0.5) | 0.003 (0.6) | 12 / 13 / 16 | -0.31 / -0.73 / -0.23 |
+| Sparse IPCA on ranks | 0.018 (1.5) | -0.001 (-0.1) | 0.005 (0.7) | -0.007 (-1.0) | -0.001 (-0.1) | 0.005 (0.7) | 9 / 15 / 16 | -0.39 / -0.41 / -0.35 |
+| XGBoost on ranks | 0.014 (1.1) | 0.022 (2.1) | 0.016 (1.7) | 0.016 (1.3) | 0.007 (0.8) | 0.013 (2.2) | 23 / 20 / 25 | -0.01 / -0.31 / -0.24 |
 
-(The lasso averages and its counts in the last column are over the feature
-sets where its forecast is not flat: 7, 10 and 10 of 18.)
+(The lasso averages and counts are over the feature sets where its forecast is
+not flat: 10, 13 and 12 of 26; on ranks 10, 18 and 19.)
 
-- **No model stands out in the test period.** No cell reaches its critical
-  value. Boosted trees, forest and EBM together against the five linear models
-  (`contrasts.csv`): +0.006 (t = 1.1), -0.001 (-0.2) and 0.000 (0.1).
+- **No model stands out in the test period.** Two of the 45 cells pass their
+  critical value, both weekly XGBoost (2.4, and 2.2 on ranks, against 2.11),
+  about what chance gives, with an IC (0.008 and 0.013) below what the price
+  features give alone at that frequency (0.024). Boosted trees, forest and EBM
+  together against the five linear base models (`contrasts.csv`): +0.007
+  (t = 1.4), +0.001 (0.2) and +0.002 (0.7).
 - **The EBM is the clearest case of validation flattering a model.** It has
-  the best validation average at every frequency and is last or second to last
-  in the test period at two of three. In validation the three flexible models
+  the best validation average of the base models at every frequency; in the
+  test period it is fourth, eighth and sixth of the eight by IC, and last or
+  second to last by median net Sharpe ratio. In validation the three flexible models
   beat the linear ones significantly at the biweekly and weekly frequencies
-  (+0.013, t = 4.1; +0.014, t = 3.3); in the test period the difference is
+  (+0.011, t = 3.4; +0.012, t = 2.8); in the test period the difference is
   gone. They stop boosting, or are tuned, on the rows they are then scored on.
 - **The EBM forecasts the test period with the model that validation chose.**
   The library cannot refit its two stages with separate numbers of rounds, so
   the model fitted on the training period and stopped on the validation
   period is used as it is. The other models are refitted on training plus
   validation data with the chosen setting.
-- **What validation chose.** The linear models and the forest are pushed to
-  their most regularised settings: the lasso to the empty model in 31 of 54 cases (after
-  the refit 27 are still empty), ridge to the largest of its 25 penalties in
-  34, sparse IPCA to one factor in 40 and to its strongest penalty in 43, IPCA
-  to one factor in 29, the random forest to depth 3 in 42. XGBoost and the EBM
-  go the other way about as often as not: XGBoost takes its deepest trees
-  (depth 5) in 21 of 54 cases and depth 1 in 17, and the EBM takes its ten
-  pairwise terms in 31. The median gap in validation R2 between the chosen
-  setting and the next best is 0.003 percentage points.
-- **OLS** on 8 to 129 noisy features has a validation R2 of -0.47%, -0.13%
-  and -0.06% (medians); every other model is within 0.02% of zero.
-- **Sparse IPCA against IPCA.** The earlier project's estimator keeps a median
-  of 68% of the features (between 27% and 100%). It does not forecast better:
-  0.002, 0.004 and 0.001 against 0.003, 0.005 and 0.005. On the weekly price
-  features it has half of IPCA's IC (0.014 against 0.031).
-- Fitting all 432 experiments takes 36 minutes on four laptop cores: 17 for
-  the EBMs, 9.5 for the forests, 3.7 for sparse IPCA, 3.2 for XGBoost, 2 for
-  IPCA.
-  The linear models are solved from second moments in milliseconds.
+- **What validation chose** (78 experiments per base model). The linear models
+  and the forest are mostly pushed to their most regularised settings: the lasso to
+  the empty model in 48 cases (after the refit 43 are still empty), ridge to
+  the largest of its 25 penalties in 51, sparse IPCA to one factor in 52 and
+  to its strongest penalty in 56, IPCA to one factor in 35, the random forest
+  to depth 3 in 60. XGBoost and the EBM go the other way about as often as
+  not: XGBoost takes its deepest trees (depth 5) in 30 cases and depth 1 in
+  22, and the EBM takes its ten pairwise terms in 47.
+- **Sparse IPCA against IPCA.** The earlier project's estimator does not
+  forecast better: 0.000, 0.003 and 0.001 against 0.002, 0.004 and 0.005. On
+  the weekly price features it has half of IPCA's IC (0.014 against 0.031).
+- Fitting all 1,092 fitted experiments takes 69 minutes on four laptop cores:
+  25 for the EBMs, 13 for the forests, 11 for the two sparse IPCAs, 11 for the
+  two XGBoosts, 7 for the two IPCAs and 2 for the six linear fits, which are
+  solved from second moments. The 624 base experiments take 53 minutes.
 
 ### 7.1 How much of a result is the seed?
 
@@ -902,101 +988,278 @@ For comparison, the sampling error of one experiment's test IC is 0.018,
 Only the XGBoost reruns are reported here (the EBM reruns used the earlier
 protocol and are left out); the forests were not rerun. Averaging a tree model
 over
-seeds would remove this noise at ten times the fitting time (section 9).
+seeds would remove this noise at ten times the fitting time (section 11).
 
-## 8. Opening the glass box
+## 8. NoLBERT
+
+NoLBERT (Kakhbod and Li 2025, `alikLab/NoLBERT`) is a DeBERTa-v3 language
+model pretrained only on text published between 1976 and 1995. It cannot have
+read anything about our sample, which no other text component here can claim:
+MiniLM was published in 2021 and the FinBERT classifier in 2022, and LDA is
+fitted on our own training text. Our teammate adapted it, embedded the
+articles and fitted its topics (run of 8 October 2026); this section reports
+that work and what it gives inside this pipeline.
+
+### 8.1 Adaptation
+
+A masked-language model is not a sentence encoder: mean-pooled NoLBERT vectors
+are anisotropic and cluster poorly. The checkpoint was trained contrastively
+(InfoNCE over two chunks of the same article, in-batch negatives, temperature
+0.05, every parameter trained, learning rate 2e-5, batches of 32 pairs, 128
+tokens, bf16) for 150 minutes on one RTX 3060: 6,205 steps, 198,560 pairs.
+Held-out in-batch top-1 retrieval rose from 0.08 to 0.89
+(`results/encoders/nolbert_ft/train_log.json`).
+
+Pooling was chosen by a probe on 11,988 documents (`nolbert_probe.json`, NPMI
+of 60 clusters on our vocabulary):
+
+| Pooling of the adapted model | NPMI | Agreement with MiniLM's partition (AMI) |
+|---|---|---|
+| Last layer, mean, no whitening | 0.343 | 0.45 |
+| Top four layers, mean | 0.268 | 0.48 |
+| Top four layers, mean, all-but-the-top whitening | 0.282 | 0.45 |
+| Top four layers, SIF, whitening | 0.273 | 0.44 |
+| MiniLM, last layer, for reference | 0.308 | 1.00 |
+
+On the adapted model the plain last-layer mean is best; whitening the top
+four layers adds little (0.268 to 0.282), and the same probe shows it lowering
+MiniLM's coherence (0.308 to 0.293). The two encoders agree on about half of
+the partition.
+
+Two caveats travel with every NoLBERT number:
+
+- **The adaptation saw validation-period text.** Pairs were drawn from articles
+  dated before 1 September 2020, the cutoff of the teammate's other pipeline,
+  which is eight months into our validation period. That is text, not
+  returns, and nothing from the test period; but it can flatter NoLBERT's
+  validation numbers, and the monthly headline choice of section 1 rests on
+  them. `scripts/03c_finetune_encoder.py` now cuts the pairs at the end of the
+  training period by default.
+- **It differs from MiniLM in two ways at once.** NoLBERT was adapted to our
+  corpus; MiniLM was used as published. A gap between them can come from the
+  adaptation as much as from the pretraining period. The clean comparison is
+  MiniLM adapted with the same recipe, which needs a GPU.
+
+### 8.2 What it gives
+
+- **Topics** (section 3): the most stable and most even partition of the
+  60-topic models, the least diverse top words, and attention shocks about as
+  reliable as LDA's.
+- **Selection.** Monthly, the validation period now chooses price and NoLBERT
+  text with sparse IPCA (validation IC 0.068, t = 1.8); in the test period it
+  has an IC of 0.006 (t = 0.1) and a net Sharpe ratio of -0.05. Within the
+  NoLBERT feature sets validation picks the EBM biweekly (price and text) and
+  weekly (text only), with test ICs of 0.008 and 0.005, neither significant.
+- **Forecasts.** On the text-only feature sets NoLBERT has the highest test IC
+  of the six topic models at the biweekly and weekly frequencies (0.003 and
+  0.006; weekly t = 1.4, 21 of 22 positive) and is ahead of each of the other
+  five in all ten paired comparisons at those frequencies, the largest t being
+  1.6. In validation it beats LDA significantly at the weekly frequency (t =
+  3.1 against 2.19). Monthly it is fifth of the six, ahead only of FinBERT,
+  and in 2024 its monthly IC (-0.031) is the second lowest.
+- **20 topics.** The same vectors in 20 clusters give far more reliable shocks
+  and no better forecasts: lower in validation at every frequency, about the
+  same in the test period (section 4.3).
+- **Search.** Price and NoLBERT text with XGBoost is the best weekly decile
+  long-short portfolio of the 375 (net Sharpe 0.97, buffered 1.11), against
+  1.85 and 1.79 expected from the best of 375 without skill.
+
+### 8.3 The same encoder in the teammate's other pipeline
+
+The teammate also ran the adapted encoder through the separate replication of
+Bybee, Kelly and Su (sparse IPCA with three factors, a mean-variance portfolio
+of the factors, 41 out-of-sample months), next to LDA and two MiniLM variants.
+These numbers come from that pipeline, which follows the earlier project's
+design (no validation period; section 2.5 lists its look-ahead); we did not
+re-run them:
+
+| Topics | Out-of-sample R2, demeaned | predictive | Sharpe ratio in sample | out of sample |
+|---|---|---|---|---|
+| LDA | 5.73% | 0.83% | 0.74 | 0.43 |
+| MiniLM | 7.28% | 0.14% | 0.66 | 0.51 |
+| MiniLM, spherical | 6.32% | 0.31% | 0.60 | 0.20 |
+| NoLBERT | 4.01% | 0.70% | 0.80 | 0.71 |
+| Equal-weighted market | | | | 0.69 |
+
+NoLBERT has the best out-of-sample Sharpe ratio there and is the only arm above
+the market, with every paired difference below one standard error and every
+bootstrap interval across zero.
+
+### 8.4 Reading
+
+The defensible claim is about the text layer: an encoder that cannot have seen
+the future gives a stable, even and reproducible decomposition of the news at
+no cost in forecasting power. The claim that it forecasts returns better is
+not supported, here or in the other pipeline.
+
+## 9. What we tried to improve the results
+
+Four levers, each a standard remedy for one weakness found in the previous
+runs: costs (the weekly price signal earns before costs and not after), noise
+in single models (section 7.1), outliers in the target (returns are not
+winsorised) and noise in the attention shocks (section 3). Each became a
+variant run on every feature set and frequency:
+
+| Lever | Variant | Compared with |
+|---|---|---|
+| Trade less | `ls_buf`: enter a leg in the top (bottom) decile, leave it below the top (bottom) fifth (Novy-Marx and Velikov 2016) | `ls_ew`, every base experiment |
+| Combine models | `ens`: the average of the eight base models' forecasts, as ranks, with equal weights | the average of its eight members, per feature set |
+| Robust target | `<model>_rk`: OLS, ridge, lasso, IPCA, sparse IPCA and XGBoost fitted on the cross-sectional rank of the return | the same model on the return |
+| Less noisy attention | `nolbert20`: 20 NoLBERT topics instead of 60 | `nolbert` |
+
+### 9.1 Decided on the validation period
+
+Before any test number of this run was looked at, the validation rows of
+`improvements.csv` were read and the decisions below written down:
+
+| | Monthly | Biweekly | Weekly | Decision |
+|---|---|---|---|---|
+| Buffer: net return, a year (t) | +0.1% (0.3) | +0.8% (1.9) | +1.9% (3.4) | adopt, at every frequency |
+| Buffer: turnover per period | 116% to 93% | 90% to 67% | 73% to 51% | |
+| Ensemble: IC against its members (t) | +0.000 (0.1) | +0.003 (0.9) | +0.002 (0.6) | no measurable gain; use the 25 ensembles as the candidates of a second, smaller search |
+| Rank target: IC (t) | +0.004 (0.7) | +0.003 (0.9) | +0.004 (1.5) | higher everywhere, never significant, Sharpe mixed: keep as candidates, not as the default |
+| 20 against 60 NoLBERT topics, text-only IC | 0.000 against 0.012 | -0.007 against 0.010 | 0.007 against 0.009 | not adopted |
+
+The improved protocol was therefore fixed as: choose among the 25 ensembles by
+validation IC, trade the choice with the buffer.
+
+### 9.2 The test period
+
+Averages over all pairs, test period (`improvements.csv`, group "every"):
+
+| | Monthly | Biweekly | Weekly |
+|---|---|---|---|
+| **Buffer**: net return, a year (t) | +0.6% (2.0) | +1.5% (3.5) | +2.0% (5.2) |
+| median net Sharpe, without / with | -0.24 / -0.15 | -0.39 / -0.24 | -0.48 / -0.29 |
+| experiments with a higher net Sharpe | 62% | 74% | 84% |
+| turnover per period, without / with | 117% / 93% | 92% / 69% | 77% / 55% |
+| **Ensemble**: IC against its members (t) | +0.001 (0.5) | 0.000 (-0.1) | +0.003 (1.4) |
+| feature sets with a higher net Sharpe than the average member | 60% | 72% | 72% |
+| **Rank target**: IC (t) | 0.000 (0.0) | -0.002 (-0.5) | +0.002 (0.7) |
+| pairs with a higher net Sharpe | 46% | 43% | 39% |
+| **Improved protocol** (text_finbert ensemble, buffered): test IC (t) | -0.015 (-0.6) | -0.014 (-1.1) | -0.004 (-0.4) |
+| its net Sharpe ratio (95% interval) | -0.21 (-1.91 to 0.85) | -0.34 (-1.61 to 0.69) | -0.16 (-1.25 to 1.19) |
+
+- **The buffer held up.** The gain is significant at the biweekly and weekly
+  frequencies and larger where costs are higher. It is clearest for the text
+  feature sets (weekly: +2.0% a year, t = 5.2) and less regular for the eight
+  price experiments (+1.5%, 0.0% and +2.0% a year). It is a saving on costs:
+  the median buffered portfolio still loses money, because the forecasts it
+  trades on carry no information. (These averages count the flat lasso
+  experiments, which hold nothing under both rules, as zero.)
+- **The ensemble helps a little and is the safer default.** Its IC is that of
+  an average model, without the risk of having picked the worst one, and its
+  Sharpe ratio is higher than the average member's in 60% to 72% of the
+  feature sets, although it trades more. On the weekly price features it has
+  the highest net Sharpe ratio of the nine (0.17, just ahead of the lasso),
+  the third IC (0.030, after IPCA and the EBM) and, buffered, the second
+  Sharpe ratio (0.21, after IPCA's 0.23).
+- **The rank target did not carry over** from validation to test.
+- **The improved protocol lost**, because validation again chose the FinBERT
+  text features, which do well in 2020 to 2021 and badly afterwards (section
+  4.3). Reducing the search from 200 candidates to 25 does not help when the
+  validation period itself points the wrong way.
+
+### 9.3 What stays in the pipeline
+
+All four variants stay as options: `ls_buf` is one of the seven portfolio
+rules, `scripts/06b_ensemble.py` builds the ensembles, the rank-target models
+are fitted by default, and `nolbert20` is one of the six topic models. The
+groups of sections 4 to 6 and the original headline keep the eight base models
+and the decile rule, so they remain comparable with the earlier runs.
+
+## 10. Opening the glass box
 
 For each frequency `scripts/09_explain.py` takes the EBM on price and text
 features with the best validation IC and reports term importance, shape
 functions and ablations in the manner of the Glass Box paper: a term or block
 is deleted from the fitted model and nothing is re-estimated.
 
-| | Monthly (LDA) | Biweekly (FinBERT) | Weekly (LDA) |
+| | Monthly (NoLBERT) | Biweekly (FinBERT) | Weekly (LDA) |
 |---|---|---|---|
 | Boosting rounds kept for the main effects | 1 | 54 | 3 |
-| Share of importance: narrative exposures | 54% | 41% | 54% |
-| pairwise terms | 21% | 26% | 19% |
-| firm news | 15% | 13% | 18% |
-| price | 10% | 20% | 9% |
-| Test IC, full model | -0.010 | -0.014 | 0.010 |
-| after deleting the pairwise terms | 0.013 | -0.006 | 0.013 |
-| after deleting the narrative block | -0.019 | -0.002 | 0.015 |
-| after deleting the firm-news block | -0.008 | -0.016 | 0.009 |
-| after deleting the price block | -0.019 | -0.020 | 0.003 |
+| Share of importance: narrative exposures | 14% | 41% | 54% |
+| pairwise terms | 79% | 26% | 19% |
+| firm news | 4.5% | 13% | 18% |
+| price | 2.5% | 20% | 9% |
+| Test IC, full model | 0.017 | -0.014 | 0.010 |
+| after deleting the pairwise terms | 0.019 | -0.006 | 0.013 |
+| after deleting the narrative block | 0.015 | -0.002 | 0.015 |
+| after deleting the firm-news block | 0.017 | -0.016 | 0.009 |
+| after deleting the price block | 0.016 | -0.020 | 0.003 |
 
 - **The monthly and the weekly model have almost nothing in them.** Validation
   stopped the first after one boosting round and the second after three: their
-  "shape functions" are a handful of small steps. What follows describes what
-  the method shows, not a finding about returns.
-- **Importance is not usefulness.** The models put 41% to 54% of their weight
-  on narrative exposures. Deleting that block improves the biweekly and the
-  weekly model.
+  main effects are a handful of small steps, and the monthly model is almost
+  all pairwise terms. What follows describes what the method shows, not a
+  finding about returns.
+- **Importance is not usefulness.** Narrative exposures carry 14% to 54% of
+  the weight. Deleting them raises the IC of the biweekly and the weekly
+  model.
 - **The price block is the only one whose deletion lowers the IC at all three
-  frequencies**, with 9% to 20% of the importance.
-- **Pairwise terms hurt**: deleting them raises the IC at all three
-  frequencies.
+  frequencies**, with 2.5% to 20% of the importance.
+- **Pairwise terms hurt the IC**: deleting them raises it at all three
+  frequencies, but lowers the net Sharpe ratio of the monthly (0.34 to 0.01)
+  and biweekly (-0.33 to -0.62) models.
 
 None of these differences is tested, and with ICs of this size none would be
 significant. The earlier project's ablation (deleting one narrative from the
 fitted IPCA) has the same form. It should be redone on this panel before it
 is quoted.
 
-## 9. Limits, and what to do next
+## 11. Limits, and what to do next
 
 **Limits of what was done.**
 
 - *Short test sample, second half of the year only.* 1.56 to 1.75 years, and
   only holding periods from July to January (section 2.4).
-- *The validation period is small and does three jobs* (section 4.2).
+- *The validation period is small and does three jobs* (section 4.2), and it
+  pointed the wrong way twice (FinBERT, the EBM).
 - *Three different yardsticks.* Hyperparameters are tuned on squared error,
   experiments are chosen on rank IC, and the portfolios use only the ordering
   of the forecasts.
 - *The rank IC is not adjusted for beta or industry*, and returns are not
-  winsorised.
+  winsorised (the rank-target models are the one exception).
 - *Costs are a flat 10 basis points*, and portfolios trade at the close that
   ends the signal.
 - *Firm-news features are noise for 39% to 51% of the rows* (section 2.3).
 - *Text features partly re-encode prices*: a narrative exposure is a function
   of the stock's past returns.
-- *Two components are not point-in-time*: the FinBERT classifier (2022) and
-  the MiniLM encoder (2021).
+- *No text component is fully point-in-time*: FinBERT (2022) and MiniLM (2021)
+  were published after the training period, and NoLBERT's adaptation used
+  text up to September 2020 (section 8.1).
 - *One seed per experiment* (section 7.1).
 
-**What to do next.**
+**What to do next, roughly by how much it could change the conclusions.**
 
-- **A complete return file.** The largest improvement available: with daily
-  returns for every list member, the 40 monthly periods that are left out
-  come back (15 of them in the test period), the test sample grows by 70% to
-  90%, and the donor rule is needed for news only. `00_pull_crsp.py` does it for
-  anyone with WRDS access; it is untested here.
+- **A complete return file.** With daily returns for every list member, the 40
+  monthly periods that are left out come back (15 of them in the test period),
+  the test sample grows by 70% to 95%, and the donor rule is needed for news
+  only. `00_pull_crsp.py` does it for anyone with WRDS access; it is untested
+  here.
 - **A point-in-time news source.** The firm-level results are limited by
   coverage (section 2.3), not by models.
-- **NoLBERT.** Not run: on our CPU it encodes about 5 articles a second (about
-  200 for MiniLM), which is more than a day for the article sample. The script
-  that adapts it to training-period news (`03c_finetune_encoder.py`) is
-  written and was tested end to end on a small encoder; with a GPU the two
-  steps take minutes. Its untuned embeddings put all articles close together
-  (mean cosine 0.7), so use `04_fit_topics.py embedding --center`, or
-  fine-tune. Given section 4, expect cleaner topics rather than
-  predictability. It would replace the encoder of `minilm`, which is not
-  point-in-time.
-- **Seed averaging.** Fit XGBoost and the forest with ten seeds and average
-  the forecasts (section 7.1). It would not create a signal, but it would
-  stop single experiments from looking like one.
-- **Less noisy attention.** Fewer topics, or weekly instead of daily
-  attention, would raise reliability (section 3). The 60 topics and the daily
-  shock were kept from the earlier project and are not tuned.
+- **A clean NoLBERT comparison.** Re-adapt NoLBERT with pairs up to the end of
+  2019 (`scripts/03c_finetune_encoder.py`, the default) and adapt MiniLM with
+  the same recipe, then run both through the pipeline (GPU, about three hours
+  each with the embedding).
+- **A longer test.** A rolling origin (refit every year, test the next) would
+  turn 2018 to 2024 into test years, at the price of a shorter first training
+  period.
+- **Seed averaging.** Fit XGBoost and the forest with ten seeds and average the
+  forecasts (section 7.1). It would not create a signal, but it would stop
+  single experiments from looking like one.
 - **Refitting topics through time.** Topics are fixed at 2019. An expanding
   refit would let new subjects in, at the price of features whose meaning
   changes.
 - **The audits again.** Rerun `scripts/10` to `12` under the final rules, and
   add an evaluation of firm-news features on covered firms only.
 
-## 10. Where each number comes from
+## 12. Where each number comes from
 
 | Section | File |
 |---|---|
-| 1, 4.2 | `results/tables/selection.csv`, `forecast.csv`, `strategies.csv`, `multiple_testing.csv` |
+| 1, 4.2 | `results/tables/selection.csv`, `forecast.csv`, `strategies.csv`, `multiple_testing.csv`, `improvements.csv` |
 | 2.1 | `results/data_audit/news_coverage.csv`; tagging and headline case from `data/news/articles/` |
 | 2.2 | `results/data_audit/text_repair.csv` |
 | 2.3 | `results/data_audit/firm_coverage.csv`, `donor_rows.csv` |
@@ -1011,7 +1274,9 @@ is quoted.
 | 6 | the same, and `forecast.csv`, `tuning.csv`, `results/data_audit/stale_rows.csv` |
 | 7 | `results/tables/landscape.csv`, `tuning.csv`, `contrasts.csv`, `results/tuning/`, `results/importance/<freq>/` |
 | 7.1 | `results/data_audit/tuning_noise.csv`, `results/tables/forecast.csv` |
-| 8 | `results/explain/<freq>__<features>/`, `results/tables/tuning.csv` |
+| 8 | `results/encoders/nolbert_ft/`, `results/tables/`; section 8.3 from the teammate's other pipeline |
+| 9 | `results/tables/improvements.csv`, `selection.csv`, `strategies.csv` |
+| 10 | `results/explain/<freq>__<features>/`, `results/tables/tuning.csv` |
 
 Counts and medians "over experiments" are taken over the rows of these tables.
 The split of the weekly price IC by the sign of the market return (section

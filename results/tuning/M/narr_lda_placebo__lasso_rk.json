@@ -1,0 +1,24 @@
+{
+ "freq": "M",
+ "features": "narr_lda_placebo",
+ "model": "lasso_rk",
+ "blocks": [
+  "narr_lda_placebo"
+ ],
+ "n_features": 60,
+ "settings_tried": 40,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 0.007442792603035825,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 0.0,
+ "train_r2": 0.0,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.0
+}

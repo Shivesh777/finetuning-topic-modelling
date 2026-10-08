@@ -1,0 +1,23 @@
+{
+ "freq": "M",
+ "features": "firm_nolbert20",
+ "model": "sipca_rk",
+ "blocks": [
+  "firm_nolbert20"
+ ],
+ "n_features": 21,
+ "settings_tried": 6,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.1
+ },
+ "validation_r2": 1.1709544097682212e-06,
+ "train_r2": 9.365184326903808e-05,
+ "seconds_tune": 0.8,
+ "seconds_final": 0.1
+}

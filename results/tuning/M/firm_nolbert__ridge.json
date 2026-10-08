@@ -1,0 +1,22 @@
+{
+ "freq": "M",
+ "features": "firm_nolbert",
+ "model": "ridge",
+ "blocks": [
+  "firm_nolbert"
+ ],
+ "n_features": 61,
+ "settings_tried": 25,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 5.178202974046292
+ },
+ "validation_r2": -3.6951570128174183e-06,
+ "train_r2": 2.4422519695144196e-05,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

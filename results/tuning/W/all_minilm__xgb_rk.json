@@ -1,0 +1,33 @@
+{
+ "freq": "W",
+ "features": "all_minilm",
+ "model": "xgb_rk",
+ "blocks": [
+  "price",
+  "narr_minilm",
+  "firm_minilm"
+ ],
+ "n_features": 129,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "max_depth": 2,
+  "learning_rate": 0.05,
+  "n_estimators": 105,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.0008092152534866504,
+ "train_r2": 0.0037178622044786724,
+ "seconds_tune": 13.0,
+ "seconds_final": 3.0
+}

@@ -1,0 +1,20 @@
+{
+ "freq": "2W",
+ "features": "firm_lda_all",
+ "model": "ols_rk",
+ "blocks": [
+  "firm_lda_all"
+ ],
+ "n_features": 61,
+ "settings_tried": 1,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {},
+ "validation_r2": -0.0004262663879548434,
+ "train_r2": 0.0005029528625443147,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.1
+}

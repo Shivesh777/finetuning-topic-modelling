@@ -1,0 +1,24 @@
+{
+ "freq": "W",
+ "features": "all_minilm",
+ "model": "ridge_rk",
+ "blocks": [
+  "price",
+  "narr_minilm",
+  "firm_minilm"
+ ],
+ "n_features": 129,
+ "settings_tried": 25,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 0.35709166537789033
+ },
+ "validation_r2": 0.0005120066022079595,
+ "train_r2": 0.0013425142429722703,
+ "seconds_tune": 0.5,
+ "seconds_final": 0.3
+}

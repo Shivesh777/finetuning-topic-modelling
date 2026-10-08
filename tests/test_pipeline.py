@@ -19,7 +19,8 @@ from ftm.topics import attention
 from synthetic import make_market, make_news
 
 ROOT = Path(__file__).resolve().parents[1]
-MODELS = list(experiments.MODEL_ORDER)
+MODELS = list(experiments.MODEL_ORDER)          # what 06 fits
+BASE = list(experiments.BASE_MODELS)            # the models of the group tables
 FEATURES = ["price", "all_toy", "narr_toy", "narr_toy_placebo"]
 
 
@@ -42,6 +43,7 @@ def workspace(tmp_path_factory):
     env = {**os.environ, "FTM_DATA": str(data), "FTM_RESULTS": str(results)}
     run("05_build_panel.py", "--freq", "M", "--placebo", "toy", env=env)
     run("06_run_models.py", "--freq", "M", "--features", *FEATURES, env=env)
+    run("06b_ensemble.py", "--freq", "M", env=env)
     run("07_evaluate.py", "--freq", "M", env=env)
     run("08_report.py", "--freq", "M", env=env)
     run("09_explain.py", "--freq", "M", env=env)
@@ -57,9 +59,10 @@ def test_every_experiment_has_forecasts(workspace):
     index = pd.read_parquet(data / "panels" / "M" / "index.parquet")
     assert set(index["split"]) == {"train", "validation", "test"}
     files = sorted(p.name for p in (data / "predictions" / "M").glob("*.test.npy"))
-    assert files == sorted(f"{f}__{m}.test.npy" for f in FEATURES for m in MODELS)
+    assert files == sorted(f"{f}__{m}.test.npy" for f in FEATURES
+                           for m in MODELS + [experiments.ENSEMBLE])
     logs = list((results / "tuning" / "M").glob("*.log"))
-    assert len(logs) == len(files) and all("finished" in p.read_text() for p in logs)
+    assert len(logs) == len(FEATURES) * len(MODELS) and all("finished" in p.read_text() for p in logs)
     tuning = pd.read_csv(results / "tuning" / "M" / "price__xgb.csv")
     assert tuning["chosen"].sum() == 1 and len(tuning) == 4
 
@@ -77,31 +80,41 @@ def test_planted_signal_is_found(workspace):
     assert spread["sharpe_ci_low"] < spread["sharpe_net"] < spread["sharpe_ci_high"]
     assert 0 < spread["turnover"] <= 2 and spread["max_drawdown"] <= 0
     assert set(strategies["split"]) == {"validation", "test", "test_2022_23", "test_2024"}
+    assert "ls_buf" in set(strategies["strategy"])
+    ranked = strategies[(strategies["features"] == "price") & (strategies["model"] == "ridge_rk")
+                        & (strategies["split"] == "test") & (strategies["strategy"] == "ls_ew")].iloc[0]
+    assert ranked["sharpe_net"] > 0                     # the rank target finds the planted signal
 
 
 def test_tables_are_complete(workspace):
     _, results, _ = workspace
     tables = {p.stem: pd.read_csv(p) for p in (results / "tables").glob("*.csv")}
     assert {"forecast", "strategies", "selection", "text_vs_price", "multiple_testing",
-            "frequency", "landscape", "contrasts", "halves", "placebo", "tuning"} <= set(tables)
+            "frequency", "landscape", "contrasts", "halves", "placebo", "tuning",
+            "improvements"} <= set(tables)
     tuning = tables["tuning"].set_index(["features", "model"])
     assert len(tuning) == len(FEATURES) * len(MODELS)
     assert tuning.loc[("price", "ols"), "terms_used"] == 8 and tuning.loc[("price", "xgb"), "rounds"] >= 1
     assert (tuning["place_in_grid"] <= tuning["settings_tried"]).all()
     # the placebo is a control: it is evaluated but can never be the selected experiment
-    assert set(tables["selection"]["family"]) == {"price", "all", "text", "any", "topic_toy"}
+    assert set(tables["selection"]["family"]) == {"price", "all", "text", "any", "topic_toy",
+                                                  "any_variant", "ensemble"}
+    selection = tables["selection"].set_index("family")
+    assert selection.loc["ensemble", "model"] == experiments.ENSEMBLE
+    assert selection.loc["any", "model"] in BASE
     assert "narr_toy_placebo" not in set(tables["selection"]["features"])
     groups = tables["landscape"][tables["landscape"]["split"] == "test"].set_index(["by", "group"])
-    assert groups.loc[("kind", "price"), "experiments"] == len(MODELS)
+    assert groups.loc[("kind", "price"), "experiments"] == len(BASE)
     assert groups.loc[("kind", "price"), "ic_t"] > 2
-    assert groups.loc[("topic_model", "toy"), "experiments"] == len(MODELS)      # narr_toy only
+    assert groups.loc[("topic_model", "toy"), "experiments"] == len(BASE)        # narr_toy only
+    assert groups.loc[("model", "ens"), "experiments"] == len(FEATURES)
     assert set(groups.loc["kind"].index) == {"price", "all", "narr", "placebo"}
     placebo = tables["placebo"].set_index("split").loc["test"]
     assert placebo["features"] == "narr_toy" and abs(placebo["difference_t"]) < 4    # noise against noise
     pairs = tables["text_vs_price"]
-    assert len(pairs) == 3 * len(MODELS) and set(pairs["family"]) == {"all", "text", "control"}
+    assert len(pairs) == 3 * len(BASE) and set(pairs["family"]) == {"all", "text", "control"}
     testing = tables["multiple_testing"].set_index("strategy").loc["ls_ew"]         # without the placebo
-    assert testing["experiments"] == (len(FEATURES) - 1) * len(MODELS) and 0 <= testing["spa_p"] <= 1
+    assert testing["experiments"] == (len(FEATURES) - 1) * (len(MODELS) + 1) and 0 <= testing["spa_p"] <= 1
     assert testing["with_position"] <= testing["experiments"]
     assert testing["best_features"] != "narr_toy_placebo"
     assert testing["expected_best_sharpe_if_no_skill"] > 0
@@ -112,6 +125,16 @@ def test_tables_are_complete(workspace):
     assert halves.loc[("kind", "price"), "periods_2022_23"] + halves.loc[("kind", "price"), "periods_2024"] \
         == contrasts.loc[("kind", "test"), "periods"]
     assert (tables["forecast"]["t_critical"] > 1.96).all()
+    better = tables["improvements"].set_index(["split", "comparison", "group"])
+    assert set(better.index.get_level_values("comparison")) == {"rank_target", "ensemble", "buffer"}
+    forecasts = tables["forecast"].query("split == 'test' and features != 'narr_toy_placebo'")
+    forecasts = forecasts.dropna(subset=["ic_mean"]).set_index(["features", "model"]).index
+    both = sum((f, m) in forecasts and (f, m[:-3]) in forecasts      # pairs where both sides forecast
+               for f in FEATURES[:3] for m in experiments.RANK_MODELS)
+    assert better.loc[("test", "rank_target", "every"), "pairs"] == both >= 12
+    assert better.loc[("test", "ensemble", "every"), "pairs"] == 3
+    buffer = better.loc[("test", "buffer", "every")]
+    assert buffer["turnover_new"] < buffer["turnover_base"] and np.isnan(buffer["ic_diff"])
     long_only = tables["strategies"][tables["strategies"]["strategy"] == "long_ew"]
     differs = long_only["tracking_error"] > 0             # a flat forecast holds the universe
     assert differs.any() and (long_only["information_ratio"].notna() == differs).all()

@@ -1,0 +1,24 @@
+{
+ "freq": "2W",
+ "features": "price",
+ "model": "lasso_rk",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 40,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 0.0029802365456716756,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 9.050905387597563e-05,
+ "train_r2": 0.00035506326508960573,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

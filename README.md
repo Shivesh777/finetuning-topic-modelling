@@ -3,8 +3,8 @@
 Do the topics that financial news is about help to forecast stock returns?
 This repository builds daily topic attention from 1.26 million Nasdaq.com
 articles (2012 to 2024), turns it into stock-level features, and tests those
-features with eight forecasting models and six portfolio rules under a strict
-training / validation / test protocol. The short answer, on our data, is that
+features with eight forecasting models (and variants of them) and seven
+portfolio rules under a strict training / validation / test protocol. The short answer, on our data, is that
 we find no evidence that they do, in a test sample that could only have shown a
 large effect: `FINDINGS.md` says why and what the data would have to look like
 to say more.
@@ -61,8 +61,13 @@ Three things are needed, in `data/` (see `data/README.md` for the details):
 2. **Articles** (`data/news/`). In the team's data folder; or rebuilt from the
    public FinMultiTime and FNSPID datasets with scripts 01 and 02 (a 3.6 GB
    download and a 23 GB file that is read in pieces without being stored).
-3. **Topic models** (`data/topics/<model>/`). Committed, so steps 3 and 4 can
-   be skipped unless you want to change the topic models.
+3. **Topic models** (`data/topics/<model>/`). Committed (`lda`, `lda_all`,
+   `minilm`, `finbert`, `nolbert`, `nolbert20`), so steps 3 and 4 can be
+   skipped unless you want to change the topic models. The adapted NoLBERT
+   encoder (434 MB) and the article embeddings (about 1.2 GB) are not in git:
+   they are in the teammate's bundle `nolbert-ftm-runnable` (`encoder/nolbert_ft/`
+   goes to `data/topics/encoders/nolbert_ft/`, and
+   `data/topics/embeddings/nolbert_ft_d150.*` to the same place here).
 
 With the team zip: unzip it so that `data/crsp/`, `data/news/` and
 `data/topics/` sit in the repository's `data/` folder.
@@ -81,10 +86,15 @@ python scripts/04_fit_topics.py lda --all --reuse lda --name lda_all
 python scripts/04_fit_topics.py embedding --embeddings paraphrase-MiniLM-L3-v2_d150 --name minilm
 python scripts/03b_classify_topics.py      # optional: FinBERT topic classifier, 50 min
 python scripts/04_fit_topics.py weights --weights finbert-topic_d150 --name finbert
+python scripts/03c_finetune_encoder.py --grad-ckpt --out data/topics/encoders/nolbert_ft   # optional, GPU, 150 min
+python scripts/03_embed.py --encoder data/topics/encoders/nolbert_ft    # GPU, about 1 hour
+python scripts/04_fit_topics.py embedding --embeddings nolbert_ft_d150 --name nolbert
+python scripts/04_fit_topics.py embedding --embeddings nolbert_ft_d150 --name nolbert20 --topics 20
 
 python scripts/05_build_panel.py --placebo lda     # monthly, biweekly and weekly panels
-python scripts/06_run_models.py            # tune, fit, forecast: 432 experiments, 36 min
-python scripts/07_evaluate.py              # forecast accuracy and backtests
+python scripts/06_run_models.py            # tune, fit, forecast: 1,092 experiments, 70 min
+python scripts/06b_ensemble.py             # the ensemble of the eight base models, 1 min
+python scripts/07_evaluate.py              # forecast accuracy and backtests, 5 min
 python scripts/08_report.py                # tables in results/tables/
 python scripts/09_explain.py               # EBM importances, shapes, ablations
 python scripts/10_audit.py                 # news coverage, stale rows, donor rows
@@ -92,9 +102,17 @@ python scripts/11_missing_data_leak.py     # what the missing-data leak is worth
 python scripts/12_tuning_noise.py          # one experiment under ten random seeds
 ```
 
+`06_run_models.py --models ols ridge lasso ipca sipca xgb rf ebm` fits only the
+eight base models (624 experiments, 53 min); the six rank-target variants are
+the rest. `03c_finetune_encoder.py` draws its pairs from articles up to the end
+of the training period by default; the committed `nolbert` topics come from the
+teammate's encoder, which used pairs up to September 2020 (FINDINGS.md, section
+8.1).
+
 Times are for four laptop CPU cores. With the team zip, start at
-`05_build_panel.py`: everything from there to the tables takes under an hour
-(or start at `07_evaluate.py` if the zip includes `predictions/`).
+`05_build_panel.py`: everything from there to the tables takes about an hour
+and a half, under an hour with the base models only (or start at
+`07_evaluate.py` if the zip includes `predictions/`).
 The results in `results/` are committed, so the tables can be read and
 `08_report.py` rerun without fitting anything.
 
@@ -122,9 +140,16 @@ counts. The fitted topics we used are in `data/topics/lda/model.npz`;
   is embedded like any other encoder. Both steps need a GPU; see the script.
 - **A new model.** Add a class with `name`, `grid()`, `fit`, `predict` and
   `refit_params` (see `ftm/models/tuning.py`), register it in `MODELS` and add
-  its name to `MODEL_ORDER` in `ftm/experiments.py`.
+  its name to `MODEL_ORDER` in `ftm/experiments.py`. A variant fitted on ranked
+  returns comes for free: add the class to `RANK_TARGET` in
+  `ftm/models/tuning.py` and `<name>_rk` to `RANK_MODELS`.
+- **Another combination of models.** `scripts/06b_ensemble.py` averages the
+  ranks of `experiments.BASE_MODELS`; any other list of members works the same
+  way.
 - **A new portfolio rule.** Add a branch to `weights_for` in
-  `ftm/portfolio/strategies.py` and its name to `LONG_SHORT` or `LONG_ONLY`.
+  `ftm/portfolio/strategies.py` and its name to `LONG_SHORT` or `LONG_ONLY`; a
+  rule that depends on what was held before (like `ls_buf`) goes into the
+  loop of `backtests`.
 - **A new feature block.** A function from a formation day to an array
   (stocks x features), added to `makers` in `ftm/features/blocks.py`.
   Missing values are fine: see the note on missing data in `ftm/panel.py`
@@ -155,6 +180,9 @@ counts. The fitted topics we used are in `data/topics/lda/model.npz`;
    next to one.
 7. t statistics are read against small-sample critical values, and the best
    of many experiments against what the best of as many would show by chance.
+8. A change meant to improve the results is adopted on validation evidence
+   written down before the test period is looked at (FINDINGS.md, section
+   9.1), and reported whether or not it then helps.
 
 ## Licences and credits
 

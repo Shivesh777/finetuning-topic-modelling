@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "all_nolbert",
+ "model": "ols",
+ "blocks": [
+  "price",
+  "narr_nolbert",
+  "firm_nolbert"
+ ],
+ "n_features": 129,
+ "settings_tried": 1,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {},
+ "validation_r2": -0.001246089184636423,
+ "train_r2": 0.0019186707575916673,
+ "seconds_tune": 0.3,
+ "seconds_final": 0.2
+}

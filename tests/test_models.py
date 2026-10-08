@@ -875,7 +875,8 @@ def test_registry_lists_every_model_with_the_common_interface():
     from ftm.models.ipca import SparseIpca
 
     names = ("ols", "ridge", "lasso", "enet", "xgb", "rf", "ebm", "ipca", "sipca")
-    assert set(MODELS) == set(names)
+    variants = {"ols_rk", "ridge_rk", "lasso_rk", "ipca_rk", "sipca_rk", "xgb_rk"}
+    assert set(MODELS) == set(names) | variants
     assert [get_model(name) for name in names] == [Ols, Ridge, Lasso, ElasticNet, Xgb, Forest,
                                                    Ebm, Ipca, SparseIpca]
     with pytest.raises(KeyError, match="available"):
@@ -888,7 +889,7 @@ def test_registry_lists_every_model_with_the_common_interface():
         if not issubclass(cls, Ipca):                          # ipca.py keeps plain attributes
             assert model.params == cls.defaults
     assert [name for name, cls in MODELS.items() if getattr(cls, "needs_groups", False)
-            ] == ["ipca", "sipca"]
+            ] == ["ipca", "sipca", "ipca_rk", "sipca_rk"]
     assert all({"seed", "n_jobs"} <= set(MODELS[name].defaults) for name in ("xgb", "rf", "ebm"))
     assert tuning.Model.__name__ == "Model"
 
@@ -979,3 +980,22 @@ def test_sparse_ipca_with_a_prohibitive_penalty_forecasts_nothing():
     model = SparseIpca(n_factors=2, penalty=1.5).fit(X, y, groups=groups)
     assert not model.active_.any() and np.ptp(model.predict(X)) == 0.0
     assert get_model("sipca") is SparseIpca and SparseIpca.grid()[0]["penalty"] >= SparseIpca.grid()[-1]["penalty"]
+
+
+def test_rank_target_variants():
+    from ftm import experiments
+    from ftm.models import tuning
+    for name in experiments.RANK_MODELS:
+        variant = tuning.get_model(name)
+        base = tuning.get_model(name[:-len("_rk")])
+        assert issubclass(variant, base) and variant.target == "rank" and variant.name == name
+        assert variant.grid() == base.grid()
+    assert getattr(tuning.get_model("rf"), "target", "return") == "return"
+    y = np.array([0.5, -2.0, 0.1, 3.0, 0.0, 0.0, np.nan])
+    groups = np.array([1, 1, 1, 2, 2, 2, 3])
+    ranks = tuning.ranks_within(y, groups)
+    np.testing.assert_allclose(ranks[:3], [1.0, -1.0, 0.0])
+    np.testing.assert_allclose(ranks[3:6], [1.0, -0.5, -0.5])        # ties share their rank
+    assert np.isnan(ranks[6])
+    np.testing.assert_allclose(tuning.target_of(tuning.get_model("ridge_rk"), y[:6], groups[:6]), ranks[:6])
+    np.testing.assert_array_equal(tuning.target_of(tuning.get_model("ridge"), y, groups), y)

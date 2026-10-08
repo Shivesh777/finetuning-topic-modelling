@@ -26,7 +26,7 @@ import pandas as pd
 
 from ftm import config, experiments
 from ftm.evaluation import metrics
-from ftm.models.tuning import chosen_setting, fit_for_test, get_model, tune
+from ftm.models.tuning import chosen_setting, fit_for_test, get_model, target_of, tune
 from ftm.panel import Panel
 from ftm.portfolio import strategies
 
@@ -49,8 +49,8 @@ def main():
         panel = Panel.load(config.PANELS / freq)
         index = panel.index
         train, val, test = (panel.rows(s) for s in ("train", "validation", "test"))
-        y = index["y_rel"].to_numpy()
         groups = index["period"].to_numpy()
+        y = target_of(cls, index["y_rel"].to_numpy(), groups)
         for features in a.features:
             X = panel.X(experiments.feature_sets(panel.blocks)[features])
             for seed in a.seeds:

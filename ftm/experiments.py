@@ -14,10 +14,18 @@ import pandas as pd
 from . import config
 
 PREDICTIONS = config.DATA / "predictions"
-# Cheapest first. The elastic net ("enet") is implemented but not run: with returns as the
-# target the penalty is so small next to the variance of the features that its ridge part
-# does nothing, and it reproduces the lasso forecasts to six decimals.
-MODEL_ORDER = ("ols", "ridge", "lasso", "ipca", "sipca", "xgb", "rf", "ebm")
+# The eight forecasting models of the design, cheapest first. The elastic net ("enet") is
+# implemented but not run: with returns as the target the penalty is so small next to the
+# variance of the features that its ridge part does nothing, and it reproduces the lasso
+# forecasts to six decimals.
+BASE_MODELS = ("ols", "ridge", "lasso", "ipca", "sipca", "xgb", "rf", "ebm")
+# The same models fitted on the cross-sectional rank of the return (ftm.models.tuning).
+RANK_MODELS = ("ols_rk", "ridge_rk", "lasso_rk", "ipca_rk", "sipca_rk", "xgb_rk")
+# What scripts/06_run_models.py fits by default.
+MODEL_ORDER = BASE_MODELS + RANK_MODELS
+# The equal-weighted combination of the base models (scripts/06b_ensemble.py): nothing is
+# fitted, so it is not in MODEL_ORDER.
+ENSEMBLE = "ens"
 EVALUATED = ("validation", "test")
 
 

@@ -1,0 +1,21 @@
+{
+ "freq": "W",
+ "features": "text_nolbert",
+ "model": "ols",
+ "blocks": [
+  "narr_nolbert",
+  "firm_nolbert"
+ ],
+ "n_features": 121,
+ "settings_tried": 1,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {},
+ "validation_r2": -0.0012094836454012992,
+ "train_r2": 0.0016572104355484507,
+ "seconds_tune": 3.8,
+ "seconds_final": 0.5
+}

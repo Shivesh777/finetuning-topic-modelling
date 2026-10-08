@@ -1,0 +1,25 @@
+{
+ "freq": "M",
+ "features": "all_finbert",
+ "model": "sipca_rk",
+ "blocks": [
+  "price",
+  "narr_finbert",
+  "firm_finbert"
+ ],
+ "n_features": 49,
+ "settings_tried": 6,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.03
+ },
+ "validation_r2": 0.0021955306360276206,
+ "train_r2": 0.0005131067471110251,
+ "seconds_tune": 2.0,
+ "seconds_final": 0.6
+}

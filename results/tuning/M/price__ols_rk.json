@@ -1,0 +1,20 @@
+{
+ "freq": "M",
+ "features": "price",
+ "model": "ols_rk",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 1,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {},
+ "validation_r2": -0.0010161773190699996,
+ "train_r2": 0.0014279795840498322,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

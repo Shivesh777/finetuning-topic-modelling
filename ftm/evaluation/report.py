@@ -21,6 +21,12 @@ Conventions
 * The experiments of a frequency forecast the same returns and are far from independent.
   Statements about groups of experiments are therefore tested on the group's average per
   period, one series, never by counting experiments.
+* Models. The eight models of the design (experiments.BASE_MODELS) make up every group of
+  the landscape, contrasts, halves, placebo and text-against-price tables, so that those
+  tables do not change when variants are added. The variants, models fitted on ranked
+  returns ("<model>_rk") and the combination of the eight ("ens"), appear as models of
+  their own in the landscape by model, in forecast, strategies and multiple_testing, and
+  are compared with what they vary in improvements_table.
 """
 from __future__ import annotations
 
@@ -34,7 +40,7 @@ import pandas as pd
 
 from .. import experiments
 from ..models.tuning import chosen_setting
-from ..portfolio.strategies import LONG_ONLY
+from ..portfolio.strategies import LONG_ONLY, LONG_SHORT
 from . import inference, metrics
 
 SUBPERIODS = {"test_2022_23": ("2022-01-01", "2023-12-31"), "test_2024": ("2024-01-01", "2024-12-31")}
@@ -43,6 +49,8 @@ KEYS = ["freq", "split", "features", "model"]
 HEADLINE = "ls_ew"                   # the strategy used when one number per experiment is needed
 TEXT_ONLY = ("narr", "firm", "text")  # kinds of feature set without price features
 NONLINEAR = ("xgb", "rf", "ebm")
+LINEAR = ("ols", "ridge", "lasso", "ipca", "sipca")
+BUFFERED = "ls_buf"                  # the rule compared with HEADLINE in improvements_table
 N_BOOT = 5000
 
 
@@ -92,6 +100,11 @@ def family(features: str) -> str:
 def _labelled(table: pd.DataFrame) -> pd.DataFrame:
     return table.assign(kind=table["features"].map(experiments.kind),
                         topic_model=table["features"].map(experiments.topic_model))
+
+
+def _base(table: pd.DataFrame) -> pd.DataFrame:
+    """The rows of the eight models of the design (and the benchmark portfolios)."""
+    return table[table["model"].isin(experiments.BASE_MODELS) | (table["features"] == "benchmark")]
 
 
 def _group_ic(part: pd.DataFrame) -> pd.Series:
@@ -157,17 +170,25 @@ def strategy_table(returns: pd.DataFrame, factors_of: dict, ppy_of: dict) -> pd.
 
 
 def selection_table(forecast: pd.DataFrame, strategy: pd.DataFrame) -> pd.DataFrame:
-    """Per frequency: the experiment with the highest validation IC among all experiments
-    ("any"), within each family and within each topic model, and its test result. The
-    placebo is a control and cannot be selected."""
-    val = forecast[forecast["split"] == "validation"].dropna(subset=["ic_mean"])
-    val = val.assign(family=val["features"].map(family))
-    val = val[val["family"] != "control"]
+    """Per frequency: the experiment with the highest validation IC, and its test result.
+
+    Among the experiments of the eight base models: over all of them ("any", the
+    headline), within each family (price, text, all) and within each topic model
+    (topic_<name>). Two further pools: "any_variant", every experiment including the
+    rank-target models and the ensembles, and "ensemble", the ensembles alone. The placebo
+    is a control and cannot be selected."""
+    every = forecast[forecast["split"] == "validation"].dropna(subset=["ic_mean"])
+    every = every.assign(family=every["features"].map(family))
+    every = every[every["family"] != "control"]
+    val = every[every["model"].isin(experiments.BASE_MODELS)]
     by_topic = val.assign(family=val["features"].map(experiments.topic_model)).dropna(subset=["family"])
     by_topic["family"] = "topic_" + by_topic["family"]
+    ensembles = every[every["model"] == experiments.ENSEMBLE]
     picks = [val.loc[val.groupby(["freq", "family"])["ic_mean"].idxmax()],
              val.loc[val.groupby("freq")["ic_mean"].idxmax()].assign(family="any"),
-             by_topic.loc[by_topic.groupby(["freq", "family"])["ic_mean"].idxmax()]]
+             by_topic.loc[by_topic.groupby(["freq", "family"])["ic_mean"].idxmax()],
+             every.loc[every.groupby("freq")["ic_mean"].idxmax()].assign(family="any_variant"),
+             ensembles.loc[ensembles.groupby("freq")["ic_mean"].idxmax()].assign(family="ensemble")]
     picks = pd.concat(picks)[["freq", "family", "features", "model", "ic_mean", "ic_t", "r2_oos_pct"]]
     picks = picks.rename(columns={c: f"validation_{c}" for c in ("ic_mean", "ic_t", "r2_oos_pct")})
     head = strategy[strategy["strategy"] == HEADLINE]
@@ -214,6 +235,7 @@ def paired(series: pd.DataFrame, returns: pd.DataFrame, ppy_of: dict) -> pd.Data
     """Test-period comparison of every experiment that uses text (or the placebo) with the
     price-only experiment of the same model and frequency, period by period."""
     rows = []
+    series, returns = _base(series), _base(returns)
     test_f = series[series["split"] == "test"]
     test_r = returns[(returns["split"] == "test") & (returns["strategy"] == HEADLINE)]
     f_by = {k: g.set_index("date").sort_index() for k, g in test_f.groupby(["freq", "features", "model"])}
@@ -306,14 +328,18 @@ def landscape(series: pd.DataFrame, returns: pd.DataFrame, factors_of: dict,
     three-factor alpha (before costs) belong to the equal-weighted average of the group's
     long-short portfolios; averaging lowers the volatility but not the costs, so read
     sharpe_net next to sharpe_net_median, the median over the single portfolios.
-    Experiments with a flat forecast are counted and left out of everything else.
+    Experiments with a flat forecast are counted and left out of everything else. The
+    groups by feature set, kind and topic model hold the eight base models; the grouping
+    by model has every model, variants included.
     """
     series = _labelled(series)
     spreads = _labelled(returns[(returns["strategy"] == HEADLINE) & (returns["features"] != "benchmark")])
     spreads = spreads[spreads.groupby(KEYS)["turnover"].transform("sum") > 0]
     rows = []
     for by in ("features", "kind", "topic_model", "model"):
-        pick = (lambda t: t[t["kind"].isin(TEXT_ONLY)]) if by == "topic_model" else (lambda t: t)
+        base = (lambda t: t) if by == "model" else _base
+        pick = ((lambda t: base(t)[base(t)["kind"].isin(TEXT_ONLY)]) if by == "topic_model"
+                else base)
         portfolios = dict(tuple(pick(spreads).groupby(["freq", "split", by])))
         for (freq, split, group), g in pick(series).groupby(["freq", "split", by]):
             ppy = ppy_of[freq]
@@ -360,7 +386,7 @@ def contrasts(series: pd.DataFrame) -> pd.DataFrame:
                       models, over all feature sets but the placebo
         kind          feature sets with price and text ("all") against price alone
     """
-    series = _labelled(series)
+    series = _labelled(_base(series))
     series = series[series["kind"] != "placebo"].copy()
     series["class"] = np.where(series["model"].isin(NONLINEAR), "nonlinear", "linear")
     text_only = series[series["kind"].isin(TEXT_ONLY)]
@@ -383,7 +409,7 @@ def halves(series: pd.DataFrame) -> pd.DataFrame:
     each half, the difference, and z = difference / sqrt(se_1^2 + se_2^2) with the
     Newey-West standard errors of the two means. z is to be read like a t statistic of
     the shorter half (t_critical)."""
-    series = _labelled(series)
+    series = _labelled(_base(series))
     rows = []
     for by in ("kind", "topic_model"):
         table = series[series["kind"].isin(TEXT_ONLY)] if by == "topic_model" else series
@@ -406,6 +432,7 @@ def placebo_table(series: pd.DataFrame) -> pd.DataFrame:
     each, averaged over the models that forecast from both, and the Newey-West t statistic
     of the difference per period. If the content of the news matters, it is positive."""
     rows = []
+    series = _base(series)
     for control in sorted(f for f in series["features"].unique() if experiments.kind(f) == "placebo"):
         real = control[:-len("_placebo")]
         both = series[series["features"].isin([real, control])]
@@ -420,6 +447,101 @@ def placebo_table(series: pd.DataFrame) -> pd.DataFrame:
                          "periods": out["periods"], "ic": out["ic_a"], "ic_placebo": out["ic_b"],
                          "difference": out["difference"], "difference_t": out["difference_t"],
                          "t_critical": out["t_critical"]})
+    return pd.DataFrame(rows)
+
+
+def improvements_table(series: pd.DataFrame, returns: pd.DataFrame, ppy_of: dict) -> pd.DataFrame:
+    """What each variant changes against what it varies, per frequency, split and group.
+
+        rank_target   <model>_rk against <model>, for every model with a rank-target variant
+        ensemble      the combination of the eight base models (ens) against the average of
+                      the eight, feature set by feature set
+        buffer        the decile long-short portfolio with a buffer (ls_buf) against the one
+                      without (ls_ew), for every experiment of the base models
+
+    Pairs are formed within a feature set; group is the family of the feature set (price,
+    text, all) or "every". Real feature sets only: the placebo is left out.
+
+    ic_base, ic_new: average rank IC of the two sides (for the ensemble, ic_base averages
+    the members); ic_diff and ic_diff_t: the mean over periods of the per-period difference
+    averaged over the pairs, with its Newey-West t statistic (not for the buffer, which
+    keeps the forecasts). return_diff_annual and return_diff_t: the same for the net
+    return of the decile long-short portfolio (for the buffer, ls_buf minus ls_ew).
+    Sharpe ratios are net and annualised: the median over the pairs of each side, the
+    median of the paired differences and the share of pairs in which the variant is
+    higher. turnover_*: average turnover per period. A side whose forecast is flat in every
+    period has no Sharpe ratio; such pairs are left out of the Sharpe columns.
+    """
+    real = lambda t: t[(t["features"] != "benchmark") & (t["features"].map(family) != "control")]
+    series, returns = real(series), real(returns)
+    rules = (HEADLINE, BUFFERED)
+    returns = returns[returns["strategy"].isin(rules)]
+    wide = lambda t, column: t.pivot(index="date", columns=["features", "model"],
+                                     values=column).sort_index()
+    rows = []
+    for (freq, split), f in series.groupby(["freq", "split"]):
+        ppy = ppy_of[freq]
+        ic = wide(f, "ic")
+        r = returns[(returns["freq"] == freq) & (returns["split"] == split)]
+        net = {rule: wide(g, "excess") for rule, g in r.groupby("strategy")}
+        turnover = {rule: g.groupby(["features", "model"])["turnover"].mean()
+                    for rule, g in r.groupby("strategy")}
+        sharpe = {rule: table.apply(lambda x: metrics.sharpe(x, ppy)) for rule, table in net.items()}
+        if HEADLINE not in net:
+            continue
+        features = sorted({k for k, _ in ic.columns})
+        pairs = []                          # (comparison, features, new side, base sides, rule)
+        for feat in features:
+            for model in experiments.RANK_MODELS:
+                pairs.append(("rank_target", feat, (feat, model), [(feat, model[:-len("_rk")])],
+                              None))
+            pairs.append(("ensemble", feat, (feat, experiments.ENSEMBLE),
+                          [(feat, m) for m in experiments.BASE_MODELS], None))
+            if BUFFERED in net:
+                for model in experiments.BASE_MODELS:
+                    pairs.append(("buffer", feat, (feat, model), [(feat, model)], BUFFERED))
+        found = []
+        for comparison, feat, new, base, rule in pairs:
+            base = [b for b in base if b in ic.columns]
+            if new not in ic.columns or not base:
+                continue
+            new_rule = rule or HEADLINE
+            if new not in net[new_rule].columns or not all(b in net[HEADLINE].columns for b in base):
+                continue
+            ic_new = ic[new] if rule is None else pd.Series(np.nan, index=ic.index)
+            ic_old = ic[base].mean(axis=1) if rule is None else pd.Series(np.nan, index=ic.index)
+            if rule is None and (ic_new.isna().all() or ic_old.isna().all()):
+                continue
+            found.append({"comparison": comparison, "group": family(feat),
+                          "ic_new": ic_new, "ic_base": ic_old,
+                          "ret_new": net[new_rule][new], "ret_base": net[HEADLINE][base].mean(axis=1),
+                          "sr_new": sharpe[new_rule][new],
+                          "sr_base": float(np.nanmean([sharpe[HEADLINE][b] for b in base]))
+                          if any(np.isfinite(sharpe[HEADLINE][b]) for b in base) else np.nan,
+                          "to_new": turnover[new_rule][new],
+                          "to_base": float(np.mean([turnover[HEADLINE][b] for b in base]))})
+        if not found:
+            continue
+        found = pd.DataFrame(found)
+        for (comparison, group), g in pd.concat([found, found.assign(group="every")]).groupby(
+                ["comparison", "group"], sort=False):
+            ic_diff = pd.concat([n - b for n, b in zip(g["ic_new"], g["ic_base"])], axis=1).mean(axis=1)
+            ret_diff = pd.concat([n - b for n, b in zip(g["ret_new"], g["ret_base"])], axis=1).mean(axis=1)
+            ic_test, ret_test = inference.mean_test(ic_diff), inference.mean_test(ret_diff)
+            sr = g[["sr_new", "sr_base"]].dropna()
+            rows.append({"freq": freq, "split": split, "comparison": comparison, "group": group,
+                         "pairs": len(g), "periods": len(ret_diff),
+                         "ic_base": float(pd.concat(list(g["ic_base"])).mean()),
+                         "ic_new": float(pd.concat(list(g["ic_new"])).mean()),
+                         "ic_diff": ic_test["mean"], "ic_diff_t": ic_test["t"],
+                         "return_diff_annual": ret_test["mean"] * ppy, "return_diff_t": ret_test["t"],
+                         "t_critical": ret_test["critical"],
+                         "sharpe_base_median": sr["sr_base"].median(),
+                         "sharpe_new_median": sr["sr_new"].median(),
+                         "sharpe_diff_median": (sr["sr_new"] - sr["sr_base"]).median(),
+                         "sharpe_improved_share": float((sr["sr_new"] > sr["sr_base"]).mean())
+                         if len(sr) else np.nan,
+                         "turnover_base": g["to_base"].mean(), "turnover_new": g["to_new"].mean()})
     return pd.DataFrame(rows)
 
 

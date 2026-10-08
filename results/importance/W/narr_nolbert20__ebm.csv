@@ -1,0 +1,31 @@
+feature,importance,kind
+narr_nolbert20_t00,1.994894996348599e-05,mean_abs_contribution
+narr_nolbert20_t01,1.82391541151481e-05,mean_abs_contribution
+narr_nolbert20_t02,5.2708150150032284e-05,mean_abs_contribution
+narr_nolbert20_t03,4.8162379984746614e-05,mean_abs_contribution
+narr_nolbert20_t04,2.2047045407565794e-05,mean_abs_contribution
+narr_nolbert20_t05,5.2329050213479906e-05,mean_abs_contribution
+narr_nolbert20_t06,2.9674789969865155e-05,mean_abs_contribution
+narr_nolbert20_t07,3.447246073779894e-05,mean_abs_contribution
+narr_nolbert20_t08,3.7063707143414396e-05,mean_abs_contribution
+narr_nolbert20_t09,4.522196026962391e-05,mean_abs_contribution
+narr_nolbert20_t10,1.648444943892743e-05,mean_abs_contribution
+narr_nolbert20_t11,1.9849444619580607e-05,mean_abs_contribution
+narr_nolbert20_t12,6.458548334786791e-05,mean_abs_contribution
+narr_nolbert20_t13,2.5229595986645413e-05,mean_abs_contribution
+narr_nolbert20_t14,1.745125297175048e-05,mean_abs_contribution
+narr_nolbert20_t15,5.043595900592894e-05,mean_abs_contribution
+narr_nolbert20_t16,7.394159793793003e-05,mean_abs_contribution
+narr_nolbert20_t17,1.9529763566857775e-05,mean_abs_contribution
+narr_nolbert20_t18,5.0785203031005076e-05,mean_abs_contribution
+narr_nolbert20_t19,2.4595548031917126e-05,mean_abs_contribution
+narr_nolbert20_t01 & narr_nolbert20_t03,3.984463746727893e-05,mean_abs_contribution
+narr_nolbert20_t02 & narr_nolbert20_t03,4.501875315296727e-05,mean_abs_contribution
+narr_nolbert20_t03 & narr_nolbert20_t08,3.063839969613683e-05,mean_abs_contribution
+narr_nolbert20_t03 & narr_nolbert20_t12,3.633811609494659e-05,mean_abs_contribution
+narr_nolbert20_t03 & narr_nolbert20_t13,5.206112808675571e-05,mean_abs_contribution
+narr_nolbert20_t03 & narr_nolbert20_t15,4.527954446056223e-05,mean_abs_contribution
+narr_nolbert20_t03 & narr_nolbert20_t18,5.760915877268704e-05,mean_abs_contribution
+narr_nolbert20_t03 & narr_nolbert20_t19,3.6455246388817974e-05,mean_abs_contribution
+narr_nolbert20_t12 & narr_nolbert20_t15,9.179898974860041e-05,mean_abs_contribution
+narr_nolbert20_t17 & narr_nolbert20_t19,6.951728367042702e-05,mean_abs_contribution

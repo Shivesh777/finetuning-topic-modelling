@@ -20,6 +20,9 @@ Optional parts of the protocol:
 * rounds_, the boosting rounds kept by a fitted model, which tune reports;
 * needs_groups = True on a class whose fit takes groups, the period of every row (IPCA).
   Rows must then be sorted by period.
+* target = "rank" on a class that is fitted on the cross-sectional rank of the return
+  instead of the return (see target_of). Every model of RANK_TARGET has such a variant,
+  registered as "<name>_rk": the same class, grid and protocol, another target.
 
 The classes of linear.py, trees.py and ebm.py reject unknown hyperparameters with a
 TypeError and keep the values, defaults included, in the dict params.
@@ -78,6 +81,45 @@ class Model(Protocol):
 
 MODELS: dict[str, type] = {cls.name: cls for cls in (Ols, Ridge, Lasso, ElasticNet, Xgb,
                                                      Forest, Ebm, Ipca, SparseIpca)}
+
+
+def _on_ranks(cls: type) -> type:
+    """A subclass of cls that is fitted on the rank of the return (see target_of)."""
+    doc = (f"{cls.__name__} fitted on the cross-sectional rank of the return, scaled to "
+           f"[-1, 1], instead of the return itself: see ftm.models.tuning.target_of.")
+    return type(f"{cls.__name__}OnRanks", (cls,),
+                {"name": f"{cls.name}_rk", "target": "rank", "__doc__": doc})
+
+
+# Models with a rank-target variant: those that are cheap to fit (the forest and the EBM
+# would add half an hour for every run of the whole grid).
+RANK_TARGET = (Ols, Ridge, Lasso, Ipca, SparseIpca, Xgb)
+MODELS.update({variant.name: variant for variant in map(_on_ranks, RANK_TARGET)})
+
+
+def ranks_within(values: ArrayLike, groups: ArrayLike) -> np.ndarray:
+    """Rank of every value among the values of its group, scaled to [-1, 1] as the features
+    are (ties get their average rank; the only value of a group gets 0; NaN stays NaN)."""
+    values = pd.Series(np.asarray(values, dtype=np.float64))
+    by = np.asarray(groups)
+    rank = values.groupby(by).rank(method="average").to_numpy()
+    count = values.groupby(by).transform("count").to_numpy(dtype=np.float64)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        scaled = 2.0 * (rank - 1.0) / (count - 1.0) - 1.0
+    return np.where(count > 1, scaled, np.where(np.isnan(rank), np.nan, 0.0))
+
+
+def target_of(model_cls: type, y: ArrayLike, groups: ArrayLike) -> np.ndarray:
+    """What model_cls is fitted on: y itself, or for a class with target = "rank" the rank of
+    y within its period (groups), scaled to [-1, 1].
+
+    A rank target bounds the influence of extreme returns (returns are not winsorised) and
+    makes the squared error that tuning minimises closer to the rank IC that selects
+    between experiments. Forecasts of such a model are scores, not returns: their R2
+    against returns means nothing, their rank IC and portfolios do."""
+    if getattr(model_cls, "target", "return") == "rank":
+        return ranks_within(y, groups)
+    return np.asarray(y, dtype=np.float64)
 
 
 def get_model(name: str) -> type:

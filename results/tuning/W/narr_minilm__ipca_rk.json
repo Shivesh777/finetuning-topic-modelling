@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "narr_minilm",
+ "model": "ipca_rk",
+ "blocks": [
+  "narr_minilm"
+ ],
+ "n_features": 60,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 1
+ },
+ "validation_r2": 7.311861040981693e-05,
+ "train_r2": 1.5002929139473764e-05,
+ "seconds_tune": 1.9,
+ "seconds_final": 0.1
+}

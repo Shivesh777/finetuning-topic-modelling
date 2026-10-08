@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "firm_finbert",
+ "model": "ridge_rk",
+ "blocks": [
+  "firm_finbert"
+ ],
+ "n_features": 21,
+ "settings_tried": 25,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 0.6197020200820266
+ },
+ "validation_r2": 5.6816366974077326e-05,
+ "train_r2": 8.542062810490414e-05,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

@@ -2,6 +2,9 @@
 
     ls_ew     long the top decile of forecasts, short the bottom decile, equal weights
     ls_vw     the same two legs, weighted by market value
+    ls_buf    ls_ew with a buffer: a stock enters a leg in the top (bottom) decile and
+              stays until it leaves the top (bottom) fifth, so a signal that moves a
+              stock within the fifth does not trade (Novy-Marx and Velikov 2016)
     rank      every stock, weight proportional to its forecast rank minus the mean rank
     mvo       mean-variance weights for the forecasts under a factor covariance of the
               last year's daily returns, dollar neutral, with a cap per stock
@@ -24,7 +27,7 @@ from .backtest import run_backtest
 from .risk import factor_covariance
 from .weights import mean_variance, quantile_long_short, rank_weighted, top_quantile
 
-LONG_SHORT = ("ls_ew", "ls_vw", "rank", "mvo")
+LONG_SHORT = ("ls_ew", "ls_vw", "rank", "mvo", "ls_buf")
 LONG_ONLY = ("long_ew", "long_vw")
 BENCHMARKS = ("univ_ew", "univ_vw")
 STRATEGIES = LONG_SHORT + LONG_ONLY
@@ -71,6 +74,34 @@ def weights_for(strategy: str, score: np.ndarray, cap: np.ndarray, cov=None,
     raise ValueError(f"unknown strategy {strategy!r}")
 
 
+def buffered_long_short(score: np.ndarray, was_long: np.ndarray, was_short: np.ndarray,
+                        order: np.ndarray, q: int = config.QUANTILES,
+                        q_hold: int = config.BUFFER_QUANTILES):
+    """Weights of ls_buf for one cross-section, and its two legs as boolean masks.
+
+    A stock is long if it is among the floor(n / q) highest forecasts, or if it was long
+    in the previous period (was_long) and is still among the floor(n / q_hold) highest;
+    the short leg mirrors this at the bottom. n counts the stocks with a forecast, ties
+    are ranked by `order` as in weights_for, and each leg is equally weighted, +1 and -1
+    in total. With nothing held before, the legs are those of ls_ew. A flat forecast
+    holds nothing and forgets the previous legs."""
+    n = len(score)
+    none = np.zeros(n, dtype=bool)
+    finite = np.isfinite(score)
+    if finite.sum() < 2 or np.nanmax(score) == np.nanmin(score):
+        return np.zeros(n), none, none.copy()
+    rank = _untied(score, order)                    # 0 = lowest forecast, NaN without one
+    valid = int(finite.sum())
+    enter, hold = max(1, valid // q), max(1, valid // q_hold)
+    with np.errstate(invalid="ignore"):
+        long = (rank >= valid - enter) | (was_long & (rank >= valid - hold))
+        short = (rank < enter) | (was_short & (rank < hold))
+    w = np.zeros(n)
+    w[long] = 1.0 / long.sum()
+    w[short] = -1.0 / short.sum()
+    return w, long, short
+
+
 def covariances(frame: pd.DataFrame, market) -> list:
     """Factor covariance of the stocks of each formation date, from the daily returns of the
     config.MVO_WINDOW trading days up to that date. One entry per date, in date order.
@@ -105,11 +136,20 @@ def backtests(frame: pd.DataFrame, strategies=STRATEGIES, covs: list | None = No
     weights = {s: np.zeros_like(returns) for s in strategies}
     bounds = np.flatnonzero(np.r_[True, row[1:] != row[:-1], True])
     order = np.random.default_rng(config.SEED).random(len(stocks))      # how ties are broken
+    was_long = np.zeros(len(stocks), dtype=bool)                         # legs of ls_buf
+    was_short = np.zeros(len(stocks), dtype=bool)
     for t, (a, b) in enumerate(zip(bounds[:-1], bounds[1:])):
+        cols = col[a:b]
         for s in strategies:
-            weights[s][t, col[a:b]] = weights_for(s, pred[a:b], cap[a:b],
-                                                  covs[t] if s == "mvo" else None, q,
-                                                  order[col[a:b]])
+            if s == "ls_buf":
+                w, long, short = buffered_long_short(pred[a:b], was_long[cols], was_short[cols],
+                                                     order[cols], q)
+                was_long[:], was_short[:] = False, False
+                was_long[cols], was_short[cols] = long, short
+                weights[s][t, cols] = w
+                continue
+            weights[s][t, cols] = weights_for(s, pred[a:b], cap[a:b],
+                                              covs[t] if s == "mvo" else None, q, order[cols])
     rf = frame["rf"].to_numpy()[bounds[:-1]]
     held = pd.DataFrame(returns, index=dates, columns=stocks)
     out = []

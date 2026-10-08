@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "all_minilm",
+ "model": "ols_rk",
+ "blocks": [
+  "price",
+  "narr_minilm",
+  "firm_minilm"
+ ],
+ "n_features": 129,
+ "settings_tried": 1,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {},
+ "validation_r2": -0.00045643276978557523,
+ "train_r2": 0.0022108989487398256,
+ "seconds_tune": 1.5,
+ "seconds_final": 0.3
+}

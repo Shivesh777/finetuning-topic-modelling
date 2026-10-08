@@ -1,0 +1,31 @@
+{
+ "freq": "W",
+ "features": "narr_nolbert20",
+ "model": "xgb_rk",
+ "blocks": [
+  "narr_nolbert20"
+ ],
+ "n_features": 20,
+ "settings_tried": 4,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "max_depth": 1,
+  "learning_rate": 0.05,
+  "n_estimators": 62,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.0003780705675764384,
+ "train_r2": 0.0005513444212276175,
+ "seconds_tune": 2.8,
+ "seconds_final": 0.6
+}

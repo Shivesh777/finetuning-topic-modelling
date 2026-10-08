@@ -1,0 +1,74 @@
+{
+  "config": {
+    "n_docs": 11988,
+    "n_chunks": 35963,
+    "k": 60,
+    "seed": 0,
+    "topn": 10,
+    "drop_pcs": 2,
+    "nolbert_max_len": 134,
+    "minilm_max_len": 128,
+    "tokens_per_word": {
+      "nolbert": 1.4933,
+      "minilm": 1.4266
+    },
+    "device": "cuda",
+    "nolbert_path": "results\\nolbert_ft"
+  },
+  "results": {
+    "nolbert_last_raw": {
+      "npmi_mean": 0.3434,
+      "npmi_sd": 0.196,
+      "empty_clusters": 0,
+      "largest_cluster_share": 0.0368,
+      "dim": 768,
+      "seconds": 4.0,
+      "ami_vs_minilm": 0.447
+    },
+    "nolbert_top4_raw": {
+      "npmi_mean": 0.2676,
+      "npmi_sd": 0.2806,
+      "empty_clusters": 0,
+      "largest_cluster_share": 0.039,
+      "dim": 768,
+      "seconds": 3.5,
+      "ami_vs_minilm": 0.478
+    },
+    "nolbert_top4_abtt": {
+      "npmi_mean": 0.2816,
+      "npmi_sd": 0.301,
+      "empty_clusters": 0,
+      "largest_cluster_share": 0.0291,
+      "dim": 766,
+      "seconds": 4.5,
+      "ami_vs_minilm": 0.4515
+    },
+    "nolbert_top4_sif_abtt": {
+      "npmi_mean": 0.2733,
+      "npmi_sd": 0.2933,
+      "empty_clusters": 0,
+      "largest_cluster_share": 0.0282,
+      "dim": 766,
+      "seconds": 4.6,
+      "ami_vs_minilm": 0.4443
+    },
+    "minilm_last_raw": {
+      "npmi_mean": 0.3077,
+      "npmi_sd": 0.207,
+      "empty_clusters": 0,
+      "largest_cluster_share": 0.0397,
+      "dim": 384,
+      "seconds": 2.4,
+      "ami_vs_minilm": 1.0
+    },
+    "minilm_last_abtt": {
+      "npmi_mean": 0.2931,
+      "npmi_sd": 0.217,
+      "empty_clusters": 0,
+      "largest_cluster_share": 0.0285,
+      "dim": 382,
+      "seconds": 2.3,
+      "ami_vs_minilm": 0.4808
+    }
+  }
+}

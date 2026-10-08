@@ -1,0 +1,28 @@
+{
+ "freq": "2W",
+ "features": "narr_nolbert20",
+ "model": "rf",
+ "blocks": [
+  "narr_nolbert20"
+ ],
+ "n_features": 20,
+ "settings_tried": 3,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": -0.00036545750407523947,
+ "train_r2": 0.0020375379078894085,
+ "seconds_tune": 5.9,
+ "seconds_final": 1.0
+}

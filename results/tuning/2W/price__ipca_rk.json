@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "price",
+ "model": "ipca_rk",
+ "blocks": [
+  "price"
+ ],
+ "n_features": 8,
+ "settings_tried": 4,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "n_factors": 5
+ },
+ "validation_r2": 0.0003384036559527237,
+ "train_r2": 0.0005276025055378497,
+ "seconds_tune": 0.0,
+ "seconds_final": 0.0
+}

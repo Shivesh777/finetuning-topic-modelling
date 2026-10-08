@@ -32,6 +32,8 @@ that fails is reported at the end without costing the others.
     halves.csv           the two halves of the test period against each other, per group
     placebo.csv          narrative exposures against exposures to misdated news: the test
                          of whether the content of the news matters
+    improvements.csv     what the variants change: models fitted on ranked returns, the
+                         ensemble of the eight models, the buffered long-short portfolio
     tuning.csv           what the validation period chose in each experiment: setting,
                          boosting rounds, R2, number of features with a weight, time
     topic_models.csv     quality of the topic models (from data/topics/*/quality.json)
@@ -74,6 +76,7 @@ def main():
         "contrasts": lambda: report.contrasts(series),
         "halves": lambda: report.halves(series),
         "placebo": lambda: report.placebo_table(series),
+        "improvements": lambda: report.improvements_table(series, returns, ppy_of),
         "tuning": lambda: report.tuning_table(config.RESULTS, a.freq),
         "topic_models": lambda: report.topic_table(config.TOPICS),
     }

@@ -1,0 +1,26 @@
+{
+ "freq": "2W",
+ "features": "all_finbert",
+ "model": "lasso_rk",
+ "blocks": [
+  "price",
+  "narr_finbert",
+  "firm_finbert"
+ ],
+ "n_features": 49,
+ "settings_tried": 40,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 0.0017517878314639225,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 0.00021975668243590096,
+ "train_r2": 0.001290834379709005,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

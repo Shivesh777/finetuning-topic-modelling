@@ -1,0 +1,22 @@
+{
+ "freq": "2W",
+ "features": "narr_nolbert",
+ "model": "ridge_rk",
+ "blocks": [
+  "narr_nolbert"
+ ],
+ "n_features": 60,
+ "settings_tried": 25,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 1.878300876166571
+ },
+ "validation_r2": 0.00023703007762643225,
+ "train_r2": 0.0008193987440063832,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.0
+}

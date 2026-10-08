@@ -38,7 +38,7 @@ from ftm import config
 from ftm.data.returns import Market
 from ftm.evaluation import metrics
 from ftm.features import price
-from ftm.models.tuning import chosen_setting, fit_for_test, get_model, tune
+from ftm.models.tuning import chosen_setting, fit_for_test, get_model, target_of, tune
 from ftm.panel import Panel
 from ftm.portfolio import strategies
 
@@ -65,7 +65,8 @@ def main():
         index = panel.index
         days = index["form_day"].unique()
         complete = index["form_day"].map(dict(zip(days, map(market.complete, days)))).to_numpy()
-        y, groups = index["y_rel"].to_numpy(), index["period"].to_numpy()
+        groups = index["period"].to_numpy()
+        y = target_of(cls, index["y_rel"].to_numpy(), groups)
         for mode in ("median", "donor"):
             config.MISSING_FEATURES = mode
             panel.add_block("price", lambda f: price.price_features(market, f), price.NAMES)

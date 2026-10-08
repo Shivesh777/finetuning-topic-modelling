@@ -1,0 +1,20 @@
+{
+ "freq": "W",
+ "features": "narr_lda_placebo",
+ "model": "ols_rk",
+ "blocks": [
+  "narr_lda_placebo"
+ ],
+ "n_features": 60,
+ "settings_tried": 1,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {},
+ "validation_r2": -0.002352682614560342,
+ "train_r2": 0.0015287143531861336,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

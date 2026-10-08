@@ -1,0 +1,25 @@
+{
+ "freq": "W",
+ "features": "all_minilm",
+ "model": "sipca_rk",
+ "blocks": [
+  "price",
+  "narr_minilm",
+  "firm_minilm"
+ ],
+ "n_features": 129,
+ "settings_tried": 6,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.3
+ },
+ "validation_r2": 3.279828038205146e-05,
+ "train_r2": 0.00018477637713176787,
+ "seconds_tune": 9.1,
+ "seconds_final": 1.6
+}

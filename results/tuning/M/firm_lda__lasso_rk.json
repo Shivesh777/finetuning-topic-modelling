@@ -1,0 +1,24 @@
+{
+ "freq": "M",
+ "features": "firm_lda",
+ "model": "lasso_rk",
+ "blocks": [
+  "firm_lda"
+ ],
+ "n_features": 61,
+ "settings_tried": 40,
+ "rows": {
+  "train": 67791,
+  "validation": 13872,
+  "test": 20794
+ },
+ "params": {
+  "alpha": 0.0008165573464242286,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 6.831230042625425e-05,
+ "train_r2": 0.00011753221164922945,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.0
+}

@@ -1,0 +1,51 @@
+{
+ "name": "nolbert",
+ "model": "embedding",
+ "topics": 60,
+ "articles_labelled": 529657,
+ "articles_fit": 140209,
+ "articles_later": 103684,
+ "fit_until": "2019-12-31",
+ "vocabulary": 10000,
+ "npmi_training": 0.4809,
+ "npmi_later": 0.3083,
+ "diversity_top10": 0.7617,
+ "stability_share_kept": 0.6925,
+ "stability_adjusted_rand": 0.6415,
+ "largest_topic_share": 0.0402,
+ "effective_topics": 54.0,
+ "firm_articles": 726280,
+ "shock_reliability": {
+  "training_50_per_day": {
+   "mean": 0.2111,
+   "median": 0.1776,
+   "lowest_topic": -0.3666
+  },
+  "training_100_per_day": {
+   "mean": 0.265,
+   "median": 0.2562,
+   "lowest_topic": -0.7701
+  },
+  "training_all_per_day": {
+   "mean": 0.2772,
+   "median": 0.3255,
+   "lowest_topic": -1.2504
+  },
+  "later_50_per_day": {
+   "mean": 0.1932,
+   "median": 0.1493,
+   "lowest_topic": -0.1383
+  },
+  "later_100_per_day": {
+   "mean": 0.282,
+   "median": 0.2119,
+   "lowest_topic": -0.1877
+  },
+  "later_all_per_day": {
+   "mean": 0.3387,
+   "median": 0.292,
+   "lowest_topic": -0.1874
+  }
+ },
+ "seconds": 519
+}

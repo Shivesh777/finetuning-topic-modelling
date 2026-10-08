@@ -1,0 +1,25 @@
+{
+ "freq": "2W",
+ "features": "text_nolbert",
+ "model": "lasso",
+ "blocks": [
+  "narr_nolbert",
+  "firm_nolbert"
+ ],
+ "n_features": 121,
+ "settings_tried": 40,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "alpha": 0.00038149696115940076,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 5.78522914248536e-05,
+ "train_r2": 0.0003514107329284366,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

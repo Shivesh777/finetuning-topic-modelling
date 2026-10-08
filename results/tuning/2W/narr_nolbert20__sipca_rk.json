@@ -1,0 +1,23 @@
+{
+ "freq": "2W",
+ "features": "narr_nolbert20",
+ "model": "sipca_rk",
+ "blocks": [
+  "narr_nolbert20"
+ ],
+ "n_features": 20,
+ "settings_tried": 6,
+ "rows": {
+  "train": 140333,
+  "validation": 26757,
+  "test": 41588
+ },
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.1
+ },
+ "validation_r2": 0.0002805420840636952,
+ "train_r2": 0.000516940802969823,
+ "seconds_tune": 1.4,
+ "seconds_final": 0.2
+}

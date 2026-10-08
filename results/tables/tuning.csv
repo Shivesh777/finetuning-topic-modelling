@@ -1,433 +1,1093 @@
 freq,features,model,n_features,settings_tried,setting,place_in_grid,rounds,validation_r2_pct,train_r2_pct,terms,terms_used,seconds
 M,all_finbert,ebm,49,2,interactions=10,2,52,0.233936,1.46371,59,59,8.4
 M,all_finbert,ipca,49,4,n_factors=3,3,,0.0791696,0.0187588,49,49,0.4
+M,all_finbert,ipca_rk,49,4,n_factors=3,3,,0.228011,0.0537546,49,49,0.3
 M,all_finbert,lasso,49,40,alpha=0.000252886,7,,0.090282,0.160891,49,18,0
+M,all_finbert,lasso_rk,49,40,alpha=0.000659333,15,,0.0743546,0.304224,49,30,0
 M,all_finbert,ols,49,1,,1,,0.073668,0.263739,49,49,0
+M,all_finbert,ols_rk,49,1,,1,,0.00525399,0.338094,49,49,0
 M,all_finbert,rf,49,3,max_depth=6,2,,-0.0192524,1.28227,49,49,8.9
 M,all_finbert,ridge,49,25,alpha=0.133949,10,,0.10506,0.229329,49,49,0
+M,all_finbert,ridge_rk,49,25,alpha=0.2382,9,,0.122971,0.257522,49,49,0
 M,all_finbert,sipca,49,6,"n_factors=3, penalty=0.03",6,,0.0817566,0.0219105,49,44,2.8
+M,all_finbert,sipca_rk,49,6,"n_factors=3, penalty=0.03",6,,0.219553,0.0513107,49,43,2.6
 M,all_finbert,xgb,49,4,max_depth=5,4,36,0.148512,3.03808,49,49,1.5
+M,all_finbert,xgb_rk,49,4,max_depth=1,1,65,0.13233,0.223811,49,21,1.7
 M,all_lda,ebm,129,2,interactions=10,2,1,0.199165,1.44916,139,139,20.7
 M,all_lda,ipca,129,4,n_factors=1,1,,-0.0433888,-0.00232856,129,129,1.9
+M,all_lda,ipca_rk,129,4,n_factors=3,3,,0.0148254,0.0242418,129,129,3
 M,all_lda,lasso,129,40,alpha=0.00158185,1,,0,0,129,0,0
+M,all_lda,lasso_rk,129,40,alpha=0.011163,1,,0,0,129,0,0
 M,all_lda,ols,129,1,,1,,-1.01638,0.814919,129,129,0
+M,all_lda,ols_rk,129,1,,1,,-1.7376,0.883491,129,129,0
 M,all_lda,rf,129,3,max_depth=3,1,,-0.0159579,0.450737,129,111,11.5
 M,all_lda,ridge,129,25,alpha=19.9168,1,,-0.0103125,0.024672,129,129,0
+M,all_lda,ridge_rk,129,25,alpha=19.9168,1,,-0.0129663,0.0266808,129,129,0.1
 M,all_lda,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0332924,-0.00194473,129,43,6
+M,all_lda,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,0.0517126,0.0428016,129,65,7.6
 M,all_lda,xgb,129,4,max_depth=3,3,1,0.00235564,0.0326249,129,7,2.3
+M,all_lda,xgb_rk,129,4,max_depth=5,4,2,0.0257328,0.222858,129,38,2.8
 M,all_lda_all,ebm,129,2,interactions=10,2,1,0.0135198,0.351524,139,139,19.9
 M,all_lda_all,ipca,129,4,n_factors=1,1,,-0.0465295,-0.00707122,129,129,2.1
+M,all_lda_all,ipca_rk,129,4,n_factors=3,3,,0.0274018,0.0136628,129,129,5.9
 M,all_lda_all,lasso,129,40,alpha=0.00162893,1,,0,0,129,0,0
+M,all_lda_all,lasso_rk,129,40,alpha=0.0112332,1,,0,0,129,0,0
 M,all_lda_all,ols,129,1,,1,,-1.07659,0.687613,129,129,0.2
+M,all_lda_all,ols_rk,129,1,,1,,-2.05955,0.752492,129,129,0.2
 M,all_lda_all,rf,129,3,max_depth=3,1,,-0.0399863,0.493675,129,110,12.1
 M,all_lda_all,ridge,129,25,alpha=20.77,1,,-0.00773487,0.0195057,129,129,0
+M,all_lda_all,ridge_rk,129,25,alpha=20.77,1,,-0.0123687,0.0209728,129,129,0.1
 M,all_lda_all,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.030818,-0.00616922,129,55,5.8
+M,all_lda_all,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,0.0461527,0.00381876,129,59,8.1
 M,all_lda_all,xgb,129,4,max_depth=3,3,14,0.105045,0.591081,129,53,2.5
+M,all_lda_all,xgb_rk,129,4,max_depth=5,4,8,0.0692654,0.783598,129,93,2.7
 M,all_minilm,ebm,129,2,interactions=10,2,1,0.0765509,0.50822,139,139,20.6
 M,all_minilm,ipca,129,4,n_factors=3,3,,0.0805225,0.0237215,129,129,4.4
+M,all_minilm,ipca_rk,129,4,n_factors=3,3,,0.0951296,-0.000855735,129,129,5.2
 M,all_minilm,lasso,129,40,alpha=0.000782762,3,,0.0073796,0.0600506,129,5,0.1
+M,all_minilm,lasso_rk,129,40,alpha=0.00788131,1,,0,0,129,0,0.2
 M,all_minilm,ols,129,1,,1,,-0.595247,0.766917,129,129,0
+M,all_minilm,ols_rk,129,1,,1,,-1.06869,0.832351,129,129,0.1
 M,all_minilm,rf,129,3,max_depth=3,1,,0.00165019,0.471426,129,112,11.5
 M,all_minilm,ridge,129,25,alpha=20.1014,1,,-0.00397397,0.0204386,129,129,0
+M,all_minilm,ridge_rk,129,25,alpha=20.1014,1,,-0.00285749,0.0233951,129,129,0.3
 M,all_minilm,sipca,129,6,"n_factors=3, penalty=0.1",5,,0.0906746,0.0187851,129,99,7.7
+M,all_minilm,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,0.0844615,0.0123113,129,62,9.1
 M,all_minilm,xgb,129,4,max_depth=2,2,88,0.0785399,1.25894,129,86,2.7
+M,all_minilm,xgb_rk,129,4,max_depth=2,2,40,0.0603767,0.593935,129,56,3.1
+M,all_nolbert20,ebm,49,2,interactions=10,2,25,0.0689355,0.329553,59,59,10
+M,all_nolbert20,ipca,49,4,n_factors=3,3,,0.0791128,-0.00362743,49,49,0.1
+M,all_nolbert20,ipca_rk,49,4,n_factors=3,3,,0.202052,0.0147674,49,49,0.3
+M,all_nolbert20,lasso,49,40,alpha=0.00102413,1,,0,0,49,0,0
+M,all_nolbert20,lasso_rk,49,40,alpha=0.00787097,1,,0,0,49,0,0
+M,all_nolbert20,ols,49,1,,1,,-0.299502,0.332722,49,49,0
+M,all_nolbert20,ols_rk,49,1,,1,,-0.476988,0.384617,49,49,0
+M,all_nolbert20,rf,49,3,max_depth=3,1,,-0.0547712,0.444607,49,49,8
+M,all_nolbert20,ridge,49,25,alpha=4.32392,4,,0.0015345,0.0387378,49,49,0
+M,all_nolbert20,ridge_rk,49,25,alpha=1.36734,6,,0.0201703,0.117198,49,49,0
+M,all_nolbert20,sipca,49,6,"n_factors=3, penalty=0.03",6,,0.0753623,-0.00435387,49,49,2.8
+M,all_nolbert20,sipca_rk,49,6,"n_factors=3, penalty=0.03",6,,0.201627,0.00989966,49,49,2.8
+M,all_nolbert20,xgb,49,4,max_depth=5,4,2,0.000585504,0.239019,49,25,1.1
+M,all_nolbert20,xgb_rk,49,4,max_depth=3,3,15,0.0682607,0.412602,49,38,1.4
+M,all_nolbert,ebm,129,2,interactions=10,2,1,0.0555915,0.597859,139,139,26.2
+M,all_nolbert,ipca,129,4,n_factors=3,3,,0.0778543,0.0964612,129,129,3.6
+M,all_nolbert,ipca_rk,129,4,n_factors=5,4,,0.36611,0.133635,129,129,5.7
+M,all_nolbert,lasso,129,40,alpha=0.000926983,2,,0.00191747,0.0182845,129,2,0.1
+M,all_nolbert,lasso_rk,129,40,alpha=0.00787097,1,,0,0,129,0,0.2
+M,all_nolbert,ols,129,1,,1,,-0.536305,0.681342,129,129,0.4
+M,all_nolbert,ols_rk,129,1,,1,,-0.678326,0.74518,129,129,0
+M,all_nolbert,rf,129,3,max_depth=3,1,,-0.0371874,0.453065,129,112,12.3
+M,all_nolbert,ridge,129,25,alpha=20.0555,1,,-0.00269846,0.0197188,129,129,0.2
+M,all_nolbert,ridge_rk,129,25,alpha=3.56643,4,,0.0175348,0.103489,129,129,0
+M,all_nolbert,sipca,129,6,"n_factors=3, penalty=0.3",4,,0.119533,0.0376078,129,61,8.5
+M,all_nolbert,sipca_rk,129,6,"n_factors=3, penalty=0.1",5,,0.356842,0.0685845,129,88,9.2
+M,all_nolbert,xgb,129,4,max_depth=2,2,4,0.0106825,0.0644195,129,11,3.1
+M,all_nolbert,xgb_rk,129,4,max_depth=1,1,73,0.0535737,0.305139,129,27,3.1
 M,firm_finbert,ebm,21,2,interactions=10,2,37,0.00770664,0.0522495,31,31,3.1
 M,firm_finbert,ipca,21,4,n_factors=1,1,,-0.0048132,0.00124936,21,21,0.2
+M,firm_finbert,ipca_rk,21,4,n_factors=3,3,,0.0175674,0.0229583,21,21,0.1
 M,firm_finbert,lasso,21,40,alpha=0.000341235,1,,0,0,21,0,0
+M,firm_finbert,lasso_rk,21,40,alpha=0.000776331,9,,0.00436101,0.0287155,21,8,0
 M,firm_finbert,ols,21,1,,1,,-0.0175923,0.0368112,21,21,0
+M,firm_finbert,ols_rk,21,1,,1,,-0.0241712,0.0529324,21,21,0
 M,firm_finbert,rf,21,3,max_depth=3,1,,-0.00570649,0.0829574,21,21,2.6
 M,firm_finbert,ridge,21,25,alpha=11.0448,1,,3.89952e-05,0.00106327,21,21,0
+M,firm_finbert,ridge_rk,21,25,alpha=0.621092,6,,0.00898929,0.0155537,21,21,0
 M,firm_finbert,sipca,21,6,"n_factors=1, penalty=0.3",1,,-0.00131401,0.00016921,21,11,1.3
+M,firm_finbert,sipca_rk,21,6,"n_factors=3, penalty=0.3",4,,0.0328273,0.0209843,21,13,1.3
 M,firm_finbert,xgb,21,4,max_depth=1,1,50,0.00598333,0.0298167,21,17,0.7
+M,firm_finbert,xgb_rk,21,4,max_depth=2,2,41,0.0209026,0.0976765,21,19,0.8
 M,firm_lda,ebm,61,2,interactions=0,1,1,0.000492695,0.00478935,61,61,7.4
 M,firm_lda,ipca,61,4,n_factors=2,2,,0.00956471,0.0156498,61,61,0.4
+M,firm_lda,ipca_rk,61,4,n_factors=2,2,,-0.000430094,0.0143933,61,61,1
 M,firm_lda,lasso,61,40,alpha=0.000162565,1,,0,0,61,0,0
+M,firm_lda,lasso_rk,61,40,alpha=0.000816557,4,,0.00683123,0.0117532,61,4,0.1
 M,firm_lda,ols,61,1,,1,,-0.068631,0.099335,61,61,0
+M,firm_lda,ols_rk,61,1,,1,,-0.0935646,0.0944393,61,61,0
 M,firm_lda,rf,61,3,max_depth=3,1,,0.00499129,0.130002,61,60,3
 M,firm_lda,ridge,61,25,alpha=4.88491,1,,-0.000281548,0.00143958,61,61,0
+M,firm_lda,ridge_rk,61,25,alpha=2.74699,2,,0.000813376,0.00260475,61,61,0
 M,firm_lda,sipca,61,6,"n_factors=1, penalty=0.3",1,,0.0010661,0.00955294,61,24,1.8
+M,firm_lda,sipca_rk,61,6,"n_factors=3, penalty=0.3",4,,0.000158017,0.0159109,61,25,2.7
 M,firm_lda,xgb,61,4,max_depth=5,4,1,0.00546396,0.0245562,61,15,0.8
+M,firm_lda,xgb_rk,61,4,max_depth=3,3,1,0.000644863,0.00546606,61,6,0.9
 M,firm_lda_all,ebm,61,2,interactions=10,2,1,0.0480517,0.11699,71,71,8.1
 M,firm_lda_all,ipca,61,4,n_factors=3,3,,0.00567509,-0.00351666,61,61,1.1
+M,firm_lda_all,ipca_rk,61,4,n_factors=2,2,,0.0191198,-0.0186281,61,61,0.9
 M,firm_lda_all,lasso,61,40,alpha=0.000165907,1,,0,0,61,0,0
+M,firm_lda_all,lasso_rk,61,40,alpha=0.0013063,1,,0,0,61,0,0
 M,firm_lda_all,ols,61,1,,1,,-0.0722261,0.0848872,61,61,0
+M,firm_lda_all,ols_rk,61,1,,1,,-0.099201,0.0823342,61,61,0
 M,firm_lda_all,rf,61,3,max_depth=3,1,,-0.00721994,0.118274,61,60,3.3
 M,firm_lda_all,ridge,61,25,alpha=6.68908,1,,-0.000222449,0.00136828,61,61,0
+M,firm_lda_all,ridge_rk,61,25,alpha=6.68908,1,,-3.45361e-05,0.00124408,61,61,0
 M,firm_lda_all,sipca,61,6,"n_factors=1, penalty=0.3",1,,0.00377225,6.43605e-05,61,41,2
+M,firm_lda_all,sipca_rk,61,6,"n_factors=1, penalty=0.1",2,,0.00957397,0.000358743,61,51,2.8
 M,firm_lda_all,xgb,61,4,max_depth=5,4,1,0.00909142,0.0289801,61,15,0.9
+M,firm_lda_all,xgb_rk,61,4,max_depth=2,2,4,0.0124582,0.0108334,61,10,1
 M,firm_minilm,ebm,61,2,interactions=0,1,2,0.000506416,0.00265801,61,61,7.6
 M,firm_minilm,ipca,61,4,n_factors=1,1,,-0.00153893,3.20391e-05,61,61,0.7
+M,firm_minilm,ipca_rk,61,4,n_factors=1,1,,0.00748102,0.00020835,61,61,0.6
 M,firm_minilm,lasso,61,40,alpha=0.000228147,1,,0,0,61,0,0
+M,firm_minilm,lasso_rk,61,40,alpha=0.00210256,1,,0,0,61,0,0.1
 M,firm_minilm,ols,61,1,,1,,-0.121653,0.124887,61,61,0.1
+M,firm_minilm,ols_rk,61,1,,1,,-0.1446,0.129946,61,61,0
 M,firm_minilm,rf,61,3,max_depth=6,2,,-0.00378709,0.376748,61,61,3.4
 M,firm_minilm,ridge,61,25,alpha=5.27529,1,,-0.000178585,0.00253167,61,61,0
+M,firm_minilm,ridge_rk,61,25,alpha=0.938094,4,,0.00389981,0.0135304,61,61,0.2
 M,firm_minilm,sipca,61,6,"n_factors=1, penalty=0.3",1,,0.00793968,0.00151733,61,42,1.5
+M,firm_minilm,sipca_rk,61,6,"n_factors=1, penalty=0.3",1,,0.00974658,0.0004208,61,45,2
 M,firm_minilm,xgb,61,4,max_depth=1,1,2,0.000172163,0.000590138,61,2,0.9
+M,firm_minilm,xgb_rk,61,4,max_depth=1,1,95,0.0119215,0.0651734,61,39,1.2
+M,firm_nolbert20,ebm,21,2,interactions=10,2,1,0.0013864,0.00520044,31,31,4.3
+M,firm_nolbert20,ipca,21,4,n_factors=2,2,,-0.00289144,0.00465719,21,21,0.1
+M,firm_nolbert20,ipca_rk,21,4,n_factors=3,3,,-0.0050268,0.0123692,21,21,0.1
+M,firm_nolbert20,lasso,21,40,alpha=0.000306967,1,,0,0,21,0,0
+M,firm_nolbert20,lasso_rk,21,40,alpha=0.00196624,1,,0,0,21,0,0
+M,firm_nolbert20,ols,21,1,,1,,-0.0603218,0.0582815,21,21,0
+M,firm_nolbert20,ols_rk,21,1,,1,,-0.0708013,0.050399,21,21,0
+M,firm_nolbert20,rf,21,3,max_depth=3,1,,-0.0317375,0.119949,21,21,2.4
+M,firm_nolbert20,ridge,21,25,alpha=12.2002,1,,-0.000243157,0.00088841,21,21,0
+M,firm_nolbert20,ridge_rk,21,25,alpha=12.2002,1,,2.05649e-05,0.000759594,21,21,0
+M,firm_nolbert20,sipca,21,6,"n_factors=3, penalty=0.03",6,,-0.00529615,0.00561066,21,21,1.1
+M,firm_nolbert20,sipca_rk,21,6,"n_factors=3, penalty=0.1",5,,0.000117095,0.00936518,21,20,0.9
+M,firm_nolbert20,xgb,21,4,max_depth=2,2,6,0.00878267,0.0302863,21,12,0.7
+M,firm_nolbert20,xgb_rk,21,4,max_depth=3,3,13,0.0201141,0.0806408,21,20,0.7
+M,firm_nolbert,ebm,61,2,interactions=0,1,1,9.13006e-05,0.00058213,61,41,12.6
+M,firm_nolbert,ipca,61,4,n_factors=2,2,,-0.00548393,0.030614,61,61,1.3
+M,firm_nolbert,ipca_rk,61,4,n_factors=5,4,,-0.0154328,-0.324051,61,61,1.2
+M,firm_nolbert,lasso,61,40,alpha=0.000250897,1,,0,0,61,0,0
+M,firm_nolbert,lasso_rk,61,40,alpha=0.000871729,5,,0.00324763,0.0296329,61,6,0
+M,firm_nolbert,ols,61,1,,1,,-0.116286,0.126406,61,61,0.2
+M,firm_nolbert,ols_rk,61,1,,1,,-0.0737342,0.130529,61,61,0
+M,firm_nolbert,rf,61,3,max_depth=3,1,,-0.0050152,0.122953,61,60,3.1
+M,firm_nolbert,ridge,61,25,alpha=5.1782,1,,-0.000369516,0.00244225,61,61,0
+M,firm_nolbert,ridge_rk,61,25,alpha=0.291192,6,,0.00633737,0.0341324,61,61,0
+M,firm_nolbert,sipca,61,6,"n_factors=1, penalty=0.03",3,,-0.0133932,0.0389311,61,60,1.9
+M,firm_nolbert,sipca_rk,61,6,"n_factors=3, penalty=0.03",6,,-0.0210976,0.0359706,61,61,2.1
+M,firm_nolbert,xgb,61,4,max_depth=5,4,2,0.00439468,0.0514613,61,24,1.1
+M,firm_nolbert,xgb_rk,61,4,max_depth=3,3,34,0.0249091,0.258005,61,58,1.4
 M,narr_finbert,ebm,20,2,interactions=10,2,54,0.110247,0.278089,30,30,3.9
 M,narr_finbert,ipca,20,4,n_factors=5,4,,0.164544,0.0770595,20,20,0.1
+M,narr_finbert,ipca_rk,20,4,n_factors=5,4,,0.116718,0.0449403,20,20,0.1
 M,narr_finbert,lasso,20,40,alpha=7.31921e-06,27,,0.109477,0.154088,20,20,0
+M,narr_finbert,lasso_rk,20,40,alpha=1.84744e-05,33,,0.135104,0.136301,20,20,0
 M,narr_finbert,ols,20,1,,1,,0.110438,0.154141,20,20,0
+M,narr_finbert,ols_rk,20,1,,1,,0.13626,0.136312,20,20,0
 M,narr_finbert,rf,20,3,max_depth=3,1,,0.0243637,0.398216,20,20,6
 M,narr_finbert,ridge,20,25,alpha=0.0334014,13,,0.111012,0.152728,20,20,0
+M,narr_finbert,ridge_rk,20,25,alpha=0.018783,14,,0.135867,0.135845,20,20,0.1
 M,narr_finbert,sipca,20,6,"n_factors=3, penalty=0.1",5,,0.0468683,0.0733541,20,20,1.3
+M,narr_finbert,sipca_rk,20,6,"n_factors=3, penalty=0.3",4,,0.115797,0.042889,20,20,1.8
 M,narr_finbert,xgb,20,4,max_depth=2,2,56,0.0783595,0.502633,20,20,0.8
+M,narr_finbert,xgb_rk,20,4,max_depth=1,1,267,0.30085,0.367869,20,20,1.5
 M,narr_lda,ebm,60,2,interactions=0,1,1,0.000837392,0.00340369,60,60,9.1
 M,narr_lda,ipca,60,4,n_factors=1,1,,-0.00156089,0.000387063,60,60,0.7
+M,narr_lda,ipca_rk,60,4,n_factors=1,1,,-0.00153416,0.000359199,60,60,0.5
 M,narr_lda,lasso,60,40,alpha=0.00158185,1,,0,0,60,0,0
+M,narr_lda,lasso_rk,60,40,alpha=0.011163,1,,0,0,60,0,0
 M,narr_lda,ols,60,1,,1,,-0.941401,0.640894,60,60,0.1
+M,narr_lda,ols_rk,60,1,,1,,-1.53663,0.636331,60,60,0
 M,narr_lda,rf,60,3,max_depth=3,1,,-0.0468755,0.391354,60,60,10.2
 M,narr_lda,ridge,60,25,alpha=33.4014,1,,-0.00653431,0.0130492,60,60,0
+M,narr_lda,ridge_rk,60,25,alpha=33.4014,1,,-0.00901337,0.0122444,60,60,0.2
 M,narr_lda,sipca,60,6,"n_factors=1, penalty=0.3",1,,0.00277355,-0.000734419,60,45,2.3
+M,narr_lda,sipca_rk,60,6,"n_factors=1, penalty=0.3",1,,-0.00172755,0.000370468,60,43,2.2
 M,narr_lda,xgb,60,4,max_depth=5,4,1,0.00115054,0.0682984,60,19,1.4
+M,narr_lda,xgb_rk,60,4,max_depth=5,4,2,0.00944867,0.133886,60,29,1.5
 M,narr_lda_all,ebm,60,2,interactions=0,1,1,0.000960084,0.00124255,60,60,9.2
 M,narr_lda_all,ipca,60,4,n_factors=1,1,,-0.000150477,0.0041856,60,60,0.4
+M,narr_lda_all,ipca_rk,60,4,n_factors=1,1,,-0.00294377,-0.00249788,60,60,0.3
 M,narr_lda_all,lasso,60,40,alpha=0.00162893,1,,0,0,60,0,0
+M,narr_lda_all,lasso_rk,60,40,alpha=0.0112332,1,,0,0,60,0,0
 M,narr_lda_all,ols,60,1,,1,,-0.950148,0.513646,60,60,0
+M,narr_lda_all,ols_rk,60,1,,1,,-1.76093,0.510827,60,60,0
 M,narr_lda_all,rf,60,3,max_depth=3,1,,-0.0409957,0.402666,60,60,10.4
 M,narr_lda_all,ridge,60,25,alpha=33.4014,1,,-0.00516183,0.0103652,60,60,0
+M,narr_lda_all,ridge_rk,60,25,alpha=33.4014,1,,-0.00884563,0.00931844,60,60,0
 M,narr_lda_all,sipca,60,6,"n_factors=1, penalty=0.1",2,,-0.000925213,0.00328477,60,57,2.3
+M,narr_lda_all,sipca_rk,60,6,"n_factors=1, penalty=0.3",1,,0.00317189,-0.00418279,60,44,2.5
 M,narr_lda_all,xgb,60,4,max_depth=3,3,11,0.0111739,0.327222,60,38,1.4
+M,narr_lda_all,xgb_rk,60,4,max_depth=1,1,2,-0.00861245,0.0153992,60,1,1.6
 M,narr_lda_placebo,ebm,60,2,interactions=0,1,1,8.36278e-05,0.00380558,60,60,9.2
 M,narr_lda_placebo,ipca,60,4,n_factors=2,2,,-0.0132985,0.0330673,60,60,0.9
+M,narr_lda_placebo,ipca_rk,60,4,n_factors=2,2,,0.0765506,0.045396,60,60,0.7
 M,narr_lda_placebo,lasso,60,40,alpha=0.00102403,1,,0,0,60,0,0
+M,narr_lda_placebo,lasso_rk,60,40,alpha=0.00744279,1,,0,0,60,0,0.1
 M,narr_lda_placebo,ols,60,1,,1,,-0.475748,0.512391,60,60,0
+M,narr_lda_placebo,ols_rk,60,1,,1,,-0.802325,0.554355,60,60,0
 M,narr_lda_placebo,rf,60,3,max_depth=3,1,,-0.0667726,0.396751,60,60,10.3
 M,narr_lda_placebo,ridge,60,25,alpha=33.4014,1,,-0.0019676,0.0107927,60,60,0
+M,narr_lda_placebo,ridge_rk,60,25,alpha=33.4014,1,,-0.00198624,0.0113698,60,60,0
 M,narr_lda_placebo,sipca,60,6,"n_factors=3, penalty=0.3",4,,-0.00621018,0.0542161,60,60,3.1
+M,narr_lda_placebo,sipca_rk,60,6,"n_factors=3, penalty=0.3",4,,0.0769306,0.0763774,60,59,3
 M,narr_lda_placebo,xgb,60,4,max_depth=3,3,2,0.00554565,0.0551964,60,12,1.4
+M,narr_lda_placebo,xgb_rk,60,4,max_depth=1,1,81,0.129634,0.282928,60,30,2.1
 M,narr_minilm,ebm,60,2,interactions=10,2,1,0.0162682,0.218682,70,70,10.6
 M,narr_minilm,ipca,60,4,n_factors=1,1,,-0.022615,0.0116999,60,60,0.8
+M,narr_minilm,ipca_rk,60,4,n_factors=1,1,,0.000986725,0.00972494,60,60,0.8
 M,narr_minilm,lasso,60,40,alpha=0.000782762,3,,0.0073796,0.0600506,60,4,0
+M,narr_minilm,lasso_rk,60,40,alpha=0.00788131,1,,0,0,60,0,0.2
 M,narr_minilm,ols,60,1,,1,,-0.468049,0.557789,60,60,0
+M,narr_minilm,ols_rk,60,1,,1,,-0.832146,0.536529,60,60,0.1
 M,narr_minilm,rf,60,3,max_depth=6,2,,0.00328665,0.932826,60,60,11.3
 M,narr_minilm,ridge,60,25,alpha=33.4014,1,,-0.00276663,0.0105534,60,60,0
+M,narr_minilm,ridge_rk,60,25,alpha=33.4014,1,,-0.00315056,0.0102695,60,60,0.1
 M,narr_minilm,sipca,60,6,"n_factors=1, penalty=0.3",1,,0.000875485,0.000373088,60,50,3
+M,narr_minilm,sipca_rk,60,6,"n_factors=1, penalty=0.3",1,,0.000457621,-0.0006004,60,51,3.3
 M,narr_minilm,xgb,60,4,max_depth=3,3,55,0.0885664,1.44367,60,60,1.6
+M,narr_minilm,xgb_rk,60,4,max_depth=2,2,45,0.0507114,0.43413,60,48,1.8
+M,narr_nolbert20,ebm,20,2,interactions=0,1,14,0.0145231,0.0635031,20,20,4.9
+M,narr_nolbert20,ipca,20,4,n_factors=2,2,,0.0447578,0.0339569,20,20,0.1
+M,narr_nolbert20,ipca_rk,20,4,n_factors=2,2,,0.0655656,0.0415554,20,20,0.1
+M,narr_nolbert20,lasso,20,40,alpha=0.00102413,1,,0,0,20,0,0
+M,narr_nolbert20,lasso_rk,20,40,alpha=0.00671323,1,,0,0,20,1,0
+M,narr_nolbert20,ols,20,1,,1,,-0.227828,0.199374,20,20,0
+M,narr_nolbert20,ols_rk,20,1,,1,,-0.284961,0.180767,20,20,0
+M,narr_nolbert20,rf,20,3,max_depth=3,1,,-0.0374964,0.403701,20,20,6
+M,narr_nolbert20,ridge,20,25,alpha=33.4014,1,,-7.14179e-05,0.00376568,20,20,0
+M,narr_nolbert20,ridge_rk,20,25,alpha=1.8783,6,,0.00999976,0.04372,20,20,0
+M,narr_nolbert20,sipca,20,6,"n_factors=1, penalty=0.3",1,,-0.00115851,-3.73044e-05,20,14,1.5
+M,narr_nolbert20,sipca_rk,20,6,"n_factors=1, penalty=0.3",1,,0.000263643,-1.10227e-06,20,18,1.2
+M,narr_nolbert20,xgb,20,4,max_depth=5,4,2,0.00443711,0.138569,20,16,0.9
+M,narr_nolbert20,xgb_rk,20,4,max_depth=1,1,90,0.0863815,0.214353,20,17,1
+M,narr_nolbert,ebm,60,2,interactions=0,1,1,0.00257676,0.00961523,60,60,12.7
+M,narr_nolbert,ipca,60,4,n_factors=2,2,,0.092624,-0.00322421,60,60,0.7
+M,narr_nolbert,ipca_rk,60,4,n_factors=1,1,,0.160818,-0.00639747,60,60,0.7
+M,narr_nolbert,lasso,60,40,alpha=0.000926983,2,,0.00191747,0.0182845,60,2,0.1
+M,narr_nolbert,lasso_rk,60,40,alpha=0.00645823,2,,0.00170974,0.0161641,60,1,0
+M,narr_nolbert,ols,60,1,,1,,-0.395509,0.480634,60,60,0.2
+M,narr_nolbert,ols_rk,60,1,,1,,-0.4449,0.457786,60,60,0
+M,narr_nolbert,rf,60,3,max_depth=3,1,,-0.0313132,0.418261,60,60,10.6
+M,narr_nolbert,ridge,60,25,alpha=33.4014,1,,-0.00196747,0.0100518,60,60,0.1
+M,narr_nolbert,ridge_rk,60,25,alpha=3.34014,5,,0.00845993,0.075411,60,60,0
+M,narr_nolbert,sipca,60,6,"n_factors=1, penalty=0.03",3,,0.0668249,-0.000834626,60,58,3.3
+M,narr_nolbert,sipca_rk,60,6,"n_factors=1, penalty=0.03",3,,0.152057,-0.00630424,60,59,2.8
+M,narr_nolbert,xgb,60,4,max_depth=2,2,4,0.0113084,0.0611083,60,10,2.7
+M,narr_nolbert,xgb_rk,60,4,max_depth=1,1,71,0.0436356,0.251625,60,25,2.3
 M,price,ebm,8,2,interactions=10,2,52,0.0168541,0.0893548,18,18,2.1
 M,price,ipca,8,4,n_factors=5,4,,0.0214879,0.042455,8,8,0
+M,price,ipca_rk,8,4,n_factors=3,3,,0.0984404,0.0114102,8,8,0.1
 M,price,lasso,8,40,alpha=0.000248683,7,,0.00371793,0.0461886,8,5,0
+M,price,lasso_rk,8,40,alpha=0.00787097,1,,0,0,8,0,0.1
 M,price,ols,8,1,,1,,-0.00912433,0.0677151,8,8,0
+M,price,ols_rk,8,1,,1,,-0.101618,0.142798,8,8,0
 M,price,rf,8,3,max_depth=3,1,,-0.0834588,0.343678,8,8,3.1
 M,price,ridge,8,25,alpha=0.334013,9,,0.0109708,0.0488656,8,8,0
+M,price,ridge_rk,8,25,alpha=1.8783,6,,0.00902347,0.0447019,8,8,0
 M,price,sipca,8,6,"n_factors=3, penalty=0.3",4,,0.00139765,-0.0130065,8,7,1.3
+M,price,sipca_rk,8,6,"n_factors=3, penalty=0.3",4,,0.100849,0.0231882,8,7,1.2
 M,price,xgb,8,4,max_depth=2,2,11,0.0215226,0.0906367,8,8,0.7
+M,price,xgb_rk,8,4,max_depth=3,3,44,0.0620719,0.444377,8,8,0.9
 M,text_finbert,ebm,41,2,interactions=10,2,52,0.28455,1.0308,51,51,6.8
 M,text_finbert,ipca,41,4,n_factors=5,4,,0.13533,0.0717907,41,41,0.4
+M,text_finbert,ipca_rk,41,4,n_factors=5,4,,0.148152,0.0402256,41,41,0.4
 M,text_finbert,lasso,41,40,alpha=3.60389e-05,18,,0.0924047,0.182762,41,33,0
+M,text_finbert,lasso_rk,41,40,alpha=0.0003752,16,,0.118589,0.175287,41,29,0
 M,text_finbert,ols,41,1,,1,,0.0884587,0.191703,41,41,0
+M,text_finbert,ols_rk,41,1,,1,,0.103973,0.18987,41,41,0
 M,text_finbert,rf,41,3,max_depth=3,1,,0.0515991,0.415039,41,40,7.3
 M,text_finbert,ridge,41,25,alpha=0.0694133,11,,0.0981049,0.178666,41,41,0
+M,text_finbert,ridge_rk,41,25,alpha=0.0694133,11,,0.132692,0.172067,41,41,0.1
 M,text_finbert,sipca,41,6,"n_factors=3, penalty=0.3",4,,0.0416596,0.0703203,41,27,1.8
+M,text_finbert,sipca_rk,41,6,"n_factors=3, penalty=0.3",4,,0.109657,0.0403186,41,25,2.2
 M,text_finbert,xgb,41,4,max_depth=1,1,108,0.0416132,0.280419,41,21,1.2
+M,text_finbert,xgb_rk,41,4,max_depth=1,1,217,0.308234,0.338941,41,26,2.1
 M,text_lda,ebm,121,2,interactions=0,1,1,6.50128e-05,0.00317283,121,121,17.7
 M,text_lda,ipca,121,4,n_factors=1,1,,-0.0162952,0.00422373,121,121,3.3
+M,text_lda,ipca_rk,121,4,n_factors=1,1,,-0.00876718,0.00201386,121,121,4.6
 M,text_lda,lasso,121,40,alpha=0.00158185,1,,0,0,121,0,0
+M,text_lda,lasso_rk,121,40,alpha=0.011163,1,,0,0,121,0,0.3
 M,text_lda,ols,121,1,,1,,-0.996359,0.734908,121,121,0.1
+M,text_lda,ols_rk,121,1,,1,,-1.60359,0.724656,121,121,0
 M,text_lda,rf,121,3,max_depth=3,1,,-0.0586044,0.432508,121,109,10.9
 M,text_lda,ridge,121,25,alpha=19.0253,1,,-0.0114792,0.0229883,121,121,0
+M,text_lda,ridge_rk,121,25,alpha=19.0253,1,,-0.0156301,0.0216333,121,121,0.1
 M,text_lda,sipca,121,6,"n_factors=1, penalty=0.3",1,,0.00117371,-0.000315926,121,52,5.2
+M,text_lda,sipca_rk,121,6,"n_factors=1, penalty=0.3",1,,-0.00172896,0.000370859,121,48,5.8
 M,text_lda,xgb,121,4,max_depth=1,1,1,0.00390392,0.00571546,121,1,2.1
+M,text_lda,xgb_rk,121,4,max_depth=5,4,2,0.00540221,0.184078,121,41,2.5
 M,text_lda_all,ebm,121,2,interactions=10,2,1,0.00777386,0.0474289,131,131,19.4
 M,text_lda_all,ipca,121,4,n_factors=2,2,,0.00310652,0.0176817,121,121,2.9
+M,text_lda_all,ipca_rk,121,4,n_factors=1,1,,0.00299927,0.00942351,121,121,3.2
 M,text_lda_all,lasso,121,40,alpha=0.00162893,1,,0,0,121,0,0
+M,text_lda_all,lasso_rk,121,40,alpha=0.0112332,1,,0,0,121,0,0.1
 M,text_lda_all,ols,121,1,,1,,-1.0134,0.596564,121,121,0.2
+M,text_lda_all,ols_rk,121,1,,1,,-1.8604,0.589839,121,121,0
 M,text_lda_all,rf,121,3,max_depth=3,1,,-0.0196113,0.418304,121,111,11.4
 M,text_lda_all,ridge,121,25,alpha=19.9348,1,,-0.00870548,0.0176176,121,121,0.1
+M,text_lda_all,ridge_rk,121,25,alpha=19.9348,1,,-0.0148288,0.0158565,121,121,0.1
 M,text_lda_all,sipca,121,6,"n_factors=3, penalty=0.3",4,,0.000395745,0.0247711,121,75,6.1
+M,text_lda_all,sipca_rk,121,6,"n_factors=1, penalty=0.3",1,,0.00458755,-0.00422399,121,51,5.6
 M,text_lda_all,xgb,121,4,max_depth=1,1,35,0.0201597,0.16919,121,17,2.3
+M,text_lda_all,xgb_rk,121,4,max_depth=2,2,1,0.00933844,0.0125279,121,3,2.6
 M,text_minilm,ebm,121,2,interactions=10,2,1,0.00379573,0.0221844,131,131,19.8
 M,text_minilm,ipca,121,4,n_factors=3,3,,-0.00153227,0.133061,121,121,4.7
+M,text_minilm,ipca_rk,121,4,n_factors=1,1,,0.0109043,0.0103783,121,121,4.6
 M,text_minilm,lasso,121,40,alpha=0.000782762,3,,0.0073796,0.0600506,121,4,0.1
+M,text_minilm,lasso_rk,121,40,alpha=0.00788131,1,,0,0,121,0,0.1
 M,text_minilm,ols,121,1,,1,,-0.588397,0.683623,121,121,0.1
+M,text_minilm,ols_rk,121,1,,1,,-0.95756,0.664113,121,121,0.2
 M,text_minilm,rf,121,3,max_depth=3,1,,0.0233919,0.428077,121,110,11
 M,text_minilm,ridge,121,25,alpha=19.2221,1,,-0.00481834,0.0185328,121,121,0
+M,text_minilm,ridge_rk,121,25,alpha=19.2221,1,,-0.00505159,0.0181991,121,121,0.3
 M,text_minilm,sipca,121,6,"n_factors=1, penalty=0.3",1,,0.00111552,0.000267738,121,68,6.3
+M,text_minilm,sipca_rk,121,6,"n_factors=1, penalty=0.3",1,,0.000148076,-0.000162475,121,63,6.3
 M,text_minilm,xgb,121,4,max_depth=5,4,7,0.0314115,0.866848,121,82,2.3
+M,text_minilm,xgb_rk,121,4,max_depth=1,1,45,0.0876873,0.195624,121,18,3.2
+M,text_nolbert20,ebm,41,2,interactions=10,2,12,0.033965,0.131521,51,51,8.2
+M,text_nolbert20,ipca,41,4,n_factors=2,2,,0.0396343,0.0241017,41,41,0.2
+M,text_nolbert20,ipca_rk,41,4,n_factors=2,2,,0.0630734,0.0291852,41,41,0.3
+M,text_nolbert20,lasso,41,40,alpha=0.00102413,1,,0,0,41,0,0
+M,text_nolbert20,lasso_rk,41,40,alpha=0.00671323,1,,0,0,41,1,0
+M,text_nolbert20,ols,41,1,,1,,-0.281903,0.256997,41,41,0
+M,text_nolbert20,ols_rk,41,1,,1,,-0.34882,0.230609,41,41,0
+M,text_nolbert20,rf,41,3,max_depth=3,1,,-0.0221795,0.388968,41,41,6
+M,text_nolbert20,ridge,41,25,alpha=22.5422,1,,-0.000233304,0.00600676,41,41,0
+M,text_nolbert20,ridge_rk,41,25,alpha=2.25422,5,,0.00909221,0.0417454,41,41,0
+M,text_nolbert20,sipca,41,6,"n_factors=1, penalty=0.3",1,,-0.00314409,-3.88718e-05,41,22,1.6
+M,text_nolbert20,sipca_rk,41,6,"n_factors=1, penalty=0.3",1,,-0.00193207,3.10411e-05,41,24,1.8
+M,text_nolbert20,xgb,41,4,max_depth=3,3,1,0.00640286,0.0310104,41,6,1
+M,text_nolbert20,xgb_rk,41,4,max_depth=1,1,50,0.0972497,0.16057,41,13,1.4
+M,text_nolbert,ebm,121,2,interactions=10,2,1,0.0232236,0.134679,131,131,28.2
+M,text_nolbert,ipca,121,4,n_factors=1,1,,0.0599971,-0.00212223,121,121,2.7
+M,text_nolbert,ipca_rk,121,4,n_factors=1,1,,0.149443,-0.00732215,121,121,4.3
+M,text_nolbert,lasso,121,40,alpha=0.000926983,2,,0.00191747,0.0182845,121,2,0.2
+M,text_nolbert,lasso_rk,121,40,alpha=0.00645823,2,,0.00170974,0.0161641,121,1,0.2
+M,text_nolbert,ols,121,1,,1,,-0.516072,0.61016,121,121,0.2
+M,text_nolbert,ols_rk,121,1,,1,,-0.519872,0.590372,121,121,0
+M,text_nolbert,rf,121,3,max_depth=3,1,,0.0287775,0.412359,121,103,11.8
+M,text_nolbert,ridge,121,25,alpha=19.1732,1,,-0.00348015,0.017793,121,121,0.1
+M,text_nolbert,ridge_rk,121,25,alpha=3.40952,4,,0.00983983,0.0779588,121,121,0.1
+M,text_nolbert,sipca,121,6,"n_factors=1, penalty=0.1",2,,0.0658361,-0.000315547,121,93,7.4
+M,text_nolbert,sipca_rk,121,6,"n_factors=1, penalty=0.03",3,,0.139115,-0.00711896,121,106,6.9
+M,text_nolbert,xgb,121,4,max_depth=2,2,1,0.00469585,0.013349,121,3,3.4
+M,text_nolbert,xgb_rk,121,4,max_depth=1,1,109,0.0693483,0.350173,121,33,3.1
 2W,all_finbert,ebm,49,2,interactions=10,2,54,0.0913869,0.418858,59,59,11.5
 2W,all_finbert,ipca,49,4,n_factors=1,1,,-0.0566005,-0.00163837,49,49,0.3
+2W,all_finbert,ipca_rk,49,4,n_factors=5,4,,-0.00902313,0.0652871,49,49,0.4
 2W,all_finbert,lasso,49,40,alpha=0.000284231,3,,0.0107748,0.0275748,49,6,0
+2W,all_finbert,lasso_rk,49,40,alpha=0.00175179,7,,0.0219757,0.129083,49,20,0.2
 2W,all_finbert,ols,49,1,,1,,-0.103999,0.161885,49,49,0
+2W,all_finbert,ols_rk,49,1,,1,,-0.0105812,0.214122,49,49,0.1
 2W,all_finbert,rf,49,3,max_depth=3,1,,-0.00126415,0.198916,49,48,10
 2W,all_finbert,ridge,49,25,alpha=23.8094,1,,-0.000362622,0.00440174,49,49,0
+2W,all_finbert,ridge_rk,49,25,alpha=0.238094,9,,0.0657178,0.163926,49,49,0
 2W,all_finbert,sipca,49,6,"n_factors=1, penalty=0.3",1,,-0.0467112,-0.00140873,49,23,2.5
+2W,all_finbert,sipca_rk,49,6,"n_factors=3, penalty=0.3",4,,-0.048728,0.00821078,49,25,3.1
 2W,all_finbert,xgb,49,4,max_depth=5,4,90,0.294414,4.74249,49,49,3.7
+2W,all_finbert,xgb_rk,49,4,max_depth=2,2,197,0.17574,0.81003,49,49,4.8
 2W,all_lda,ebm,129,2,interactions=0,1,2,0.00135478,0.0222403,129,129,27.9
 2W,all_lda,ipca,129,4,n_factors=1,1,,-0.044427,-0.00290794,129,129,3.9
+2W,all_lda,ipca_rk,129,4,n_factors=5,4,,-0.0455292,0.0374425,129,129,6.2
 2W,all_lda,lasso,129,40,alpha=0.00083241,1,,0,0,129,0,0.2
+2W,all_lda,lasso_rk,129,40,alpha=0.00798227,1,,0,0,129,0,0.2
 2W,all_lda,ols,129,1,,1,,-0.373925,0.441624,129,129,0.3
+2W,all_lda,ols_rk,129,1,,1,,-0.514315,0.432602,129,129,0.2
 2W,all_lda,rf,129,3,max_depth=3,1,,-0.000499295,0.24779,129,109,14.6
 2W,all_lda,ridge,129,25,alpha=19.907,1,,-0.00147816,0.0143315,129,129,0.2
+2W,all_lda,ridge_rk,129,25,alpha=11.1946,2,,0.00215249,0.0250249,129,129,0.6
 2W,all_lda,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0418302,-0.00265266,129,40,7.1
+2W,all_lda,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,-0.0762509,0.00860218,129,51,9.2
 2W,all_lda,xgb,129,4,max_depth=2,2,1,-0.000542564,0.0180991,129,3,4.5
+2W,all_lda,xgb_rk,129,4,max_depth=1,1,93,0.050418,0.196129,129,25,6.3
 2W,all_lda_all,ebm,129,2,interactions=10,2,1,0.00715308,0.0774084,139,139,31.6
 2W,all_lda_all,ipca,129,4,n_factors=1,1,,-0.0710159,-0.00536865,129,129,2.6
+2W,all_lda_all,ipca_rk,129,4,n_factors=3,3,,-0.0862625,0.00733501,129,129,6.6
 2W,all_lda_all,lasso,129,40,alpha=0.000793587,1,,0,0,129,0,0.2
+2W,all_lda_all,lasso_rk,129,40,alpha=0.00771877,1,,0,0,129,0,0.3
 2W,all_lda_all,ols,129,1,,1,,-0.314205,0.43181,129,129,0.2
+2W,all_lda_all,ols_rk,129,1,,1,,-0.58174,0.418381,129,129,0.2
 2W,all_lda_all,rf,129,3,max_depth=10,3,,-0.00510597,1.28291,129,128,20.2
 2W,all_lda_all,ridge,129,25,alpha=20.732,1,,-0.000244255,0.012335,129,129,0.2
+2W,all_lda_all,ridge_rk,129,25,alpha=20.732,1,,0.000805511,0.0124729,129,129,0.2
 2W,all_lda_all,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0559841,-0.00416606,129,49,7.1
+2W,all_lda_all,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,-0.0831232,0.0119226,129,55,7.7
 2W,all_lda_all,xgb,129,4,max_depth=5,4,1,0.00273732,0.0989572,129,20,4.7
+2W,all_lda_all,xgb_rk,129,4,max_depth=2,2,88,0.0649862,0.523508,129,84,7.5
 2W,all_minilm,ebm,129,2,interactions=10,2,22,0.497395,1.54049,139,139,32.5
 2W,all_minilm,ipca,129,4,n_factors=5,4,,-0.0203839,0.0317366,129,129,7.2
+2W,all_minilm,ipca_rk,129,4,n_factors=5,4,,-0.026796,0.0416594,129,129,4.3
 2W,all_minilm,lasso,129,40,alpha=0.000324345,4,,0.00385674,0.084517,129,10,0.2
+2W,all_minilm,lasso_rk,129,40,alpha=0.00178445,7,,0.0455035,0.201511,129,30,0.5
 2W,all_minilm,ols,129,1,,1,,-0.260439,0.451564,129,129,0.4
+2W,all_minilm,ols_rk,129,1,,1,,-0.24441,0.436012,129,129,0.3
 2W,all_minilm,rf,129,3,max_depth=3,1,,-0.0124824,0.204948,129,114,14.3
 2W,all_minilm,ridge,129,25,alpha=6.3524,3,,0.00310953,0.037658,129,129,0.2
+2W,all_minilm,ridge_rk,129,25,alpha=0.63524,7,,0.0538923,0.192837,129,129,0.2
 2W,all_minilm,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0360167,-0.00292782,129,57,7.9
+2W,all_minilm,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,-0.0450112,0.00933682,129,49,9.4
 2W,all_minilm,xgb,129,4,max_depth=5,4,12,0.0162629,0.992098,129,109,4.7
+2W,all_minilm,xgb_rk,129,4,max_depth=3,3,63,0.167607,1.05627,129,107,8.4
+2W,all_nolbert20,ebm,49,2,interactions=10,2,2,0.0881513,0.558316,59,59,16.8
+2W,all_nolbert20,ipca,49,4,n_factors=5,4,,-0.0353813,0.0134706,49,49,0.4
+2W,all_nolbert20,ipca_rk,49,4,n_factors=5,4,,0.0288649,0.0799498,49,49,0.7
+2W,all_nolbert20,lasso,49,40,alpha=0.00052247,1,,0,0,49,0,0.2
+2W,all_nolbert20,lasso_rk,49,40,alpha=0.00545761,1,,0,0,49,1,0
+2W,all_nolbert20,ols,49,1,,1,,-0.21115,0.184872,49,49,0.2
+2W,all_nolbert20,ols_rk,49,1,,1,,-0.247737,0.218912,49,49,0
+2W,all_nolbert20,rf,49,3,max_depth=3,1,,-0.00910117,0.236715,49,48,9.5
+2W,all_nolbert20,ridge,49,25,alpha=24.3066,1,,-0.000151802,0.00511931,49,49,0.1
+2W,all_nolbert20,ridge_rk,49,25,alpha=1.36686,6,,0.0178949,0.0781756,49,49,0
+2W,all_nolbert20,sipca,49,6,"n_factors=3, penalty=0.1",5,,-0.0295819,-0.00283684,49,36,2.6
+2W,all_nolbert20,sipca_rk,49,6,"n_factors=3, penalty=0.3",4,,-0.0620331,0.00859445,49,24,2.4
+2W,all_nolbert20,xgb,49,4,max_depth=5,4,55,0.0661223,3.36757,49,49,2.9
+2W,all_nolbert20,xgb_rk,49,4,max_depth=3,3,79,0.138318,0.871481,49,48,3.9
+2W,all_nolbert,ebm,129,2,interactions=10,2,14,0.057445,0.298029,139,139,40.7
+2W,all_nolbert,ipca,129,4,n_factors=3,3,,-0.0367357,-0.0106262,129,129,5
+2W,all_nolbert,ipca_rk,129,4,n_factors=5,4,,0.0297136,0.0408312,129,129,4.3
+2W,all_nolbert,lasso,129,40,alpha=0.000381497,3,,0.00778665,0.0384935,129,6,0.3
+2W,all_nolbert,lasso_rk,129,40,alpha=0.00486352,2,,0.00337133,0.0247772,129,5,0.2
+2W,all_nolbert,ols,129,1,,1,,-0.360252,0.375647,129,129,0.5
+2W,all_nolbert,ols_rk,129,1,,1,,-0.446697,0.426916,129,129,0.2
+2W,all_nolbert,rf,129,3,max_depth=3,1,,-0.00503467,0.232498,129,114,15.2
+2W,all_nolbert,ridge,129,25,alpha=20.0471,1,,0.000342151,0.0122734,129,129,0.2
+2W,all_nolbert,ridge_rk,129,25,alpha=2.00471,5,,0.0283953,0.105161,129,129,1.1
+2W,all_nolbert,sipca,129,6,"n_factors=3, penalty=0.1",5,,-0.0310553,-0.0067791,129,79,11.9
+2W,all_nolbert,sipca_rk,129,6,"n_factors=1, penalty=0.3",1,,-0.0792495,0.00981619,129,33,7.2
+2W,all_nolbert,xgb,129,4,max_depth=1,1,66,0.0266348,0.151872,129,24,6
+2W,all_nolbert,xgb_rk,129,4,max_depth=1,1,134,0.114897,0.255436,129,31,8
 2W,firm_finbert,ebm,21,2,interactions=10,2,1,0.00135829,0.0150562,31,31,4.8
 2W,firm_finbert,ipca,21,4,n_factors=1,1,,-0.00522829,0.00453228,21,21,0.1
+2W,firm_finbert,ipca_rk,21,4,n_factors=5,4,,0.0313876,0.0132842,21,21,0.4
 2W,firm_finbert,lasso,21,40,alpha=0.000178311,1,,0,0,21,0,0
+2W,firm_finbert,lasso_rk,21,40,alpha=0.00019115,15,,0.0110836,0.027359,21,13,0
 2W,firm_finbert,ols,21,1,,1,,-0.0212234,0.0298275,21,21,0
+2W,firm_finbert,ols_rk,21,1,,1,,0.00102408,0.0321959,21,21,0
 2W,firm_finbert,rf,21,3,max_depth=3,1,,-0.00608881,0.0477951,21,21,3.4
 2W,firm_finbert,ridge,21,25,alpha=11.02,1,,-0.000117194,0.000641716,21,21,0
+2W,firm_finbert,ridge_rk,21,25,alpha=0.619702,6,,0.00568164,0.00854206,21,21,0
 2W,firm_finbert,sipca,21,6,"n_factors=1, penalty=0.3",1,,-0.00325895,0.00558372,21,9,1.2
+2W,firm_finbert,sipca_rk,21,6,"n_factors=3, penalty=0.03",6,,0.026782,0.0120148,21,20,1.7
 2W,firm_finbert,xgb,21,4,max_depth=5,4,45,0.0149499,0.444945,21,21,1.2
+2W,firm_finbert,xgb_rk,21,4,max_depth=3,3,19,0.0170217,0.0600161,21,20,1.4
 2W,firm_lda,ebm,61,2,interactions=10,2,1,0.00171957,0.0123919,71,71,14.9
 2W,firm_lda,ipca,61,4,n_factors=1,1,,-0.000208843,2.11402e-05,61,61,1.1
+2W,firm_lda,ipca_rk,61,4,n_factors=1,1,,0.00165059,0.00029431,61,61,1.2
 2W,firm_lda,lasso,61,40,alpha=8.11464e-05,1,,0,0,61,0,0.2
+2W,firm_lda,lasso_rk,61,40,alpha=0.000906707,1,,0,0,61,1,0.2
 2W,firm_lda,ols,61,1,,1,,-0.0486773,0.0469368,61,61,0.2
+2W,firm_lda,ols_rk,61,1,,1,,-0.0967669,0.0494747,61,61,0.2
 2W,firm_lda,rf,61,3,max_depth=6,2,,-0.000374767,0.171492,61,60,4.6
 2W,firm_lda,ridge,61,25,alpha=4.8641,1,,-0.000173863,0.00067748,61,61,0.2
+2W,firm_lda,ridge_rk,61,25,alpha=4.8641,1,,-0.000694552,0.000714821,61,61,0.2
 2W,firm_lda,sipca,61,6,"n_factors=1, penalty=0.3",1,,-0.00100716,0.000164728,61,33,2.3
+2W,firm_lda,sipca_rk,61,6,"n_factors=1, penalty=0.3",1,,0.00317848,0.000945331,61,22,2.3
 2W,firm_lda,xgb,61,4,max_depth=1,1,83,0.00754199,0.0230392,61,40,2.2
+2W,firm_lda,xgb_rk,61,4,max_depth=5,4,3,0.00467016,0.0468508,61,42,1.8
 2W,firm_lda_all,ebm,61,2,interactions=0,1,51,0.00987284,0.0351795,61,61,16.3
 2W,firm_lda_all,ipca,61,4,n_factors=5,4,,0.000657776,-0.0156414,61,61,2.2
+2W,firm_lda_all,ipca_rk,61,4,n_factors=5,4,,0.00713381,-0.00550922,61,61,2.5
 2W,firm_lda_all,lasso,61,40,alpha=0.000109653,1,,0,0,61,1,0.2
+2W,firm_lda_all,lasso_rk,61,40,alpha=0.000558573,4,,0.00969966,0.00771233,61,9,0.2
 2W,firm_lda_all,ols,61,1,,1,,-0.0272843,0.0557438,61,61,0.1
+2W,firm_lda_all,ols_rk,61,1,,1,,-0.0426266,0.0502953,61,61,0.1
 2W,firm_lda_all,rf,61,3,max_depth=3,1,,0.00166361,0.0590111,61,60,4.7
 2W,firm_lda_all,ridge,61,25,alpha=2.08984,3,,0.000731774,0.00305313,61,61,0.2
+2W,firm_lda_all,ridge_rk,61,25,alpha=0.371632,6,,0.00623821,0.0101628,61,61,0.2
 2W,firm_lda_all,sipca,61,6,"n_factors=3, penalty=0.1",5,,-0.00121445,0.00947385,61,54,2.2
+2W,firm_lda_all,sipca_rk,61,6,"n_factors=3, penalty=0.3",4,,0.00620868,0.00408049,61,45,2.1
 2W,firm_lda_all,xgb,61,4,max_depth=1,1,131,0.0198161,0.0508503,61,46,2.5
+2W,firm_lda_all,xgb_rk,61,4,max_depth=1,1,76,0.01833,0.0303934,61,33,2.7
 2W,firm_minilm,ebm,61,2,interactions=10,2,4,0.00316127,0.0275026,71,71,15.6
 2W,firm_minilm,ipca,61,4,n_factors=1,1,,-0.00378945,0.00109198,61,61,0.7
+2W,firm_minilm,ipca_rk,61,4,n_factors=5,4,,0.00693337,0.0110028,61,61,1.9
 2W,firm_minilm,lasso,61,40,alpha=0.000105707,1,,0,0,61,1,0.2
+2W,firm_minilm,lasso_rk,61,40,alpha=0.00105453,1,,0,0,61,0,0.2
 2W,firm_minilm,ols,61,1,,1,,-0.102526,0.0724353,61,61,0.2
+2W,firm_minilm,ols_rk,61,1,,1,,-0.160734,0.0716509,61,61,0.2
 2W,firm_minilm,rf,61,3,max_depth=3,1,,-0.00636386,0.056753,61,61,4
 2W,firm_minilm,ridge,61,25,alpha=5.2469,1,,-0.000133919,0.00112468,61,61,0.1
+2W,firm_minilm,ridge_rk,61,25,alpha=5.2469,1,,-0.000401768,0.00105533,61,61,0.2
 2W,firm_minilm,sipca,61,6,"n_factors=1, penalty=0.3",1,,-0.0039818,0.00132774,61,45,2.4
+2W,firm_minilm,sipca_rk,61,6,"n_factors=3, penalty=0.1",5,,0.00582172,0.00155232,61,57,2.8
 2W,firm_minilm,xgb,61,4,max_depth=5,4,3,0.0111653,0.0398674,61,36,1.5
+2W,firm_minilm,xgb_rk,61,4,max_depth=5,4,1,0.00175687,0.00986436,61,19,1.7
+2W,firm_nolbert20,ebm,21,2,interactions=0,1,1,6.11869e-05,6.6232e-05,21,13,6.3
+2W,firm_nolbert20,ipca,21,4,n_factors=2,2,,-0.0387241,0.0149928,21,21,0.1
+2W,firm_nolbert20,ipca_rk,21,4,n_factors=2,2,,-0.0338841,0.0123905,21,21,0.2
+2W,firm_nolbert20,lasso,21,40,alpha=0.00015196,1,,0,0,21,0,0
+2W,firm_nolbert20,lasso_rk,21,40,alpha=0.00162862,1,,0,0,21,0,0
+2W,firm_nolbert20,ols,21,1,,1,,-0.0429083,0.0230613,21,21,0
+2W,firm_nolbert20,ols_rk,21,1,,1,,-0.0673859,0.0222968,21,21,0
+2W,firm_nolbert20,rf,21,3,max_depth=3,1,,-0.0225031,0.0616628,21,21,3.3
+2W,firm_nolbert20,ridge,21,25,alpha=12.1801,1,,-0.000394603,0.000457829,21,21,0
+2W,firm_nolbert20,ridge_rk,21,25,alpha=12.1801,1,,-0.000672214,0.000384688,21,21,0
+2W,firm_nolbert20,sipca,21,6,"n_factors=1, penalty=0.3",1,,-0.0406622,0.0135893,21,14,1.2
+2W,firm_nolbert20,sipca_rk,21,6,"n_factors=3, penalty=0.1",5,,-0.0365898,0.0125012,21,19,1.2
+2W,firm_nolbert20,xgb,21,4,max_depth=5,4,10,0.00659486,0.135274,21,21,0.9
+2W,firm_nolbert20,xgb_rk,21,4,max_depth=1,1,1,-0.000306251,0.000689486,21,1,1
+2W,firm_nolbert,ebm,61,2,interactions=10,2,1,0.00136169,0.00296128,71,68,20.7
+2W,firm_nolbert,ipca,61,4,n_factors=1,1,,-0.00191206,0.000756483,61,61,1
+2W,firm_nolbert,ipca_rk,61,4,n_factors=2,2,,0.00627166,0.00416403,61,61,1.2
+2W,firm_nolbert,lasso,61,40,alpha=7.73421e-05,1,,0,0,61,0,0.2
+2W,firm_nolbert,lasso_rk,61,40,alpha=0.00111223,2,,0.00134911,0.00292118,61,1,0.2
+2W,firm_nolbert,ols,61,1,,1,,-0.0792572,0.050267,61,61,0.2
+2W,firm_nolbert,ols_rk,61,1,,1,,-0.130356,0.0679913,61,61,0.2
+2W,firm_nolbert,rf,61,3,max_depth=3,1,,0.0022392,0.0544054,61,61,4.4
+2W,firm_nolbert,ridge,61,25,alpha=5.16034,1,,-0.000477872,0.000774667,61,61,0.2
+2W,firm_nolbert,ridge_rk,61,25,alpha=5.16034,1,,-0.000759052,0.00135645,61,61,0.2
+2W,firm_nolbert,sipca,61,6,"n_factors=1, penalty=0.03",3,,-0.0022772,0.000892734,61,55,2.9
+2W,firm_nolbert,sipca_rk,61,6,"n_factors=1, penalty=0.3",1,,0.00207302,0.00498913,61,35,2
+2W,firm_nolbert,xgb,61,4,max_depth=1,1,5,0.000862516,0.00136123,61,4,2.3
+2W,firm_nolbert,xgb_rk,61,4,max_depth=5,4,6,0.00436067,0.0846989,61,49,1.8
 2W,narr_finbert,ebm,20,2,interactions=0,1,62,0.0547002,0.145241,20,20,5
 2W,narr_finbert,ipca,20,4,n_factors=2,2,,0.0061781,0.0045451,20,20,0.1
+2W,narr_finbert,ipca_rk,20,4,n_factors=2,2,,0.00495377,0.0207909,20,20,0.1
 2W,narr_finbert,lasso,20,40,alpha=0.000319689,2,,0.00513599,0.00696142,20,5,0
+2W,narr_finbert,lasso_rk,20,40,alpha=0.000141412,21,,0.0234591,0.106096,20,19,0
 2W,narr_finbert,ols,20,1,,1,,0.000954476,0.0764783,20,20,0
+2W,narr_finbert,ols_rk,20,1,,1,,0.0242477,0.10644,20,20,0
 2W,narr_finbert,rf,20,3,max_depth=3,1,,0.0173905,0.1855,20,20,7.2
 2W,narr_finbert,ridge,20,25,alpha=0.334014,9,,0.0165602,0.0593392,20,20,0
+2W,narr_finbert,ridge_rk,20,25,alpha=0.334014,9,,0.0471086,0.0810875,20,20,0
 2W,narr_finbert,sipca,20,6,"n_factors=1, penalty=0.3",1,,-0.00766581,-0.0012221,20,18,1.3
+2W,narr_finbert,sipca_rk,20,6,"n_factors=1, penalty=0.3",1,,-0.00409136,0.01035,20,13,1.3
 2W,narr_finbert,xgb,20,4,max_depth=1,1,97,0.0345098,0.125519,20,19,1.7
+2W,narr_finbert,xgb_rk,20,4,max_depth=1,1,142,0.112476,0.164084,20,20,2.3
 2W,narr_lda,ebm,60,2,interactions=0,1,1,0.00164218,0.00495615,60,60,12.7
 2W,narr_lda,ipca,60,4,n_factors=1,1,,0.00059257,-0.000127081,60,60,0.6
+2W,narr_lda,ipca_rk,60,4,n_factors=2,2,,0.00350112,-0.00042086,60,60,0.9
 2W,narr_lda,lasso,60,40,alpha=0.00083241,1,,0,0,60,0,0
+2W,narr_lda,lasso_rk,60,40,alpha=0.00798227,1,,0,0,60,0,0.2
 2W,narr_lda,ols,60,1,,1,,-0.24794,0.334688,60,60,0.1
+2W,narr_lda,ols_rk,60,1,,1,,-0.397842,0.306791,60,60,0.2
 2W,narr_lda,rf,60,3,max_depth=3,1,,-0.00103947,0.218051,60,60,12.4
 2W,narr_lda,ridge,60,25,alpha=33.4014,1,,2.71839e-05,0.00749776,60,60,0.2
+2W,narr_lda,ridge_rk,60,25,alpha=33.4014,1,,0.000280393,0.00660167,60,60,0.2
 2W,narr_lda,sipca,60,6,"n_factors=1, penalty=0.3",1,,0.00222628,-0.000361417,60,49,3.2
+2W,narr_lda,sipca_rk,60,6,"n_factors=1, penalty=0.1",2,,9.09021e-06,-3.2023e-06,60,55,2.6
 2W,narr_lda,xgb,60,4,max_depth=1,1,1,-0.00345975,0.00597593,60,1,2.6
+2W,narr_lda,xgb_rk,60,4,max_depth=3,3,16,0.0414201,0.176896,60,45,3.5
 2W,narr_lda_all,ebm,60,2,interactions=0,1,12,0.00780441,0.0840116,60,60,14.2
 2W,narr_lda_all,ipca,60,4,n_factors=3,3,,0.0148142,0.0123079,60,60,1.3
+2W,narr_lda_all,ipca_rk,60,4,n_factors=5,4,,0.0115991,0.0168562,60,60,1.9
 2W,narr_lda_all,lasso,60,40,alpha=0.000793587,1,,0,0,60,0,0.2
+2W,narr_lda_all,lasso_rk,60,40,alpha=0.00771877,1,,0,0,60,0,0.2
 2W,narr_lda_all,ols,60,1,,1,,-0.22071,0.3198,60,60,0.2
+2W,narr_lda_all,ols_rk,60,1,,1,,-0.516956,0.294375,60,60,0.2
 2W,narr_lda_all,rf,60,3,max_depth=3,1,,0.00722065,0.200553,60,60,12.1
 2W,narr_lda_all,ridge,60,25,alpha=5.93971,4,,0.00278363,0.0335286,60,60,0.1
+2W,narr_lda_all,ridge_rk,60,25,alpha=33.4014,1,,-0.000328468,0.00565749,60,60,0.3
 2W,narr_lda_all,sipca,60,6,"n_factors=3, penalty=0.3",4,,0.0165585,0.0155365,60,59,2.9
+2W,narr_lda_all,sipca_rk,60,6,"n_factors=3, penalty=0.03",6,,0.00281668,0.0124723,60,60,3.6
 2W,narr_lda_all,xgb,60,4,max_depth=1,1,1,-0.00267619,0.00503965,60,1,2.5
+2W,narr_lda_all,xgb_rk,60,4,max_depth=3,3,26,0.0407055,0.263711,60,56,3.8
 2W,narr_lda_placebo,ebm,60,2,interactions=0,1,2,0.00203416,0.0171799,60,60,14
 2W,narr_lda_placebo,ipca,60,4,n_factors=3,3,,0.0167084,0.0446429,60,60,1.2
+2W,narr_lda_placebo,ipca_rk,60,4,n_factors=3,3,,0.0392891,0.0385916,60,60,1.3
 2W,narr_lda_placebo,lasso,60,40,alpha=0.000360461,3,,0.00772342,0.0487957,60,7,0.1
+2W,narr_lda_placebo,lasso_rk,60,40,alpha=0.0033954,4,,0.0238498,0.0786578,60,11,0.2
 2W,narr_lda_placebo,ols,60,1,,1,,-0.151696,0.302251,60,60,0.2
+2W,narr_lda_placebo,ols_rk,60,1,,1,,-0.292837,0.310495,60,60,0
 2W,narr_lda_placebo,rf,60,3,max_depth=3,1,,-0.0302816,0.172373,60,60,12.6
 2W,narr_lda_placebo,ridge,60,25,alpha=33.4014,1,,-0.000138222,0.00656021,60,60,0.1
+2W,narr_lda_placebo,ridge_rk,60,25,alpha=10.5625,3,,0.00113785,0.0200155,60,60,0.2
 2W,narr_lda_placebo,sipca,60,6,"n_factors=3, penalty=0.3",4,,0.000331522,0.0364792,60,60,3.3
+2W,narr_lda_placebo,sipca_rk,60,6,"n_factors=3, penalty=0.1",5,,0.0390017,0.0398675,60,60,3
 2W,narr_lda_placebo,xgb,60,4,max_depth=5,4,3,0.00686856,0.168253,60,45,2.8
+2W,narr_lda_placebo,xgb_rk,60,4,max_depth=1,1,106,0.0982678,0.194494,60,32,4.2
 2W,narr_minilm,ebm,60,2,interactions=10,2,32,0.0836684,0.436002,70,70,15.2
 2W,narr_minilm,ipca,60,4,n_factors=1,1,,0.0213093,0.00399174,60,60,0.8
+2W,narr_minilm,ipca_rk,60,4,n_factors=2,2,,0.0154683,0.0343018,60,60,1.4
 2W,narr_minilm,lasso,60,40,alpha=0.00013378,9,,0.00304145,0.210732,60,27,0.1
+2W,narr_minilm,lasso_rk,60,40,alpha=0.00149479,8,,0.0367756,0.167507,60,26,0.2
 2W,narr_minilm,ols,60,1,,1,,-0.0770383,0.321643,60,60,0.2
+2W,narr_minilm,ols_rk,60,1,,1,,-0.0526973,0.290588,60,60,0.2
 2W,narr_minilm,rf,60,3,max_depth=6,2,,0.0299795,0.506691,60,60,13.5
 2W,narr_minilm,ridge,60,25,alpha=1.8783,6,,0.0129118,0.0808972,60,60,0
+2W,narr_minilm,ridge_rk,60,25,alpha=1.05625,7,,0.0440557,0.106903,60,60,0.2
 2W,narr_minilm,sipca,60,6,"n_factors=1, penalty=0.03",3,,0.0165495,0.0027003,60,56,3.6
+2W,narr_minilm,sipca_rk,60,6,"n_factors=3, penalty=0.03",6,,0.0106978,0.0561865,60,60,4
 2W,narr_minilm,xgb,60,4,max_depth=5,4,83,0.111957,3.19508,60,60,3.6
+2W,narr_minilm,xgb_rk,60,4,max_depth=3,3,71,0.144581,0.573605,60,60,5.2
+2W,narr_nolbert20,ebm,20,2,interactions=0,1,30,0.0166665,0.0754685,20,20,5.3
+2W,narr_nolbert20,ipca,20,4,n_factors=1,1,,-0.00425997,-0.000626593,20,20,0.1
+2W,narr_nolbert20,ipca_rk,20,4,n_factors=5,4,,0.0170887,0.0686603,20,20,0.3
+2W,narr_nolbert20,lasso,20,40,alpha=0.00052247,1,,0,0,20,0,0
+2W,narr_nolbert20,lasso_rk,20,40,alpha=0.00545761,1,,0,0,20,1,0
+2W,narr_nolbert20,ols,20,1,,1,,-0.0861631,0.105935,20,20,0
+2W,narr_nolbert20,ols_rk,20,1,,1,,-0.149263,0.121797,20,20,0
+2W,narr_nolbert20,rf,20,3,max_depth=3,1,,-0.0365458,0.203754,20,20,6.9
+2W,narr_nolbert20,ridge,20,25,alpha=1.05625,7,,0.0125296,0.0463791,20,20,0
+2W,narr_nolbert20,ridge_rk,20,25,alpha=1.05625,7,,0.0150646,0.053136,20,20,0
+2W,narr_nolbert20,sipca,20,6,"n_factors=1, penalty=0.3",1,,-0.00147316,-0.000254098,20,18,1.5
+2W,narr_nolbert20,sipca_rk,20,6,"n_factors=3, penalty=0.1",5,,0.0280542,0.0516941,20,20,1.6
+2W,narr_nolbert20,xgb,20,4,max_depth=3,3,1,0.00242644,0.0177576,20,7,1.2
+2W,narr_nolbert20,xgb_rk,20,4,max_depth=2,2,48,0.0515994,0.16866,20,20,1.8
+2W,narr_nolbert,ebm,60,2,interactions=10,2,42,0.0508846,0.287039,70,70,18.2
+2W,narr_nolbert,ipca,60,4,n_factors=3,3,,0.0192985,-0.000152448,60,60,0.9
+2W,narr_nolbert,ipca_rk,60,4,n_factors=1,1,,-0.0260288,0.00600373,60,60,1.5
+2W,narr_nolbert,lasso,60,40,alpha=0.000381497,3,,0.00578523,0.0351411,60,5,0.2
+2W,narr_nolbert,lasso_rk,60,40,alpha=0.00486352,2,,0.00162784,0.0216778,60,4,0.1
+2W,narr_nolbert,ols,60,1,,1,,-0.179996,0.26828,60,60,0.2
+2W,narr_nolbert,ols_rk,60,1,,1,,-0.273226,0.286404,60,60,0.2
+2W,narr_nolbert,rf,60,3,max_depth=6,2,,0.0117649,0.478305,60,60,15.1
+2W,narr_nolbert,ridge,60,25,alpha=3.34014,5,,0.00654058,0.049325,60,60,0.2
+2W,narr_nolbert,ridge_rk,60,25,alpha=1.8783,6,,0.023703,0.0819399,60,60,0.1
+2W,narr_nolbert,sipca,60,6,"n_factors=3, penalty=0.3",4,,0.0230077,0.000494594,60,60,3.7
+2W,narr_nolbert,sipca_rk,60,6,"n_factors=3, penalty=0.3",4,,-0.0092454,0.0127541,60,58,2.7
+2W,narr_nolbert,xgb,60,4,max_depth=5,4,34,0.110468,1.56667,60,60,3.5
+2W,narr_nolbert,xgb_rk,60,4,max_depth=3,3,37,0.101732,0.375701,60,55,4.6
 2W,price,ebm,8,2,interactions=10,2,1,0.00123557,0.00753099,18,18,2
 2W,price,ipca,8,4,n_factors=1,1,,-0.0427175,-0.000560788,8,8,0
+2W,price,ipca_rk,8,4,n_factors=5,4,,0.0338404,0.0527603,8,8,0
 2W,price,lasso,8,40,alpha=0.000339309,2,,0.00404577,0.00528835,8,1,0
+2W,price,lasso_rk,8,40,alpha=0.00298024,4,,0.00905091,0.0355063,8,4,0
 2W,price,ols,8,1,,1,,-0.0910901,0.0498836,8,8,0
+2W,price,ols_rk,8,1,,1,,-0.0636891,0.0700636,8,8,0
 2W,price,rf,8,3,max_depth=3,1,,-0.0439649,0.144654,8,8,3.5
 2W,price,ridge,8,25,alpha=33.4014,1,,-0.000884006,0.00105065,8,8,0
+2W,price,ridge_rk,8,25,alpha=1.8783,6,,0.00614937,0.0238207,8,8,0.1
 2W,price,sipca,8,6,"n_factors=1, penalty=0.3",1,,-0.0433179,-0.000650068,8,8,1.3
+2W,price,sipca_rk,8,6,"n_factors=3, penalty=0.3",4,,-0.0602017,0.00659388,8,7,1.4
 2W,price,xgb,8,4,max_depth=1,1,18,0.00713585,0.0269894,8,6,0.8
+2W,price,xgb_rk,8,4,max_depth=1,1,159,0.116789,0.119007,8,8,1.7
 2W,text_finbert,ebm,41,2,interactions=10,2,56,0.0765704,0.317416,51,51,10.1
 2W,text_finbert,ipca,41,4,n_factors=2,2,,0.00713718,0.00466679,41,41,0.2
+2W,text_finbert,ipca_rk,41,4,n_factors=2,2,,0.00889682,0.0195888,41,41,0.4
 2W,text_finbert,lasso,41,40,alpha=0.000319689,2,,0.00513599,0.00696142,41,5,0.2
+2W,text_finbert,lasso_rk,41,40,alpha=0.000168815,20,,0.0351011,0.133524,41,32,0.1
 2W,text_finbert,ols,41,1,,1,,-0.0207073,0.10642,41,41,0
+2W,text_finbert,ols_rk,41,1,,1,,0.026036,0.138045,41,41,0.2
 2W,text_finbert,rf,41,3,max_depth=6,2,,0.0170452,0.520787,41,41,9.2
 2W,text_finbert,ridge,41,25,alpha=0.693734,7,,0.0123375,0.0525562,41,41,0
+2W,text_finbert,ridge_rk,41,25,alpha=0.219378,9,,0.0540198,0.105701,41,41,0
 2W,text_finbert,sipca,41,6,"n_factors=1, penalty=0.3",1,,-0.00819793,-0.0010233,41,22,1.8
+2W,text_finbert,sipca_rk,41,6,"n_factors=1, penalty=0.3",1,,-0.00367198,0.0104128,41,15,2.1
 2W,text_finbert,xgb,41,4,max_depth=5,4,202,0.199123,7.10042,41,41,3.7
+2W,text_finbert,xgb_rk,41,4,max_depth=5,4,82,0.219965,2.49828,41,41,4.2
 2W,text_lda,ebm,121,2,interactions=0,1,2,0.00462678,0.0186604,121,121,25.9
 2W,text_lda,ipca,121,4,n_factors=1,1,,-0.00491443,0.0012543,121,121,2.4
+2W,text_lda,ipca_rk,121,4,n_factors=2,2,,0.00523632,-0.000795668,121,121,6.7
 2W,text_lda,lasso,121,40,alpha=0.00083241,1,,0,0,121,0,0.2
+2W,text_lda,lasso_rk,121,40,alpha=0.00798227,1,,0,0,121,0,0.3
 2W,text_lda,ols,121,1,,1,,-0.296443,0.381427,121,121,0.2
+2W,text_lda,ols_rk,121,1,,1,,-0.497064,0.356219,121,121,0.3
 2W,text_lda,rf,121,3,max_depth=3,1,,-0.0373719,0.244048,121,108,14.3
 2W,text_lda,ridge,121,25,alpha=19.0148,1,,-4.3479e-05,0.0131604,121,121,0.3
+2W,text_lda,ridge_rk,121,25,alpha=19.0148,1,,0.000225815,0.0116231,121,121,0.3
 2W,text_lda,sipca,121,6,"n_factors=1, penalty=0.3",1,,0.00132262,-0.000227355,121,53,6.8
+2W,text_lda,sipca_rk,121,6,"n_factors=1, penalty=0.1",2,,-0.000133071,4.73673e-05,121,66,6.8
 2W,text_lda,xgb,121,4,max_depth=5,4,1,0.00990897,0.0950947,121,20,4.2
+2W,text_lda,xgb_rk,121,4,max_depth=1,1,85,0.0414922,0.173179,121,22,6.5
 2W,text_lda_all,ebm,121,2,interactions=0,1,14,0.00861826,0.101523,121,121,26.7
 2W,text_lda_all,ipca,121,4,n_factors=3,3,,0.02564,0.00944355,121,121,6.2
+2W,text_lda_all,ipca_rk,121,4,n_factors=3,3,,0.0299524,0.00762311,121,121,6.5
 2W,text_lda_all,lasso,121,40,alpha=0.000793587,1,,0,0,121,0,0.2
+2W,text_lda_all,lasso_rk,121,40,alpha=0.00771877,1,,0,0,121,0,0.3
 2W,text_lda_all,ols,121,1,,1,,-0.243149,0.37297,121,121,0.3
+2W,text_lda_all,ols_rk,121,1,,1,,-0.557488,0.34097,121,121,0.2
 2W,text_lda_all,rf,121,3,max_depth=6,2,,0.00234267,0.621016,121,120,16.8
 2W,text_lda_all,ridge,121,25,alpha=3.53777,4,,0.00398965,0.0546989,121,121,0.2
+2W,text_lda_all,ridge_rk,121,25,alpha=19.8943,1,,-0.000299328,0.00965233,121,121,0.5
 2W,text_lda_all,sipca,121,6,"n_factors=3, penalty=0.03",6,,0.0255738,0.0123747,121,112,7.5
+2W,text_lda_all,sipca_rk,121,6,"n_factors=3, penalty=0.03",6,,0.0262032,0.00869772,121,114,8.3
 2W,text_lda_all,xgb,121,4,max_depth=5,4,57,0.0479448,3.30989,121,119,5.1
+2W,text_lda_all,xgb_rk,121,4,max_depth=3,3,61,0.0701472,0.803805,121,105,7.2
 2W,text_minilm,ebm,121,2,interactions=10,2,20,0.107658,0.879405,131,131,31.4
 2W,text_minilm,ipca,121,4,n_factors=2,2,,0.0268315,0.0722366,121,121,3.2
+2W,text_minilm,ipca_rk,121,4,n_factors=3,3,,0.022079,0.0673671,121,121,6.2
 2W,text_minilm,lasso,121,40,alpha=0.00013378,9,,0.00304145,0.210732,121,27,0.3
+2W,text_minilm,lasso_rk,121,40,alpha=0.00149479,8,,0.0367756,0.167507,121,26,0.5
 2W,text_minilm,ols,121,1,,1,,-0.178432,0.39326,121,121,0.5
+2W,text_minilm,ols_rk,121,1,,1,,-0.198925,0.359229,121,121,0.4
 2W,text_minilm,rf,121,3,max_depth=3,1,,0.0230546,0.211664,121,106,13.8
 2W,text_minilm,ridge,121,25,alpha=1.92078,5,,0.0124371,0.0826444,121,121,0.2
+2W,text_minilm,ridge_rk,121,25,alpha=1.08014,6,,0.0422276,0.110324,121,121,0.3
 2W,text_minilm,sipca,121,6,"n_factors=1, penalty=0.03",3,,0.0147101,0.00557029,121,96,7.7
+2W,text_minilm,sipca_rk,121,6,"n_factors=1, penalty=0.03",3,,0.00933745,0.00461394,121,95,8.8
 2W,text_minilm,xgb,121,4,max_depth=5,4,7,0.0173763,0.515967,121,89,4.2
+2W,text_minilm,xgb_rk,121,4,max_depth=2,2,67,0.135048,0.398558,121,81,6.1
+2W,text_nolbert20,ebm,41,2,interactions=10,2,17,0.148903,0.921556,51,51,13.1
+2W,text_nolbert20,ipca,41,4,n_factors=1,1,,-0.00915545,-0.000833312,41,41,0.2
+2W,text_nolbert20,ipca_rk,41,4,n_factors=2,2,,0.0121061,0.00758797,41,41,0.6
+2W,text_nolbert20,lasso,41,40,alpha=0.00052247,1,,0,0,41,0,0.2
+2W,text_nolbert20,lasso_rk,41,40,alpha=0.00545761,1,,0,0,41,1,0
+2W,text_nolbert20,ols,41,1,,1,,-0.12102,0.129451,41,41,0.1
+2W,text_nolbert20,ols_rk,41,1,,1,,-0.199615,0.144066,41,41,0
+2W,text_nolbert20,rf,41,3,max_depth=6,2,,-0.030991,0.532058,41,41,8.7
+2W,text_nolbert20,ridge,41,25,alpha=1.26707,6,,0.00878429,0.045323,41,41,0
+2W,text_nolbert20,ridge_rk,41,25,alpha=2.2532,5,,0.00972014,0.033716,41,41,0
+2W,text_nolbert20,sipca,41,6,"n_factors=1, penalty=0.3",1,,-0.00319282,-0.000433788,41,23,1.9
+2W,text_nolbert20,sipca_rk,41,6,"n_factors=3, penalty=0.1",5,,0.01568,0.0449925,41,33,2
+2W,text_nolbert20,xgb,41,4,max_depth=5,4,8,0.0139625,0.547002,41,40,1.8
+2W,text_nolbert20,xgb_rk,41,4,max_depth=1,1,56,0.0427269,0.0915198,41,16,2.6
+2W,text_nolbert,ebm,121,2,interactions=0,1,32,0.0372506,0.259188,121,121,36.3
+2W,text_nolbert,ipca,121,4,n_factors=3,3,,0.0335852,0.0011978,121,121,3.9
+2W,text_nolbert,ipca_rk,121,4,n_factors=5,4,,-0.0125731,0.0163654,121,121,6.5
+2W,text_nolbert,lasso,121,40,alpha=0.000381497,3,,0.00578523,0.0351411,121,5,0.2
+2W,text_nolbert,lasso_rk,121,40,alpha=0.00486352,2,,0.00162784,0.0216778,121,4,0.4
+2W,text_nolbert,ols,121,1,,1,,-0.260282,0.320141,121,121,1.5
+2W,text_nolbert,ols_rk,121,1,,1,,-0.391985,0.354821,121,121,0.2
+2W,text_nolbert,rf,121,3,max_depth=6,2,,0.0154284,0.555911,121,120,16.2
+2W,text_nolbert,ridge,121,25,alpha=3.40793,4,,0.00577946,0.049739,121,121,0.3
+2W,text_nolbert,ridge_rk,121,25,alpha=1.91642,5,,0.0217646,0.0843823,121,121,0.4
+2W,text_nolbert,sipca,121,6,"n_factors=3, penalty=0.1",5,,0.0271419,0.000776446,121,106,10.5
+2W,text_nolbert,sipca_rk,121,6,"n_factors=3, penalty=0.3",4,,-0.00844555,0.0126884,121,70,7.5
+2W,text_nolbert,xgb,121,4,max_depth=1,1,91,0.0338221,0.186122,121,29,6.1
+2W,text_nolbert,xgb_rk,121,4,max_depth=1,1,88,0.0875759,0.183359,121,21,6.7
 W,all_finbert,ebm,49,2,interactions=0,1,51,0.0428159,0.0861694,49,49,17.3
 W,all_finbert,ipca,49,4,n_factors=1,1,,-0.0241244,-0.000710394,49,49,0.9
+W,all_finbert,ipca_rk,49,4,n_factors=5,4,,0.0113929,0.0501353,49,49,0.9
 W,all_finbert,lasso,49,40,alpha=9.17974e-06,19,,0.0198088,0.0696329,49,38,0.2
+W,all_finbert,lasso_rk,49,40,alpha=3.71514e-05,28,,0.0665559,0.122298,49,47,0.2
 W,all_finbert,ols,49,1,,1,,0.016602,0.0754912,49,49,0.2
+W,all_finbert,ols_rk,49,1,,1,,0.0664495,0.1227,49,49,0.2
 W,all_finbert,rf,49,3,max_depth=10,3,,0.0138164,0.597146,49,49,14.5
 W,all_finbert,ridge,49,25,alpha=0.133823,10,,0.0203443,0.0617258,49,49,0.2
+W,all_finbert,ridge_rk,49,25,alpha=0.133823,10,,0.0706567,0.107716,49,49,0.2
 W,all_finbert,sipca,49,6,"n_factors=1, penalty=0.3",1,,-0.0206955,-7.59005e-05,49,20,3
+W,all_finbert,sipca_rk,49,6,"n_factors=3, penalty=0.3",4,,0.00208733,0.0173751,49,21,3.5
 W,all_finbert,xgb,49,4,max_depth=2,2,175,0.0566641,0.459023,49,49,6.1
+W,all_finbert,xgb_rk,49,4,max_depth=1,1,154,0.0861495,0.122272,49,25,6.4
 W,all_lda,ebm,129,2,interactions=10,2,3,0.141003,0.491428,139,139,48.2
 W,all_lda,ipca,129,4,n_factors=5,4,,-0.0294059,0.0139216,129,129,11.1
+W,all_lda,ipca_rk,129,4,n_factors=5,4,,-0.0414648,0.0327515,129,129,8.1
 W,all_lda,lasso,129,40,alpha=0.000437903,1,,0,0,129,0,0.4
+W,all_lda,lasso_rk,129,40,alpha=0.0056623,1,,0,0,129,0,0.5
 W,all_lda,ols,129,1,,1,,-0.266118,0.222726,129,129,0.5
+W,all_lda,ols_rk,129,1,,1,,-0.404517,0.243082,129,129,0.6
 W,all_lda,rf,129,3,max_depth=3,1,,-0.0219776,0.113669,129,115,18.1
 W,all_lda,ridge,129,25,alpha=19.9023,1,,-0.00165125,0.00710044,129,129,0.7
+W,all_lda,ridge_rk,129,25,alpha=19.9023,1,,-0.00110289,0.00845818,129,129,1.3
 W,all_lda,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0244466,-0.00130074,129,35,9.2
+W,all_lda,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,-0.0267913,0.0210851,129,47,11.8
 W,all_lda,xgb,129,4,max_depth=1,1,1,-0.00236139,0.00357337,129,1,9.3
+W,all_lda,xgb_rk,129,4,max_depth=3,3,55,0.0728077,0.536343,129,106,14.8
 W,all_lda_all,ebm,129,2,interactions=10,2,11,0.0959112,0.38464,139,139,49.8
 W,all_lda_all,ipca,129,4,n_factors=1,1,,-0.0337029,-0.000494725,129,129,5.1
+W,all_lda_all,ipca_rk,129,4,n_factors=5,4,,-0.0222925,0.0307344,129,129,5.2
 W,all_lda_all,lasso,129,40,alpha=0.000391158,1,,0,0,129,0,0.5
+W,all_lda_all,lasso_rk,129,40,alpha=0.00527537,1,,0,0,129,0,1.3
 W,all_lda_all,ols,129,1,,1,,-0.223013,0.209272,129,129,0.8
+W,all_lda_all,ols_rk,129,1,,1,,-0.356587,0.239762,129,129,0.6
 W,all_lda_all,rf,129,3,max_depth=3,1,,-0.007214,0.102739,129,118,17.5
 W,all_lda_all,ridge,129,25,alpha=20.7387,1,,-0.00107771,0.00601905,129,129,0.5
+W,all_lda_all,ridge_rk,129,25,alpha=20.7387,1,,0.000120716,0.00768418,129,129,0.6
 W,all_lda_all,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0226634,-0.00103123,129,38,9.1
+W,all_lda_all,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,-0.0282313,0.0215941,129,45,11.7
 W,all_lda_all,xgb,129,4,max_depth=5,4,8,0.0354073,0.35962,129,88,9.8
+W,all_lda_all,xgb_rk,129,4,max_depth=2,2,44,0.035954,0.193398,129,55,12.4
 W,all_minilm,ebm,129,2,interactions=10,2,27,0.152373,0.457733,139,139,52.1
 W,all_minilm,ipca,129,4,n_factors=5,4,,-0.0145798,0.00012586,129,129,6.8
+W,all_minilm,ipca_rk,129,4,n_factors=5,4,,0.00074134,0.0339678,129,129,13.4
 W,all_minilm,lasso,129,40,alpha=0.000118647,5,,0.0072208,0.0555123,129,15,0.4
+W,all_minilm,lasso_rk,129,40,alpha=0.000754515,11,,0.0708511,0.147621,129,37,0.9
 W,all_minilm,ols,129,1,,1,,-0.0668632,0.187473,129,129,0.5
+W,all_minilm,ols_rk,129,1,,1,,-0.0456433,0.22109,129,129,1.8
 W,all_minilm,rf,129,3,max_depth=3,1,,-0.0046135,0.0940666,129,111,18.6
 W,all_minilm,ridge,129,25,alpha=3.57092,4,,0.00329218,0.0266092,129,129,0.3
+W,all_minilm,ridge_rk,129,25,alpha=0.357092,8,,0.0512007,0.134251,129,129,0.8
 W,all_minilm,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0179155,-0.00118393,129,44,9.6
+W,all_minilm,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,0.00327983,0.0184776,129,41,10.7
 W,all_minilm,xgb,129,4,max_depth=5,4,24,0.0412804,1.09813,129,122,10.5
+W,all_minilm,xgb_rk,129,4,max_depth=2,2,105,0.0809215,0.371786,129,90,16
+W,all_nolbert20,ebm,49,2,interactions=10,2,16,0.0679887,0.113405,59,59,24.8
+W,all_nolbert20,ipca,49,4,n_factors=5,4,,-0.00341337,0.0141317,49,49,0.8
+W,all_nolbert20,ipca_rk,49,4,n_factors=5,4,,0.00196427,0.0470352,49,49,1.7
+W,all_nolbert20,lasso,49,40,alpha=0.000233303,1,,0,0,49,0,0.2
+W,all_nolbert20,lasso_rk,49,40,alpha=0.00260693,4,,0.0141574,0.0468816,49,8,0.4
+W,all_nolbert20,ols,49,1,,1,,-0.102928,0.0911849,49,49,0.2
+W,all_nolbert20,ols_rk,49,1,,1,,-0.0970798,0.132594,49,49,0.3
+W,all_nolbert20,rf,49,3,max_depth=3,1,,-0.00772709,0.111792,49,48,12.3
+W,all_nolbert20,ridge,49,25,alpha=24.2898,1,,8.17169e-05,0.00276173,49,49,0.2
+W,all_nolbert20,ridge_rk,49,25,alpha=0.76811,7,,0.0281819,0.0709877,49,49,0.2
+W,all_nolbert20,sipca,49,6,"n_factors=3, penalty=0.1",5,,-0.0101139,0.00390314,49,32,3.3
+W,all_nolbert20,sipca_rk,49,6,"n_factors=3, penalty=0.3",4,,0.00887375,0.0205946,49,18,3
+W,all_nolbert20,xgb,49,4,max_depth=5,4,26,0.032239,0.877494,49,49,5.2
+W,all_nolbert20,xgb_rk,49,4,max_depth=3,3,44,0.0919201,0.31292,49,46,6.7
+W,all_nolbert,ebm,129,2,interactions=0,1,14,0.0165802,0.0839911,129,129,65.2
+W,all_nolbert,ipca,129,4,n_factors=5,4,,-0.0217337,-0.00093424,129,129,15.7
+W,all_nolbert,ipca_rk,129,4,n_factors=5,4,,0.00346874,0.0432322,129,129,7.2
+W,all_nolbert,lasso,129,40,alpha=0.000281269,1,,0,0,129,0,0.4
+W,all_nolbert,lasso_rk,129,40,alpha=0.00121355,9,,0.0208901,0.151569,129,30,0.5
+W,all_nolbert,ols,129,1,,1,,-0.124609,0.191867,129,129,0.5
+W,all_nolbert,ols_rk,129,1,,1,,-0.117289,0.228804,129,129,0.3
+W,all_nolbert,rf,129,3,max_depth=3,1,,0.00136659,0.108761,129,106,18.3
+W,all_nolbert,ridge,129,25,alpha=11.2717,2,,0.00105215,0.011013,129,129,0.4
+W,all_nolbert,ridge_rk,129,25,alpha=0.633852,7,,0.0396175,0.122155,129,129,2.6
+W,all_nolbert,sipca,129,6,"n_factors=1, penalty=0.3",1,,-0.0228516,-0.000844873,129,42,14.1
+W,all_nolbert,sipca_rk,129,6,"n_factors=3, penalty=0.3",4,,-0.00174668,0.0232303,129,46,11.4
+W,all_nolbert,xgb,129,4,max_depth=2,2,55,0.0300141,0.226063,129,72,11.4
+W,all_nolbert,xgb_rk,129,4,max_depth=3,3,94,0.131501,0.866501,129,118,18.2
 W,firm_finbert,ebm,21,2,interactions=0,1,52,0.00404744,0.00579289,21,21,7.6
 W,firm_finbert,ipca,21,4,n_factors=1,1,,-0.000376808,4.43269e-05,21,21,0.3
+W,firm_finbert,ipca_rk,21,4,n_factors=1,1,,-0.0015688,0.00254512,21,21,0.3
 W,firm_finbert,lasso,21,40,alpha=5.72789e-06,14,,0.00502026,0.00974496,21,16,0.1
+W,firm_finbert,lasso_rk,21,40,alpha=9.09432e-05,13,,0.0026343,0.00960025,21,17,0
 W,firm_finbert,ols,21,1,,1,,0.00391303,0.0119716,21,21,0
+W,firm_finbert,ols_rk,21,1,,1,,0.00277155,0.011015,21,21,0.1
 W,firm_finbert,rf,21,3,max_depth=3,1,,0.00195065,0.0207133,21,21,4.2
 W,firm_finbert,ridge,21,25,alpha=0.0109921,13,,0.00416003,0.00979245,21,21,0
+W,firm_finbert,ridge_rk,21,25,alpha=0.00618132,14,,0.00205437,0.0104513,21,21,0.2
 W,firm_finbert,sipca,21,6,"n_factors=1, penalty=0.3",1,,-0.00128968,0.000603059,21,11,1.5
+W,firm_finbert,sipca_rk,21,6,"n_factors=1, penalty=0.3",1,,0.0002845,0.00279104,21,6,1.3
 W,firm_finbert,xgb,21,4,max_depth=1,1,106,0.00177578,0.0136409,21,21,2.1
+W,firm_finbert,xgb_rk,21,4,max_depth=1,1,46,0.00305709,0.0072325,21,14,2.4
 W,firm_lda,ebm,61,2,interactions=0,1,1,6.94092e-05,1.60474e-05,61,61,19.9
 W,firm_lda,ipca,61,4,n_factors=1,1,,-0.00870533,0.00227598,61,61,2.3
+W,firm_lda,ipca_rk,61,4,n_factors=3,3,,-0.00556747,0.00390087,61,61,2.7
 W,firm_lda,lasso,61,40,alpha=4.41787e-05,1,,0,0,61,1,0.2
+W,firm_lda,lasso_rk,61,40,alpha=0.000786457,1,,0,0,61,1,0.3
 W,firm_lda,ols,61,1,,1,,-0.040718,0.0265353,61,61,0.2
+W,firm_lda,ols_rk,61,1,,1,,-0.0480838,0.0271487,61,61,0.3
 W,firm_lda,rf,61,3,max_depth=3,1,,-0.00848988,0.0213536,61,60,5.5
 W,firm_lda,ridge,61,25,alpha=4.8541,1,,-0.000147628,0.00047265,61,61,0.2
+W,firm_lda,ridge_rk,61,25,alpha=4.8541,1,,2.01807e-05,0.000476192,61,61,0.3
 W,firm_lda,sipca,61,6,"n_factors=1, penalty=0.3",1,,-0.00736208,0.00244325,61,31,3.2
+W,firm_lda,sipca_rk,61,6,"n_factors=3, penalty=0.3",4,,-0.00174261,0.0034989,61,33,3.8
 W,firm_lda,xgb,61,4,max_depth=3,3,13,0.00435589,0.025821,61,41,3
+W,firm_lda,xgb_rk,61,4,max_depth=1,1,9,0.000715105,0.00257763,61,7,3.6
 W,firm_lda_all,ebm,61,2,interactions=0,1,9,0.00193743,0.00297695,61,61,21
 W,firm_lda_all,ipca,61,4,n_factors=1,1,,-0.011221,0.00315831,61,61,1.3
+W,firm_lda_all,ipca_rk,61,4,n_factors=1,1,,-0.00624296,0.00590012,61,61,2.4
 W,firm_lda_all,lasso,61,40,alpha=5.2208e-05,1,,0,0,61,0,0.2
+W,firm_lda_all,lasso_rk,61,40,alpha=0.000862858,2,,0.000653949,0.00242521,61,1,0.3
 W,firm_lda_all,ols,61,1,,1,,-0.0264153,0.0283623,61,61,0.2
+W,firm_lda_all,ols_rk,61,1,,1,,-0.0498229,0.0352911,61,61,0.2
 W,firm_lda_all,rf,61,3,max_depth=3,1,,-0.000141431,0.0285169,61,60,6
 W,firm_lda_all,ridge,61,25,alpha=6.62281,1,,3.91831e-05,0.000425544,61,61,0.2
+W,firm_lda_all,ridge_rk,61,25,alpha=6.62281,1,,0.00021842,0.000563951,61,61,0.3
 W,firm_lda_all,sipca,61,6,"n_factors=3, penalty=0.3",4,,-0.0102502,0.00513376,61,40,2.9
+W,firm_lda_all,sipca_rk,61,6,"n_factors=1, penalty=0.3",1,,-0.00533075,0.00747845,61,36,3
 W,firm_lda_all,xgb,61,4,max_depth=1,1,1,-0.000187963,0.000562992,61,1,2.9
+W,firm_lda_all,xgb_rk,61,4,max_depth=1,1,3,0.000297338,0.00151937,61,2,3.8
 W,firm_minilm,ebm,61,2,interactions=10,2,2,0.00679292,0.0110526,71,71,21.9
 W,firm_minilm,ipca,61,4,n_factors=1,1,,-0.00700836,0.000914343,61,61,1
+W,firm_minilm,ipca_rk,61,4,n_factors=1,1,,-0.0136998,0.00330872,61,61,1.5
 W,firm_minilm,lasso,61,40,alpha=3.89003e-05,1,,0,0,61,1,0.2
+W,firm_minilm,lasso_rk,61,40,alpha=0.00060053,1,,0,0,61,1,0.3
 W,firm_minilm,ols,61,1,,1,,-0.0492238,0.0258754,61,61,0.3
+W,firm_minilm,ols_rk,61,1,,1,,-0.0743672,0.0316905,61,61,0.2
 W,firm_minilm,rf,61,3,max_depth=3,1,,-0.00469725,0.0258457,61,61,5.7
 W,firm_minilm,ridge,61,25,alpha=5.23145,1,,-0.000135208,0.000381524,61,61,0.2
+W,firm_minilm,ridge_rk,61,25,alpha=5.23145,1,,-0.00017358,0.000479683,61,61,0.4
 W,firm_minilm,sipca,61,6,"n_factors=1, penalty=0.3",1,,-0.00546825,0.000760956,61,49,2.9
+W,firm_minilm,sipca_rk,61,6,"n_factors=1, penalty=0.3",1,,-0.0122081,0.00308163,61,36,3.9
 W,firm_minilm,xgb,61,4,max_depth=3,3,20,0.00561179,0.0422494,61,48,3.1
+W,firm_minilm,xgb_rk,61,4,max_depth=1,1,1,-0.000217058,-4.01371e-05,61,1,3.5
+W,firm_nolbert20,ebm,21,2,interactions=10,2,43,0.0128373,0.0126368,31,31,10.1
+W,firm_nolbert20,ipca,21,4,n_factors=3,3,,0.00027725,0.0017899,21,21,0.5
+W,firm_nolbert20,ipca_rk,21,4,n_factors=3,3,,0.00556998,0.00199558,21,21,0.4
+W,firm_nolbert20,lasso,21,40,alpha=4.62361e-05,1,,0,0,21,2,0
+W,firm_nolbert20,lasso_rk,21,40,alpha=0.000901125,1,,0,0,21,1,0
+W,firm_nolbert20,ols,21,1,,1,,-0.00351685,0.00833153,21,21,0.1
+W,firm_nolbert20,ols_rk,21,1,,1,,-0.00784927,0.00974236,21,21,0
+W,firm_nolbert20,rf,21,3,max_depth=3,1,,0.00210204,0.0294576,21,21,5.5
+W,firm_nolbert20,ridge,21,25,alpha=12.1409,1,,3.18089e-05,0.00012246,21,21,0
+W,firm_nolbert20,ridge_rk,21,25,alpha=2.15899,4,,0.000691672,0.00086855,21,21,0
+W,firm_nolbert20,sipca,21,6,"n_factors=3, penalty=0.3",4,,0.000233374,0.00218471,21,16,1.7
+W,firm_nolbert20,sipca_rk,21,6,"n_factors=3, penalty=0.1",5,,0.00546673,0.00235678,21,19,1.3
+W,firm_nolbert20,xgb,21,4,max_depth=3,3,147,0.0103706,0.202526,21,21,3.2
+W,firm_nolbert20,xgb_rk,21,4,max_depth=2,2,74,0.00674319,0.0396276,21,21,2.9
+W,firm_nolbert,ebm,61,2,interactions=0,1,14,0.00326351,0.00540829,61,61,26.7
+W,firm_nolbert,ipca,61,4,n_factors=5,4,,-0.00369858,0.001472,61,61,3.2
+W,firm_nolbert,ipca_rk,61,4,n_factors=1,1,,-0.00591731,0.00265266,61,61,1.4
+W,firm_nolbert,lasso,61,40,alpha=2.4726e-05,5,,0.00116427,0.00642713,61,8,0.2
+W,firm_nolbert,lasso_rk,61,40,alpha=0.000353807,5,,0.00185692,0.00480931,61,5,0.3
+W,firm_nolbert,ols,61,1,,1,,-0.015939,0.0252736,61,61,0.3
+W,firm_nolbert,ols_rk,61,1,,1,,-0.0232812,0.022476,61,61,0.3
+W,firm_nolbert,rf,61,3,max_depth=6,2,,-0.00147616,0.0933036,61,61,6.6
+W,firm_nolbert,ridge,61,25,alpha=5.1541,1,,8.47997e-05,0.000428781,61,61,0.3
+W,firm_nolbert,ridge_rk,61,25,alpha=5.1541,1,,2.94361e-05,0.00036897,61,61,0.3
+W,firm_nolbert,sipca,61,6,"n_factors=3, penalty=0.3",4,,-0.00520469,0.00183469,61,35,2.9
+W,firm_nolbert,sipca_rk,61,6,"n_factors=1, penalty=0.3",1,,-0.00461786,0.00267876,61,34,2.5
+W,firm_nolbert,xgb,61,4,max_depth=1,1,25,0.000895468,0.00535119,61,20,3.7
+W,firm_nolbert,xgb_rk,61,4,max_depth=1,1,1,-0.000131829,6.62086e-06,61,1,3.5
 W,narr_finbert,ebm,20,2,interactions=10,2,59,0.0449271,0.0805522,30,30,8.2
 W,narr_finbert,ipca,20,4,n_factors=2,2,,0.00111735,-8.14625e-05,20,20,0.2
+W,narr_finbert,ipca_rk,20,4,n_factors=2,2,,-0.000421915,-0.000335827,20,20,0.3
 W,narr_finbert,lasso,20,40,alpha=5.33326e-05,8,,0.0115383,0.0280337,20,10,0
+W,narr_finbert,lasso_rk,20,40,alpha=0.000312628,14,,0.0118228,0.0539937,20,18,0
 W,narr_finbert,ols,20,1,,1,,0.00768015,0.0370414,20,20,0
+W,narr_finbert,ols_rk,20,1,,1,,0.0124137,0.0555542,20,20,0
 W,narr_finbert,rf,20,3,max_depth=3,1,,0.0073397,0.080756,20,20,7.8
 W,narr_finbert,ridge,20,25,alpha=0.18783,10,,0.0123326,0.0322606,20,20,0
+W,narr_finbert,ridge_rk,20,25,alpha=0.334014,9,,0.0274035,0.0413543,20,20,0
 W,narr_finbert,sipca,20,6,"n_factors=1, penalty=0.1",2,,-0.00591989,-0.000760345,20,19,1.5
+W,narr_finbert,sipca_rk,20,6,"n_factors=1, penalty=0.3",1,,-0.0038829,0.00301378,20,15,1.5
 W,narr_finbert,xgb,20,4,max_depth=3,3,40,0.0314362,0.196758,20,20,3.1
+W,narr_finbert,xgb_rk,20,4,max_depth=3,3,54,0.0833739,0.171523,20,20,4.7
 W,narr_lda,ebm,60,2,interactions=0,1,2,0.00167994,0.0105705,60,60,21.5
 W,narr_lda,ipca,60,4,n_factors=1,1,,-0.0030856,0.000364905,60,60,1.7
+W,narr_lda,ipca_rk,60,4,n_factors=1,1,,0.0016201,-0.000723852,60,60,1.6
 W,narr_lda,lasso,60,40,alpha=0.000437903,1,,0,0,60,0,0.2
+W,narr_lda,lasso_rk,60,40,alpha=0.0056623,1,,0,0,60,0,0.4
 W,narr_lda,ols,60,1,,1,,-0.22888,0.167014,60,60,0.5
+W,narr_lda,ols_rk,60,1,,1,,-0.407805,0.158674,60,60,0.2
 W,narr_lda,rf,60,3,max_depth=3,1,,-0.00386669,0.0948012,60,60,14.5
 W,narr_lda,ridge,60,25,alpha=33.4014,1,,-0.000982444,0.00345604,60,60,0.2
+W,narr_lda,ridge_rk,60,25,alpha=33.4014,1,,-0.00187872,0.00324191,60,60,0.2
 W,narr_lda,sipca,60,6,"n_factors=1, penalty=0.3",1,,-0.00190934,0.000215651,60,47,3.2
+W,narr_lda,sipca_rk,60,6,"n_factors=1, penalty=0.1",2,,0.00154851,-0.000557587,60,58,3.9
 W,narr_lda,xgb,60,4,max_depth=1,1,1,-0.00236139,0.00357337,60,1,5
+W,narr_lda,xgb_rk,60,4,max_depth=1,1,1,0.00138085,0.00214593,60,1,6.3
 W,narr_lda_all,ebm,60,2,interactions=0,1,8,0.00477019,0.0294954,60,60,21.4
 W,narr_lda_all,ipca,60,4,n_factors=5,4,,0.0045948,0.0243302,60,60,2.3
+W,narr_lda_all,ipca_rk,60,4,n_factors=2,2,,-0.00463839,0.0135054,60,60,2.7
 W,narr_lda_all,lasso,60,40,alpha=0.000391158,1,,0,0,60,0,0.2
+W,narr_lda_all,lasso_rk,60,40,alpha=0.00527537,1,,0,0,60,0,0.2
 W,narr_lda_all,ols,60,1,,1,,-0.200469,0.153567,60,60,0.2
+W,narr_lda_all,ols_rk,60,1,,1,,-0.348688,0.151525,60,60,0.2
 W,narr_lda_all,rf,60,3,max_depth=3,1,,0.00640019,0.107304,60,60,15.2
 W,narr_lda_all,ridge,60,25,alpha=33.4014,1,,-0.000694702,0.0029394,60,60,0.2
+W,narr_lda_all,ridge_rk,60,25,alpha=33.4014,1,,-0.00117581,0.00292747,60,60,0.2
 W,narr_lda_all,sipca,60,6,"n_factors=1, penalty=0.3",1,,0.000397464,-2.65356e-05,60,48,3.6
+W,narr_lda_all,sipca_rk,60,6,"n_factors=1, penalty=0.03",3,,-0.0219977,0.0150363,60,59,3.6
 W,narr_lda_all,xgb,60,4,max_depth=1,1,1,-0.00181348,0.00242193,60,1,5
+W,narr_lda_all,xgb_rk,60,4,max_depth=3,3,21,0.0085899,0.114571,60,54,6.9
 W,narr_lda_placebo,ebm,60,2,interactions=0,1,1,0.000730815,0.00321116,60,60,22
 W,narr_lda_placebo,ipca,60,4,n_factors=5,4,,0.0132161,0.0150603,60,60,2
+W,narr_lda_placebo,ipca_rk,60,4,n_factors=2,2,,0.0150965,0.0133904,60,60,1.6
 W,narr_lda_placebo,lasso,60,40,alpha=0.000273484,1,,0,0,60,0,0.2
+W,narr_lda_placebo,lasso_rk,60,40,alpha=0.00436314,1,,0,0,60,0,0.2
 W,narr_lda_placebo,ols,60,1,,1,,-0.0970203,0.142122,60,60,0.2
+W,narr_lda_placebo,ols_rk,60,1,,1,,-0.235268,0.152871,60,60,0.2
 W,narr_lda_placebo,rf,60,3,max_depth=3,1,,0.00709174,0.0837267,60,59,15.1
 W,narr_lda_placebo,ridge,60,25,alpha=33.4014,1,,-0.000363167,0.00320008,60,60,0.2
+W,narr_lda_placebo,ridge_rk,60,25,alpha=33.4014,1,,-0.000942536,0.00338367,60,60,0.2
 W,narr_lda_placebo,sipca,60,6,"n_factors=3, penalty=0.3",4,,0.00366808,0.0196282,60,59,3.3
+W,narr_lda_placebo,sipca_rk,60,6,"n_factors=3, penalty=0.3",4,,0.0113475,0.0142982,60,59,3.7
 W,narr_lda_placebo,xgb,60,4,max_depth=5,4,3,0.00561236,0.0728097,60,39,5.1
+W,narr_lda_placebo,xgb_rk,60,4,max_depth=5,4,12,0.0244085,0.202691,60,60,7.1
 W,narr_minilm,ebm,60,2,interactions=10,2,23,0.0426561,0.155526,70,70,23.7
 W,narr_minilm,ipca,60,4,n_factors=1,1,,0.00952691,0.000124889,60,60,1.5
+W,narr_minilm,ipca_rk,60,4,n_factors=1,1,,0.00731186,0.00150029,60,60,2
 W,narr_minilm,lasso,60,40,alpha=0.000118647,5,,0.00819024,0.0416812,60,12,0.2
+W,narr_minilm,lasso_rk,60,40,alpha=0.00091079,9,,0.0364149,0.08655,60,25,0.3
 W,narr_minilm,ols,60,1,,1,,-0.021122,0.131426,60,60,0.3
+W,narr_minilm,ols_rk,60,1,,1,,-0.0183827,0.131688,60,60,0.3
 W,narr_minilm,rf,60,3,max_depth=10,3,,0.0187261,0.39486,60,60,19.9
 W,narr_minilm,ridge,60,25,alpha=5.93971,4,,0.00253416,0.013268,60,60,0.2
+W,narr_minilm,ridge_rk,60,25,alpha=0.593971,8,,0.0224863,0.0673354,60,60,0.4
 W,narr_minilm,sipca,60,6,"n_factors=1, penalty=0.03",3,,0.00743231,-0.000113376,60,56,4.1
+W,narr_minilm,sipca_rk,60,6,"n_factors=1, penalty=0.03",3,,0.00611972,0.00118402,60,55,3.4
 W,narr_minilm,xgb,60,4,max_depth=5,4,80,0.0450408,1.88811,60,60,6.9
+W,narr_minilm,xgb_rk,60,4,max_depth=2,2,89,0.0634651,0.174222,60,54,9.3
+W,narr_nolbert20,ebm,20,2,interactions=10,2,14,0.0318725,0.0902853,30,30,9.4
+W,narr_nolbert20,ipca,20,4,n_factors=1,1,,0.000763404,0.00018168,20,20,0.3
+W,narr_nolbert20,ipca_rk,20,4,n_factors=3,3,,0.0341695,0.0162861,20,20,0.8
+W,narr_nolbert20,lasso,20,40,alpha=0.000233303,1,,0,0,20,0,0
+W,narr_nolbert20,lasso_rk,20,40,alpha=0.00371438,1,,0,0,20,1,0
+W,narr_nolbert20,ols,20,1,,1,,-0.0976445,0.0559425,20,20,0
+W,narr_nolbert20,ols_rk,20,1,,1,,-0.1115,0.0647124,20,20,0
+W,narr_nolbert20,rf,20,3,max_depth=6,2,,-0.0159632,0.210059,20,20,11.2
+W,narr_nolbert20,ridge,20,25,alpha=33.4014,1,,3.77659e-05,0.00122098,20,20,0
+W,narr_nolbert20,ridge_rk,20,25,alpha=1.8783,6,,0.00620316,0.0191777,20,20,0
+W,narr_nolbert20,sipca,20,6,"n_factors=1, penalty=0.3",1,,0.00128363,0.000350128,20,17,1.5
+W,narr_nolbert20,sipca_rk,20,6,"n_factors=3, penalty=0.03",6,,0.0324338,0.0160717,20,20,1.8
+W,narr_nolbert20,xgb,20,4,max_depth=1,1,3,0.00167212,0.003758,20,3,2.2
+W,narr_nolbert20,xgb_rk,20,4,max_depth=1,1,62,0.0378071,0.0551344,20,16,3.4
+W,narr_nolbert,ebm,60,2,interactions=10,2,12,0.0164665,0.0743747,70,70,26.1
+W,narr_nolbert,ipca,60,4,n_factors=3,3,,0.0139929,0.00175874,60,60,2.8
+W,narr_nolbert,ipca_rk,60,4,n_factors=5,4,,0.0405996,0.0278043,60,60,2.5
+W,narr_nolbert,lasso,60,40,alpha=0.000281269,1,,0,0,60,0,0.3
+W,narr_nolbert,lasso_rk,60,40,alpha=0.00144871,8,,0.00666964,0.0939859,60,19,0.3
+W,narr_nolbert,ols,60,1,,1,,-0.106074,0.139881,60,60,0.4
+W,narr_nolbert,ols_rk,60,1,,1,,-0.118115,0.152175,60,60,0.8
+W,narr_nolbert,rf,60,3,max_depth=3,1,,0.0020927,0.0980859,60,60,13.6
+W,narr_nolbert,ridge,60,25,alpha=18.783,2,,0.000657276,0.00537556,60,60,0.3
+W,narr_nolbert,ridge_rk,60,25,alpha=1.8783,6,,0.017277,0.0436544,60,60,0.2
+W,narr_nolbert,sipca,60,6,"n_factors=3, penalty=0.1",5,,0.0151875,0.00185957,60,60,4.7
+W,narr_nolbert,sipca_rk,60,6,"n_factors=3, penalty=0.03",6,,0.0264121,0.0193092,60,60,4.7
+W,narr_nolbert,xgb,60,4,max_depth=2,2,33,0.0132099,0.107813,60,40,7.3
+W,narr_nolbert,xgb_rk,60,4,max_depth=1,1,264,0.0441372,0.173669,60,46,10.9
 W,price,ebm,8,2,interactions=10,2,50,0.0160547,0.0455294,18,18,3.5
 W,price,ipca,8,4,n_factors=5,4,,0.0113781,0.0195052,8,8,0.1
+W,price,ipca_rk,8,4,n_factors=5,4,,0.0356132,0.052804,8,8,0.1
 W,price,lasso,8,40,alpha=0.000186433,2,,0.0013764,0.00322749,8,2,0
+W,price,lasso_rk,8,40,alpha=0.000182929,19,,0.029959,0.0547819,8,8,0
 W,price,ols,8,1,,1,,-0.000390544,0.0235766,8,8,0
+W,price,ols_rk,8,1,,1,,0.0274244,0.0553012,8,8,0
 W,price,rf,8,3,max_depth=10,3,,0.0223004,0.369581,8,8,5.4
 W,price,ridge,8,25,alpha=0.18783,10,,0.00348835,0.0206618,8,8,0
+W,price,ridge_rk,8,25,alpha=0.105625,11,,0.0331667,0.0526072,8,8,0
 W,price,sipca,8,6,"n_factors=3, penalty=0.3",4,,-0.0165943,-0.000124541,8,6,1.4
+W,price,sipca_rk,8,6,"n_factors=3, penalty=0.3",4,,0.0123767,0.0199933,8,6,1.3
 W,price,xgb,8,4,max_depth=1,1,46,0.0112901,0.032618,8,8,1.9
+W,price,xgb_rk,8,4,max_depth=2,2,123,0.0830534,0.138008,8,8,4.1
 W,text_finbert,ebm,41,2,interactions=10,2,54,0.0678197,0.14265,51,51,15.6
 W,text_finbert,ipca,41,4,n_factors=2,2,,0.00100542,-2.74872e-05,41,41,0.6
+W,text_finbert,ipca_rk,41,4,n_factors=2,2,,-0.000707639,-0.000264548,41,41,0.8
 W,text_finbert,lasso,41,40,alpha=6.36673e-06,20,,0.0149344,0.0459558,41,35,0.2
+W,text_finbert,lasso_rk,41,40,alpha=7.57956e-05,22,,0.0170905,0.0651748,41,37,0.2
 W,text_finbert,ols,41,1,,1,,0.0117024,0.0488896,41,41,0.2
+W,text_finbert,ols_rk,41,1,,1,,0.0170478,0.0662927,41,41,0.2
 W,text_finbert,rf,41,3,max_depth=6,2,,0.0185067,0.249305,41,41,10
 W,text_finbert,ridge,41,25,alpha=0.219235,9,,0.0132983,0.0345183,41,41,0.2
+W,text_finbert,ridge_rk,41,25,alpha=0.219235,9,,0.0278446,0.0500213,41,41,0.2
 W,text_finbert,sipca,41,6,"n_factors=1, penalty=0.3",1,,-0.00675053,-0.000516335,41,22,2
+W,text_finbert,sipca_rk,41,6,"n_factors=1, penalty=0.3",1,,-0.00382132,0.0028347,41,15,2.4
 W,text_finbert,xgb,41,4,max_depth=2,2,118,0.05604,0.280876,41,39,5.7
+W,text_finbert,xgb_rk,41,4,max_depth=3,3,113,0.083752,0.529031,41,41,6.8
 W,text_lda,ebm,121,2,interactions=0,1,1,0.00164998,0.00507299,121,121,42
 W,text_lda,ipca,121,4,n_factors=1,1,,-0.00409534,0.000440826,121,121,8.3
+W,text_lda,ipca_rk,121,4,n_factors=2,2,,0.00370597,-0.00546146,121,121,11.3
 W,text_lda,lasso,121,40,alpha=0.000437903,1,,0,0,121,0,0.4
+W,text_lda,lasso_rk,121,40,alpha=0.0056623,1,,0,0,121,0,0.9
 W,text_lda,ols,121,1,,1,,-0.264441,0.19248,121,121,2.1
+W,text_lda,ols_rk,121,1,,1,,-0.449769,0.184742,121,121,1.4
 W,text_lda,rf,121,3,max_depth=3,1,,-0.0235821,0.10562,121,107,17.4
 W,text_lda,ridge,121,25,alpha=19.0098,1,,-0.00176899,0.00611479,121,121,0.6
+W,text_lda,ridge_rk,121,25,alpha=19.0098,1,,-0.0032996,0.00574535,121,121,2
 W,text_lda,sipca,121,6,"n_factors=1, penalty=0.3",1,,-0.00301558,0.000384598,121,51,8.4
+W,text_lda,sipca_rk,121,6,"n_factors=1, penalty=0.3",1,,0.000121896,-3.52777e-05,121,57,10.3
 W,text_lda,xgb,121,4,max_depth=3,3,2,0.000788774,0.0282053,121,14,8.7
+W,text_lda,xgb_rk,121,4,max_depth=1,1,1,-0.00162865,0.00143314,121,1,10.7
 W,text_lda_all,ebm,121,2,interactions=0,1,2,0.00238041,0.0108574,121,121,41.6
 W,text_lda_all,ipca,121,4,n_factors=1,1,,0.00123071,4.85092e-05,121,121,8.8
+W,text_lda_all,ipca_rk,121,4,n_factors=2,2,,-0.00649903,0.0160615,121,121,12.6
 W,text_lda_all,lasso,121,40,alpha=0.000391158,1,,0,0,121,0,0.9
+W,text_lda_all,lasso_rk,121,40,alpha=0.00527537,1,,0,0,121,0,2.3
 W,text_lda_all,ols,121,1,,1,,-0.224913,0.180413,121,121,0.7
+W,text_lda_all,ols_rk,121,1,,1,,-0.393729,0.184436,121,121,2.2
 W,text_lda_all,rf,121,3,max_depth=3,1,,0.00677562,0.10648,121,105,16.2
 W,text_lda_all,ridge,121,25,alpha=19.9015,1,,-0.00115586,0.005018,121,121,1
+W,text_lda_all,ridge_rk,121,25,alpha=19.9015,1,,-0.00190536,0.00504534,121,121,0.9
 W,text_lda_all,sipca,121,6,"n_factors=1, penalty=0.3",1,,0.000724229,-1.15907e-05,121,54,9.2
+W,text_lda_all,sipca_rk,121,6,"n_factors=1, penalty=0.03",3,,-0.023357,0.0166262,121,91,9.9
 W,text_lda_all,xgb,121,4,max_depth=5,4,1,0.00640183,0.0281625,121,24,8.4
+W,text_lda_all,xgb_rk,121,4,max_depth=2,2,44,0.0141534,0.145585,121,59,12.5
 W,text_minilm,ebm,121,2,interactions=10,2,18,0.0783741,0.356489,131,131,57
 W,text_minilm,ipca,121,4,n_factors=1,1,,0.00892908,9.86518e-05,121,121,7.3
+W,text_minilm,ipca_rk,121,4,n_factors=1,1,,0.00716477,0.00152691,121,121,9
 W,text_minilm,lasso,121,40,alpha=0.000118647,5,,0.00819024,0.0416812,121,12,0.7
+W,text_minilm,lasso_rk,121,40,alpha=0.00091079,9,,0.0364149,0.08655,121,25,1.4
 W,text_minilm,ols,121,1,,1,,-0.0681728,0.157506,121,121,2.1
+W,text_minilm,ols_rk,121,1,,1,,-0.0801578,0.162285,121,121,1.9
 W,text_minilm,rf,121,3,max_depth=3,1,,0.0127651,0.0964151,121,105,18.2
 W,text_minilm,ridge,121,25,alpha=6.07158,3,,0.00238511,0.0133539,121,121,0.6
+W,text_minilm,ridge_rk,121,25,alpha=1.0797,6,,0.0202459,0.0514013,121,121,2
 W,text_minilm,sipca,121,6,"n_factors=1, penalty=0.03",3,,0.00726792,-0.000129114,121,94,9
+W,text_minilm,sipca_rk,121,6,"n_factors=1, penalty=0.03",3,,0.00609866,0.0012402,121,87,10.5
 W,text_minilm,xgb,121,4,max_depth=3,3,53,0.0854528,0.536183,121,110,10.2
+W,text_minilm,xgb_rk,121,4,max_depth=2,2,137,0.101593,0.364975,121,100,18.1
+W,text_nolbert20,ebm,41,2,interactions=10,2,6,0.0136196,0.0323231,51,51,18.6
+W,text_nolbert20,ipca,41,4,n_factors=1,1,,0.000715529,8.33168e-05,41,41,0.5
+W,text_nolbert20,ipca_rk,41,4,n_factors=3,3,,0.0368576,0.0170573,41,41,0.9
+W,text_nolbert20,lasso,41,40,alpha=0.000233303,1,,0,0,41,0,0.2
+W,text_nolbert20,lasso_rk,41,40,alpha=0.00371438,1,,0,0,41,1,0.2
+W,text_nolbert20,ols,41,1,,1,,-0.100525,0.0644109,41,41,0.2
+W,text_nolbert20,ols_rk,41,1,,1,,-0.117666,0.07452,41,41,0.2
+W,text_nolbert20,rf,41,3,max_depth=3,1,,-0.011674,0.0948268,41,41,10.3
+W,text_nolbert20,ridge,41,25,alpha=22.5119,1,,6.66291e-05,0.00185852,41,41,0.2
+W,text_nolbert20,ridge_rk,41,25,alpha=2.25119,5,,0.00654808,0.0176312,41,41,0.2
+W,text_nolbert20,sipca,41,6,"n_factors=1, penalty=0.3",1,,0.00125315,0.000295912,41,23,2.2
+W,text_nolbert20,sipca_rk,41,6,"n_factors=3, penalty=0.03",6,,0.0357981,0.0169081,41,40,2.8
+W,text_nolbert20,xgb,41,4,max_depth=5,4,1,0.00534576,0.0243907,41,18,3.6
+W,text_nolbert20,xgb_rk,41,4,max_depth=2,2,29,0.0373513,0.0760505,41,28,4.7
+W,text_nolbert,ebm,121,2,interactions=10,2,13,0.022666,0.122877,131,131,62.6
+W,text_nolbert,ipca,121,4,n_factors=3,3,,0.00792713,0.00122658,121,121,16.4
+W,text_nolbert,ipca_rk,121,4,n_factors=5,4,,0.0465984,0.0303125,121,121,14.2
+W,text_nolbert,lasso,121,40,alpha=0.000281269,1,,0,0,121,0,1.3
+W,text_nolbert,lasso_rk,121,40,alpha=0.00144871,8,,0.00666964,0.0939859,121,19,0.7
+W,text_nolbert,ols,121,1,,1,,-0.120948,0.165721,121,121,4.3
+W,text_nolbert,ols_rk,121,1,,1,,-0.134939,0.17444,121,121,1.2
+W,text_nolbert,rf,121,3,max_depth=6,2,,0.00301431,0.276619,121,120,19.7
+W,text_nolbert,ridge,121,25,alpha=19.161,1,,0.000671042,0.00539212,121,121,1.5
+W,text_nolbert,ridge_rk,121,25,alpha=1.0775,6,,0.0183943,0.0638978,121,121,1
+W,text_nolbert,sipca,121,6,"n_factors=3, penalty=0.3",4,,0.0131489,0.00153113,121,75,15.9
+W,text_nolbert,sipca_rk,121,6,"n_factors=3, penalty=0.3",4,,0.0239711,0.0143024,121,63,11.7
+W,text_nolbert,xgb,121,4,max_depth=3,3,20,0.0230823,0.205927,121,80,11.4
+W,text_nolbert,xgb_rk,121,4,max_depth=3,3,39,0.0643932,0.307259,121,90,14.7

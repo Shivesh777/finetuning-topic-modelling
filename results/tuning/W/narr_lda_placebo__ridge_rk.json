@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "narr_lda_placebo",
+ "model": "ridge_rk",
+ "blocks": [
+  "narr_lda_placebo"
+ ],
+ "n_features": 60,
+ "settings_tried": 25,
+ "rows": {
+  "train": 284639,
+  "validation": 52518,
+  "test": 80216
+ },
+ "params": {
+  "alpha": 33.40143166279794
+ },
+ "validation_r2": -9.425362233139722e-06,
+ "train_r2": 3.383671191958815e-05,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

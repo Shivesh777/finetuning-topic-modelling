@@ -1,0 +1,101 @@
+{
+ "freq": "M",
+ "features": "narr_lda_all",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.1
+ },
+ "factors": 1,
+ "features_total": 60,
+ "features_kept": 57,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.0013259185547771213
+ ],
+ "implied_coefficients": {
+  "narr_lda_all_t00": -0.00013265696207573024,
+  "narr_lda_all_t01": -3.380407698832455e-05,
+  "narr_lda_all_t02": -0.0001886219679013087,
+  "narr_lda_all_t03": 0.0001607195389839279,
+  "narr_lda_all_t04": -0.00012103586092668808,
+  "narr_lda_all_t05": 0.0006290895623162545,
+  "narr_lda_all_t06": 0.0002725272513350116,
+  "narr_lda_all_t07": -1.11424531003733e-05,
+  "narr_lda_all_t08": -0.00016336159135642812,
+  "narr_lda_all_t09": 6.540306824853627e-05,
+  "narr_lda_all_t10": -1.6173708672846462e-05,
+  "narr_lda_all_t11": -5.8969578372980786e-05,
+  "narr_lda_all_t12": -7.141545168874978e-05,
+  "narr_lda_all_t13": -7.798635146523789e-05,
+  "narr_lda_all_t14": -0.00030711030788810225,
+  "narr_lda_all_t15": 0.0,
+  "narr_lda_all_t16": -3.8687354629879015e-05,
+  "narr_lda_all_t17": 5.4273077091661675e-05,
+  "narr_lda_all_t18": 0.0001961161680506013,
+  "narr_lda_all_t19": -0.0002930942000649275,
+  "narr_lda_all_t20": -0.00019007379571439224,
+  "narr_lda_all_t21": -4.2901917649626054e-05,
+  "narr_lda_all_t22": 0.00011195081088953188,
+  "narr_lda_all_t23": 0.00022260067861798848,
+  "narr_lda_all_t24": 0.00031321162401195586,
+  "narr_lda_all_t25": 4.1516383915792684e-05,
+  "narr_lda_all_t26": -0.00026572709608629875,
+  "narr_lda_all_t27": 7.103830349709292e-05,
+  "narr_lda_all_t28": -2.4502696958991852e-05,
+  "narr_lda_all_t29": -0.00017296063873028025,
+  "narr_lda_all_t30": 0.0001861182673403136,
+  "narr_lda_all_t31": 0.0,
+  "narr_lda_all_t32": 1.0264748739271444e-05,
+  "narr_lda_all_t33": 0.0,
+  "narr_lda_all_t34": -0.00019909816747093313,
+  "narr_lda_all_t35": -0.00022113303177147693,
+  "narr_lda_all_t36": -6.878886997077898e-05,
+  "narr_lda_all_t37": 9.846430867232109e-05,
+  "narr_lda_all_t38": -6.942091138212345e-05,
+  "narr_lda_all_t39": -2.168883694154886e-05,
+  "narr_lda_all_t40": -3.981051206732466e-05,
+  "narr_lda_all_t41": -9.949106311780617e-05,
+  "narr_lda_all_t42": 0.0001596580682333826,
+  "narr_lda_all_t43": -1.3427541680232412e-06,
+  "narr_lda_all_t44": 0.00033565783611740925,
+  "narr_lda_all_t45": 3.3783135768103125e-05,
+  "narr_lda_all_t46": 8.230101895117645e-05,
+  "narr_lda_all_t47": 0.00019639752678745742,
+  "narr_lda_all_t48": -0.00025113449849960127,
+  "narr_lda_all_t49": -2.643902788392541e-05,
+  "narr_lda_all_t50": 5.5437108672287984e-05,
+  "narr_lda_all_t51": -4.699517956936946e-05,
+  "narr_lda_all_t52": 9.576878545858619e-05,
+  "narr_lda_all_t53": 0.0001462962145164812,
+  "narr_lda_all_t54": 0.00012456925532305458,
+  "narr_lda_all_t55": -0.00019163556605456295,
+  "narr_lda_all_t56": 0.0001765843576361926,
+  "narr_lda_all_t57": -0.0002840032225081679,
+  "narr_lda_all_t58": -0.00011655583182543222,
+  "narr_lda_all_t59": 4.0363661850083195e-05
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 1.1605807113956867e-10
+}

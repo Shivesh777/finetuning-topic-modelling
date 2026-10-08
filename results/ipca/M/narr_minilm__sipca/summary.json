@@ -1,0 +1,101 @@
+{
+ "freq": "M",
+ "features": "narr_minilm",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "factors": 1,
+ "features_total": 60,
+ "features_kept": 50,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.002071877931664602
+ ],
+ "implied_coefficients": {
+  "narr_minilm_t00": 6.0942478969109505e-05,
+  "narr_minilm_t01": -2.2805961925710363e-05,
+  "narr_minilm_t02": 0.000369457536740274,
+  "narr_minilm_t03": 0.00019751721380891393,
+  "narr_minilm_t04": -1.8995547540292613e-05,
+  "narr_minilm_t05": -0.0001726543822108681,
+  "narr_minilm_t06": 0.0,
+  "narr_minilm_t07": 0.00011016719508233211,
+  "narr_minilm_t08": 0.00014401710575858822,
+  "narr_minilm_t09": 0.00027334781740163364,
+  "narr_minilm_t10": 4.8012356345299135e-05,
+  "narr_minilm_t11": 0.0002204731050223796,
+  "narr_minilm_t12": 0.0,
+  "narr_minilm_t13": -0.0005662774586588916,
+  "narr_minilm_t14": -1.6941325752880271e-06,
+  "narr_minilm_t15": 0.0,
+  "narr_minilm_t16": -0.00018930437018282954,
+  "narr_minilm_t17": 0.00018917400173350005,
+  "narr_minilm_t18": 0.0,
+  "narr_minilm_t19": 0.00011576773789294616,
+  "narr_minilm_t20": -0.0004164737748437942,
+  "narr_minilm_t21": 0.0,
+  "narr_minilm_t22": 0.0004040420242264166,
+  "narr_minilm_t23": -0.0003831223164614077,
+  "narr_minilm_t24": 7.732580812123754e-05,
+  "narr_minilm_t25": 1.117585199707644e-05,
+  "narr_minilm_t26": -6.89320504718843e-05,
+  "narr_minilm_t27": 0.00043159205507535,
+  "narr_minilm_t28": -8.739768516973406e-05,
+  "narr_minilm_t29": -0.001009839256805727,
+  "narr_minilm_t30": -0.00018073977784151154,
+  "narr_minilm_t31": 0.0009265962213081112,
+  "narr_minilm_t32": -0.00041161802528216556,
+  "narr_minilm_t33": 6.225070657700023e-05,
+  "narr_minilm_t34": -6.557455456908488e-06,
+  "narr_minilm_t35": -4.0681968401412756e-05,
+  "narr_minilm_t36": -0.0002819429699153047,
+  "narr_minilm_t37": 1.5211423452308158e-05,
+  "narr_minilm_t38": -5.177269451564139e-05,
+  "narr_minilm_t39": 0.0,
+  "narr_minilm_t40": -0.00019144889059525552,
+  "narr_minilm_t41": -6.808676412094929e-05,
+  "narr_minilm_t42": 0.0004186012554268116,
+  "narr_minilm_t43": 0.00011383094657621154,
+  "narr_minilm_t44": 0.0,
+  "narr_minilm_t45": -7.171780451355403e-05,
+  "narr_minilm_t46": 0.00026573809985997143,
+  "narr_minilm_t47": 2.021931191148851e-05,
+  "narr_minilm_t48": 0.0,
+  "narr_minilm_t49": -0.0002835740867829019,
+  "narr_minilm_t50": 5.870472714463415e-05,
+  "narr_minilm_t51": 0.0,
+  "narr_minilm_t52": -7.518108794897998e-05,
+  "narr_minilm_t53": 0.0003240826393736055,
+  "narr_minilm_t54": 0.0002527147206759923,
+  "narr_minilm_t55": -2.0999121550041357e-05,
+  "narr_minilm_t56": -8.610910541453004e-05,
+  "narr_minilm_t57": 0.0,
+  "narr_minilm_t58": -8.644399477456781e-05,
+  "narr_minilm_t59": -0.00028722484861926664
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 2.2955747025488193e-10
+}

@@ -1,0 +1,101 @@
+{
+ "freq": "M",
+ "features": "narr_lda_s63",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "factors": 1,
+ "features_total": 60,
+ "features_kept": 57,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.002869118109471946
+ ],
+ "implied_coefficients": {
+  "narr_lda_s63_t00": 4.7317155680074275e-05,
+  "narr_lda_s63_t01": 0.0004123847047361787,
+  "narr_lda_s63_t02": 0.0003206829501641914,
+  "narr_lda_s63_t03": -0.0005749463545618701,
+  "narr_lda_s63_t04": 0.0002942889145947587,
+  "narr_lda_s63_t05": 3.4882367256330873e-06,
+  "narr_lda_s63_t06": -7.634543660873113e-05,
+  "narr_lda_s63_t07": -0.0002718328065011412,
+  "narr_lda_s63_t08": 0.0,
+  "narr_lda_s63_t09": -0.00017530763594170257,
+  "narr_lda_s63_t10": 0.00013792007312209855,
+  "narr_lda_s63_t11": 0.00017290099774003973,
+  "narr_lda_s63_t12": 0.0001396744426413923,
+  "narr_lda_s63_t13": -3.963393407451402e-06,
+  "narr_lda_s63_t14": 0.00017438600432665566,
+  "narr_lda_s63_t15": -0.0008673498503787902,
+  "narr_lda_s63_t16": 0.00014338460418937446,
+  "narr_lda_s63_t17": 0.00049124964517275,
+  "narr_lda_s63_t18": -0.00036424253522971285,
+  "narr_lda_s63_t19": 1.2193103206763099e-05,
+  "narr_lda_s63_t20": -0.00034973377448337085,
+  "narr_lda_s63_t21": -0.0002818797387932362,
+  "narr_lda_s63_t22": 4.233367320885149e-05,
+  "narr_lda_s63_t23": 0.0005271323226318063,
+  "narr_lda_s63_t24": -0.00019283481849803057,
+  "narr_lda_s63_t25": -0.0005329316611217852,
+  "narr_lda_s63_t26": 0.00019414092482394863,
+  "narr_lda_s63_t27": -0.00013834244449803228,
+  "narr_lda_s63_t28": 2.7299320469670993e-05,
+  "narr_lda_s63_t29": -5.027867341939712e-05,
+  "narr_lda_s63_t30": 0.0,
+  "narr_lda_s63_t31": -0.00015115881959005032,
+  "narr_lda_s63_t32": -4.004507411814194e-05,
+  "narr_lda_s63_t33": -2.655164591359959e-06,
+  "narr_lda_s63_t34": 0.0005367381111672933,
+  "narr_lda_s63_t35": -0.00016048082710821445,
+  "narr_lda_s63_t36": 0.0004136658727866694,
+  "narr_lda_s63_t37": -0.0006568516951805386,
+  "narr_lda_s63_t38": -0.000520178827845165,
+  "narr_lda_s63_t39": 0.0003272745072842638,
+  "narr_lda_s63_t40": 0.0006925022681079148,
+  "narr_lda_s63_t41": 0.00024330781874499986,
+  "narr_lda_s63_t42": -0.00015116205422785237,
+  "narr_lda_s63_t43": 0.0,
+  "narr_lda_s63_t44": -0.000331005369591052,
+  "narr_lda_s63_t45": -0.00041747657210167166,
+  "narr_lda_s63_t46": -0.00048487026894206733,
+  "narr_lda_s63_t47": -0.0003624627844648453,
+  "narr_lda_s63_t48": 0.0005303903057210938,
+  "narr_lda_s63_t49": -0.0003400986387374265,
+  "narr_lda_s63_t50": -0.001037889868643082,
+  "narr_lda_s63_t51": -0.0002624180705606692,
+  "narr_lda_s63_t52": -0.0006849516726870783,
+  "narr_lda_s63_t53": 9.1356119109374e-05,
+  "narr_lda_s63_t54": -0.0003840743711861572,
+  "narr_lda_s63_t55": -4.499091658217657e-05,
+  "narr_lda_s63_t56": -0.0002173864409488943,
+  "narr_lda_s63_t57": -0.00016733213044304497,
+  "narr_lda_s63_t58": -0.0005533861393577227,
+  "narr_lda_s63_t59": 0.00048823581855247353
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 2.3236868505749353e-10
+}

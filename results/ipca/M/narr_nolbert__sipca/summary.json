@@ -1,0 +1,101 @@
+{
+ "freq": "M",
+ "features": "narr_nolbert",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.03
+ },
+ "factors": 1,
+ "features_total": 60,
+ "features_kept": 58,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.005488040842880403
+ ],
+ "implied_coefficients": {
+  "narr_nolbert_t00": 0.00020460168185653171,
+  "narr_nolbert_t01": -0.0002844266891553772,
+  "narr_nolbert_t02": -5.257005452302469e-05,
+  "narr_nolbert_t03": 0.00026438854333365026,
+  "narr_nolbert_t04": -0.00018507783179334865,
+  "narr_nolbert_t05": 0.0002166522583744618,
+  "narr_nolbert_t06": 0.00019531669602472227,
+  "narr_nolbert_t07": 0.0002467341239863686,
+  "narr_nolbert_t08": -0.00011087081028450074,
+  "narr_nolbert_t09": 0.0004945194263014262,
+  "narr_nolbert_t10": -0.0007935521919264889,
+  "narr_nolbert_t11": -0.001527151042561475,
+  "narr_nolbert_t12": -0.002083288840544228,
+  "narr_nolbert_t13": 0.00026911917889832,
+  "narr_nolbert_t14": -0.0005412517313008916,
+  "narr_nolbert_t15": 0.0003465559849990812,
+  "narr_nolbert_t16": -0.0006861348520998096,
+  "narr_nolbert_t17": -0.0001833360960911872,
+  "narr_nolbert_t18": 0.0,
+  "narr_nolbert_t19": -0.00024509756245584167,
+  "narr_nolbert_t20": 2.6533167241036512e-05,
+  "narr_nolbert_t21": -0.0007605723175034494,
+  "narr_nolbert_t22": 8.921042915446119e-05,
+  "narr_nolbert_t23": 0.0009999060579432416,
+  "narr_nolbert_t24": -0.000632811243265541,
+  "narr_nolbert_t25": 0.0,
+  "narr_nolbert_t26": -0.00034604043117997,
+  "narr_nolbert_t27": 0.0007684435733649994,
+  "narr_nolbert_t28": -4.691992973752707e-05,
+  "narr_nolbert_t29": 0.0008682760745030475,
+  "narr_nolbert_t30": -0.00039827565840534236,
+  "narr_nolbert_t31": 0.00014841102646300576,
+  "narr_nolbert_t32": 0.00018626983576626907,
+  "narr_nolbert_t33": 0.0003669346275671538,
+  "narr_nolbert_t34": -0.0005017621176133394,
+  "narr_nolbert_t35": -0.0010791923075200867,
+  "narr_nolbert_t36": 0.0007292979210977451,
+  "narr_nolbert_t37": -0.0004010605190309082,
+  "narr_nolbert_t38": -6.0407662742634406e-05,
+  "narr_nolbert_t39": -0.00048354964946420225,
+  "narr_nolbert_t40": -0.0008542900866011865,
+  "narr_nolbert_t41": -0.0007677111654362572,
+  "narr_nolbert_t42": -0.0006247344214540241,
+  "narr_nolbert_t43": -0.0006477051225289562,
+  "narr_nolbert_t44": 0.00018793186489564326,
+  "narr_nolbert_t45": 0.0004903506791571255,
+  "narr_nolbert_t46": 0.000966254026026698,
+  "narr_nolbert_t47": -0.0003921908233801729,
+  "narr_nolbert_t48": 0.001443008176607877,
+  "narr_nolbert_t49": -0.0003048157629537067,
+  "narr_nolbert_t50": 0.0010469599463121264,
+  "narr_nolbert_t51": 0.0006767862599608856,
+  "narr_nolbert_t52": 0.0021543368102829455,
+  "narr_nolbert_t53": 0.00032055994550874854,
+  "narr_nolbert_t54": 0.001317508750092943,
+  "narr_nolbert_t55": -0.00024084176120029916,
+  "narr_nolbert_t56": -0.0005378659707662566,
+  "narr_nolbert_t57": -0.00046984529339644666,
+  "narr_nolbert_t58": 0.0007009862601369376,
+  "narr_nolbert_t59": 0.00047225641595758966
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 4.625912673750232e-10
+}

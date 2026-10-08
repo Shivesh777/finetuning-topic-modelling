@@ -112,6 +112,7 @@ python scripts/06c_signals.py              # single-feature signals, combo, best
 python scripts/07_evaluate.py              # forecast accuracy and backtests, 5 min
 python scripts/08_report.py                # tables in results/tables/ (--tables to split it)
 python scripts/09_explain.py               # EBM importances, shapes, ablations
+python scripts/09b_ipca_factors.py         # Gamma and factor returns of the IPCA models
 python scripts/10_audit.py                 # news coverage, stale rows, donor rows
 python scripts/11_missing_data_leak.py     # what the missing-data leak is worth
 python scripts/12_tuning_noise.py          # one experiment under ten random seeds

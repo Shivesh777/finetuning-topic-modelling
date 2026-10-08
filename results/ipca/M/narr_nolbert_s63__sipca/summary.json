@@ -1,0 +1,101 @@
+{
+ "freq": "M",
+ "features": "narr_nolbert_s63",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "factors": 1,
+ "features_total": 60,
+ "features_kept": 50,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.003681831256221757
+ ],
+ "implied_coefficients": {
+  "narr_nolbert_s63_t00": 0.0,
+  "narr_nolbert_s63_t01": -0.0002535175444639636,
+  "narr_nolbert_s63_t02": -0.00017753461527563025,
+  "narr_nolbert_s63_t03": 0.00022112163947346058,
+  "narr_nolbert_s63_t04": 0.0,
+  "narr_nolbert_s63_t05": 0.0,
+  "narr_nolbert_s63_t06": -0.00010101838189518007,
+  "narr_nolbert_s63_t07": 9.617791204061782e-05,
+  "narr_nolbert_s63_t08": -0.0003811786588891733,
+  "narr_nolbert_s63_t09": -5.2020465071089814e-05,
+  "narr_nolbert_s63_t10": -0.0009233364223256476,
+  "narr_nolbert_s63_t11": -5.7534740680409206e-05,
+  "narr_nolbert_s63_t12": -0.0007368456275427579,
+  "narr_nolbert_s63_t13": 0.0,
+  "narr_nolbert_s63_t14": -0.0009465552879219093,
+  "narr_nolbert_s63_t15": 0.00044229590435980335,
+  "narr_nolbert_s63_t16": -0.00011009251558568362,
+  "narr_nolbert_s63_t17": -2.2580837279100155e-05,
+  "narr_nolbert_s63_t18": 0.0002722063701784906,
+  "narr_nolbert_s63_t19": 0.0001326145955510549,
+  "narr_nolbert_s63_t20": 0.0,
+  "narr_nolbert_s63_t21": -0.0005933005197459913,
+  "narr_nolbert_s63_t22": 0.0005939893456604967,
+  "narr_nolbert_s63_t23": 6.48501318827176e-05,
+  "narr_nolbert_s63_t24": 0.0,
+  "narr_nolbert_s63_t25": 0.00013420721316039454,
+  "narr_nolbert_s63_t26": 0.0,
+  "narr_nolbert_s63_t27": 0.0003009601590531444,
+  "narr_nolbert_s63_t28": 0.0004237321128322031,
+  "narr_nolbert_s63_t29": 0.000247420985781108,
+  "narr_nolbert_s63_t30": -8.241886221841229e-05,
+  "narr_nolbert_s63_t31": -0.0002042175656749503,
+  "narr_nolbert_s63_t32": 0.00047995136490857634,
+  "narr_nolbert_s63_t33": -0.00011280403138915336,
+  "narr_nolbert_s63_t34": -0.0008249233080855213,
+  "narr_nolbert_s63_t35": -0.0008975949502508536,
+  "narr_nolbert_s63_t36": 0.0009517681014436878,
+  "narr_nolbert_s63_t37": 3.2460300857712906e-05,
+  "narr_nolbert_s63_t38": 5.815009234671991e-05,
+  "narr_nolbert_s63_t39": -0.0003617636177961529,
+  "narr_nolbert_s63_t40": -0.0017674219968732724,
+  "narr_nolbert_s63_t41": -0.0004217619126275604,
+  "narr_nolbert_s63_t42": -0.00040932524435759946,
+  "narr_nolbert_s63_t43": 0.0,
+  "narr_nolbert_s63_t44": 0.00024180908457804764,
+  "narr_nolbert_s63_t45": 0.000141373086258517,
+  "narr_nolbert_s63_t46": 0.000430914500204772,
+  "narr_nolbert_s63_t47": -2.403795427638119e-05,
+  "narr_nolbert_s63_t48": 0.0009613259728254869,
+  "narr_nolbert_s63_t49": 0.0,
+  "narr_nolbert_s63_t50": 0.00025704404653957065,
+  "narr_nolbert_s63_t51": 0.0005398465703884945,
+  "narr_nolbert_s63_t52": 0.0011479739618070193,
+  "narr_nolbert_s63_t53": 9.901175490343808e-05,
+  "narr_nolbert_s63_t54": 0.0003703680683736255,
+  "narr_nolbert_s63_t55": 0.0,
+  "narr_nolbert_s63_t56": -0.00021121329385703847,
+  "narr_nolbert_s63_t57": -0.0004165047753776938,
+  "narr_nolbert_s63_t58": 0.00024281081803975016,
+  "narr_nolbert_s63_t59": 0.00011945166702180647
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 3.8724502077203127e-10
+}

@@ -1,0 +1,102 @@
+{
+ "freq": "M",
+ "features": "firm_lda_all",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "factors": 1,
+ "features_total": 61,
+ "features_kept": 41,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.002787455329451501
+ ],
+ "implied_coefficients": {
+  "firm_lda_all_news_count": 0.00012219272395290798,
+  "firm_lda_all_news_t00": 0.00019087819329360693,
+  "firm_lda_all_news_t01": 0.00014841306946204797,
+  "firm_lda_all_news_t02": 0.0006596476103696897,
+  "firm_lda_all_news_t03": -6.296800456618433e-05,
+  "firm_lda_all_news_t04": 0.0,
+  "firm_lda_all_news_t05": 0.0,
+  "firm_lda_all_news_t06": 0.00024026419732168304,
+  "firm_lda_all_news_t07": 0.000193166107428885,
+  "firm_lda_all_news_t08": 0.0,
+  "firm_lda_all_news_t09": -0.0020461469721755493,
+  "firm_lda_all_news_t10": -0.00011701711017585129,
+  "firm_lda_all_news_t11": 0.0,
+  "firm_lda_all_news_t12": -0.0002086505397304172,
+  "firm_lda_all_news_t13": 0.0004120572721769216,
+  "firm_lda_all_news_t14": -8.628668523022244e-05,
+  "firm_lda_all_news_t15": 0.0003549109413637144,
+  "firm_lda_all_news_t16": 7.795365743701394e-05,
+  "firm_lda_all_news_t17": -0.0005225820785662737,
+  "firm_lda_all_news_t18": 0.0,
+  "firm_lda_all_news_t19": 0.0,
+  "firm_lda_all_news_t20": -0.0002864599597238757,
+  "firm_lda_all_news_t21": -4.5108308161157944e-05,
+  "firm_lda_all_news_t22": 0.0,
+  "firm_lda_all_news_t23": 0.0,
+  "firm_lda_all_news_t24": 0.0,
+  "firm_lda_all_news_t25": -3.3549964631218953e-06,
+  "firm_lda_all_news_t26": -0.00018935914347311447,
+  "firm_lda_all_news_t27": -0.0005458684858267866,
+  "firm_lda_all_news_t28": 1.9410778254973706e-05,
+  "firm_lda_all_news_t29": 0.00014043809717913776,
+  "firm_lda_all_news_t30": -2.8286405860874744e-05,
+  "firm_lda_all_news_t31": 0.0,
+  "firm_lda_all_news_t32": 0.0,
+  "firm_lda_all_news_t33": 7.412522713339584e-05,
+  "firm_lda_all_news_t34": 0.0,
+  "firm_lda_all_news_t35": -8.514133776158676e-05,
+  "firm_lda_all_news_t36": -8.369361476681684e-05,
+  "firm_lda_all_news_t37": 0.0001624512155809692,
+  "firm_lda_all_news_t38": 0.00014374538255742413,
+  "firm_lda_all_news_t39": -0.000134641201752368,
+  "firm_lda_all_news_t40": -0.00039183522160617817,
+  "firm_lda_all_news_t41": 4.369026165252341e-05,
+  "firm_lda_all_news_t42": 0.0,
+  "firm_lda_all_news_t43": 0.0,
+  "firm_lda_all_news_t44": 0.0007413199951898484,
+  "firm_lda_all_news_t45": -0.00044913395114030714,
+  "firm_lda_all_news_t46": -2.054942317235346e-07,
+  "firm_lda_all_news_t47": -9.300027500521371e-05,
+  "firm_lda_all_news_t48": 0.0,
+  "firm_lda_all_news_t49": 0.0004956735937322577,
+  "firm_lda_all_news_t50": 6.557361753391527e-05,
+  "firm_lda_all_news_t51": 0.0,
+  "firm_lda_all_news_t52": 0.0,
+  "firm_lda_all_news_t53": 0.0002709191320443218,
+  "firm_lda_all_news_t54": -0.00010498821084405595,
+  "firm_lda_all_news_t55": -0.000605690591217739,
+  "firm_lda_all_news_t56": -0.00044233043874558023,
+  "firm_lda_all_news_t57": 0.0,
+  "firm_lda_all_news_t58": 0.0,
+  "firm_lda_all_news_t59": 0.0
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 1.1600576792572537e-10
+}

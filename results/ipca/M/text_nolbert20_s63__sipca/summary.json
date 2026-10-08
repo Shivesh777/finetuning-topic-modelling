@@ -1,0 +1,84 @@
+{
+ "freq": "M",
+ "features": "text_nolbert20_s63",
+ "model": "sipca",
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.1
+ },
+ "factors": 3,
+ "features_total": 41,
+ "features_kept": 40,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.0004250870994922953,
+  0.0006597133932174047,
+  0.001064166158718517
+ ],
+ "implied_coefficients": {
+  "narr_nolbert20_s63_t00": 0.00030465978476932606,
+  "narr_nolbert20_s63_t01": 0.00021836188999531234,
+  "narr_nolbert20_s63_t02": -0.00011259638378319728,
+  "narr_nolbert20_s63_t03": -1.4486145974261536e-05,
+  "narr_nolbert20_s63_t04": 5.4163375911491215e-05,
+  "narr_nolbert20_s63_t05": 6.796514939057014e-05,
+  "narr_nolbert20_s63_t06": 2.4163166446463006e-05,
+  "narr_nolbert20_s63_t07": 0.0001778530106811052,
+  "narr_nolbert20_s63_t08": 0.00012607541978449708,
+  "narr_nolbert20_s63_t09": -6.913374134392472e-05,
+  "narr_nolbert20_s63_t10": 0.000410049581814128,
+  "narr_nolbert20_s63_t11": 0.000538536648481717,
+  "narr_nolbert20_s63_t12": 0.00011679736154466531,
+  "narr_nolbert20_s63_t13": -0.0005009482932684852,
+  "narr_nolbert20_s63_t14": 2.9832553212190137e-05,
+  "narr_nolbert20_s63_t15": 0.0005033675057839304,
+  "narr_nolbert20_s63_t16": -8.347493569387033e-05,
+  "narr_nolbert20_s63_t17": -9.033069134640032e-05,
+  "narr_nolbert20_s63_t18": 7.171455676482599e-05,
+  "narr_nolbert20_s63_t19": -0.0004846152546878672,
+  "firm_nolbert20_news_count": -3.50040740173695e-05,
+  "firm_nolbert20_news_t00": -1.3233569990393613e-06,
+  "firm_nolbert20_news_t01": -8.00439121310805e-05,
+  "firm_nolbert20_news_t02": -9.633799629561673e-07,
+  "firm_nolbert20_news_t03": -1.5601425536255737e-05,
+  "firm_nolbert20_news_t04": -6.0627579913100485e-05,
+  "firm_nolbert20_news_t05": -1.0268280520666197e-05,
+  "firm_nolbert20_news_t06": 1.6005306972039042e-05,
+  "firm_nolbert20_news_t07": 2.9500913349541423e-05,
+  "firm_nolbert20_news_t08": 3.116260958008915e-05,
+  "firm_nolbert20_news_t09": 4.962041562725903e-05,
+  "firm_nolbert20_news_t10": 0.0005233500575801387,
+  "firm_nolbert20_news_t11": 7.898785234956912e-05,
+  "firm_nolbert20_news_t12": 3.4749533010162377e-06,
+  "firm_nolbert20_news_t13": 8.7481745697089e-06,
+  "firm_nolbert20_news_t14": 0.0,
+  "firm_nolbert20_news_t15": -2.400664480453254e-05,
+  "firm_nolbert20_news_t16": -4.264448859847862e-05,
+  "firm_nolbert20_news_t17": 5.197924018685097e-05,
+  "firm_nolbert20_news_t18": -2.7379535352382582e-05,
+  "firm_nolbert20_news_t19": 1.0338271661199709e-05
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 1.1522848560735488e-10
+}

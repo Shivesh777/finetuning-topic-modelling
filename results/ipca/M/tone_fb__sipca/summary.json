@@ -1,0 +1,49 @@
+{
+ "freq": "M",
+ "features": "tone_fb",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.3
+ },
+ "factors": 1,
+ "features_total": 8,
+ "features_kept": 6,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.0004263780067034656
+ ],
+ "implied_coefficients": {
+  "fb_tone_1": 3.122392260966744e-05,
+  "fb_tone_5": 0.0,
+  "fb_tone_21": 0.00010837063765642788,
+  "fb_tone_252": 0.000407170062208456,
+  "fb_surprise_21": 0.0,
+  "news_log_n5": 1.595218699862234e-05,
+  "news_log_n21": -4.9793584629393354e-05,
+  "news_abnormal_21": 2.3616588494189007e-05
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 2.9013320717273527e-11
+}

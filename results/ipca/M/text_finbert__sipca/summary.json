@@ -1,0 +1,84 @@
+{
+ "freq": "M",
+ "features": "text_finbert",
+ "model": "sipca",
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.3
+ },
+ "factors": 3,
+ "features_total": 41,
+ "features_kept": 27,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.001434606076814608,
+  0.0015342884453700867,
+  0.003760807250382845
+ ],
+ "implied_coefficients": {
+  "narr_finbert_t00": -8.085449139177979e-05,
+  "narr_finbert_t01": -0.00045529984146441783,
+  "narr_finbert_t02": 0.0006180193171972705,
+  "narr_finbert_t03": 0.001778378587091147,
+  "narr_finbert_t04": -9.324699805262761e-05,
+  "narr_finbert_t05": -0.0007897100626492729,
+  "narr_finbert_t06": 0.0008581013755104406,
+  "narr_finbert_t07": 0.00012030140867957068,
+  "narr_finbert_t08": 0.0009465445439860966,
+  "narr_finbert_t09": -0.0014458571154802673,
+  "narr_finbert_t10": -0.001008596100015125,
+  "narr_finbert_t11": -0.0002807855196670655,
+  "narr_finbert_t12": 4.838259890824335e-05,
+  "narr_finbert_t13": -0.0009362236618419571,
+  "narr_finbert_t14": -0.0006307603142700284,
+  "narr_finbert_t15": 0.0013745100503366938,
+  "narr_finbert_t16": 0.0005575718253036733,
+  "narr_finbert_t17": -0.0015330778945742071,
+  "narr_finbert_t18": -2.549355926477448e-05,
+  "narr_finbert_t19": 0.001829352710714871,
+  "firm_finbert_news_count": 2.337331163599741e-05,
+  "firm_finbert_news_t00": -2.0048053716347554e-06,
+  "firm_finbert_news_t01": 0.0,
+  "firm_finbert_news_t02": -2.760453409583572e-05,
+  "firm_finbert_news_t03": 0.0,
+  "firm_finbert_news_t04": 7.575337214346187e-05,
+  "firm_finbert_news_t05": -9.334509764215393e-06,
+  "firm_finbert_news_t06": 0.0003874462091045978,
+  "firm_finbert_news_t07": 0.0,
+  "firm_finbert_news_t08": 0.0,
+  "firm_finbert_news_t09": 0.0,
+  "firm_finbert_news_t10": 0.0,
+  "firm_finbert_news_t11": 0.0,
+  "firm_finbert_news_t12": 0.0,
+  "firm_finbert_news_t13": 0.0,
+  "firm_finbert_news_t14": 0.0,
+  "firm_finbert_news_t15": 0.0,
+  "firm_finbert_news_t16": 0.0,
+  "firm_finbert_news_t17": 0.0,
+  "firm_finbert_news_t18": 0.0,
+  "firm_finbert_news_t19": -7.046731785612638e-06
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 4.635439879163705e-10
+}

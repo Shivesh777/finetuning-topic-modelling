@@ -1,0 +1,51 @@
+{
+ "freq": "M",
+ "features": "price",
+ "model": "sipca",
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.3
+ },
+ "factors": 3,
+ "features_total": 8,
+ "features_kept": 7,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.0013546720162531225,
+  0.0012286513923407847,
+  0.00039492646410112345
+ ],
+ "implied_coefficients": {
+  "beta": -0.0002136304743108232,
+  "ivol": 3.7816343892766015e-05,
+  "vol_21": -0.0001830059146378681,
+  "mom_12_1": 0.0017320603151144138,
+  "rev_21": 0.0006295712364772545,
+  "rev_5": -0.00012619473723870999,
+  "size": 8.83754414701982e-05,
+  "max_21": 0.0
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 1.1623194811141713e-10
+}

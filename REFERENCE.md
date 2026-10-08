@@ -97,6 +97,7 @@ Run the scripts in order. Times are for a 4-core laptop CPU.
 | 7 | `07_evaluate.py` | `results/series/` | 2 min |
 | 8 | `08_report.py` | `results/tables/` | under 1 min |
 | 9 | `09_explain.py` | `results/explain/` | under 1 min |
+| 9b | `09b_ipca_factors.py` | `results/ipca/<freq>/<features>__<model>/`: Gamma, factor returns, settings | 2 min for the 50 monthly sparse IPCA experiments |
 | 10 | `10_audit.py` | `results/data_audit/firm_coverage.csv`, `stale_rows.csv`, `donor_rows.csv` | under 1 min |
 | 11 | `11_missing_data_leak.py` | `results/data_audit/missing_data_leak.csv` | 1 min |
 | 12 | `12_tuning_noise.py` | `results/data_audit/tuning_noise.csv` | 3 min for XGBoost on two feature sets; EBMs take 1 min a seed |
@@ -303,6 +304,30 @@ validation rows is therefore the one that forecasts the test period
 (`Ebm.refit = False`). It has seen the validation returns only through the
 number of boosting steps.
 
+**IPCA loadings, factors and their normalisation.** The pipeline keeps only an
+IPCA model's forecasts (and its implied coefficients Gamma lambda in
+`results/importance/`). `scripts/09b_ipca_factors.py` refits the model that
+forecast the test period, checks that it reproduces the stored test forecasts,
+and writes `results/ipca/<freq>/<features>__<model>/`: `gamma.csv` (one row per
+feature, one column per factor; for `sipca` whether the feature is kept),
+`factors.csv` (the factor return of every holding period) and `summary.json`
+(setting, periods, lambda, implied coefficients). Normalisation, as in Kelly,
+Pruitt and Su (2019): Gamma'Gamma = I, factors orthogonal over the fit sample
+(the sum of f_t f_t' diagonal) in decreasing order of second moment, each with
+a positive mean. `ipca` is estimated under it. The objective of `sipca` (fit,
+plus the sum of squared factors, plus the group penalty on the rows of Gamma)
+does not change under an orthogonal rotation of the factors, so its Gamma and
+factors are put into the same form after the fit; forecasts and kept features
+do not change. `sipca` works with sums over stocks rather than means and
+estimates each period's factors by a ridge cross-section,
+f_t = (Gamma' S_t Gamma + I)^-1 Gamma' q_t, as the earlier project did.
+Schedule (every model): the grid is fitted on the training periods and scored
+on the validation periods; the chosen setting is refitted once on training plus
+validation and applied unchanged to the test periods. The factors of the
+training and validation periods are therefore in-sample estimates; those of the
+test periods are out of sample: the same cross-section with Gamma fixed, a
+portfolio whose weights are known at formation.
+
 Every experiment is run once, with seed 0. For the tree models that is one
 draw: `scripts/12_tuning_noise.py` repeats an experiment with other seeds,
 tuning included, and records how far the result moves (FINDINGS.md, section
@@ -417,6 +442,7 @@ section 10.
 | `results/tables/placebo.csv`, `text_vs_price.csv` | Exposures against the placebo; text against price |
 | `results/tables/multiple_testing.csv`, `tuning.csv`, `topic_models.csv` | The best of all experiments, given the search; what tuning chose; topic quality |
 | `results/explain/` | Importance, shape functions and ablations of the chosen EBM |
+| `results/ipca/<freq>/<features>__<model>/` | Gamma (`gamma.csv`), factor returns in and out of sample (`factors.csv`), setting and schedule (`summary.json`) of IPCA models; all 50 monthly sparse IPCA experiments are there |
 
 ## 5. Differences from the previous project
 

@@ -55,6 +55,8 @@ def workspace(tmp_path_factory):
     run("07_evaluate.py", "--freq", "M", env=env)
     run("08_report.py", "--freq", "M", env=env)
     run("09_explain.py", "--freq", "M", env=env)
+    run("09b_ipca_factors.py", "--freq", "M", "--models", "sipca", "ipca", "--features", "price",
+        "all_toy", env=env)
     run("10_audit.py", "--topics", "toy", env=env)
     run("11_missing_data_leak.py", "--freq", "M", env=env)
     run("12_tuning_noise.py", "--freq", "M", "--features", "price", "--seeds", "1", env=env)
@@ -214,3 +216,32 @@ def test_explanations(workspace):
     assert ablation.loc["block: price", "change_in_ic_mean"] < -0.02
     shapes = pd.read_csv(folder / "shapes.csv")
     assert (shapes["to"] >= shapes["from"]).all() and shapes["term"].nunique() >= 5
+
+
+def test_ipca_loadings_and_factors(workspace):
+    data, results, _ = workspace
+    index = pd.read_parquet(data / "panels" / "M" / "index.parquet")
+    for features, model in [("price", "sipca"), ("price", "ipca"), ("all_toy", "sipca")]:
+        folder = results / "ipca" / "M" / f"{features}__{model}"
+        summary = __import__("json").loads((folder / "summary.json").read_text())
+        gamma = pd.read_csv(folder / "gamma.csv")
+        factors = pd.read_csv(folder / "factors.csv", parse_dates=["date", "hold_start"])
+        cols = [f"f{j + 1}" for j in range(summary["factors"])]
+        assert summary["test_forecasts_reproduced_max_abs_error"] < 1e-6
+        g = gamma[cols].to_numpy()
+        assert np.allclose(g.T @ g, np.eye(len(cols)), atol=1e-8)          # Gamma'Gamma = I
+        fit = factors[factors["estimate"] == "in_sample"]
+        assert len(fit) == index.loc[index["split"] != "test", "date"].nunique()
+        assert (factors["estimate"] == "out_of_sample").sum() == index.loc[
+            index["split"] == "test", "date"].nunique()
+        assert (factors.loc[factors["estimate"] == "out_of_sample", "split"] == "test").all()
+        f = fit[cols].to_numpy()
+        assert (f.mean(axis=0) > 0).all()                                    # positive means
+        c = np.cov(f, rowvar=False, bias=True) + np.outer(f.mean(0), f.mean(0))
+        assert np.allclose(c - np.diag(np.diag(c)), 0, atol=1e-10 * np.abs(c).max())
+        importance = pd.read_csv(results / "importance" / "M" / f"{features}__{model}.csv")
+        implied = pd.Series(summary["implied_coefficients"])
+        assert np.allclose(implied[importance["feature"]].to_numpy(), importance["coef"], rtol=1e-6)
+        if model == "sipca":
+            assert gamma["kept"].sum() == summary["features_kept"]
+            assert (gamma.loc[~gamma["kept"], cols] == 0).all().all()

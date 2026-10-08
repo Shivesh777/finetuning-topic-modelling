@@ -1,0 +1,102 @@
+{
+ "freq": "M",
+ "features": "firm_nolbert",
+ "model": "sipca",
+ "params": {
+  "n_factors": 1,
+  "penalty": 0.03
+ },
+ "factors": 1,
+ "features_total": 61,
+ "features_kept": 60,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.008126788843545767
+ ],
+ "implied_coefficients": {
+  "firm_nolbert_news_count": 0.00011043076060162129,
+  "firm_nolbert_news_t00": 0.0014091253325692395,
+  "firm_nolbert_news_t01": 0.0005799586733117594,
+  "firm_nolbert_news_t02": 0.0002183466123544167,
+  "firm_nolbert_news_t03": -6.0433138203116725e-05,
+  "firm_nolbert_news_t04": 4.1608407188306495e-05,
+  "firm_nolbert_news_t05": 0.0,
+  "firm_nolbert_news_t06": 0.0005397087140726575,
+  "firm_nolbert_news_t07": -0.00028305435824882566,
+  "firm_nolbert_news_t08": 0.00026922176577465624,
+  "firm_nolbert_news_t09": 0.00018730963460398194,
+  "firm_nolbert_news_t10": -0.0001494473233357429,
+  "firm_nolbert_news_t11": -0.00040357033404720555,
+  "firm_nolbert_news_t12": -0.00010618051162336197,
+  "firm_nolbert_news_t13": -0.0015224664384249095,
+  "firm_nolbert_news_t14": -0.00012533991730695509,
+  "firm_nolbert_news_t15": -0.00012102402564065525,
+  "firm_nolbert_news_t16": 0.0002942945237932792,
+  "firm_nolbert_news_t17": 0.000789982034179556,
+  "firm_nolbert_news_t18": 0.006718491964554813,
+  "firm_nolbert_news_t19": 7.365288102731295e-05,
+  "firm_nolbert_news_t20": -0.0001653610395445929,
+  "firm_nolbert_news_t21": -0.0005453882422544981,
+  "firm_nolbert_news_t22": 0.00026410347519449624,
+  "firm_nolbert_news_t23": -2.529910038367738e-05,
+  "firm_nolbert_news_t24": 0.0007819754740420509,
+  "firm_nolbert_news_t25": 0.000516099565966884,
+  "firm_nolbert_news_t26": 0.00010348702319058341,
+  "firm_nolbert_news_t27": 0.0003485568212619852,
+  "firm_nolbert_news_t28": -0.0014916735212405345,
+  "firm_nolbert_news_t29": -0.0004899383211678399,
+  "firm_nolbert_news_t30": -0.0018994338920874498,
+  "firm_nolbert_news_t31": 1.482070312894999e-05,
+  "firm_nolbert_news_t32": 0.0011336711813983334,
+  "firm_nolbert_news_t33": 0.00021731579562797116,
+  "firm_nolbert_news_t34": -0.0005477858789725968,
+  "firm_nolbert_news_t35": -0.0006935314623440105,
+  "firm_nolbert_news_t36": -2.55565503227898e-05,
+  "firm_nolbert_news_t37": 0.0007705147575781029,
+  "firm_nolbert_news_t38": -0.0005664532694250068,
+  "firm_nolbert_news_t39": -0.0007327318938839811,
+  "firm_nolbert_news_t40": 2.074241262662897e-05,
+  "firm_nolbert_news_t41": -0.00040427070116000525,
+  "firm_nolbert_news_t42": 0.00020911632595433855,
+  "firm_nolbert_news_t43": -0.0002593852236958334,
+  "firm_nolbert_news_t44": 0.00017704099897620742,
+  "firm_nolbert_news_t45": 0.00023802384169065152,
+  "firm_nolbert_news_t46": 0.0007346470950183035,
+  "firm_nolbert_news_t47": -0.00013694778281606016,
+  "firm_nolbert_news_t48": -0.0001189339783135153,
+  "firm_nolbert_news_t49": -8.843262848683852e-05,
+  "firm_nolbert_news_t50": -0.0001341682766872506,
+  "firm_nolbert_news_t51": -0.00028235787882238044,
+  "firm_nolbert_news_t52": -8.627524955699983e-05,
+  "firm_nolbert_news_t53": 0.00046545355823601444,
+  "firm_nolbert_news_t54": 0.00024428836211290444,
+  "firm_nolbert_news_t55": -0.0013835721704927048,
+  "firm_nolbert_news_t56": -0.00037231291381167484,
+  "firm_nolbert_news_t57": 0.0002804887138600784,
+  "firm_nolbert_news_t58": 0.00023373000252009532,
+  "firm_nolbert_news_t59": -0.00047380323361472936
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 3.406305515429864e-10
+}

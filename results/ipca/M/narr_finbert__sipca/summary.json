@@ -1,0 +1,63 @@
+{
+ "freq": "M",
+ "features": "narr_finbert",
+ "model": "sipca",
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.1
+ },
+ "factors": 3,
+ "features_total": 20,
+ "features_kept": 20,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.002059262377597013,
+  0.0032787453552179813,
+  0.0026062164498028826
+ ],
+ "implied_coefficients": {
+  "narr_finbert_t00": -0.0002625471634224459,
+  "narr_finbert_t01": -0.0006728420802554408,
+  "narr_finbert_t02": 0.0010741379845911334,
+  "narr_finbert_t03": 0.0019058779705316685,
+  "narr_finbert_t04": -8.866860867298972e-05,
+  "narr_finbert_t05": -0.0005873004776107946,
+  "narr_finbert_t06": 0.0010251786477955705,
+  "narr_finbert_t07": 0.00018753357850422262,
+  "narr_finbert_t08": 0.0010389893840839842,
+  "narr_finbert_t09": -0.0015596370946018155,
+  "narr_finbert_t10": -0.0010595060566244972,
+  "narr_finbert_t11": -0.0002320545983188882,
+  "narr_finbert_t12": 8.099141790095593e-05,
+  "narr_finbert_t13": -0.001004856226317598,
+  "narr_finbert_t14": -0.0007632753184649196,
+  "narr_finbert_t15": 0.0014816297698758665,
+  "narr_finbert_t16": 0.0005771152789111769,
+  "narr_finbert_t17": -0.0015754976748967424,
+  "narr_finbert_t18": 0.00010593242987448147,
+  "narr_finbert_t19": 0.0019306487294377637
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 4.5641366727688926e-10
+}

@@ -1,0 +1,103 @@
+{
+ "freq": "M",
+ "features": "narr_minilm_s63",
+ "model": "sipca",
+ "params": {
+  "n_factors": 3,
+  "penalty": 0.1
+ },
+ "factors": 3,
+ "features_total": 60,
+ "features_kept": 60,
+ "periods": {
+  "train": 69,
+  "validation": 14,
+  "test": 21
+ },
+ "holding_periods_start": {
+  "train": [
+   "2013-01-02",
+   "2019-12-02"
+  ],
+  "validation": [
+   "2020-01-02",
+   "2021-12-01"
+  ],
+  "test": [
+   "2022-01-03",
+   "2024-12-02"
+  ]
+ },
+ "lambda": [
+  0.007062660511431976,
+  0.0036525249284625597,
+  0.0011677328419475114
+ ],
+ "implied_coefficients": {
+  "narr_minilm_s63_t00": 6.131428984297222e-05,
+  "narr_minilm_s63_t01": -0.000646681611455733,
+  "narr_minilm_s63_t02": 0.0006869726814427761,
+  "narr_minilm_s63_t03": 0.00018821648448791035,
+  "narr_minilm_s63_t04": -0.00039457440456494754,
+  "narr_minilm_s63_t05": 0.0003771447499980734,
+  "narr_minilm_s63_t06": -0.0008807019849508146,
+  "narr_minilm_s63_t07": 0.000954516716693021,
+  "narr_minilm_s63_t08": 0.0005727444677922621,
+  "narr_minilm_s63_t09": 0.0005313217000622857,
+  "narr_minilm_s63_t10": -0.0016260804896062386,
+  "narr_minilm_s63_t11": 0.002147475688462972,
+  "narr_minilm_s63_t12": 0.00021376960206957477,
+  "narr_minilm_s63_t13": -0.0010797966472179885,
+  "narr_minilm_s63_t14": -0.0009432993934722267,
+  "narr_minilm_s63_t15": 0.0002789066331077673,
+  "narr_minilm_s63_t16": 0.0004770279854226195,
+  "narr_minilm_s63_t17": -0.0012238313639123999,
+  "narr_minilm_s63_t18": 0.000536188438467329,
+  "narr_minilm_s63_t19": -0.00012519153112219733,
+  "narr_minilm_s63_t20": -0.0011009130344037034,
+  "narr_minilm_s63_t21": -6.231761187559848e-05,
+  "narr_minilm_s63_t22": -0.00166535510466119,
+  "narr_minilm_s63_t23": -0.003944354032727373,
+  "narr_minilm_s63_t24": 0.0016418950802762982,
+  "narr_minilm_s63_t25": 0.0019215236500763682,
+  "narr_minilm_s63_t26": 0.0007802064089396427,
+  "narr_minilm_s63_t27": -0.000992260049310672,
+  "narr_minilm_s63_t28": -0.0013418760557887951,
+  "narr_minilm_s63_t29": -0.0017007195624144506,
+  "narr_minilm_s63_t30": 0.00016134158547383506,
+  "narr_minilm_s63_t31": -6.608681252501301e-05,
+  "narr_minilm_s63_t32": -7.44879906373831e-06,
+  "narr_minilm_s63_t33": 7.345450274024266e-05,
+  "narr_minilm_s63_t34": -0.00017617994864586626,
+  "narr_minilm_s63_t35": 0.0005902896805249285,
+  "narr_minilm_s63_t36": -0.0013887889582516674,
+  "narr_minilm_s63_t37": -0.0003290018848043033,
+  "narr_minilm_s63_t38": -0.0005523598298083832,
+  "narr_minilm_s63_t39": -0.0017607066245882426,
+  "narr_minilm_s63_t40": -0.0002733090318689242,
+  "narr_minilm_s63_t41": -0.0001716139146463226,
+  "narr_minilm_s63_t42": -0.0006906127705056653,
+  "narr_minilm_s63_t43": 0.0011149800346176321,
+  "narr_minilm_s63_t44": 0.0012586046788192538,
+  "narr_minilm_s63_t45": -0.00045547662702772246,
+  "narr_minilm_s63_t46": 0.0021750536186515555,
+  "narr_minilm_s63_t47": 0.00024003104911260025,
+  "narr_minilm_s63_t48": 0.00027571421512013973,
+  "narr_minilm_s63_t49": -0.00022647560413055525,
+  "narr_minilm_s63_t50": 0.0001450219918205877,
+  "narr_minilm_s63_t51": -0.001007817908616856,
+  "narr_minilm_s63_t52": 0.00012484077971969528,
+  "narr_minilm_s63_t53": 0.0003875010995931734,
+  "narr_minilm_s63_t54": 0.000960477261872775,
+  "narr_minilm_s63_t55": 4.7886892339316e-05,
+  "narr_minilm_s63_t56": 0.0003100123518389365,
+  "narr_minilm_s63_t57": 0.0003759464337735242,
+  "narr_minilm_s63_t58": -0.0001870751380695309,
+  "narr_minilm_s63_t59": -0.0007663879149410103
+ },
+ "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
+ "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
+ "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
+ "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
+ "test_forecasts_reproduced_max_abs_error": 4.6401349082514365e-10
+}

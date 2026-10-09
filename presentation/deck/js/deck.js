@@ -20,7 +20,7 @@
   if (STILL) document.documentElement.classList.add('still');
   var stage = $('#stage'), slides = $$('.slide');
   slides.forEach(function (sl, i) { sl.id = 's' + (i + 1); });   // ?still=1#s12 opens the pre-read at slide 12
-  var SECTIONS = {1: 'Recap', 2: 'Look-ahead', 3: 'Fine-tuning', 4: 'Glass box', 5: 'Results', B: 'Backup'};
+  var SECTIONS = {1: 'Recap', 2: 'Look-ahead', 3: 'Fine-tuning', 4: 'How it works', 5: 'Results', B: 'Backup'};
   var cur = -1, step = 0, started = null, typed = null;
   var CHARTS = window.CHARTS || {};
 

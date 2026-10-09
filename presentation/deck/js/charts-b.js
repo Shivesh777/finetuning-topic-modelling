@@ -1,4 +1,4 @@
-/* Exhibits, part B: sections 4 and 5, and the backup slides. Same conventions as part A. */
+/* Exhibits, part B: the backup slides (B1 to B5). Same conventions as part A. */
 (function () {
   'use strict';
   var U = window.DECKUTIL, C = window.CHARTS, el = U.el, tx = U.tx, surface = U.surface, lin = U.lin, ease = U.ease,
@@ -12,74 +12,7 @@
       still: function (box, k) { halt(box); build(box, k, false); }
     };
   }
-  var FSHADE = {M: 0.38, '2W': 0.68, W: 1};
-
-  // ------------------------------------------------------------------ 4.1 the twelve largest main-effect shapes (weekly EBM)
-  var PRICE = {rev_21: 'return over the last 21 days', rev_5: 'return over the last 5 days', ivol: 'idiosyncratic volatility',
-               beta: 'market beta', mom_12_1: 'return, day −252 to day −21'};
-  function nice(t) {
-    var m = /^narr_lda_t(\d+)$/.exec(t.term); if (m) return ['exposure, LDA topic ' + (+m[1]), t.words || ''];
-    m = /^firm_lda_news_t(\d+)$/.exec(t.term); if (m) return ['firm news, LDA topic ' + (+m[1]), t.words || ''];
-    return ['price: ' + t.term, PRICE[t.term] || ''];
-  }
-  C.shapes = stepped(function (box, k, animate) {
-    var g = surface(box), s = g.s, S = D().glassbox.shapes_weekly_bp;
-    tx(s, 0, 34, 'forecast  =  intercept  +  f₁(x₁)  +  f₂(x₂)  +  …  +  f₁₂(x₁, x₂)  +  …', {'font-size': 34, class: 't-serif', 'font-style': 'italic'});
-    var lo = Infinity, hi = -Infinity;
-    S.forEach(function (t) { t.bins.forEach(function (b) { lo = Math.min(lo, b[2]); hi = Math.max(hi, b[2]); }); });
-    tx(s, 0, 70, 'Each panel: x = the feature’s cross-sectional rank (−1 to 1); y = basis points of weekly return, ' + U.signed(lo) + ' to ' + U.signed(hi) + '; dashed = 0.', {'font-size': 18, class: 't-mono t-quiet'});
-    var pad = (hi - lo) * 0.15, cw = 330, ch = 100, gx = 20;
-    S.slice(0, 12).forEach(function (t, i) {
-      var c = i % 4, r = Math.floor(i / 4), x0 = c * (cw + gx), y0 = 96 + r * 158, nm = nice(t);
-      var X = lin(-1, 1, x0, x0 + cw), Y = lin(lo - pad, hi + pad, y0 + 44 + ch, y0 + 44);
-      tx(s, x0, y0 + 14, nm[0], {'font-size': 17, class: 't-mono'});
-      tx(s, x0, y0 + 35, nm[1], {'font-size': 17, class: 't-quiet'});
-      el('rect', {x: x0, y: y0 + 44, width: cw, height: ch, fill: 'none', stroke: COL.rule}, s);
-      el('line', {x1: x0, x2: x0 + cw, y1: Y(0), y2: Y(0), stroke: COL.mist, 'stroke-dasharray': '4 4'}, s);
-      var d = '';
-      t.bins.forEach(function (b, j) { d += (j ? 'L' : 'M') + X(b[0]).toFixed(1) + ' ' + Y(b[2]).toFixed(1) + 'L' + X(b[1]).toFixed(1) + ' ' + Y(b[2]).toFixed(1); });
-      var p = el('path', {d: d, fill: 'none', stroke: COL.ink, 'stroke-width': 2.2, 'stroke-dasharray': '2000', 'stroke-dashoffset': k >= 1 ? 0 : 2000}, s);
-      if (k >= 1 && animate) tween(box, 1200, function (u) { p.setAttribute('stroke-dashoffset', 2000 * (1 - ease(u))); });
-    });
-  });
-
-  // ------------------------------------------------------------------ 4.2 delete one block at a time
-  C.blocks = stepped(function (box, k, animate) {
-    var g = surface(box), s = g.s, M = D().glassbox.models, order = ['narr', 'price', 'firm', 'mixed pair'];
-    var shownAt = {narr: 1, price: 2, firm: 3, 'mixed pair': 4};
-    var XI = lin(0, 0.8, 330, 600), X = lin(-0.013, 0.013, 720, 1360), y0 = 70, gh = 118;
-    tx(s, 330, 22, 'share of importance', {'font-size': 19, class: 't-mono t-quiet'});
-    tx(s, 720, 22, 'block hurt the forecast', {'font-size': 19, class: 't-mono t-quiet'});
-    tx(s, 1360, 22, 'block helped', {'text-anchor': 'end', 'font-size': 19, class: 't-mono t-quiet'});
-    tx(s, 1040, 50, 'change in test rank IC when the block is deleted', {'text-anchor': 'middle', 'font-size': 18, class: 't-mono t-quiet'});
-    [-0.01, -0.005, 0, 0.005, 0.01].forEach(function (v) {
-      el('line', {x1: X(v), x2: X(v), y1: y0 - 6, y2: y0 + 4 * gh - 20, class: v ? 'ln-rule' : 'ln-axis', 'stroke-width': v ? 1 : 2}, s);
-      tx(s, X(v), y0 + 4 * gh + 8, v ? signed(v, 3) : '0', {'text-anchor': 'middle', 'font-size': 18, class: 't-mono t-quiet'});
-    });
-    order.forEach(function (bk, bi) {
-      var y = y0 + bi * gh, first = M[0].blocks.filter(function (b) { return b.block === bk; })[0];
-      tx(s, 0, y + 28, first.label, {'font-size': 26, 'font-weight': 600, fill: bk === 'price' ? COL.cobalt : COL.ink});
-      if (bk === 'mixed pair') tx(s, 0, y + 58, '29 of 30 are price × firm news', {'font-size': 17, class: 't-mono t-quiet'});
-      var active = k === shownAt[bk], shown = k >= shownAt[bk];
-      M.forEach(function (m, mi) {
-        var b = m.blocks.filter(function (q) { return q.block === bk; })[0], yy = y + mi * 32;
-        var imp = el('rect', {x: XI(0), y: yy, width: XI(b.share) - XI(0), height: 24, fill: '#9D9D9A', 'fill-opacity': FSHADE[m.freq]}, s);
-        tx(s, XI(b.share) + 8, yy + 19, pct(b.share, b.share < 0.1 ? 1 : 0), {'font-size': 17, class: 't-mono t-quiet'});
-        if (active && animate) imp.setAttribute('fill-opacity', 0.12);
-        var v = b.d_ic, w = Math.abs(X(v) - X(0)), bar = el('rect', {x: v >= 0 ? X(0) : X(0) - w, y: yy, width: shown ? w : 0, height: 24,
-          fill: bk === 'price' ? COL.cobalt : COL.ink, 'fill-opacity': FSHADE[m.freq]}, s);
-        tx(s, v >= 0 ? X(v) + 8 : X(v) - 8, yy + 19, shown ? signed(v, 4) : '', {'text-anchor': v >= 0 ? 'start' : 'end', 'font-size': 17, class: 't-mono t-quiet'});
-        if (shown && animate && active) { bar.setAttribute('width', 0); tween(box, 700, function (u) { var ww = w * ease(u); bar.setAttribute('width', ww); if (v < 0) bar.setAttribute('x', X(0) - ww); }); }
-      });
-    });
-    tx(s, 0, y0 + 4 * gh + 42, 'Bars light to dark: monthly (NoLBERT text), biweekly (FinBERT), weekly (LDA). One block deleted at a time; nothing refitted.', {'font-size': 18, class: 't-mono t-quiet'});
-    if (k >= 4) {
-      var sh = M.map(function (m) { var p = m.blocks.filter(function (q) { return q.block === 'mixed pair'; })[0]; return signed(m.sharpe, 2) + ' → ' + signed(p.sharpe_without, 2); });
-      reveal(box, tx(s, 0, y0 + 4 * gh + 72, 'Net Sharpe without the pairs: monthly ' + sh[0] + ', biweekly ' + sh[1] + ', weekly ' + sh[2] + '.', {'font-size': 18, class: 't-mono'}), k, 4, animate, 900);
-    }
-  });
-
-  // ------------------------------------------------------------------ 4.3 forecast to portfolio (real weekly ranks, anonymous)
+  // ------------------------------------------------------------------ B3 forecast to portfolio (real weekly ranks, anonymous)
   C.portfolio = {
     draw: function (box, k, play) {
       halt(box);
@@ -158,7 +91,7 @@
     still: function (box) { this.draw(box, 2, false); }
   };
 
-  // ------------------------------------------------------------------ 5.1 three checks after the class's ladder
+  // ------------------------------------------------------------------ B4 three checks after the class's ladder
   C.ladder = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, F = D().facts;
     var rungs = [
@@ -194,7 +127,7 @@
     });
   });
 
-  // ------------------------------------------------------------------ 5.2 validation's favorites, then the search
+  // ------------------------------------------------------------------ B5 validation's favorites, then the search
   C.vdrop = {
     draw: function (box, k, play) {
       halt(box);
@@ -250,22 +183,7 @@
     still: function (box) { this.draw(box, 2, false); }
   };
 
-  // ------------------------------------------------------------------ 5.3 trading less
-  C.heldup = stepped(function (box, k, animate) {
-    var g = surface(box), s = g.s, B = D().facts.buffer, X = lin(0, 2.5, 300, 1100);
-    tx(s, 0, 30, 'Net return added by the buffer, test period, average over 200 base experiments', {'font-size': 22, 'font-weight': 600});
-    ['Monthly', 'Biweekly', 'Weekly'].forEach(function (f, i) {
-      var y = 70 + i * 80, beyond = B.t[i] > B.crit[i];
-      tx(s, 0, y + 32, f, {'font-size': 28});
-      var bar = el('rect', {x: X(0), y: y, width: 0, height: 46, fill: beyond ? COL.cobalt : '#BDBDBA'}, s);
-      var lab = tx(s, X(0), y + 32, '', {'font-size': 22, class: 't-mono'});
-      var grow = function (u) { var w = (X(B.gain[i]) - X(0)) * u; bar.setAttribute('width', w); lab.setAttribute('x', X(0) + w + 14); lab.textContent = u >= 1 ? '+' + B.gain[i].toFixed(1) + '% a year · t = ' + B.t[i].toFixed(1) + (beyond ? ' > ' : ' < ') + B.crit[i] : ''; };
-      if (k >= 1) { if (animate && k === 1) tween(box, 1000, grow); else grow(1); }
-    });
-    tx(s, X(0), 330, 'blue: t beyond its small-sample critical value', {'font-size': 18, class: 't-mono t-quiet'});
-  });
-
-  // ------------------------------------------------------------------ backup: the presidents strip (Table A3)
+  // ------------------------------------------------------------------ B1 the presidents strip (Table A3)
   C.presidents = stepped(function (box) {
     var g = surface(box), s = g.s, P = D().facts.presidents, X = lin(0, 7, 120, 1260), Y = lin(0, 0.65, 520, 80);
     el('rect', {x: (X(1) + X(2)) / 2, y: 60, width: (X(5) + X(6)) / 2 - (X(1) + X(2)) / 2, height: 470, fill: 'rgba(44,75,239,.07)'}, s);

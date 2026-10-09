@@ -1,6 +1,6 @@
 # Group presentation (MFE 230ZB)
 
-A browser deck of 19 slides. One click per slide: each slide's animations then play by themselves.
+A browser deck of 23 slides and 5 backup slides. One click per slide: each slide's animations then play by themselves.
 
     pip install flask
     python presentation/app.py        # http://127.0.0.1:5055
@@ -21,8 +21,8 @@ Without Flask: `python -m http.server 5055 --directory presentation/deck`.
 
 ## Numbers
 
-Every number on the slides comes from `deck/js/data.js`, which `tools/build_data.py` builds from this repo (FINDINGS.md, results/, data/topics, as at commit b97a27a). `--check` prints the values next to the ones in FINDINGS.md. It needs pandas, numpy and duckdb.
+Every number on the slides comes from `deck/js/data.js`, which `tools/build_data.py` builds from this repo (FINDINGS.md, results/tables, results/explain, results/encoders, results/series, data/topics, as at commit b97a27a). `--check` prints the values next to the ones in FINDINGS.md. It needs pandas, numpy and duckdb.
 
     python presentation/tools/build_data.py --check
 
-Slide 4.3 animates the weekly forecast ranks of individual, unnamed stocks. They come from `data/predictions` and `data/panels`, which are derived from CRSP and stay out of git, so the builder writes them to `deck/js/portfolio.js`, which is gitignored. Without that file the slide shows a short note instead of the dots. To build it, point `FTM_DATA` at a data folder with `predictions/W` and `panels/W`.
+Backup slide B3 animates the weekly forecast ranks of individual, unnamed stocks. They come from `data/predictions` and `data/panels`, which are derived from CRSP and stay out of git, so the builder writes them to `deck/js/portfolio.js`, which is gitignored. Without that file the slide shows a short note instead of the dots. To build it, point `FTM_DATA` at a data folder with `predictions/W` and `panels/W`.

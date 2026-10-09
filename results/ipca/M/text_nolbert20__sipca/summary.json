@@ -2,10 +2,16 @@
  "freq": "M",
  "features": "text_nolbert20",
  "model": "sipca",
+ "blocks": [
+  "narr_nolbert20",
+  "firm_nolbert20"
+ ],
+ "attention_shock_window_days": 5,
  "params": {
   "n_factors": 1,
   "penalty": 0.3
  },
+ "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 1,
  "features_total": 41,
  "features_kept": 22,

@@ -89,68 +89,131 @@
   <div class="xnote" data-step="1">Forecasting gain we can demonstrate: <b>none</b> (best text arm weekly and biweekly, inside noise).</div>
 </section>
 
-<!-- ================================================================ 4 glass box (Shivesh) -->
-<section class="slide" data-sec="4" data-num="4.1" data-name="A forecast you can read" data-steps="1" data-auto="600">
+<!-- ================================================================ 4 how it works (Shivesh) -->
+<section class="slide" data-sec="4" data-num="4.1" data-name="End to end" data-steps="2" data-auto="600 2900">
   <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">4.1</span><span class="chip on">Glass box</span><span class="who">Shivesh · 2 min</span></div>
+  <div class="tags"><span class="chip">4.1</span><span class="chip on">How it works</span><span class="who">Shivesh · 1.5 min</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">Glass box:</span> <span class="claim">a forecast you can read.</span></div>
-  <div class="ex short" data-chart="shapes"></div>
-  <div class="xnote high">EBM (Lou et al. 2013; Nori et al. 2019), as used for bond returns by Bell, Kakhbod, Lettau and Nazemi</div>
-  <div class="xnote">Weekly LDA model, 12 of 129 main effects. Validation stopped boosting after 3 rounds: the steps are small.</div>
+  <div class="title"><span class="hook">End to end:</span> <span class="claim">news in, a portfolio out.</span></div>
+  <div class="ex short" data-chart="flow"></div>
+  <div class="xnote high" data-step="2"><b>Built to keep the future out:</b> fitted on 2013–19, tuned and chosen on 2020–21, reported on 2022–24.</div>
+  <div class="xnote" data-step="2">We removed most of the look-ahead bias we could find, and kept a genuine validation and test split.</div>
 </section>
 
-<section class="slide" data-sec="4" data-num="4.2" data-name="Delete a block" data-steps="4" data-auto="700 2100 3500 4900">
+<section class="slide" data-sec="4" data-num="4.2" data-name="Four topic readers" data-steps="2" data-auto="600 2600">
   <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">4.2</span><span class="chip on">Glass box</span><span class="who">Shivesh · 2 min</span></div>
+  <div class="tags"><span class="chip">4.2</span><span class="chip on">How it works</span><span class="chip">Topics</span><span class="who">Shivesh · 2 min</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">Importance</span> <span class="claim">is not usefulness.</span></div>
-  <div class="ex" data-chart="blocks"></div>
-  <div class="xnote">Every change is at most 0.012 in IC: inside noise and untested. On R² and Sharpe the order differs.</div>
+  <div class="title"><span class="hook">Four readers:</span> <span class="claim">from word counts to meaning.</span></div>
+  <div class="ex short" data-chart="readers"></div>
+  <div class="xnote high">All four read the same 529,657 articles (up to 150 a day); LDA and the clusters are fitted on 140,209 articles to 2019.</div>
+  <div class="xnote">Also run: LDA on every article (1,255,289) and 20 NoLBERT clusters: six topic models in all.</div>
 </section>
 
-<section class="slide" data-sec="4" data-num="4.3" data-name="Forecast to portfolio" data-steps="2" data-auto="700 2400">
+<section class="slide" data-sec="4" data-num="4.3" data-name="Attention and shocks" data-steps="3" data-auto="600 2600 4400">
   <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">4.3</span><span class="chip on">Long/short</span><span class="who">Shivesh · 2 min</span></div>
+  <div class="tags"><span class="chip">4.3</span><span class="chip on">How it works</span><span class="chip">Attention</span><span class="who">Shivesh · 1.5 min</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">Long the top tenth,</span> <span class="claim">short the bottom.</span></div>
-  <div class="ex short" data-chart="portfolio"></div>
-  <div class="xnote high">Weekly LDA EBM, its first 16 test weeks: real forecast ranks, stocks unnamed.</div>
-  <div class="xnote">Buffer: enter in the top or bottom tenth; stay until leaving the top or bottom fifth.</div>
+  <div class="title"><span class="hook">Attention and its shock:</span> <span class="claim">what is new today.</span></div>
+  <div class="ex short" data-chart="shock"></div>
+  <div class="xnote high" data-step="3">Window chosen on validation (2020–21): 1 day for weekly and 63 days for monthly rebalancing; biweekly keeps 5.</div>
+  <div class="xnote">Weekend news counts on Monday; a day with fewer than 20 articles has no reading.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.4" data-name="Stock features" data-steps="2" data-auto="600 2800">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">4.4</span><span class="chip on">How it works</span><span class="chip">Features</span><span class="who">Shivesh · 1.5 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Stock by stock:</span> <span class="claim">exposure, own news, past prices.</span></div>
+  <div class="ex short" data-chart="features"></div>
+  <div class="xnote high" data-step="2">Universe: the 1,000 largest stocks by market value at the end of each June.</div>
+  <div class="xnote" data-step="2">A stock without news coverage gets another stock’s features at random, so a missing value reveals nothing.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.5" data-name="Forecasters" data-steps="2" data-auto="600 2700">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">4.5</span><span class="chip on">How it works</span><span class="chip">Forecasters</span><span class="who">Shivesh · 1.5 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Forecasters:</span> <span class="claim">lines, boosted trees, forests.</span></div>
+  <div class="ex short" data-chart="models"></div>
+  <div class="xnote high"><b>Tuning:</b> fit on 2013–19; score each setting on 2020–21; keep the simplest within 10<sup>−5</sup> of the best; refit on 2013–21.</div>
+  <div class="xnote">Fifteen models in all: eight base models, six of them also on ranked returns, and the ensemble.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.6" data-name="The EBM" data-steps="3" data-auto="600 2000 4600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">4.6</span><span class="chip on">How it works</span><span class="chip">EBM</span><span class="who">Shivesh · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">The EBM:</span> <span class="claim">a forecast you can read, term by term.</span></div>
+  <div class="ex short" data-chart="ebm"></div>
+  <div class="xnote high">The glass-box model of Bell, Kakhbod, Lettau and Nazemi: an EBM (Lou et al. 2013), fitted with InterpretML.</div>
+  <div class="xnote">Curves from the biweekly EBM on price and FinBERT text, 54 boosting rounds kept; the EBM keeps its validated fit.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.7" data-name="Portfolios" data-steps="3" data-auto="600 2200 3800">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">4.7</span><span class="chip on">How it works</span><span class="chip">Portfolios</span><span class="who">Shivesh · 1.5 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">From forecast to portfolio:</span> <span class="claim">three ways to trade it.</span></div>
+  <div class="ex short" data-chart="rules"></div>
+  <div class="xnote high"><b>Costs:</b> 10 bp per dollar traded, c<sub>t</sub> = 10 bp × Σ<sub>i</sub> |w<sub>i,t</sub> − w̃<sub>i,t</sub>| (w̃: last weights after returns); net = gross − cost.</div>
+  <div class="xnote">Also run: long-short with value weights, rank-weighted, mean-variance, long-only top decile (equal and value weights).</div>
 </section>
 
 <!-- ================================================================ 5 results (Charishma) -->
-<section class="slide" data-sec="5" data-num="5.1" data-name="Three checks" data-steps="3" data-auto="600 2000 3400">
+<section class="slide" data-sec="5" data-num="5.1" data-name="Frequency" data-steps="3" data-auto="600 2400 4200">
   <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">5.1</span><span class="chip on">Results</span><span class="who">Charishma · 2 min</span></div>
+  <div class="tags"><span class="chip">5.1</span><span class="chip on">Results</span><span class="chip">Frequency</span><span class="who">Charishma · 1.5 min</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">Three checks:</span> <span class="claim">none clears its bar.</span></div>
-  <div class="ex" data-chart="ladder"></div>
+  <div class="title"><span class="hook">Frequency:</span> <span class="claim">more signal weekly, and more cost.</span></div>
+  <div class="ex short" data-chart="freq"></div>
+  <div class="xnote high">Medians over the 192 to 195 experiments of the main run that trade; test period; 10 bp per dollar traded.</div>
+  <div class="xnote" data-step="3">The buffer cuts the weekly cost from 8.2% to 5.1% a year and is kept as the default rule.</div>
 </section>
 
-<section class="slide" data-sec="5" data-num="5.2" data-name="Validation vs test" data-steps="2" data-auto="700 3300">
+<section class="slide" data-sec="5" data-num="5.2" data-name="Topic models" data-steps="2" data-auto="600 2800">
   <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">5.2</span><span class="chip on">Results</span><span class="who">Charishma · 2 min</span></div>
+  <div class="tags"><span class="chip">5.2</span><span class="chip on">Results</span><span class="chip">Topic models</span><span class="who">Charishma · 2 min</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">Validation's favorites</span> <span class="claim">score about zero in test.</span></div>
-  <div class="ex short" data-chart="vdrop"></div>
-  <div class="xnote high" data-step="2">Adding 552 more experiments: 15 of 24 below; monthly value-weighted 3.08 vs 1.71, p = 0.004, ≈0.1 after Bonferroni.</div>
-  <div class="xnote" data-step="2">Nothing passes a 10% false-discovery threshold. A true Sharpe of about 2.4 would be detected 4 times in 5.</div>
+  <div class="title"><span class="hook">Topic models:</span> <span class="claim">NoLBERT leads; tuned shocks help.</span></div>
+  <div class="ex short" data-chart="tm"></div>
+  <div class="xnote high">A NoLBERT model has the highest text-only test IC at every frequency; FinBERT’s classes the lowest.</div>
+  <div class="xnote" data-step="2">Shock windows chosen on validation: 63 days monthly, 1 day weekly; the biweekly window stays at 5 days.</div>
 </section>
 
-<section class="slide" data-sec="5" data-num="5.3" data-name="What held up" data-steps="2" data-auto="600 2600">
+<section class="slide" data-sec="5" data-num="5.3" data-name="Forecasters" data-steps="2" data-auto="600 2600">
   <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">5.3</span><span class="chip on">Results</span><span class="who">Charishma · 2 min</span></div>
+  <div class="tags"><span class="chip">5.3</span><span class="chip on">Results</span><span class="chip">Forecasters</span><span class="who">Charishma · 1.5 min</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">What held up:</span> <span class="claim">trading less.</span></div>
-  <div class="ex short" data-chart="heldup"></div>
-  <div class="list" data-step="1">“It saves costs; it does not create a signal.” Adopted on validation before the test was seen.</div>
-  <div class="list l2" data-step="2"><b>Shock windows:</b> consistent, not significant. Two validation picks reach net Sharpe 0.6–0.7:<br>weekly: news adds no IC over price, all gains in 2022–23; monthly: pool set after test results were seen.<br><b>Tone:</b> no signal. <b>Tilt:</b> the index's own Sharpe.</div>
+  <div class="title"><span class="hook">Forecasters:</span> <span class="claim">boosted trees on ranked returns lead.</span></div>
+  <div class="ex short" data-chart="forecasters"></div>
+  <div class="xnote high">Average over the 26 feature sets of the main run; the lasso over the sets where its forecast is not flat.</div>
+  <div class="xnote" data-step="2">The EBM has the best validation IC at every frequency; in the test it ranks 6th, 10th and 8th of these ten.</div>
 </section>
 
-<section class="slide" data-sec="5" data-num="5.4" data-name="The next paper" data-steps="0">
+<section class="slide" data-sec="5" data-num="5.4" data-name="Strategies" data-steps="2" data-auto="600 2600">
   <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">5.4</span><span class="chip on">Next</span><span class="who">Charishma · 2 min</span></div>
+  <div class="tags"><span class="chip">5.4</span><span class="chip on">Results</span><span class="chip">Strategies</span><span class="who">Charishma · 1.5 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Strategies:</span> <span class="claim">the buffer is the best long-short rule.</span></div>
+  <div class="ex short" data-chart="strategies"></div>
+  <div class="xnote high">Medians of the same 192 to 195 experiments under every rule, test period, net of costs.</div>
+  <div class="xnote" data-step="2">Long-only rules and the tilt earn about the index’s own Sharpe ratio; the tilt trades least (13% a week).</div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.5" data-name="Best performers" data-steps="2" data-auto="600 2600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">5.5</span><span class="chip on">Results</span><span class="chip">Best</span><span class="who">Charishma · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Best performers:</span> <span class="claim">what validation picks, step by step.</span></div>
+  <div class="ex short" data-chart="best"></div>
+  <div class="xnote high">Each cell: the experiment with the highest validation IC in its pool, then its test numbers net of costs.</div>
+  <div class="xnote">† pool set up after the first test results of the tuned windows. Weekly EBM on price alone: IC 0.030, net −0.15.</div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.6" data-name="Next steps" data-steps="0">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">5.6</span><span class="chip on">Next</span><span class="who">Charishma · 1 min</span></div>
   <div class="hair"></div>
   <div class="title"><span class="hook">The next paper</span></div>
   <ol class="next">
@@ -192,12 +255,41 @@
   </ol>
 </section>
 
+<section class="slide" data-sec="B" data-num="B3" data-name="Forecast to portfolio" data-steps="2" data-auto="700 2400">
+  <div class="edge">MFE 230ZB · backup</div>
+  <div class="tags"><span class="chip">B3</span><span class="chip on">Portfolios</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Long the top tenth,</span> <span class="claim">short the bottom.</span></div>
+  <div class="ex short" data-chart="portfolio"></div>
+  <div class="xnote high">Weekly LDA EBM, its first 16 test weeks: real forecast ranks, stocks unnamed.</div>
+  <div class="xnote">Buffer: enter in the top or bottom tenth; stay until leaving the top or bottom fifth.</div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B4" data-name="Three checks" data-steps="3" data-auto="600 2000 3400">
+  <div class="edge">MFE 230ZB · backup</div>
+  <div class="tags"><span class="chip">B4</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Three checks:</span> <span class="claim">none clears its bar.</span></div>
+  <div class="ex" data-chart="ladder"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B5" data-name="Validation vs test" data-steps="2" data-auto="700 3300">
+  <div class="edge">MFE 230ZB · backup</div>
+  <div class="tags"><span class="chip">B5</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Validation's favorites</span> <span class="claim">score about zero in test.</span></div>
+  <div class="ex short" data-chart="vdrop"></div>
+  <div class="xnote high" data-step="2">Adding 552 more experiments: 15 of 24 below; monthly value-weighted 3.08 vs 1.71, p = 0.004, ≈0.1 after Bonferroni.</div>
+  <div class="xnote" data-step="2">Nothing passes a 10% false-discovery threshold. A true Sharpe of about 2.4 would be detected 4 times in 5.</div>
+</section>
+
 </div>
 <script src="js/data.js"></script>
 <script src="js/portfolio.js"></script>
 <script src="js/panel.js"></script>
 <script src="js/charts-a.js"></script>
 <script src="js/charts-b.js"></script>
+<script src="js/charts-c.js"></script>
 <script src="js/deck.js"></script>
 </body>
 </html>

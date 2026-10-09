@@ -2,10 +2,16 @@
  "freq": "M",
  "features": "text_minilm",
  "model": "sipca",
+ "blocks": [
+  "narr_minilm",
+  "firm_minilm"
+ ],
+ "attention_shock_window_days": 5,
  "params": {
   "n_factors": 1,
   "penalty": 0.3
  },
+ "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 1,
  "features_total": 121,
  "features_kept": 68,

@@ -2,10 +2,15 @@
  "freq": "M",
  "features": "narr_finbert",
  "model": "sipca",
+ "blocks": [
+  "narr_finbert"
+ ],
+ "attention_shock_window_days": 5,
  "params": {
   "n_factors": 3,
   "penalty": 0.1
  },
+ "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 3,
  "features_total": 20,
  "features_kept": 20,

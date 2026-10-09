@@ -18,9 +18,11 @@ test forecasts, then writes results/ipca/<freq>/<features>__<model>/:
                   each period's cross-sectional regression of returns on Z_t Gamma with Gamma
                   fixed, the same formula as in the fit (a portfolio whose weights are known at
                   formation)
-    summary.json  setting, periods, lambda (mean factor of the fit sample), the implied
-                  coefficient of every feature (Gamma lambda, the forecast's slope),
-                  normalisation and estimation schedule
+    summary.json  feature blocks and attention-shock window, setting, periods, lambda (mean
+                  factor of the fit sample), the implied coefficient of every feature
+                  (Gamma lambda, the forecast's slope), normalisation and estimation schedule
+
+results/ipca/README.md explains the names of the folders.
 
 Normalisation (both models): Gamma'Gamma = I; the factors orthogonal over the fit sample (the
 sum of f_t f_t' is diagonal) and ordered by decreasing second moment, each with a positive
@@ -35,6 +37,7 @@ the stocks of the period, in decimals per holding period. Nothing written is sto
 from pathlib import Path
 import argparse
 import json
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -118,8 +121,15 @@ def export(freq: str, features: str, model_name: str, out: Path) -> str:
         return f"skipped: the normalisation moved Gamma lambda by {drift:.1e} (relative)"
     span = lambda rows: [str(index.loc[rows, "hold_start"].min().date()),
                          str(index.loc[rows, "hold_start"].max().date())]
+    narr = [b for b in meta["blocks"] if b.startswith("narr_")]
+    window = [int(m.group(1)) if (m := re.search(r"_s(\d+)$", b)) else config.SHOCK_WINDOW
+              for b in narr]
     summary = {
-        "freq": freq, "features": features, "model": model_name, "params": meta["params"],
+        "freq": freq, "features": features, "model": model_name, "blocks": meta["blocks"],
+        "attention_shock_window_days": window[0] if window else None,
+        "params": meta["params"],
+        "params_note": "factors and penalty chosen for this feature set on the validation "
+                       "period from the grid of the model (see results/tuning/)",
         "factors": k, "features_total": len(names),
         "features_kept": int(loadings["kept"].sum()) if "kept" in loadings else len(names),
         "periods": {"train": int(index.loc[train, "period"].nunique()),

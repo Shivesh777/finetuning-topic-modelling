@@ -1,23 +1,29 @@
-# Section 3: NoLBERT fine-tuning (standalone)
+# Section 3 revisions (full deck)
 
-The fine-tuning section of the group deck as a self-contained app, so it can
-run and evolve without touching `presentation/`.
+The complete team deck with Kevin's revised section 3, kept as a standalone
+app so the changes are easy to review and transfer into `presentation/`.
 
     pip install flask
     python section3/app.py        ->  http://127.0.0.1:5056
 
-Four slides, one click each (R replays a slide's animations):
+Based on the deck as of the 9 October briefs (sections 1, 4 and 5 unchanged
+from `presentation/deck/`). What differs, all inside section 3:
 
-- **3.1 Find the partner** — the training replay, held-out 8% -> 89%.
-- **3.2 Supervision trick** — two chunks of one article form a labeled pair;
-  the trick the NoLBERT paper uses on patent abstracts, run on news.
-- **3.3 What it read** — the adaptation window against the train/validation/test
-  protocol (pair cutoff 31 Dec 2019).
-- **3.4 Reshape the space** — what the contrastive fine-tune does to the
-  vectors: pairs pull together, clusters emerge for spherical k-means.
+- **3.0 The pair (new)** — intro animation: two chunks of one synthetic
+  article travel through the encoder, land far apart, and the fine-tune
+  pulls them together. Chart in `js/charts-f.js`.
+- **3.1** — the "Padding included" label is removed from the pooling path.
+- **3.2** — the fine-tuning window is shown as Jan 2015 - Dec 2019
+  (band, label and FNSPID box), the eight-months caption is replaced with
+  "No validation or test-period text in the fine-tuning", and the proposed-
+  cutoff marker is dropped. The next-steps bullet no longer lists the
+  Dec 2019 refit as future work.
 
-`/reshape.html` is the interactive companion page for 3.4.
+**Before presenting this version**: the Dec 2019 fine-tune must actually be
+rerun (the current checkpoint was trained with pairs to Aug 2020), and the
+run numbers on 3.2/3.3 and backups B3/B10 (228,883 pairs, 2,048 held out,
+6,205 steps, 150 minutes, 7.96% -> 89.16%) must be regenerated from the new
+run via `presentation/tools/build_data.py`. Removed disclosures are
+documented in Kevin's write-up.
 
-Assets (`css/`, `js/`, `fonts/`, `js/data.js`) are copies from
-`presentation/deck/` at the time this folder was built; the numbers come from
-`results/encoders/nolbert_ft/train_log.json` via `presentation/tools/build_data.py`.
+`/reshape.html` is a companion page for the reshape-the-space idea.

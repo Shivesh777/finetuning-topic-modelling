@@ -3,62 +3,368 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Section 3 · News attention and returns · MFE 230ZB</title>
+<title>News attention and returns · MFE 230ZB</title>
 <link rel="stylesheet" href="css/deck.css">
 </head>
 <body>
 <div id="stage">
 
 <!-- ================================================================ title -->
+<section class="slide cover" data-sec="0" data-name="Title">
+  <div class="title">Does news attention forecast stock returns?</div>
+  <div class="who-list">Jonathan · Swapnil · Kevin · Shivesh · Charishma</div>
+  <div class="panel-dark" data-chart="beads" data-noadvance><canvas></canvas><div class="when"></div>
+    <div class="cap">20 NoLBERT topics · Sep 2020–Dec 2024<br>Columns: topics · Rows: months · Dot: news share above its prior 12-month median.</div></div>
+</section>
+
 <!-- ================================================================ 1 recap (Jonathan) -->
-<!-- ================================================================ 2 look-ahead (Swapnil) -->
+<section class="slide" data-sec="1" data-num="1.1" data-name="Project development" data-steps="2" data-auto="600 2600">
+  <div class="tags"><span class="chip">1.1</span><span class="chip on">Recap</span><span class="who">Jonathan</span></div>
+  <div class="hair"></div>
+  <div class="title">Changes across 230P, 230ZA and 230ZB</div>
+  <div class="ex" data-chart="stations"></div>
+</section>
+
+<section class="slide" data-sec="1" data-num="1.2" data-name="Previous work" data-steps="6" data-auto="500 2600 4600 6600 8800 13400">
+  <div class="tags"><span class="chip">1.2</span><span class="chip on">Recap</span><span class="who">Jonathan</span></div>
+  <div class="hair"></div>
+  <div class="title">What we built in 230P and 230ZA</div>
+  <div class="ex" data-chart="built"></div>
+</section>
+
+<section class="slide" data-sec="1" data-num="1.3" data-name="Portfolio diagnosis" data-steps="5" data-auto="500 2800 5000 7400 10000">
+  <div class="tags"><span class="chip">1.3</span><span class="chip on">Recap</span><span class="who">Jonathan</span></div>
+  <div class="hair"></div>
+  <div class="title">Earlier MVO portfolio: market exposure and stock tilts</div>
+  <div class="ex" data-chart="mvo"></div>
+</section>
+
+<!-- ================================================================ 2 NoLBERT (Swapnil) -->
+<section class="slide" data-sec="2" data-num="2.1" data-name="Temporal bias" data-steps="2" data-auto="500 3400">
+  <div class="tags"><span class="chip">2.1</span><span class="chip on">NoLBERT</span><span class="chip">Temporal bias</span><span class="who">Swapnil</span></div>
+  <div class="hair"></div>
+  <div class="title">Look-ahead and look-back bias</div>
+  <div class="ex" data-chart="bias"></div>
+  <aside class="notes">The paper’s own look-back test runs the other way round: 20 words whose 19th-century meaning differs from their 1976–1995 meaning, and NoLBERT prefers the 1976–1995 meaning (t = −4.60, backup B8).</aside>
+</section>
+
+<section class="slide" data-sec="2" data-num="2.2" data-name="Architecture" data-steps="4" data-auto="500 3600 6400 9200">
+  <div class="tags"><span class="chip">2.2</span><span class="chip on">NoLBERT</span><span class="chip">Architecture</span><span class="who">Swapnil</span></div>
+  <div class="hair"></div>
+  <div class="title">NoLBERT architecture and pretraining</div>
+  <div class="ex" data-chart="arch"></div>
+</section>
+
 <!-- ================================================================ 3 fine-tuning (Kevin) -->
-<section class="slide" data-sec="3" data-num="3.1" data-name="Find the partner" data-steps="1" data-auto="800">
-  <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">3.1</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 2 min</span></div>
+<section class="slide" data-sec="3" data-num="3.0" data-name="The pair" data-steps="3" data-auto="900 3400 6400">
+  <div class="tags"><span class="chip">3.0</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">Find the partner:</span> <span class="claim">8% to 89%.</span></div>
-  <div class="ex" data-chart="replay" data-noadvance-off></div>
+  <div class="title">Fine-tuning: reshape the space</div>
+  <div class="ex" data-chart="pairintro"></div>
 </section>
 
-<section class="slide" data-sec="3" data-num="3.2" data-name="Supervision trick" data-steps="3" data-auto="1200 3600 6800">
-  <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 1 min</span></div>
+<section class="slide" data-sec="3" data-num="3.1" data-name="Fine-tuning" data-steps="7" data-auto="500 3400 6000 8600 11400 14400 17200">
+  <div class="tags"><span class="chip">3.1</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">The supervision trick:</span> <span class="claim">two chunks of one article.</span></div>
-  <div class="ex short" data-chart="trick"></div>
-  <div class="xnote high" data-step="3">Same recipe as the paper: AdamW at 2e&minus;5 &middot; weight decay 0.01 &middot; warmup then decay &middot; clipping at 1 &middot; about one epoch.</div>
-  <div class="xnote" data-step="3">Our changes: InfoNCE in place of their classifier head &middot; mean pooling in place of [CLS] (probe: 0.343 vs 0.27).</div>
+  <div class="title">Our NoLBERT fine-tuning</div>
+  <div class="ex" data-chart="finetune"></div>
+  <aside class="notes">The class example uses human similarity scores and squared error. We use same-article pairs and symmetric InfoNCE.</aside>
 </section>
 
-<section class="slide" data-sec="3" data-num="3.3" data-name="What it read" data-steps="1" data-auto="1500">
-  <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">3.3</span><span class="chip on">NoLBERT</span><span class="chip warn">Look-ahead</span><span class="who">Kevin · 2 min</span></div>
+<section class="slide" data-sec="3" data-num="3.2" data-name="Evaluation protocols" data-steps="4" data-auto="500 3000 5600 8400">
+  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip">Evaluation protocols</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">What it read,</span> <span class="claim">and when.</span></div>
-  <div class="ex short" data-chart="saw"></div>
-  <div class="xnote high">198,560 of 228,883 pairs · 6,205 steps of 32 · a 150-minute budget, under one pass · 230P news (FNSPID, from 2015)</div>
-  <div class="xnote" data-step="1">Pair cutoff 31 Dec 2019: the training period only &mdash; validation (2020&ndash;21) and test (2022&ndash;24) unseen.</div>
+  <div class="title">Paper and project evaluation protocols</div>
+  <div class="ex" data-chart="protocols"></div>
+  <aside class="notes">The trainer reserved the first 2,048 generated pairs for evaluation. Pairs are generated in article-date order, so these are the earliest-dated articles of the corpus: not a random assignment, and not a later period.</aside>
 </section>
 
-<section class="slide" data-sec="3" data-num="3.4" data-name="Reshape the space" data-steps="2" data-auto="1400 4600">
-  <div class="edge">MFE 230ZB · news attention and returns</div>
-  <div class="tags"><span class="chip">3.4</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 2 min</span></div>
+<section class="slide" data-sec="3" data-num="3.3" data-name="Fine-tuning results" data-steps="4" data-auto="500 3600 6000 8400">
+  <div class="tags"><span class="chip">3.3</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning results</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
-  <div class="title"><span class="hook">Reshape the space:</span> <span class="claim">no head, no new parameters.</span></div>
-  <div class="ex short" data-chart="reshape"></div>
-  <div class="xnote high">The reshaped space is what the rest of the deck consumes: spherical k-means, 60 topics, softmax weights at 0.07.</div>
-  <div class="xnote" data-step="2">Run: 6,205 steps of 32 pairs &middot; 150 minutes on one RTX 3060 &middot; re-embedding all 1.26M articles: about 2.5 hours.</div>
+  <div class="title">NoLBERT fine-tuning results</div>
+  <div class="ex" data-chart="results"></div>
+  <aside class="notes">150 minutes is the run’s wall-clock budget: the console log shows step 6,200 at 106.6 minutes and the stop at 164.3 minutes after a stall. The example batch is headline against lead for 32 articles dated 1 September 2020, chosen by a fixed rule before scoring, with the run’s own padding regime; the original held-out pairs are not on this machine.</aside>
 </section>
 
 <!-- ================================================================ 4 how it works (Shivesh) -->
+<section class="slide" data-sec="4" data-num="4.1" data-name="End to end" data-steps="2" data-auto="600 2900">
+  <div class="tags"><span class="chip">4.1</span><span class="chip on">How it works</span><span class="who">Shivesh</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">End to end:</span> <span class="claim">news in, a portfolio out.</span></div>
+  <div class="ex short" data-chart="flow"></div>
+  <div class="xnote high" data-step="2"><b>Built to keep the future out:</b> fitted on 2013–19, tuned and chosen on 2020–21, reported on 2022–24.</div>
+  <div class="xnote" data-step="2">We removed most of the look-ahead bias we could find, and kept a genuine validation and test split.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.2" data-name="Four topic readers" data-steps="2" data-auto="600 2600">
+  <div class="tags"><span class="chip">4.2</span><span class="chip on">How it works</span><span class="chip">Topics</span><span class="who">Shivesh</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Four readers:</span> <span class="claim">from word counts to meaning.</span></div>
+  <div class="ex short" data-chart="readers"></div>
+  <div class="xnote high">All four read the same 529,657 articles (up to 150 a day); LDA and the clusters are fitted on 140,209 articles to 2019.</div>
+  <div class="xnote">Also run: LDA on every article (1,255,289) and 20 NoLBERT clusters: six topic models in all.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.3" data-name="Attention and shocks" data-steps="3" data-auto="600 2600 4400">
+  <div class="tags"><span class="chip">4.3</span><span class="chip on">How it works</span><span class="chip">Attention</span><span class="who">Shivesh</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Attention and its shock:</span> <span class="claim">what is new today.</span></div>
+  <div class="ex short" data-chart="shock"></div>
+  <div class="xnote high" data-step="3">Window chosen on validation (2020–21): 1 day for weekly and 63 days for monthly rebalancing; biweekly keeps 5.</div>
+  <div class="xnote">Weekend news counts on Monday; a day with fewer than 20 articles has no reading.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.4" data-name="Stock features" data-steps="2" data-auto="600 2800">
+  <div class="tags"><span class="chip">4.4</span><span class="chip on">How it works</span><span class="chip">Features</span><span class="who">Shivesh</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Stock by stock:</span> <span class="claim">exposure, own news, past prices.</span></div>
+  <div class="ex short" data-chart="features"></div>
+  <div class="xnote high" data-step="2">Universe: the 1,000 largest stocks by market value at the end of each June.</div>
+  <div class="xnote" data-step="2">A stock without news coverage gets another stock’s features at random, so a missing value reveals nothing.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.5" data-name="Forecasters" data-steps="2" data-auto="600 2700">
+  <div class="tags"><span class="chip">4.5</span><span class="chip on">How it works</span><span class="chip">Forecasters</span><span class="who">Shivesh</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Forecasters:</span> <span class="claim">lines, boosted trees, forests.</span></div>
+  <div class="ex short" data-chart="models"></div>
+  <div class="xnote high"><b>Tuning:</b> fit on 2013–19; score each setting on 2020–21; keep the simplest within 10<sup>−5</sup> of the best; refit on 2013–21.</div>
+  <div class="xnote">Fifteen models in all: eight base models, six of them also on ranked returns, and the ensemble.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.6" data-name="The EBM" data-steps="3" data-auto="600 2000 4600">
+  <div class="tags"><span class="chip">4.6</span><span class="chip on">How it works</span><span class="chip">EBM</span><span class="who">Shivesh</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">The EBM:</span> <span class="claim">a forecast you can read, term by term.</span></div>
+  <div class="ex short" data-chart="ebm"></div>
+  <div class="xnote high">The glass-box model of Bell, Kakhbod, Lettau and Nazemi: an EBM (Lou et al. 2013), fitted with InterpretML.</div>
+  <div class="xnote">Curves from the biweekly EBM on price and FinBERT text, 54 boosting rounds kept; the EBM keeps its validated fit.</div>
+</section>
+
+<section class="slide" data-sec="4" data-num="4.7" data-name="Portfolios" data-steps="3" data-auto="600 2200 3800">
+  <div class="tags"><span class="chip">4.7</span><span class="chip on">How it works</span><span class="chip">Portfolios</span><span class="who">Shivesh</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">From forecast to portfolio:</span> <span class="claim">three ways to trade it.</span></div>
+  <div class="ex short" data-chart="rules"></div>
+  <div class="xnote high"><b>Costs:</b> 10 bp per dollar traded, c<sub>t</sub> = 10 bp × Σ<sub>i</sub> |w<sub>i,t</sub> − w̃<sub>i,t</sub>| (w̃: last weights after returns); net = gross − cost.</div>
+  <div class="xnote">Also run: long-short with value weights, rank-weighted, mean-variance, long-only top decile (equal and value weights).</div>
+</section>
+
 <!-- ================================================================ 5 results (Charishma) -->
+<section class="slide" data-sec="5" data-num="5.1" data-name="Equity forecasts" data-steps="5" data-auto="500 2600 4400 6400 8400">
+  <div class="tags"><span class="chip">5.1</span><span class="chip on">Results</span><span class="who">Charishma</span></div>
+  <div class="hair"></div>
+  <div class="title">Validation and test performance</div>
+  <div class="ex" data-chart="vtest"></div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.2" data-name="Weekly forecasts" data-steps="4" data-auto="500 3400 5400 7200">
+  <div class="tags"><span class="chip">5.2</span><span class="chip on">Results</span><span class="who">Charishma</span></div>
+  <div class="hair"></div>
+  <div class="title">Weekly forecasts versus the historical mean</div>
+  <div class="ex" data-chart="weekly"></div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.3" data-name="Cross-asset results" data-steps="4" data-auto="500 3200 6000 9400">
+  <div class="tags"><span class="chip">5.3</span><span class="chip on">Results</span><span class="who">Charishma</span></div>
+  <div class="hair"></div>
+  <div class="title">Cross-asset explanatory results</div>
+  <div class="ex" data-chart="xasset"></div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.4" data-name="Text-model comparison" data-steps="4" data-auto="500 2400 4200 6000">
+  <div class="tags"><span class="chip">5.4</span><span class="chip on">Results</span><span class="who">Charishma</span></div>
+  <div class="hair"></div>
+  <div class="title">Crude-oil results across text models</div>
+  <div class="ex" data-chart="textmodels"></div>
+</section>
+
 <!-- ================================================================ closing -->
+<section class="slide cover" data-sec="0" data-name="Conclusions">
+  <div class="title">No significant forecast improvement over price-only models</div>
+  <div class="who-list">Crude-oil explanation varies across text models.<br>Small effects remain unresolved.</div>
+  <div class="meta">Approximately 80% power for a single strategy with true annual Sharpe ≈ 2.4.<br>github.com/Shivesh777/finetuning-topic-modelling</div>
+  <div class="panel-dark" data-chart="beads" data-noadvance><canvas></canvas><div class="when"></div>
+    <div class="cap">20 NoLBERT topics · Monthly, Sep 2020–Dec 2024</div></div>
+</section>
+
 <!-- ================================================================ backup -->
+<section class="slide" data-sec="B" data-num="B1" data-name="Table A3" data-steps="0">
+  <div class="tags"><span class="chip">B1</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title">NoLBERT Table A3</div>
+  <div class="ex" data-chart="presidents"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B2" data-name="Additional tests" data-steps="0">
+  <div class="tags"><span class="chip">B2</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title">Additional forecasting and portfolio tests</div>
+  <table class="tbl">
+    <tr><td>Sentiment</td><td>Mean test IC: 0.002 monthly; 0.000 biweekly; −0.002 weekly. Fixed protocol, net Sharpe: −0.01, −0.20, −0.62.</td></tr>
+    <tr><td>Embedding regression</td><td>Biweekly/weekly IC: 0.007/0.005; neither significant. Monthly IC is significantly negative. Turnover: 155–169% per period.</td></tr>
+    <tr><td>Weekly combined price/news model</td><td>Test IC: 0.025 versus 0.030 for price alone. Buffered net Sharpe: 0.65; 95% interval includes zero. Gains concentrated in 2022–2023.</td></tr>
+    <tr><td>Monthly tuned-shock model</td><td>Net Sharpe: 0.68. IC not significant. Candidate pool defined after inspecting test results.</td></tr>
+    <tr><td>Cap-weighted tilt</td><td>Net Sharpe: 0.46–0.60 versus 0.47–0.61 for the benchmark. Median net information ratio is negative.</td></tr>
+    <tr><td>Expanded search, 552 more experiments</td><td>Best result below the no-skill benchmark in 15 of 24 rule × frequency combinations. Monthly value-weighted long–short: best 3.08 versus 1.71 expected, p = 0.004, ≈ 0.1 after Bonferroni. No portfolio passes the 10% false-discovery-rate threshold.</td></tr>
+  </table>
+</section>
+
+<section class="slide" data-sec="B" data-num="B3" data-name="Methods" data-steps="0">
+  <div class="tags"><span class="chip">B3</span><span class="chip on">Methods</span></div>
+  <div class="hair"></div>
+  <div class="title">Methods</div>
+  <table class="tbl small">
+    <tr><td>NoLBERT</td><td>DeBERTa v3 base · 109M parameters · masked language modeling, 15 epochs · 30,000-token tokenizer · pretraining text 1976–1995, validation 1996.</td></tr>
+    <tr><td>Fine-tuning</td><td>InfoNCE, temperature 0.05: two random chunks of one article form a pair; the other 31 chunks of the batch are negatives. 198,560 of 228,883 pairs seen · 6,205 steps of 32 · 150-minute budget, less than one epoch · last-layer mean pooling, max length 128.</td></tr>
+    <tr><td>Historical usage tests</td><td>H0: equal mean log-probability of the sentence in both eras; one-sided paired t over 20 words.</td></tr>
+    <tr><td>Topic stability</td><td>Share of articles keeping their topic across two seeds: NoLBERT 69%, MiniLM 67%, LDA 58%. Largest topic share: 4.0%, 4.3%, 12.7%. NoLBERT is not the most coherent split.</td></tr>
+    <tr><td>Turnover and costs</td><td>Turnover: half the sum of absolute weight changes per period. Costs: 10 bp per unit traded.</td></tr>
+    <tr><td>Multiple testing</td><td>Metric: net Sharpe ratio; long-only rules use benchmark-relative returns (information ratio). Benchmark: the expected maximum over 375 portfolios with no skill that move together as ours do.</td></tr>
+    <tr><td>Pairwise terms</td><td>Net Sharpe without the pairwise terms: monthly +0.34 → +0.01, biweekly −0.33 → −0.62, weekly −0.66 → −0.24.</td></tr>
+    <tr><td>FinBERT</td><td>Sentiment model: trained on text to 2010. Topic classifier: a different model, published Dec 2022 (tweets released Sep 2022).</td></tr>
+  </table>
+</section>
+
+<section class="slide" data-sec="B" data-num="B4" data-name="Further work" data-steps="0">
+  <div class="tags"><span class="chip">B4</span><span class="chip on">Next</span></div>
+  <div class="hair"></div>
+  <div class="title">Further work</div>
+  <ol class="next">
+    <li>Complete return file: the Feb–Jun months from 2017 return to the sample; the test sample grows by 70% to 95%.</li>
+    <li>Point-in-time news source: firm-level results are limited by news coverage.</li>
+    <li>Time-stamped news with daily returns, in smaller stocks.</li>
+    <li>NoLBERT comparison: adapt MiniLM with the same recipe; results year by year.</li>
+    <li>Five-factor alpha for every portfolio.</li>
+    <li>Tuned shock windows on months not yet used (2025, or the Feb–Jun months).</li>
+  </ol>
+</section>
+
+<section class="slide" data-sec="B" data-num="B5" data-name="Shape functions" data-steps="3" data-auto="600 2600 5400">
+  <div class="tags"><span class="chip">B5</span><span class="chip on">Glass box</span></div>
+  <div class="hair"></div>
+  <div class="title">EBM shape functions</div>
+  <div class="ex short" data-chart="shapes"></div>
+  <div class="xnote high">Lou et al. (2013); Nori et al. (2019); Bell et al.</div>
+  <div class="xnote">Weekly LDA EBM · 12 of 129 main effects · 3 boosting rounds</div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B6" data-name="Block ablation" data-steps="4" data-auto="700 2100 3500 4900">
+  <div class="tags"><span class="chip">B6</span><span class="chip on">Glass box</span></div>
+  <div class="hair"></div>
+  <div class="title">Feature importance and block ablation</div>
+  <div class="ex" data-chart="blocks"></div>
+  <div class="xnote">Largest absolute change in IC ≈ 0.012; significance not tested.</div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B7" data-name="Portfolio construction" data-steps="2" data-auto="700 2400">
+  <div class="tags"><span class="chip">B7</span><span class="chip on">Glass box</span><span class="chip">Long/short</span></div>
+  <div class="hair"></div>
+  <div class="title">Decile long–short portfolio</div>
+  <div class="ex short" data-chart="portfolio"></div>
+  <div class="xnote high">Weekly LDA EBM · First 16 test weeks · Anonymized stocks</div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B8" data-name="Historical usage tests" data-steps="1" data-auto="600">
+  <div class="tags"><span class="chip">B8</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title">NoLBERT historical usage tests</div>
+  <div class="ex" data-chart="table2"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B9" data-name="Topic stability" data-steps="1" data-auto="600">
+  <div class="tags"><span class="chip">B9</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title">Topic stability across random seeds</div>
+  <div class="ex short" data-chart="stability"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B10" data-name="Training settings" data-steps="0">
+  <div class="tags"><span class="chip">B10</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title">NoLBERT training settings</div>
+  <table class="tbl small">
+    <tr><td>Trainable parameters</td><td>All encoder parameters</td></tr>
+    <tr><td>Optimizer</td><td>AdamW</td></tr>
+    <tr><td>Learning rate</td><td>2×10⁻⁵</td></tr>
+    <tr><td>Weight decay</td><td>0.01</td></tr>
+    <tr><td>Batch size</td><td>32 pairs</td></tr>
+    <tr><td>Input limit</td><td>128 tokens</td></tr>
+    <tr><td>Temperature</td><td>0.05</td></tr>
+    <tr><td>Precision</td><td>bf16</td></tr>
+    <tr><td>Gradient clipping</td><td>1</td></tr>
+    <tr><td>Gradient checkpointing</td><td>Enabled</td></tr>
+    <tr><td>Optimizer steps</td><td>6,205</td></tr>
+    <tr><td>Training time</td><td>150 minutes</td></tr>
+    <tr><td>Pair presentations</td><td>198,560</td></tr>
+    <tr><td>Available training pairs</td><td>228,883</td></tr>
+    <tr><td>Held-out pairs</td><td>2,048</td></tr>
+  </table>
+</section>
+
+<section class="slide" data-sec="B" data-num="B11" data-name="Pooling comparison" data-steps="0">
+  <div class="tags"><span class="chip">B11</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title">Pooling comparison</div>
+  <div class="ex" data-chart="pooling"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B12" data-name="Pretraining period" data-steps="3" data-auto="400 1600 2800">
+  <div class="tags"><span class="chip">B12</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title">NoLBERT pretraining, 1976–1995</div>
+  <div class="ex" data-chart="sealed"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B13" data-name="Limitations" data-steps="4" data-auto="600 2000 3400 4800">
+  <div class="tags"><span class="chip">B13</span><span class="chip on">Recap</span></div>
+  <div class="hair"></div>
+  <div class="title">Progress on six 230ZA limitations</div>
+  <div class="ex" data-chart="delta"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B14" data-name="Evaluation checks" data-steps="3" data-auto="600 2900 4800">
+  <div class="tags"><span class="chip">B14</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title">Out-of-sample evaluation</div>
+  <div class="ex" data-chart="ladder"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B15" data-name="Validation vs test, detail" data-steps="2" data-auto="700 4300">
+  <div class="tags"><span class="chip">B15</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title">Validation and test performance, in detail</div>
+  <div class="ex short" data-chart="vdrop"></div>
+  <div class="xnote" data-step="2">No portfolio passes the 10% false-discovery-rate threshold.</div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B16" data-name="Portfolio buffering" data-steps="1" data-auto="600">
+  <div class="tags"><span class="chip">B16</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title">Portfolio buffering and net returns</div>
+  <div class="ex short" data-chart="heldup"></div>
+  <div class="list" data-step="1">Buffer rule selected on validation.</div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B17" data-name="Proposed evaluation" data-steps="3" data-auto="700 3200 5000">
+  <div class="tags"><span class="chip">B17</span><span class="chip on">Next</span></div>
+  <div class="hair"></div>
+  <div class="title">LLM evaluation after the training cutoff</div>
+  <div class="ex" data-chart="next"></div>
+</section>
+
 </div>
 <script src="js/data.js"></script>
+<script src="js/portfolio.js"></script>
+<script src="js/similarity.js"></script>
 <script src="js/panel.js"></script>
 <script src="js/charts-a.js"></script>
+<script src="js/charts-b.js"></script>
+<script src="js/charts-c.js"></script>
+<script src="js/charts-d.js"></script>
+<script src="js/charts-e.js"></script>
+<script src="js/charts-f.js"></script>
 <script src="js/deck.js"></script>
 </body>
 </html>

@@ -7,11 +7,13 @@
           R: replay this slide's animations    G then a number then Enter: jump to that slide
           I: index of slides (click one)    Home / End    F: full screen    T: timer    B or . : black screen
           N: this slide's speaker notes (an <aside class="notes"> in the slide); ?still=1&notes=1 prints them under each slide
-   A click anywhere goes forward, except on anything marked data-noadvance.
+   A click anywhere goes forward, except on anything marked data-noadvance. A slide marked data-manual plays no
+   timers: each click advances one of its steps, then the next click leaves it.
    #5 in the address opens slide 5 and plays it; #5.2 opens it at step 2 and holds there.
    ?still=1 shows every slide at its last step, one under another: the pre-read, printable to PDF.
-   ?still=1&only=12 shows slide 12 alone; ?still=1&qa=1 also runs js/qa.js, a layout check
-   (overlapping text, text past the margins); ?selftest=1 clicks through every step (js/selftest.js). */
+   ?still=1&only=12 shows slide 12 alone (&at=3: held at step 3); ?still=1&qa=1 also runs js/qa.js, a layout check (overlapping text,
+   text over chart shapes, text past the margins); ?qa=1#12.3 checks the live slide 12 held at step 3;
+   ?selftest=1 clicks through every step (js/selftest.js). */
 (function () {
   'use strict';
   var W = 1920, H = 1080;
@@ -95,13 +97,18 @@
   function stopAuto() { timers.forEach(clearTimeout); timers = []; }
   function autoplay(i) {
     var sl = slides[i], at = (sl.dataset.auto || '').split(/\s+/).filter(Boolean).map(Number);
+    if (sl.dataset.manual != null) return;                       // a data-manual slide: each click plays one step (Kevin's 3.0)
     for (var k = 1; k <= maxStep(sl); k++) (function (k) {
       timers.push(setTimeout(function () { if (cur === i && step === k - 1) go(i, k, true); },
         at[k - 1] != null ? at[k - 1] : (600 + (k - 1) * 1600) * window.DECKUTIL.pace(sl)));
     })(k);
   }
   function enter(i) { go(i, 0); autoplay(cur); }
-  function next() { if (cur < slides.length - 1) enter(cur + 1); }
+  // a slide marked data-manual plays no timers: each click advances one step, then the next click leaves
+  function next() {
+    if (cur >= 0 && slides[cur].dataset.manual != null && step < maxStep(slides[cur])) { go(cur, step + 1, true); return; }
+    if (cur < slides.length - 1) enter(cur + 1);
+  }
   function prev() { if (cur > 0) go(cur - 1, maxStep(slides[cur - 1])); }
 
   // ------------------------------------------------------------------ keys
@@ -131,14 +138,15 @@
   // ------------------------------------------------------------------ start
   if (STILL) {
     // every slide at its last step; charts draw their final frame. ?still=1&only=12 shows slide 12 alone
-    var only = /[?&]only=(\d+)/.exec(location.search), notes = /[?&]notes=1/.test(location.search);
+    var only = /[?&]only=(\d+)/.exec(location.search), notes = /[?&]notes=1/.test(location.search), at = /[?&]at=(\d+)/.exec(location.search);
     slides.forEach(function (sl, i) {
       if (only && i + 1 !== +only[1]) { sl.style.display = 'none'; return; }
       var nt = sl.querySelector('.notes');
       if (notes && nt) { nt.classList.add('notes-out'); stage.insertBefore(nt, sl.nextSibling); }   // speaker notes under the slide
       sl.classList.add('on');
-      $$('[data-step]', sl).forEach(function (e) { e.classList.add('shown'); });
-      charts(sl, 'still', maxStep(sl));
+      var k = at ? Math.min(maxStep(sl), +at[1]) : maxStep(sl);          // ?still=1&only=12&at=3: slide 12 held at step 3 (for the layout check)
+      $$('[data-step]', sl).forEach(function (e) { e.classList.toggle('shown', +e.dataset.step <= k); });
+      charts(sl, 'still', k);
     });
     window.DECK = {still: true};
     if (/[?&]qa=1/.test(location.search)) { var q = document.createElement('script'); q.src = 'js/qa.js'; document.body.appendChild(q); }
@@ -159,6 +167,7 @@
   }
   window.addEventListener('hashchange', fromHash);
   fromHash();
+  if (/[?&]qa=1/.test(location.search)) { stopAuto(); var q2 = document.createElement('script'); q2.src = 'js/qa.js'; document.body.appendChild(q2); }   // ?qa=1#12.3: check slide 12 held at step 3
   window.DECK = {go: go, next: next, prev: prev, replay: function () { enter(cur); },
     steps: function (i) { return maxStep(slides[i]); }, state: function () { return {slide: cur + 1, step: step}; }};
   if (/[?&]selftest=1/.test(location.search)) { var t = document.createElement('script'); t.src = 'js/selftest.js'; document.body.appendChild(t); }

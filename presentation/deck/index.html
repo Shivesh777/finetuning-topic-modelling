@@ -56,6 +56,13 @@
 </section>
 
 <!-- ================================================================ 3 fine-tuning (Kevin) -->
+<section class="slide" data-sec="3" data-num="3.0" data-name="The pair" data-steps="2" data-manual>
+  <div class="tags"><span class="chip">3.0</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
+  <div class="hair"></div>
+  <div class="title">Fine-tuning: reshape the space</div>
+  <div class="ex" data-chart="pairintro"></div>
+</section>
+
 <section class="slide" data-sec="3" data-num="3.1" data-name="Fine-tuning" data-steps="7" data-auto="250 1700 3000 4300 5700 7200 8600">
   <div class="tags"><span class="chip">3.1</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
@@ -64,16 +71,8 @@
   <aside class="notes">The class example uses human similarity scores and squared error. We use same-article pairs and symmetric InfoNCE. Pooling in the run: every input was padded to 128 positions with pad id 1, but the attention mask was built as token id ≠ 0, so the padding positions were attended and averaged, in training and in the 7.96% → 89.16% evaluation alike. The downstream embedding step (SentenceTransformers, 64 tokens) masks padding properly.</aside>
 </section>
 
-<section class="slide" data-sec="3" data-num="3.2" data-name="Evaluation protocols" data-steps="4" data-auto="250 1500 2800 4200">
-  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip">Evaluation protocols</span><span class="who">Kevin</span></div>
-  <div class="hair"></div>
-  <div class="title">Paper and project evaluation protocols</div>
-  <div class="ex" data-chart="protocols"></div>
-  <aside class="notes">The trainer reserved the first 2,048 generated pairs for evaluation. Pairs are generated in article-date order, so these are the earliest-dated articles of the corpus: not a random assignment, and not a later period.</aside>
-</section>
-
-<section class="slide" data-sec="3" data-num="3.3" data-name="Fine-tuning results" data-steps="4" data-auto="250 1800 3000 4200">
-  <div class="tags"><span class="chip">3.3</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning results</span><span class="who">Kevin</span></div>
+<section class="slide" data-sec="3" data-num="3.2" data-name="Fine-tuning results" data-steps="4" data-auto="250 1800 3000 4200">
+  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning results</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
   <div class="title">NoLBERT fine-tuning results</div>
   <div class="ex" data-chart="results"></div>
@@ -393,6 +392,14 @@
   <div class="ex" data-chart="next"></div>
 </section>
 
+<section class="slide" data-sec="B" data-num="B18" data-name="Evaluation protocols" data-steps="4" data-auto="250 1500 2800 4200">
+  <div class="tags"><span class="chip">B18</span><span class="chip on">NoLBERT</span></div>
+  <div class="hair"></div>
+  <div class="title">Paper and project evaluation protocols</div>
+  <div class="ex" data-chart="protocols"></div>
+  <aside class="notes">The trainer reserved the first 2,048 generated pairs for evaluation. Pairs are generated in article-date order, so these are the earliest-dated articles of the corpus: not a random assignment, and not a later period.</aside>
+</section>
+
 </div>
 <script src="js/data.js"></script>
 <script src="js/portfolio.js"></script>
@@ -403,6 +410,7 @@
 <script src="js/charts-c.js"></script>
 <script src="js/charts-d.js"></script>
 <script src="js/charts-e.js"></script>
+<script src="js/charts-f.js"></script>
 <script src="js/deck.js"></script>
 </body>
 </html>

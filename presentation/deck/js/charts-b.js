@@ -40,7 +40,7 @@
       tx(s, x0, y0 + 31, nm[1].length > 30 ? nm[1].slice(0, 28).replace(/,?\s*$/, '') + '…' : nm[1], {'font-size': 15, class: 't-quiet'});
       el('rect', {x: x0, y: y0 + 40, width: cw, height: ch, fill: 'none', stroke: COL.rule}, s);
       el('line', {x1: x0, x2: x0 + cw, y1: Y(0), y2: Y(0), stroke: COL.mist, 'stroke-dasharray': '4 4'}, s);
-      if (c === 0) { tx(s, x0 + 3, Y(hi) + 11, signed(hi, 1), {'font-size': 11, class: 't-mono t-quiet'}); tx(s, x0 + 3, Y(lo) - 3, signed(lo, 1), {'font-size': 11, class: 't-mono t-quiet'}); }
+      if (c === 0) { var hl = {'font-size': 11, class: 't-mono t-quiet', stroke: '#fff', 'stroke-width': 4, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}; tx(s, x0 + 3, Y(hi) + 11, signed(hi, 1), hl); tx(s, x0 + 3, Y(lo) - 3, signed(lo, 1), hl); }
       if (r === 0) { tx(s, x0, y0 + 40 + ch + 13, '−1', {'font-size': 11, class: 't-mono t-quiet'}); tx(s, x0 + cw, y0 + 40 + ch + 13, '+1', {'text-anchor': 'end', 'font-size': 11, class: 't-mono t-quiet'}); }
       var d = '';
       t.bins.forEach(function (b, j) { d += (j ? 'L' : 'M') + X(b[0]).toFixed(1) + ' ' + Y(b[2]).toFixed(1) + 'L' + X(b[1]).toFixed(1) + ' ' + Y(b[2]).toFixed(1); });
@@ -444,7 +444,7 @@
     var labels = el('g', {opacity: 0}, s);
     P.forEach(function (p, i) {
       var x0 = 50 + i * (pw + gapx), n = p.dates.length, X = lin(0, n - 1, x0, x0 + pw), Y = lin(lo, hi, bot, top), beyond = B.t[i] > B.crit[i];
-      tx(s, x0 + 10, top + 26, ['Monthly', 'Biweekly', 'Weekly'][i], {'font-size': 22});
+      tx(s, x0 + 10, top + 26, ['Monthly', 'Biweekly', 'Weekly'][i], {'font-size': 22, stroke: '#fff', 'stroke-width': 6, 'stroke-linejoin': 'round', 'paint-order': 'stroke'});
       el('rect', {x: x0, y: top, width: pw, height: bot - top, fill: 'none', stroke: COL.rule}, s);
       for (var v = Math.ceil(lo / stepV) * stepV; v <= hi; v += stepV) {
         el('line', {x1: x0, x2: x0 + pw, y1: Y(v), y2: Y(v), class: v ? 'ln-rule' : 'ln-axis', 'stroke-width': v ? 1 : 1.5}, s);
@@ -508,7 +508,7 @@
     var bar = el('rect', {x: d('2013-01-01'), y: r2, width: 0, height: 30, fill: 'url(#cut-grad)'}, g1);
     el('line', {x1: tRel, x2: tRel, y1: r2 - 6, y2: r2 + 36, stroke: COL.cobalt, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, g1);
     var cutTick = el('line', {x1: tEnd, x2: tEnd, y1: r2 - 14, y2: r2 + 44, stroke: COL.cobalt, 'stroke-width': 3, opacity: 0}, g1);
-    var cutLab = tx(g1, tEnd - 8, r2 - 4, 'Training cutoff: July 2025', {'text-anchor': 'end', 'font-size': 19, class: 't-mono', 'font-weight': 500, opacity: 0});
+    var cutLab = tx(g1, tEnd - 8, r2 - 4, 'Training cutoff: July 2025', {'text-anchor': 'end', 'font-size': 19, class: 't-mono', 'font-weight': 500, opacity: 0, stroke: '#fff', 'stroke-width': 6, 'stroke-linejoin': 'round', 'paint-order': 'stroke'});
     tx(g1, tRel - 10, r2 + 58, 'reliable knowledge cutoff: Feb 2025', {'text-anchor': 'end', 'font-size': 15, class: 't-mono t-quiet'});
 
     // row 3: the proposed test, after the cutoff; the 2022–2024 weeks lie before it

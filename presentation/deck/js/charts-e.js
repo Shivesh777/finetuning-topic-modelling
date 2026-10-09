@@ -181,7 +181,7 @@
     for (var v = 0; v <= 5; v++) { el('line', {x1: EX(v), x2: EX(v), y1: 360, y2: v === 1 ? 372 : 366, class: 'ln-axis'}, g3); label(g3, EX(v), 386, v + '×', 14, 't-mono t-quiet', {'text-anchor': 'middle'}); }
     label(g3, EX(1), 406, '1× equity', 15, 't-mono', {'text-anchor': 'middle', 'font-weight': 500});
     var bar = el('rect', {x: EX(0), y: 338, width: 0, height: 20, fill: COL.cobalt}, g3);
-    el('line', {x1: 40, x2: 40, y1: 206, y2: 336, stroke: COL.cobalt, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, g3);
+    el('line', {x1: 40, x2: 40, y1: 206, y2: 296, stroke: COL.cobalt, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, g3);
     function expo(u) { bar.setAttribute('width', (EX(M.exposure) - EX(0)) * u); }
     if (k >= 3) { if (animate && k === 3) tween(box, 1100, function (u) { expo(ease(u)); }); else expo(1); }
     // scene D, step 4: three independent Sharpe rows on the same axis
@@ -286,8 +286,9 @@
       links.push(el('line', {x1: xc, y1: y, x2: xc, y2: y, stroke: COL.cobalt, 'stroke-width': 1.5, opacity: 0}, s));
       ctl.push(el('circle', {cx: xc, cy: y, r: 9, fill: '#fff', stroke: CHAR, 'stroke-width': 2, opacity: 0}, s));
       news.push(el('circle', {cx: xn, cy: y, r: 9, fill: COL.cobalt, opacity: 0}, s));
-      labs.push([label(s, xc, y - 18, signed(r.controls * 100, 2) + '%', 15, 't-mono t-quiet', {'text-anchor': 'middle', opacity: 0}),
-                 label(s, xn, y + 32, signed(r.news * 100, 2) + '%', 15, 't-mono t-cobalt', {'text-anchor': 'middle', 'font-weight': 500, opacity: 0})]);
+      var nearZero = Math.abs(xc - X(0)) < 40, HALO = {stroke: '#fff', 'stroke-width': 5, 'stroke-linejoin': 'round', 'paint-order': 'stroke'};
+      labs.push([label(s, nearZero ? xc + 16 : xc, nearZero ? y + 5 : y - 18, signed(r.controls * 100, 2) + '%', 15, 't-mono t-quiet', Object.assign({'text-anchor': nearZero ? 'start' : 'middle', opacity: 0}, HALO)),
+                 label(s, xn, y + 32, signed(r.news * 100, 2) + '%', 15, 't-mono t-cobalt', Object.assign({'text-anchor': 'middle', 'font-weight': 500, opacity: 0}, HALO))]);
     });
     var leg = el('g', {opacity: 0}, s);
     el('circle', {cx: 310, cy: 578, r: 7, fill: '#fff', stroke: CHAR, 'stroke-width': 2}, leg); label(leg, 326, 583, 'Price controls', 16, 't-mono t-quiet');

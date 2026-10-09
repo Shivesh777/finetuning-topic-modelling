@@ -1,6 +1,6 @@
 # Group presentation (MFE 230ZB)
 
-A browser deck of 26 slides and 17 backup slides. One click per slide: each slide's animations then play by themselves, at twice the speed they were drawn at (four times in section 4: `pace` in `deck/js/charts-a.js`; the `data-auto` times in `index.html` are the fast ones).
+A browser deck of 26 slides and 18 backup slides. One click per slide: each slide's animations then play by themselves, at twice the speed they were drawn at (four times in section 4: `pace` in `deck/js/charts-a.js`; the `data-auto` times in `index.html` are the fast ones).
 
 The title and closing slides show what the news was about, month by month: which of the 20 NoLBERT topics took more of the news than usual, with four callouts whose headline keywords were checked on the article file (`deck/js/panel.js`).
 
@@ -20,7 +20,7 @@ Without Flask: `python -m http.server 5055 --directory presentation/deck`.
 | N | this slide's speaker notes |
 
 - Pre-read: `/?still=1` shows every slide finished, one under another; print it to PDF from Chrome. `/?still=1&only=12` shows slide 12 alone; `/?still=1&notes=1` prints the speaker notes under their slides.
-- Checks: `/?still=1&qa=1` lists overlapping text and text past the margins; `/?selftest=1` clicks through every slide and step.
+- Checks: `/?still=1&qa=1` lists overlapping text, text lying over chart shapes and text past the margins; `/?qa=1#12.3` checks the live slide 12 held at step 3; `/?selftest=1` clicks through every slide and step.
 
 ## Numbers
 

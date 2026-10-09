@@ -86,7 +86,7 @@
     el('line', {x1: 570, x2: 570, y1: 302, y2: ax, stroke: COL.red, 'stroke-width': 2}, gl);
     el('circle', {cx: 570, cy: ax, r: 7, fill: COL.red}, gl);
     label(gl, 570, 216, 'Later training text', 21, 't-red', {'text-anchor': 'middle', 'font-weight': 500});
-    var arc = el('path', {d: 'M556 232 C 500 120, 330 120, 262 ' + (ax - 16), fill: 'none', stroke: COL.red, 'stroke-width': 3}, gl);
+    var arc = el('path', {d: 'M460 252 C 400 150, 330 130, 262 ' + (ax - 16), fill: 'none', stroke: COL.red, 'stroke-width': 3}, gl);
     var head = arrow(gl, 286, ax - 60, 262, ax - 16, {stroke: COL.red, width: 0, head: 12});
     var cap = label(gl, 0, 520, 'Later information used for an earlier prediction.', 24, '', {opacity: 0});
     function back(u) { drawOn(arc, u); head.setAttribute('opacity', u >= 1 ? 1 : 0); cap.setAttribute('opacity', u >= 1 ? 1 : 0); }
@@ -122,7 +122,7 @@
     // scene A, step 1: tokens -> token embeddings -> the twelve layers -> token representations (tokens x 768)
     var g1 = el('g', {opacity: k >= 1 ? 1 : 0}, s);
     label(g1, 0, ENC.rowY0 - 24, 'Tokens', 20);
-    label(g1, 160, ENC.rowY0 - 24, 'Token embeddings', 20);
+    label(g1, 290, ENC.rowY0 - 24, 'Token embeddings', 18, '', {'text-anchor': 'end'});
     label(g1, 700, ENC.rowY0 - 24, 'Token representations', 20);
     var toks = [], embs = [], outs = [];
     for (i = 0; i < N; i++) {
@@ -165,13 +165,13 @@
     rrect(g2, PX + 250, yC, 190, 34, {fill: COL.wash, stroke: COL.rule}); label(g2, PX + 345, yC + 23, 'Relative position', 19, '', {'text-anchor': 'middle'});
     arrow(g2, cx - 40, yIn + 10, PX + 135, yC - 2); arrow(g2, cx + 40, yIn + 10, PX + 345, yC - 2);
     arrow(g2, PX + 135, yC + 34, cx - 60, yAtt - 2); arrow(g2, PX + 345, yC + 34, cx + 60, yAtt - 2);
-    rrect(g2, bx, yAtt, BW, 40, {fill: SOFT, stroke: COL.cobalt, 'stroke-width': 1.5}); label(g2, cx, yAtt + 26, 'Self-attention', 20, '', {'text-anchor': 'middle', 'font-weight': 500});
-    label(g2, cx, yAtt + 62, nb.heads + ' attention heads', 17, 't-mono t-quiet', {'text-anchor': 'middle'});
+    rrect(g2, bx, yAtt, BW, 56, {fill: SOFT, stroke: COL.cobalt, 'stroke-width': 1.5}); label(g2, cx, yAtt + 24, 'Self-attention', 20, '', {'text-anchor': 'middle', 'font-weight': 500});
+    label(g2, cx, yAtt + 46, nb.heads + ' attention heads', 15, 't-mono t-quiet', {'text-anchor': 'middle'});
     rrect(g2, bx, yN1, BW, 34, {fill: COL.wash, stroke: COL.rule}); label(g2, cx, yN1 + 23, 'Add + normalize', 19, '', {'text-anchor': 'middle'});
     rrect(g2, bx, yFF, BW, 40, {fill: SOFT, stroke: COL.cobalt, 'stroke-width': 1.5}); label(g2, cx, yFF + 26, 'Feed-forward', 20, '', {'text-anchor': 'middle', 'font-weight': 500});
     rrect(g2, bx, yN2, BW, 34, {fill: COL.wash, stroke: COL.rule}); label(g2, cx, yN2 + 23, 'Add + normalize', 19, '', {'text-anchor': 'middle'});
     el('rect', {x: cx - 110, y: yOut, width: 220, height: 10, fill: SLAB}, g2);
-    arrow(g2, cx, yAtt + 40, cx, yN1 - 2); arrow(g2, cx, yN1 + 34, cx, yFF - 2); arrow(g2, cx, yFF + 40, cx, yN2 - 2); arrow(g2, cx, yN2 + 34, cx, yOut - 2);
+    arrow(g2, cx, yAtt + 56, cx, yN1 - 2); arrow(g2, cx, yN1 + 34, cx, yFF - 2); arrow(g2, cx, yFF + 40, cx, yN2 - 2); arrow(g2, cx, yN2 + 34, cx, yOut - 2);
     var rx1 = PX + 34;
     el('path', {d: 'M' + (cx - 110) + ' ' + (yIn + 5) + ' H ' + rx1 + ' V ' + (yN1 + 17) + ' H ' + (bx - 12), fill: 'none', stroke: COL.cobalt, 'stroke-width': 1.8}, g2);
     arrow(g2, bx - 12, yN1 + 17, bx - 1, yN1 + 17, {stroke: COL.cobalt, width: 1.8});
@@ -218,7 +218,7 @@
 
     // scene A, step 1: two chunks of one article through one encoder
     var g1 = reveal(box, el('g', {}, s), k, 1, animate, 600);
-    el('line', {x1: 0, x2: 300, y1: 46, y2: 46, stroke: COL.mist, 'stroke-width': 2}, g1);
+    el('line', {x1: 0, x2: 300, y1: 46, y2: 46, stroke: COL.mist, 'stroke-width': 2, class: 'ln-strike'}, g1);
     arrow(g1, 330, 46, 396, 46, {stroke: COL.ink, width: 2});
     label(g1, 420, 22, 'Our objective', 18, 't-mono t-quiet');
     label(g1, 420, 54, 'Same-article retrieval', 25, 't-cobalt', {'font-weight': 600});
@@ -255,7 +255,7 @@
       pools.push({rows: rows, mean: mean, unit: unit, y: c.y});
     });
     label(g2, 660, 128, 'Last-layer mean', 19, '', {'font-weight': 500});
-    var lPad = label(g2, 660, 262, 'Padding included', 17, 't-mono t-quiet', {opacity: 0});
+    var lPad = label(g2, 660, 262, '', 17, 't-mono t-quiet', {opacity: 0});   // Kevin's 3.1 (section3/): no padding label on the slide; the regime stays in the speaker notes
     var lL2 = label(g2, 660, 286, 'L2 normalization', 17, 't-mono t-quiet', {opacity: 0});
     function pool(u) {
       var a = part(u, 0, 0.3), b = part(u, 0.3, 0.7), c2 = part(u, 0.7, 1);
@@ -318,7 +318,7 @@
     el('path', {d: 'M1380 444 V 560 H 1580', fill: 'none', class: 'ln-axis'}, g5);
     var guide = el('path', {d: '', fill: 'none', stroke: COL.cobalt, 'stroke-width': 1, 'stroke-dasharray': '4 4', opacity: 0}, g5);
     var pt = el('circle', {cx: 0, cy: 0, r: 6, fill: COL.cobalt, opacity: 0}, g5);
-    label(g5, 1580, 584, 'Loss = −log P(same article)', 20, '', {'text-anchor': 'end', 'font-weight': 500});
+    label(g5, 1580, 596, 'Loss = −log P(same article)', 20, '', {'text-anchor': 'end', 'font-weight': 500});
     function strip(v, u) {   // v: base -> adapted; u: how far the widths have unfolded
       var x = SX, p0 = null;
       for (var b = 0; b < 32; b++) {
@@ -453,7 +453,7 @@
     [['Training', sp.train, 0.10], ['Validation', sp.valid, 0.18], ['Test', sp.test, 0.28]].forEach(function (p) {
       var x0 = X(p[1][0]), x1 = X(p[1][1]);
       el('rect', {x: x0, y: yR, width: x1 - x0, height: 30, fill: 'rgba(22,22,22,' + p[2] + ')'}, g4);
-      label(g4, (x0 + x1) / 2, yR - 10, p[0] + ': ' + p[1][0].slice(0, 4) + '–' + p[1][1].slice(0, 4), 17, 't-mono t-quiet', {'text-anchor': 'middle'});
+      label(g4, (x0 + x1) / 2, yR - 10, p[0] + ': ' + p[1][0].slice(0, 4) + '–' + p[1][1].slice(0, 4), 17, 't-mono t-quiet', {'text-anchor': 'middle', stroke: '#fff', 'stroke-width': 5, 'stroke-linejoin': 'round', 'paint-order': 'stroke'});
     });
     var ov = el('rect', {x: X(sp.valid[0]), y: 468, width: X(ad.before) - X(sp.valid[0]), height: 124, fill: REDSOFT, stroke: COL.red, 'stroke-width': 1.5, opacity: 0}, g4);
     var cur = el('line', {x1: 0, x2: 0, y1: 462, y2: 596, stroke: COL.ink, 'stroke-width': 2, opacity: 0}, g4);

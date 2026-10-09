@@ -202,7 +202,7 @@
     if (k >= 5) { if (animate && k === 5) tween(box, 600, function (u) { shrink(ease(u)); }); else shrink(1); }
   });
 
-  // ------------------------------------------------------------------ 5.1 validation against test: the ten best validation ICs followed into the test period
+  // ------------------------------------------------------------------ 5.6 validation against test: the ten best validation ICs followed into the test period
   C.vtest = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, V = D().vt, EXT = 0.08, PW = 440, GAPX = 110, top = 70, H = 400, Y = lin(-EXT, EXT, top + H, top);
     label(s, 8, top + H / 2, 'Rank IC', 15, 't-mono t-quiet', {'text-anchor': 'middle', transform: 'rotate(-90 8 ' + (top + H / 2) + ')'});
@@ -257,7 +257,7 @@
     stages.forEach(function (f, i) { var st = i + 1; if (k >= st) { if (animate && k === st) tween(box, [800, 450, 650, 800, 400][i], function (u) { f(ease(u)); }); else f(1); } });
   });
 
-  // ------------------------------------------------------------------ 5.2 weekly forecasts: price controls alone and with the news, against the historical mean
+  // ------------------------------------------------------------------ B19 weekly forecasts: price controls alone and with the news, against the historical mean
   C.weekly = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, W = D().weekly, sp = D().facts.splits, X = lin(-8, 2, 300, 1500), rows = [170, 260, 350, 440];
     // step 1: the timing: the news comes before the week whose return is the target; then the strip settles at the top
@@ -303,7 +303,7 @@
     [[2, controls, 1200], [3, addNews, 1000], [4, numbers, 500]].forEach(function (st) { if (k >= st[0]) { if (animate && k === st[0]) tween(box, st[2], st[1]); else st[1](1); } });
   });
 
-  // ------------------------------------------------------------------ 5.3 same-month explanation: when the information exists, what the crude result measures, the four assets, the sample
+  // ------------------------------------------------------------------ 5.7 same-month explanation: when the information exists, what the crude result measures, the four assets, the sample
   C.xasset = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, XA = D().xasset, sp = D().facts.splits, crude = XA.rows[0], X = lin(-60, 60, 300, 1340), rowsY = [190, 270, 350, 430];
     // scene A, step 1: both same-month tracks fill the month; only the completed stock track feeds the factors; the coefficients are older
@@ -381,7 +381,7 @@
     label(g4, 1340, 650, 'Crude has the largest estimated reduction.', 22, '', {'text-anchor': 'end'});
   });
 
-  // ------------------------------------------------------------------ 5.4 the crude-oil result under three text models, window and factor count held fixed
+  // ------------------------------------------------------------------ B20 the crude-oil result under three text models, window and factor count held fixed
   C.textmodels = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, TM = D().textmodels, ref = D().xasset.rows[0], X = lin(-60, 60, 300, 1340), rowsY = [260, 340, 420];
     [-60, -40, -20, 0, 20, 40, 60].forEach(function (v) {

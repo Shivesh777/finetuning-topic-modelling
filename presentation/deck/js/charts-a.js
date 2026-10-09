@@ -113,7 +113,7 @@
     if (k >= 2) { if (animate) tween(box, 2400, function (u) { cr.setAttribute('width', (right - left) * u); }); else cr.setAttribute('width', right - left); }
   });
 
-  // ------------------------------------------------------------------ 1.2 the delta
+  // ------------------------------------------------------------------ B13 the delta
   C.delta = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s;
     var rows = [

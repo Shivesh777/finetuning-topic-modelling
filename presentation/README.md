@@ -30,9 +30,9 @@ Every number on the slides comes from `deck/js/data.js`, which `tools/build_data
 
 Backup slide B7 animates the weekly forecast ranks of individual, unnamed stocks. They come from `data/predictions` and `data/panels`, which are derived from CRSP and stay out of git, so the builder writes them to `deck/js/portfolio.js`, which is gitignored. Without that file the slide shows a short note instead of the dots; the same file carries the one-stock contributions of backup slide B5. To build it, point `FTM_DATA` at a data folder with `predictions/W` and `panels/W`.
 
-## The NoLBERT example batches (slides 3.1 and 3.3)
+## The NoLBERT example batches (slides 3.2 and 3.3)
 
-Slide 3.1 colours its 32 × 32 similarity matrix and unfolds its probabilities from measured values, and slide 3.3 draws the matching decisions of the base and the adapted encoder, when `deck/js/similarity.js` exists (gitignored). Without it, 3.1 draws the calculation schematically (labelled so) and 3.3 shows the recorded loss and the held-out evaluation only.
+Slide 3.2 colours its 32 × 32 similarity matrix and unfolds its probabilities from measured values, and slide 3.3 draws the matching decisions of the base and the adapted encoder, when `deck/js/similarity.js` exists (gitignored). Without it, 3.2 draws the calculation schematically (labelled so) and 3.3 shows the recorded loss and the held-out evaluation only.
 
     FTM_DATA=/path/to/data python tools/select_example_batches.py      # 32 (headline, lead) pairs from Jan 2015 and 32 from Sep 2020, by a fixed rule (duckdb)
     pip install torch transformers safetensors                            # any Python 3.10+ environment; CPU is enough

@@ -203,7 +203,7 @@
     if (k >= 4) { if (animate && k === 4) tween(box, 1200, function (u) { dates(ease(u)); }); else dates(1); }
   });
 
-  // ------------------------------------------------------------------ 3.1 what changed, the batch, every similarity, the loss, the update
+  // ------------------------------------------------------------------ 3.2 what changed, the batch, every similarity, the loss, the update
   C.finetune = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, sim = SIM(), ex = sim && sim.batches.train_example, T = D().training, tau = T.temperature, i, j;
     var PAD = hatch(s, 'ft-pad', COL.mist);
@@ -370,7 +370,7 @@
     if (k >= 7) { if (animate) tween(box, 1800, trace); else trace(1); }
   });
 
-  // ------------------------------------------------------------------ 3.2 the paper's protocol and ours, then the dates
+  // ------------------------------------------------------------------ B18 the paper's protocol and ours, then the dates
   C.protocols = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, F = D().facts, nb = F.nolbert, sp = F.splits, ad = F.adaptation, T = D().training, i;
     var HR = hatch(s, 'pr-hatch', COL.red);

@@ -184,7 +184,7 @@
     });
   });
 
-  // ------------------------------------------------------------------ 4.3 attention and its shock (one real topic)
+  // ------------------------------------------------------------------ B21 attention and its shock (one real topic)
   C.shock = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, A = D().attention, n = A.days.length;
     mtx(s, 0, 28, 'θ_{k,d} = Σ_{a∈d} π_{a,k} / N_{d}', serif({'font-size': 28}));
@@ -234,7 +234,7 @@
     });
   });
 
-  // ------------------------------------------------------------------ 4.4 the features of one stock
+  // ------------------------------------------------------------------ 4.3 the features of one stock
   C.features = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, P = D().pipeline;
     var cards = [
@@ -280,7 +280,7 @@
     tx(gM, tx0, y0 + 202, '(both) · all (price and text): up to ' + P.features_all_lda, {'font-size': 17, class: 't-mono t-quiet'});
   });
 
-  // ------------------------------------------------------------------ 4.5 the forecasters
+  // ------------------------------------------------------------------ 4.4 the forecasters
   C.models = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s;
     var cards = [
@@ -329,7 +329,7 @@
     tx(gB, 700, yb + 62, 'IPCA and sparse IPCA: last time · EBM: next', {'font-size': 17, class: 't-mono t-quiet'});
   });
 
-  // ------------------------------------------------------------------ 4.6 the EBM
+  // ------------------------------------------------------------------ 4.5 the EBM
   C.ebm = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, E = D().ebm;
     mtx(s, 0, 34, 'ŷ_{i} = β_{0} + f_{1}(z_{i1}) + f_{2}(z_{i2}) + … + f_{p}(z_{ip}) + Σ f_{jk}(z_{ij}, z_{ik})', serif({'font-size': 32}));
@@ -381,7 +381,7 @@
     tx(gW, 18, 556, 'models at every frequency: ' + E.val_ic.map(function (v) { return v.toFixed(3); }).join(', '), {'font-size': 17, class: 't-mono'});
   });
 
-  // ------------------------------------------------------------------ 4.7 from forecast to portfolio (schematic stocks)
+  // ------------------------------------------------------------------ 4.6 from forecast to portfolio (schematic stocks)
   C.rules = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, T = D().turnover, Fr = D().frequency.rows, n = 50, X = lin(0, n - 1, 14, 846);
     var rows = [['Decile long-short', ['w_{i} = +1/N_{L}  in the top tenth', 'w_{i} = −1/N_{S}  in the bottom tenth'], ['the classic sort; rebalanced every period']],
@@ -428,7 +428,7 @@
     });
   });
 
-  // ------------------------------------------------------------------ 5.1 monthly, biweekly or weekly
+  // ------------------------------------------------------------------ 5.3 monthly, biweekly or weekly
   C.freq = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, R = D().frequency.rows, Xi = lin(-0.01, 0.03, 250, 600), Xs = lin(-0.6, 0.4, 680, 1150);
     var unit = {M: ' months', '2W': ' fortnights', W: ' weeks'};
@@ -468,7 +468,7 @@
     });
   });
 
-  // ------------------------------------------------------------------ 5.2 topic models, then the tuned shock window
+  // ------------------------------------------------------------------ 5.1 topic models, then the tuned shock window
   var TM_ORDER = ['lda', 'lda_all', 'minilm', 'nolbert', 'nolbert20', 'finbert'];
   C.tm = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, T = D().topics, rows = TM_ORDER.map(function (m) { return T.rows.filter(function (r) { return r.model === m; })[0]; });
@@ -514,7 +514,7 @@
     });
   });
 
-  // ------------------------------------------------------------------ 5.3 the forecasters, test against validation
+  // ------------------------------------------------------------------ 5.2 the forecasters, test against validation
   var GROUP_END = {lasso: 1, sipca: 1, rf: 1, ebm: 1};
   C.forecasters = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, F = D().forecasters, R = F.rows, W = 286, xs = [262, 640, 1018], ry = function (j) { return 86 + j * 43; };

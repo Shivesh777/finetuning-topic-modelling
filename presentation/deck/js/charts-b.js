@@ -14,7 +14,7 @@
   }
   var FSHADE = {M: 0.38, '2W': 0.68, W: 1};
 
-  // ------------------------------------------------------------------ 4.1 the twelve largest main-effect shapes, then one stock read through them
+  // ------------------------------------------------------------------ B5 the twelve largest main-effect shapes, then one stock read through them
   var PRICE = {rev_21: '21-day return', rev_5: '5-day return', ivol: 'Idiosyncratic volatility', beta: 'Market beta', mom_12_1: 'Momentum, months 12 to 2',
                vol_21: '21-day volatility', size: 'Market value', max_21: 'Max daily return, 21 days'};
   var SHORT = {rev_21: '21-day ret.', rev_5: '5-day ret.', ivol: 'idio. vol.', beta: 'beta', mom_12_1: 'momentum', vol_21: '21-day vol.', size: 'size', max_21: 'max ret.'};
@@ -102,7 +102,7 @@
     if (k >= 3) { if (animate && k === 3) tween(box, 900, function (u) { erase(ease(u)); }); else erase(1); }
   });
 
-  // ------------------------------------------------------------------ 4.2 delete one block at a time
+  // ------------------------------------------------------------------ B6 delete one block at a time
   C.blocks = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, M = D().glassbox.models, order = ['narr', 'price', 'firm', 'mixed pair'];
     var shownAt = {narr: 1, price: 2, firm: 3, 'mixed pair': 4};
@@ -134,7 +134,7 @@
     tx(s, 0, y0 + 4 * gh + 42, 'One block removed at a time; no refitting. Bars light to dark — Monthly: NoLBERT · Biweekly: FinBERT · Weekly: LDA', {'font-size': 18, class: 't-mono t-quiet'});
   });
 
-  // ------------------------------------------------------------------ 4.3 forecast to portfolio: the same forecast ranks under the plain rule and under the buffered rule, side by side
+  // ------------------------------------------------------------------ B7 forecast to portfolio: the same forecast ranks under the plain rule and under the buffered rule, side by side
   C.portfolio = {
     draw: function (box, k, play) {
       halt(box);
@@ -234,7 +234,7 @@
     still: function (box) { this.draw(box, 2, false); }
   };
 
-  // ------------------------------------------------------------------ 5.1 three checks: the placebo, every alpha, the Sharpe intervals
+  // ------------------------------------------------------------------ B14 three checks: the placebo, every alpha, the Sharpe intervals
   C.ladder = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, F = D().facts, PL = D().placebo_series, A = D().alpha_rain, TV = D().tvp;
     var rungs = [
@@ -327,7 +327,7 @@
     });
   });
 
-  // ------------------------------------------------------------------ 5.2 validation's ten picks drop to their test scores, then the search as 375 paths
+  // ------------------------------------------------------------------ B15 validation's ten picks drop to their test scores, then the search as 375 paths
   C.vdrop = {
     draw: function (box, k, play) {
       halt(box);
@@ -430,7 +430,7 @@
     still: function (box) { this.draw(box, 2, false); }
   };
 
-  // ------------------------------------------------------------------ 5.3 trading less: the average experiment, plain and buffered, through the test period
+  // ------------------------------------------------------------------ B16 trading less: the average experiment, plain and buffered, through the test period
   C.heldup = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, B = D().facts.buffer, P = D().buffer_paths.panels;
     tx(s, 0, 22, 'Annualized net-return gain from buffering · Test period · Mean across 200 base experiments', {'font-size': 20, 'font-weight': 600});
@@ -477,7 +477,7 @@
     }
   });
 
-  // ------------------------------------------------------------------ 5.4 the proposed evaluation: a model with a July 2025 training cutoff, tested on what came after
+  // ------------------------------------------------------------------ B17 the proposed evaluation: a model with a July 2025 training cutoff, tested on what came after
   C.next = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, N = D().facts.next, sp = D().facts.splits, Sr = D().search, day = U.day;
     var L = 260, R = 1520, X = lin(day('2012-01-01'), day('2027-01-01'), L, R), d = function (iso) { return X(day(iso)); };

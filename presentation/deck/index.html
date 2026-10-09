@@ -56,23 +56,23 @@
 </section>
 
 <!-- ================================================================ 3 fine-tuning (Kevin) -->
-<section class="slide" data-sec="3" data-num="3.0" data-name="The pair" data-steps="2" data-manual>
-  <div class="tags"><span class="chip">3.0</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
+<section class="slide" data-sec="3" data-num="3.1" data-name="The pair" data-steps="2" data-manual>
+  <div class="tags"><span class="chip">3.1</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
   <div class="title">Fine-tuning: reshape the space</div>
   <div class="ex" data-chart="pairintro"></div>
 </section>
 
-<section class="slide" data-sec="3" data-num="3.1" data-name="Fine-tuning" data-steps="7" data-auto="200 1000 1800 2600 3400 4300 5200">
-  <div class="tags"><span class="chip">3.1</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
+<section class="slide" data-sec="3" data-num="3.2" data-name="Fine-tuning" data-steps="7" data-auto="200 1000 1800 2600 3400 4300 5200">
+  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
   <div class="title">Our NoLBERT fine-tuning</div>
   <div class="ex" data-chart="finetune"></div>
   <aside class="notes">The class example uses human similarity scores and squared error. We use same-article pairs and symmetric InfoNCE. Pooling in the run: every input was padded to 128 positions with pad id 1, but the attention mask was built as token id ≠ 0, so the padding positions were attended and averaged, in training and in the 7.96% → 89.16% evaluation alike. The downstream embedding step (SentenceTransformers, 64 tokens) masks padding properly.</aside>
 </section>
 
-<section class="slide" data-sec="3" data-num="3.2" data-name="Fine-tuning results" data-steps="4" data-auto="250 1800 3000 4200">
-  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning results</span><span class="who">Kevin</span></div>
+<section class="slide" data-sec="3" data-num="3.3" data-name="Fine-tuning results" data-steps="4" data-auto="250 1800 3000 4200">
+  <div class="tags"><span class="chip">3.3</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning results</span><span class="who">Kevin</span></div>
   <div class="hair"></div>
   <div class="title">NoLBERT fine-tuning results</div>
   <div class="ex" data-chart="results"></div>
@@ -98,8 +98,8 @@
   <div class="xnote">Also run: LDA on every article (1,255,289) and 20 NoLBERT clusters: six topic models in all.</div>
 </section>
 
-<section class="slide" data-sec="4" data-num="4.4" data-name="Stock features" data-steps="2" data-auto="150 700">
-  <div class="tags"><span class="chip">4.4</span><span class="chip on">How it works</span><span class="chip">Features</span><span class="who">Shivesh</span></div>
+<section class="slide" data-sec="4" data-num="4.3" data-name="Stock features" data-steps="2" data-auto="150 700">
+  <div class="tags"><span class="chip">4.3</span><span class="chip on">How it works</span><span class="chip">Features</span><span class="who">Shivesh</span></div>
   <div class="hair"></div>
   <div class="title"><span class="hook">Stock by stock:</span> <span class="claim">exposure, own news, past prices.</span></div>
   <div class="ex short" data-chart="features"></div>
@@ -107,8 +107,8 @@
   <div class="xnote" data-step="2">A stock without news coverage gets another stock’s features at random, so a missing value reveals nothing.</div>
 </section>
 
-<section class="slide" data-sec="4" data-num="4.5" data-name="Forecasters" data-steps="2" data-auto="150 675">
-  <div class="tags"><span class="chip">4.5</span><span class="chip on">How it works</span><span class="chip">Forecasters</span><span class="who">Shivesh</span></div>
+<section class="slide" data-sec="4" data-num="4.4" data-name="Forecasters" data-steps="2" data-auto="150 675">
+  <div class="tags"><span class="chip">4.4</span><span class="chip on">How it works</span><span class="chip">Forecasters</span><span class="who">Shivesh</span></div>
   <div class="hair"></div>
   <div class="title"><span class="hook">Forecasters:</span> <span class="claim">lines, boosted trees, forests.</span></div>
   <div class="ex short" data-chart="models"></div>
@@ -116,8 +116,8 @@
   <div class="xnote">Fifteen models in all: eight base models, six of them also on ranked returns, and the ensemble.</div>
 </section>
 
-<section class="slide" data-sec="4" data-num="4.6" data-name="The EBM" data-steps="3" data-auto="150 500 1150">
-  <div class="tags"><span class="chip">4.6</span><span class="chip on">How it works</span><span class="chip">EBM</span><span class="who">Shivesh</span></div>
+<section class="slide" data-sec="4" data-num="4.5" data-name="The EBM" data-steps="3" data-auto="150 500 1150">
+  <div class="tags"><span class="chip">4.5</span><span class="chip on">How it works</span><span class="chip">EBM</span><span class="who">Shivesh</span></div>
   <div class="hair"></div>
   <div class="title"><span class="hook">The EBM:</span> <span class="claim">a forecast you can read, term by term.</span></div>
   <div class="ex short" data-chart="ebm"></div>
@@ -125,8 +125,8 @@
   <div class="xnote">Curves from the biweekly EBM on price and FinBERT text, 54 boosting rounds kept; the EBM keeps its validated fit.</div>
 </section>
 
-<section class="slide" data-sec="4" data-num="4.7" data-name="Portfolios" data-steps="3" data-auto="150 550 950">
-  <div class="tags"><span class="chip">4.7</span><span class="chip on">How it works</span><span class="chip">Portfolios</span><span class="who">Shivesh</span></div>
+<section class="slide" data-sec="4" data-num="4.6" data-name="Portfolios" data-steps="3" data-auto="150 550 950">
+  <div class="tags"><span class="chip">4.6</span><span class="chip on">How it works</span><span class="chip">Portfolios</span><span class="who">Shivesh</span></div>
   <div class="hair"></div>
   <div class="title"><span class="hook">From forecast to portfolio:</span> <span class="claim">three ways to trade it.</span></div>
   <div class="ex short" data-chart="rules"></div>
@@ -135,17 +135,8 @@
 </section>
 
 <!-- ================================================================ 5 results (Charishma) -->
-<section class="slide" data-sec="5" data-num="5.1" data-name="Frequency" data-steps="3" data-auto="300 1200 2100">
-  <div class="tags"><span class="chip">5.1</span><span class="chip on">Results</span><span class="chip">Frequency</span><span class="who">Charishma</span></div>
-  <div class="hair"></div>
-  <div class="title"><span class="hook">Frequency:</span> <span class="claim">more signal weekly, and more cost.</span></div>
-  <div class="ex short" data-chart="freq"></div>
-  <div class="xnote high">Medians over the 192 to 195 experiments of the main run that trade; test period; 10 bp per dollar traded.</div>
-  <div class="xnote" data-step="3">The buffer cuts the weekly cost from 8.2% to 5.1% a year and is kept as the default rule.</div>
-</section>
-
-<section class="slide" data-sec="5" data-num="5.2" data-name="Topic models" data-steps="2" data-auto="300 1400">
-  <div class="tags"><span class="chip">5.2</span><span class="chip on">Results</span><span class="chip">Topic models</span><span class="who">Charishma</span></div>
+<section class="slide" data-sec="5" data-num="5.1" data-name="Topic models" data-steps="2" data-auto="300 1400">
+  <div class="tags"><span class="chip">5.1</span><span class="chip on">Results</span><span class="chip">Topic models</span><span class="who">Charishma</span></div>
   <div class="hair"></div>
   <div class="title"><span class="hook">Topic models:</span> <span class="claim">NoLBERT leads; tuned shocks help.</span></div>
   <div class="ex short" data-chart="tm"></div>
@@ -153,13 +144,22 @@
   <div class="xnote" data-step="2">Shock windows chosen on validation: 63 days monthly, 1 day weekly; the biweekly window stays at 5 days.</div>
 </section>
 
-<section class="slide" data-sec="5" data-num="5.3" data-name="Forecasters" data-steps="2" data-auto="300 1300">
-  <div class="tags"><span class="chip">5.3</span><span class="chip on">Results</span><span class="chip">Forecasters</span><span class="who">Charishma</span></div>
+<section class="slide" data-sec="5" data-num="5.2" data-name="Forecasters" data-steps="2" data-auto="300 1300">
+  <div class="tags"><span class="chip">5.2</span><span class="chip on">Results</span><span class="chip">Forecasters</span><span class="who">Charishma</span></div>
   <div class="hair"></div>
   <div class="title"><span class="hook">Forecasters:</span> <span class="claim">boosted trees on ranked returns lead.</span></div>
   <div class="ex short" data-chart="forecasters"></div>
   <div class="xnote high">Average over the 26 feature sets of the main run; the lasso over the sets where its forecast is not flat.</div>
   <div class="xnote" data-step="2">The EBM has the best validation IC at every frequency; in the test it ranks 6th, 10th and 8th of these ten.</div>
+</section>
+
+<section class="slide" data-sec="5" data-num="5.3" data-name="Frequency" data-steps="3" data-auto="300 1200 2100">
+  <div class="tags"><span class="chip">5.3</span><span class="chip on">Results</span><span class="chip">Frequency</span><span class="who">Charishma</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Frequency:</span> <span class="claim">more signal weekly, and more cost.</span></div>
+  <div class="ex short" data-chart="freq"></div>
+  <div class="xnote high">Medians over the 192 to 195 experiments of the main run that trade; test period; 10 bp per dollar traded.</div>
+  <div class="xnote" data-step="3">The buffer cuts the weekly cost from 8.2% to 5.1% a year and is kept as the default rule.</div>
 </section>
 
 <section class="slide" data-sec="5" data-num="5.4" data-name="Strategies" data-steps="2" data-auto="300 1300">

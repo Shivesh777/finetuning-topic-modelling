@@ -254,7 +254,7 @@
       cap.setAttribute('opacity', u >= 1 ? 1 : 0);
     }
     var stages = [show, pick, follow, rest, mean];
-    stages.forEach(function (f, i) { var st = i + 1; if (k >= st) { if (animate && k === st) tween(box, [1200, 700, 1000, 1200, 600][i], function (u) { f(ease(u)); }); else f(1); } });
+    stages.forEach(function (f, i) { var st = i + 1; if (k >= st) { if (animate && k === st) tween(box, [800, 450, 650, 800, 400][i], function (u) { f(ease(u)); }); else f(1); } });
   });
 
   // ------------------------------------------------------------------ 5.2 weekly forecasts: price controls alone and with the news, against the historical mean

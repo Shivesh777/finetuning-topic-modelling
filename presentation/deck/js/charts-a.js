@@ -16,7 +16,7 @@
   var CALM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // pace: the deck plays every animation faster than it was drawn, 2x, and 4x in section 4 (how it works).
   // The data-auto times in index.html are already the fast ones; tween durations are scaled here.
-  function pace(node) { var sl = node && node.closest ? node.closest('.slide') : null; return sl && sl.dataset.sec === '4' ? 0.25 : 0.5; }
+  function pace(node) { var sl = node && node.closest ? node.closest('.slide') : null; if (sl && sl.dataset.pace) return +sl.dataset.pace; return sl && sl.dataset.sec === '4' ? 0.25 : 0.5; }
   function tween(box, ms, fn, done) {
     if (CALM) { fn(1); if (done) done(); return function () {}; }   // reduced motion: the final state at once
     ms = ms * pace(box);

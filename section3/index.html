@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section 3 · News attention and returns · MFE 230ZB</title>
+<link rel="stylesheet" href="css/deck.css">
+</head>
+<body>
+<div id="stage">
+
+<!-- ================================================================ title -->
+<!-- ================================================================ 1 recap (Jonathan) -->
+<!-- ================================================================ 2 look-ahead (Swapnil) -->
+<!-- ================================================================ 3 fine-tuning (Kevin) -->
+<section class="slide" data-sec="3" data-num="3.1" data-name="Find the partner" data-steps="1" data-auto="800">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">3.1</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Find the partner:</span> <span class="claim">8% to 89%.</span></div>
+  <div class="ex" data-chart="replay" data-noadvance-off></div>
+</section>
+
+<section class="slide" data-sec="3" data-num="3.2" data-name="Supervision trick" data-steps="3" data-auto="1200 3600 6800">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">3.2</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 1 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">The supervision trick:</span> <span class="claim">two chunks of one article.</span></div>
+  <div class="ex short" data-chart="trick"></div>
+  <div class="xnote high" data-step="3">Same recipe as the paper: AdamW at 2e&minus;5 &middot; weight decay 0.01 &middot; warmup then decay &middot; clipping at 1 &middot; about one epoch.</div>
+  <div class="xnote" data-step="3">Our changes: InfoNCE in place of their classifier head &middot; mean pooling in place of [CLS] (probe: 0.343 vs 0.27).</div>
+</section>
+
+<section class="slide" data-sec="3" data-num="3.3" data-name="What it read" data-steps="1" data-auto="1500">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">3.3</span><span class="chip on">NoLBERT</span><span class="chip warn">Look-ahead</span><span class="who">Kevin · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">What it read,</span> <span class="claim">and when.</span></div>
+  <div class="ex short" data-chart="saw"></div>
+  <div class="xnote high">198,560 of 228,883 pairs · 6,205 steps of 32 · a 150-minute budget, under one pass · 230P news (FNSPID, from 2015)</div>
+  <div class="xnote" data-step="1">Pair cutoff 31 Dec 2019: the training period only &mdash; validation (2020&ndash;21) and test (2022&ndash;24) unseen.</div>
+</section>
+
+<section class="slide" data-sec="3" data-num="3.4" data-name="Reshape the space" data-steps="2" data-auto="1400 4600">
+  <div class="edge">MFE 230ZB · news attention and returns</div>
+  <div class="tags"><span class="chip">3.4</span><span class="chip on">NoLBERT</span><span class="chip">Fine-tuning</span><span class="who">Kevin · 2 min</span></div>
+  <div class="hair"></div>
+  <div class="title"><span class="hook">Reshape the space:</span> <span class="claim">no head, no new parameters.</span></div>
+  <div class="ex short" data-chart="reshape"></div>
+  <div class="xnote high">The reshaped space is what the rest of the deck consumes: spherical k-means, 60 topics, softmax weights at 0.07.</div>
+  <div class="xnote" data-step="2">Run: 6,205 steps of 32 pairs &middot; 150 minutes on one RTX 3060 &middot; re-embedding all 1.26M articles: about 2.5 hours.</div>
+</section>
+
+<!-- ================================================================ 4 how it works (Shivesh) -->
+<!-- ================================================================ 5 results (Charishma) -->
+<!-- ================================================================ closing -->
+<!-- ================================================================ backup -->
+</div>
+<script src="js/data.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/charts-a.js"></script>
+<script src="js/deck.js"></script>
+</body>
+</html>

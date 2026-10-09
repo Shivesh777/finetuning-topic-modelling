@@ -1,0 +1,128 @@
+{
+  "M": {
+    "chosen_on_validation": "all_finbert__xgb",
+    "validation_sharpe": 1.8008065843811991,
+    "test_sharpe_by_cost": {
+      "0": 0.06417346355207333,
+      "5": -0.0553460101875016,
+      "10": -0.1745049558064127,
+      "20": -0.4114724218865325
+    },
+    "test_turnover_per_period": 2.7576027735968927,
+    "test_max_drawdown": 0.13383341174669805,
+    "test_periods": 21,
+    "pct_rank_among_real_specs": 0.5413333333333333,
+    "share_real_specs_beating_placebo_max": 0.0,
+    "placebo_sharpe_range": [
+      -0.8312053176761337,
+      1.528673839569006
+    ],
+    "real_sharpe_median": -0.2388825914015541,
+    "permutation_p_value": 0.24075924075924077,
+    "permutation_null_95pct": 0.5891803466487654,
+    "permutation_p_value_gross": 0.4925074925074925,
+    "best_in_test": "narr_lda__rf",
+    "best_in_test_sharpe": 1.4167153133248855,
+    "n_trials_raw": 375,
+    "n_trials_effective": 6.3195781392882955,
+    "dsr_chosen_n1": 0.4130425891060401,
+    "dsr_best_in_test": {
+      "N_eff": 0.7541102845714822,
+      "N_26": 0.5667468742796709,
+      "N_raw": 0.28972776116769805
+    },
+    "bootstrap_sharpe_95ci": [
+      -2.49962252815411,
+      1.2327009442347292
+    ],
+    "bootstrap_diff_vs_price_95ci": [
+      -2.9311447512616633,
+      1.379112907223591
+    ],
+    "price_model_same_type_sharpe": 0.1658795961829101
+  },
+  "2W": {
+    "chosen_on_validation": "all_finbert__xgb",
+    "validation_sharpe": 2.1189558629937175,
+    "test_sharpe_by_cost": {
+      "0": 0.7582065324654311,
+      "5": 0.5789033329049423,
+      "10": 0.3993373154220023,
+      "20": 0.03998981803831891
+    },
+    "test_turnover_per_period": 2.1110254234207253,
+    "test_max_drawdown": 0.143214123182133,
+    "test_periods": 42,
+    "pct_rank_among_real_specs": 0.9306666666666666,
+    "share_real_specs_beating_placebo_max": 0.018666666666666668,
+    "placebo_sharpe_range": [
+      -1.4223509519809963,
+      0.7319615889008085
+    ],
+    "real_sharpe_median": -0.36263558565334236,
+    "permutation_p_value": 0.01898101898101898,
+    "permutation_null_95pct": 0.1443096727406824,
+    "permutation_p_value_gross": 0.16483516483516483,
+    "best_in_test": "text_lda__xgb",
+    "best_in_test_sharpe": 1.1423559615919503,
+    "n_trials_raw": 375,
+    "n_trials_effective": 8.38940204541951,
+    "dsr_chosen_n1": 0.6941237681536814,
+    "dsr_best_in_test": {
+      "N_eff": 0.6142775359066801,
+      "N_26": 0.43175309280692675,
+      "N_raw": 0.15806152700539866
+    },
+    "bootstrap_sharpe_95ci": [
+      -1.2282048316682577,
+      2.023373455994918
+    ],
+    "bootstrap_diff_vs_price_95ci": [
+      -1.4320645124698104,
+      2.645564071656775
+    ],
+    "price_model_same_type_sharpe": -0.15069957536002507
+  },
+  "W": {
+    "chosen_on_validation": "text_nolbert__ipca_rk",
+    "validation_sharpe": 1.504214301023994,
+    "test_sharpe_by_cost": {
+      "0": 0.38769589880801325,
+      "5": 0.22812852893272587,
+      "10": 0.06872980843477493,
+      "20": -0.2481948214063932
+    },
+    "test_turnover_per_period": 0.7808161009452916,
+    "test_max_drawdown": 0.10320589304006811,
+    "test_periods": 81,
+    "pct_rank_among_real_specs": 0.792,
+    "share_real_specs_beating_placebo_max": 0.048,
+    "placebo_sharpe_range": [
+      -0.7972816763965058,
+      0.4167106708072707
+    ],
+    "real_sharpe_median": -0.2859896732824156,
+    "permutation_p_value": 0.10589410589410589,
+    "permutation_null_95pct": 0.32711284011509134,
+    "permutation_p_value_gross": 0.3126873126873127,
+    "best_in_test": "all_nolbert__xgb",
+    "best_in_test_sharpe": 1.0663408212334553,
+    "n_trials_raw": 375,
+    "n_trials_effective": 7.7934928620975,
+    "dsr_chosen_n1": 0.5341572071980394,
+    "dsr_best_in_test": {
+      "N_eff": 0.42639687930963066,
+      "N_26": 0.21193948002675683,
+      "N_raw": 0.033849406381842126
+    },
+    "bootstrap_sharpe_95ci": [
+      -1.353748273706775,
+      1.3381559357180715
+    ],
+    "bootstrap_diff_vs_price_95ci": [
+      -1.5628389728306193,
+      1.7707594120919763
+    ],
+    "price_model_same_type_sharpe": -0.02555468977455914
+  }
+}

@@ -1,0 +1,51 @@
+spec,features,K,penalty,kept,periods,theirs_err,months,my_err,pred_scale,note
+all_finbert__sipca,all_finbert,3,0.03,44/49,69/14/21,2.2781729714510535e-10,104,2.278172962777436e-10,0.006278052926063538,
+all_finbert_s63__sipca,all_finbert_s63,3,0.1,38/49,69/14/21,2.3153985152790657e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_finbert_
+all_lda__sipca,all_lda,1,0.3,43/129,69/14/21,5.816716292655899e-11,104,5.816716379392073e-11,0.0015399709809571505,
+all_lda_all__sipca,all_lda_all,1,0.3,55/129,69/14/21,5.817347645264981e-11,104,5.8173475368447636e-11,0.001780052436515689,
+all_lda_all_s63__sipca,all_lda_all_s63,1,0.3,52/129,69/14/21,1.1639980429176133e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_lda_all_
+all_lda_s63__sipca,all_lda_s63,1,0.3,47/129,69/14/21,5.801298352293982e-11,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_lda_s63.
+all_minilm__sipca,all_minilm,3,0.1,99/129,69/14/21,2.1277749874537566e-10,104,2.1277749874537566e-10,0.004792654886841774,
+all_minilm_s63__sipca,all_minilm_s63,3,0.3,65/129,69/14/21,2.1658608847369143e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_minilm_s
+all_nolbert20__sipca,all_nolbert20,3,0.03,49/49,69/14/21,2.1314990831383662e-10,104,2.1314991091592184e-10,0.0043651144951581955,
+all_nolbert20_s63__sipca,all_nolbert20_s63,3,0.03,49/49,69/14/21,1.799820370865235e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_nolbert2
+all_nolbert__sipca,all_nolbert,3,0.3,61/129,69/14/21,2.2661950267732767e-10,104,2.2661950267732767e-10,0.004625121131539345,
+all_nolbert_s63__sipca,all_nolbert_s63,3,0.3,61/129,69/14/21,2.320093908658727e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_nolbert_
+emb_fb__sipca,emb_fb,1,0.3,52/64,69/14/21,5.7964139564548045e-11,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/emb_fb.npy'
+firm_finbert__sipca,firm_finbert,1,0.3,11/21,69/14/21,5.440854602793699e-11,104,5.4408546895298726e-11,0.0010423511266708374,
+firm_lda__sipca,firm_lda,1,0.3,24/61,69/14/21,2.3177971087556815e-10,104,2.3177971174292988e-10,0.005734800826758146,
+firm_lda_all__sipca,firm_lda_all,1,0.3,41/61,69/14/21,1.1600576792572537e-10,104,1.160057687930871e-10,0.004462669603526592,
+firm_minilm__sipca,firm_minilm,1,0.3,42/61,69/14/21,2.9086040650647127e-11,104,2.9086040650647127e-11,0.0009204943780787289,
+firm_nolbert20__sipca,firm_nolbert20,3,0.03,21/21,69/14/21,7.836291207943824e-11,104,7.836291294679998e-11,0.0021263856906443834,
+firm_nolbert__sipca,firm_nolbert,1,0.03,60/61,69/14/21,3.406305515429864e-10,104,3.406305446040925e-10,0.010346690192818642,
+narr_finbert__sipca,narr_finbert,3,0.1,20/20,69/14/21,4.5641366727688926e-10,104,4.5641366727688926e-10,0.011372484266757965,
+narr_finbert_s63__sipca,narr_finbert_s63,3,0.03,20/20,69/14/21,2.70571797605923e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_finbert_
+narr_lda__sipca,narr_lda,1,0.3,45/60,69/14/21,1.156799465246161e-10,104,1.1567994565725437e-10,0.0033874167129397392,
+narr_lda_all__sipca,narr_lda_all,1,0.1,57/60,69/14/21,1.1605807113956867e-10,104,1.1605807027220694e-10,0.0034779198467731476,
+narr_lda_all_s63__sipca,narr_lda_all_s63,3,0.3,60/60,69/14/21,2.3196810444714444e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_lda_all_
+narr_lda_s63__sipca,narr_lda_s63,1,0.3,57/60,69/14/21,2.3236868505749353e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_lda_s63.
+narr_minilm__sipca,narr_minilm,1,0.3,50/60,69/14/21,2.2955747025488193e-10,104,2.2955747112224367e-10,0.004357923753559589,
+narr_minilm_s63__sipca,narr_minilm_s63,3,0.1,60/60,69/14/21,4.6401349082514365e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_minilm_s
+narr_nolbert20__sipca,narr_nolbert20,1,0.3,14/20,69/14/21,5.7950091340158716e-11,104,5.7950092207520454e-11,0.0015528507065027952,
+narr_nolbert20_s63__sipca,narr_nolbert20_s63,3,0.03,20/20,69/14/21,2.0979196331538663e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_nolbert2
+narr_nolbert__sipca,narr_nolbert,1,0.03,58/60,69/14/21,4.625912673750232e-10,104,4.625912673750232e-10,0.013062763959169388,
+narr_nolbert_s63__sipca,narr_nolbert_s63,1,0.3,50/60,69/14/21,3.8724502077203127e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_nolbert_
+news_fb__sipca,news_fb,1,0.3,66/77,69/14/21,1.4536063758924245e-11,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/tone_fb.npy'
+price__sipca,price,3,0.3,7/8,69/14/21,1.1623194811141713e-10,104,1.1623194811141713e-10,0.0029059492517262697,
+px_all__sipca,px_all,3,0.3,122/212,69/14/21,2.3272938610985339e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/tone_fb.npy'
+px_news__sipca,px_news,3,0.3,48/91,69/14/21,1.1629193181345032e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/tone_fb.npy'
+px_tone__sipca,px_tone,3,0.1,23/27,69/14/21,1.1638996710860994e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/tone_fb.npy'
+text_finbert__sipca,text_finbert,3,0.3,27/41,69/14/21,4.635439879163705e-10,104,4.6354398618164705e-10,0.010548848658800125,
+text_finbert_s63__sipca,text_finbert_s63,3,0.3,27/41,69/14/21,2.321004369601476e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_finbert_
+text_lda__sipca,text_lda,1,0.3,52/121,69/14/21,1.1542303571254742e-10,104,1.1542303657990916e-10,0.0034252190962433815,
+text_lda_all__sipca,text_lda_all,3,0.3,75/121,69/14/21,8.545588325511999e-11,104,8.545588152039651e-11,0.0022928223479539156,
+text_lda_all_s63__sipca,text_lda_all_s63,3,0.3,80/121,69/14/21,2.32783661270608e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_lda_all_
+text_lda_s63__sipca,text_lda_s63,1,0.1,88/121,69/14/21,2.3259539780329241e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_lda_s63.
+text_minilm__sipca,text_minilm,1,0.3,68/121,69/14/21,2.3048778510781354e-10,104,2.3048778337309006e-10,0.007045474834740162,
+text_minilm_s63__sipca,text_minilm_s63,1,0.3,82/121,69/14/21,8.951583658350915e-11,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_minilm_s
+text_nolbert20__sipca,text_nolbert20,1,0.3,22/41,69/14/21,5.749026948942415e-11,104,5.749026905574328e-11,0.001592882676050067,
+text_nolbert20_s63__sipca,text_nolbert20_s63,3,0.1,40/41,69/14/21,1.1522848560735488e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_nolbert2
+text_nolbert__sipca,text_nolbert,1,0.1,93/121,69/14/21,4.642598909476714e-10,104,4.6425989441711835e-10,0.012401980347931385,
+text_nolbert_s63__sipca,text_nolbert_s63,3,0.3,84/121,69/14/21,2.0226936965628273e-10,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/narr_nolbert_
+tone_fb__sipca,tone_fb,1,0.3,6/8,69/14/21,2.9013320717273527e-11,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/tone_fb.npy'
+tone_lm__sipca,tone_lm,1,0.3,3/5,69/14/21,9.094224261456049e-13,104,,,FileNotFoundError: [Errno 2] No such file or directory: 'panels/M/tone_lm.npy'

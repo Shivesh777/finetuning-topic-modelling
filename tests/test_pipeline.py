@@ -228,6 +228,7 @@ def test_ipca_loadings_and_factors(workspace):
         factors = pd.read_csv(folder / "factors.csv", parse_dates=["date", "hold_start"])
         cols = [f"f{j + 1}" for j in range(summary["factors"])]
         assert summary["test_forecasts_reproduced_max_abs_error"] < 1e-6
+        assert summary["attention_shock_window_days"] == (None if features == "price" else 5)
         g = gamma[cols].to_numpy()
         assert np.allclose(g.T @ g, np.eye(len(cols)), atol=1e-8)          # Gamma'Gamma = I
         fit = factors[factors["estimate"] == "in_sample"]

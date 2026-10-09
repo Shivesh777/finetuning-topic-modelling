@@ -2,10 +2,17 @@
  "freq": "M",
  "features": "all_finbert_s63",
  "model": "sipca",
+ "blocks": [
+  "price",
+  "narr_finbert_s63",
+  "firm_finbert"
+ ],
+ "attention_shock_window_days": 63,
  "params": {
   "n_factors": 3,
   "penalty": 0.1
  },
+ "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 3,
  "features_total": 49,
  "features_kept": 38,

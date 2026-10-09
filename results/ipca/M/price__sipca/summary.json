@@ -2,10 +2,15 @@
  "freq": "M",
  "features": "price",
  "model": "sipca",
+ "blocks": [
+  "price"
+ ],
+ "attention_shock_window_days": null,
  "params": {
   "n_factors": 3,
   "penalty": 0.3
  },
+ "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 3,
  "features_total": 8,
  "features_kept": 7,

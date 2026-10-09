@@ -2,10 +2,21 @@
  "freq": "M",
  "features": "px_all",
  "model": "sipca",
+ "blocks": [
+  "price",
+  "tone_fb",
+  "tone_lm",
+  "emb_fb",
+  "npx",
+  "narr_nolbert_s63",
+  "firm_nolbert"
+ ],
+ "attention_shock_window_days": 63,
  "params": {
   "n_factors": 3,
   "penalty": 0.3
  },
+ "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 3,
  "features_total": 212,
  "features_kept": 122,

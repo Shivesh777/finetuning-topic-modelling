@@ -94,12 +94,17 @@
   function stopAuto() { timers.forEach(clearTimeout); timers = []; }
   function autoplay(i) {
     var sl = slides[i], at = (sl.dataset.auto || '').split(/\s+/).filter(Boolean).map(Number);
+    if (sl.dataset.manual != null) return;
     for (var k = 1; k <= maxStep(sl); k++) (function (k) {
       timers.push(setTimeout(function () { if (cur === i && step === k - 1) go(i, k, true); }, at[k - 1] != null ? at[k - 1] : 600 + (k - 1) * 1600));
     })(k);
   }
   function enter(i) { go(i, 0); autoplay(cur); }
-  function next() { if (cur < slides.length - 1) enter(cur + 1); }
+  // a slide marked data-manual plays no timers: each click advances one step, then the next click leaves
+  function next() {
+    if (cur >= 0 && slides[cur].dataset.manual != null && step < maxStep(slides[cur])) { go(cur, step + 1, true); return; }
+    if (cur < slides.length - 1) enter(cur + 1);
+  }
   function prev() { if (cur > 0) go(cur - 1, maxStep(slides[cur - 1])); }
 
   // ------------------------------------------------------------------ keys

@@ -12,7 +12,7 @@
       enter: function (box, k) { halt(box); build(box, k, false); box._k = k; },
       step: function (box, k) { if (box._k === k) return; box._k = k; build(box, k, true); },
       leave: function (box) { halt(box); },
-      still: function (box, k) { halt(box); build(box, k == null ? 3 : k, false); }
+      still: function (box, k) { halt(box); build(box, k == null ? 2 : k, false); }
     };
   }
 
@@ -96,7 +96,7 @@
     tx(lab2, 430, 300, 'Pull together', {'font-size': 22, 'font-weight': 600, class: 't-cobalt'});
     tx(lab2, 430, 330, 'Push apart', {'font-size': 22, class: 't-quiet'});
 
-    var lab3 = reveal(box, el('g', {}, s), k, 3, animate, 700);
+    var lab3 = el('g', {opacity: k >= 2 && !(animate && k === 2) ? 1 : 0}, s);
     el('circle', {cx: Pc[0], cy: Pc[1], r: 46, fill: 'none', stroke: COL.mist, 'stroke-width': 2, 'stroke-dasharray': '8 7'}, lab3);
     tx(lab3, 1360, 646, 'After   8% → 89%', {'text-anchor': 'end', 'font-size': 24, 'font-weight': 600, class: 't-cobalt'});
 
@@ -105,8 +105,12 @@
       if (animate) { flight(0); tween(box, 1600, function (u) { flight(ease(u)); }); }
       else flight(1);
     } else if (k >= 2) {
-      if (animate && k === 2) { reshape(0); tween(box, 2200, function (u) { reshape(ease(u)); }); }
-      else reshape(1);
+      if (animate && k === 2) {
+        reshape(0);
+        tween(box, 2200, function (u) { reshape(ease(u)); }, function () {
+          tween(box, 700, function (u) { lab3.setAttribute('opacity', ease(u).toFixed(3)); });
+        });
+      } else reshape(1);
     }
   });
 })();

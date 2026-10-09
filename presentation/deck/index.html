@@ -196,38 +196,13 @@
   <div class="ex" data-chart="vtest"></div>
 </section>
 
-<section class="slide" data-sec="5" data-num="5.7" data-name="Weekly forecasts" data-steps="4" data-auto="250 1700 2700 3600">
+<section class="slide" data-sec="5" data-num="5.7" data-name="Cross-asset results" data-steps="4" data-auto="250 1600 3000 4700">
   <div class="tags"><span class="chip">5.7</span><span class="chip on">Results</span><span class="who">Charishma</span></div>
-  <div class="hair"></div>
-  <div class="title">Weekly forecasts versus the historical mean</div>
-  <div class="ex" data-chart="weekly"></div>
-</section>
-
-<section class="slide" data-sec="5" data-num="5.8" data-name="Cross-asset results" data-steps="4" data-auto="250 1600 3000 4700">
-  <div class="tags"><span class="chip">5.8</span><span class="chip on">Results</span><span class="who">Charishma</span></div>
   <div class="hair"></div>
   <div class="title">Cross-asset explanatory results</div>
   <div class="ex" data-chart="xasset"></div>
 </section>
 
-<section class="slide" data-sec="5" data-num="5.9" data-name="Text-model comparison" data-steps="4" data-auto="250 1200 2100 3000">
-  <div class="tags"><span class="chip">5.9</span><span class="chip on">Results</span><span class="who">Charishma</span></div>
-  <div class="hair"></div>
-  <div class="title">Crude-oil results across text models</div>
-  <div class="ex" data-chart="textmodels"></div>
-</section>
-
-<!-- ================================================================ closing -->
-<section class="slide cover end" data-sec="0" data-name="Thank you">
-  <div class="title">Thank you.</div>
-  <div class="takeaway">Our two strongest validated picks read the news with NoLBERT and tuned attention shocks, and earned net Sharpe ratios of 0.6–0.7 after costs.
-    <span class="more">Built end to end, from 1.26 million articles to portfolios, with a genuine validation and test split.</span></div>
-  <div class="who-list"><span class="grey">Questions?</span><br>Jonathan · Swapnil · Kevin · Shivesh · Charishma</div>
-  <div class="panel-dark" data-chart="beads" data-noadvance><canvas></canvas><div class="when"></div>
-    <div class="cap">Columns: 20 news topics found by NoLBERT. Rows: months, Sep 2020 to Dec 2024.<br>A dot: the topic took more of that month’s news than its median share of the past year.</div></div>
-</section>
-
-<!-- ================================================================ backup -->
 <section class="slide" data-sec="B" data-num="B1" data-name="Table A3" data-steps="0">
   <div class="tags"><span class="chip">B1</span><span class="chip on">NoLBERT</span></div>
   <div class="hair"></div>
@@ -399,6 +374,32 @@
   <div class="ex" data-chart="protocols"></div>
   <aside class="notes">The trainer reserved the first 2,048 generated pairs for evaluation. Pairs are generated in article-date order, so these are the earliest-dated articles of the corpus: not a random assignment, and not a later period.</aside>
 </section>
+
+<section class="slide" data-sec="B" data-num="B19" data-name="Weekly forecasts" data-steps="4" data-auto="250 1700 2700 3600">
+  <div class="tags"><span class="chip">B19</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title">Weekly forecasts versus the historical mean</div>
+  <div class="ex" data-chart="weekly"></div>
+</section>
+
+<section class="slide" data-sec="B" data-num="B20" data-name="Text-model comparison" data-steps="4" data-auto="250 1200 2100 3000">
+  <div class="tags"><span class="chip">B20</span><span class="chip on">Results</span></div>
+  <div class="hair"></div>
+  <div class="title">Crude-oil results across text models</div>
+  <div class="ex" data-chart="textmodels"></div>
+</section>
+
+<!-- ================================================================ closing -->
+<section class="slide cover end" data-sec="0" data-name="Thank you">
+  <div class="title">Thank you.</div>
+  <div class="takeaway">Our two strongest validated picks read the news with NoLBERT and tuned attention shocks, and earned net Sharpe ratios of 0.6–0.7 after costs.
+    <span class="more">Built end to end, from 1.26 million articles to portfolios, with a genuine validation and test split.</span></div>
+  <div class="who-list"><span class="grey">Questions?</span><br>Jonathan · Swapnil · Kevin · Shivesh · Charishma</div>
+  <div class="panel-dark" data-chart="beads" data-noadvance><canvas></canvas><div class="when"></div>
+    <div class="cap">Columns: 20 news topics found by NoLBERT. Rows: months, Sep 2020 to Dec 2024.<br>A dot: the topic took more of that month’s news than its median share of the past year.</div></div>
+</section>
+
+<!-- ================================================================ backup -->
 
 </div>
 <script src="js/data.js"></script>

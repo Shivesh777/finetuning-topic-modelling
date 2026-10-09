@@ -266,7 +266,7 @@
       });
       lPad.setAttribute('opacity', a >= 1 ? 1 : 0); lL2.setAttribute('opacity', c2 >= 1 ? 1 : 0);
     }
-    if (k >= 2) { if (animate && k === 2) tween(box, 2200, pool); else pool(1); }
+    if (k >= 2) { if (animate && k === 2) tween(box, 1400, pool); else pool(1); }
 
     // scene B, step 3: the batch, two aligned groups of 32 vectors that keep their article numbers
     var g3 = reveal(box, el('g', {}, s), k, 3, animate, 500), GA = 840, GB = 920, GY = 104, RP = 9, cellsA = [], cellsB = [];
@@ -278,7 +278,7 @@
       if (i === 0 || i === 31) label(g3, GA - 6, GY + i * RP + 7, String(i + 1), 12, 't-mono t-quiet', {'text-anchor': 'end'});
     }
     function fillGroups(u) { for (var q = 0; q < 32; q++) { var v = part(u, q / 40, q / 40 + 0.2); cellsA[q].setAttribute('opacity', v); cellsB[q].setAttribute('opacity', v); } }
-    if (k >= 3) { if (animate && k === 3) tween(box, 1400, fillGroups); else fillGroups(1); }
+    if (k >= 3) { if (animate && k === 3) tween(box, 900, fillGroups); else fillGroups(1); }
 
     // scene C, step 4: every query against every candidate; the diagonal is the partner, the rest are the negatives
     var g4 = reveal(box, el('g', {}, s), k, 4, animate, 500), MX = 1030, MY = 104, CP = 9, CS = 8, Mw = 32 * CP, cells = [];
@@ -342,13 +342,13 @@
     rich(g6, SX, 626, [['L = ½[CE(S, y) + CE(S'], ['T', 'sup'], [', y)]']], {'font-size': 26, class: 't-serif'});
     label(g6, 1090, 626, 'Symmetric InfoNCE', 19, 't-mono t-cobalt');
     label(g6, 1316, 626, 'Targets: diagonal matches', 17, 't-mono t-quiet');
-    if (k === 4) { if (animate) tween(box, 1200, function (u) { paint(0, Math.ceil(u * 32)); }); else paint(0); }
-    if (k === 5) { paint(0); if (animate) tween(box, 1200, function (u) { strip(0, ease(u)); }); else strip(0, 1); }
+    if (k === 4) { if (animate) tween(box, 800, function (u) { paint(0, Math.ceil(u * 32)); }); else paint(0); }
+    if (k === 5) { paint(0); if (animate) tween(box, 800, function (u) { strip(0, ease(u)); }); else strip(0, 1); }
     if (k >= 6) {
       if (ex) state.textContent = 'After fine-tuning';
       if (animate && k === 6) {
         paint(0); strip(0, 1); colHL.setAttribute('opacity', 0);
-        tween(box, 1600, function (u) { var v = ease(part(u, 0, 0.7)); paint(v); strip(v, 1); colHL.setAttribute('opacity', u > 0.8 ? 1 : 0); });
+        tween(box, 1100, function (u) { var v = ease(part(u, 0, 0.7)); paint(v); strip(v, 1); colHL.setAttribute('opacity', u > 0.8 ? 1 : 0); });
       } else { paint(1); strip(1, 1); }
     }
 
@@ -367,7 +367,7 @@
       upd.forEach(function (t, q) { t.setAttribute('opacity', b > q * 0.3 ? 1 : 0); });
       st.forEach(function (t, q) { t.setAttribute('opacity', c2 > q / 3 + 0.01 ? 1 : 0); });
     }
-    if (k >= 7) { if (animate) tween(box, 2800, trace); else trace(1); }
+    if (k >= 7) { if (animate) tween(box, 1800, trace); else trace(1); }
   });
 
   // ------------------------------------------------------------------ 3.2 the paper's protocol and ours, then the dates

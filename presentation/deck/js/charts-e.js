@@ -48,7 +48,7 @@
   // ------------------------------------------------------------------ 1.2 what we built: the 230P comparison, the 230ZA changes, the separate replication
   C.built = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, F = D().facts, za = F.za, rp = F.replication, i, j;
-    var STAGES = [['News', 100], ['Topics', 300], ['Stock exposures', 560], ['Sparse IPCA', 860], ['MVO portfolio', 1040]];
+    var STAGES = [['News', 100], ['Topics', 300], ['Stock exposures', 560], ['Sparse IPCA', 860], ['MVE factor portfolio', 1040]];
     STAGES.forEach(function (h) { label(s, h[1], 22, h[0], 15, 't-mono t-quiet'); });
     var TOP = {y: 140}, LOW = {y: 430};
     label(s, 0, TOP.y + 10, '230P', 28, 't-serif', {'font-weight': 500});
@@ -68,7 +68,7 @@
     arrow(g2, 802, TOP.y, 856, TOP.y, {stroke: CHAR});
     rrect(g2, 860, TOP.y - 30, 130, 60, {fill: COL.wash, stroke: CHAR, 'stroke-width': 1.5}); label(g2, 925, TOP.y + 7, za.factors + ' factors', 19, '', {'text-anchor': 'middle'});
     arrow(g2, 992, TOP.y, 1036, TOP.y, {stroke: CHAR});
-    rrect(g2, 1040, TOP.y - 30, 150, 60, {fill: COL.wash, stroke: CHAR, 'stroke-width': 1.5}); label(g2, 1115, TOP.y + 7, 'MVO portfolio', 19, '', {'text-anchor': 'middle'});
+    rrect(g2, 1040, TOP.y - 30, 150, 60, {fill: COL.wash, stroke: CHAR, 'stroke-width': 1.5}); label(g2, 1115, TOP.y - 3, 'MVE factor', 18, '', {'text-anchor': 'middle'}); label(g2, 1115, TOP.y + 19, 'portfolio', 18, '', {'text-anchor': 'middle'});
     label(g2, 100, 250, 'Same downstream model; different text representations.', 20);
 
     // scene B, step 3: the 230ZA row, unchanged stages in charcoal, the changed topic processing in cobalt
@@ -92,7 +92,7 @@
     var rel = label(g4, 560, LOW.y + 102, za.topics + ' topics × ' + za.half_lives.length + ' half-lives', 14, 't-mono t-quiet', {opacity: 0});
     rrect(g4, 860, LOW.y - 30, 130, 60, {fill: COL.wash, stroke: CHAR, 'stroke-width': 1.5}); label(g4, 925, LOW.y + 7, za.factors + ' factors', 19, '', {'text-anchor': 'middle'});
     arrow(g4, 992, LOW.y, 1036, LOW.y, {stroke: CHAR});
-    rrect(g4, 1040, LOW.y - 30, 150, 60, {fill: COL.wash, stroke: CHAR, 'stroke-width': 1.5}); label(g4, 1115, LOW.y + 7, 'MVO portfolio', 19, '', {'text-anchor': 'middle'});
+    rrect(g4, 1040, LOW.y - 30, 150, 60, {fill: COL.wash, stroke: CHAR, 'stroke-width': 1.5}); label(g4, 1115, LOW.y - 3, 'MVE factor', 18, '', {'text-anchor': 'middle'}); label(g4, 1115, LOW.y + 19, 'portfolio', 18, '', {'text-anchor': 'middle'});
     function copies(u) { blocks.forEach(function (b, q) { b.setAttribute('opacity', part(u, q * 0.22, q * 0.22 + 0.3)); }); cnt.setAttribute('opacity', u > 0.85 ? 1 : 0); rel.setAttribute('opacity', u >= 1 ? 1 : 0); }
     if (k >= 4) { if (animate && k === 4) tween(box, 1600, copies); else copies(1); }
 
@@ -115,7 +115,7 @@
         for (var l = 0; l <= 300; l += 3) d += (l ? 'L' : 'M') + X(l).toFixed(1) + ' ' + Y(Math.pow(2, -l / h)).toFixed(1);
         paths.push(el('path', {d: d, fill: 'none', stroke: [COL.cobalt, '#5A6FD9', '#9AA6E8'][q], 'stroke-width': full ? 2.5 : 1.5}, into));
         el('circle', {cx: X(h), cy: Y(0.5), r: full ? 5 : 2.5, fill: [COL.cobalt, '#5A6FD9', '#9AA6E8'][q]}, into);
-        if (full) label(into, X(h) + 8, Y(0.5) - 10, h + '-day half-life', 13, 't-mono', {'font-weight': 500});
+        if (full) label(into, X(h) + 8, Y(0.5) + (q === 1 ? 24 : -10), h + '-day half-life', 13, 't-mono', {'font-weight': 500});
       });
       return paths;
     }
@@ -155,7 +155,7 @@
     if (k >= 6) { if (animate && k === 6) tween(box, 2400, repl); else repl(1); }
   });
 
-  // ------------------------------------------------------------------ 1.3 the earlier MVO portfolio: its Sharpe, its two components, its exposure, and what follows
+  // ------------------------------------------------------------------ 1.3 the earlier MVE factor portfolio: its Sharpe, its two components, its exposure, and what follows
   C.mvo = stepped(function (box, k, animate) {
     var g = surface(box), s = g.s, M = D().facts.mvo, main = el('g', {}, s);
     label(main, 0, 24, 'Earlier FNSPID portfolio · ' + monthName(M.from) + '–' + monthName(M.to), 17, 't-mono t-quiet');

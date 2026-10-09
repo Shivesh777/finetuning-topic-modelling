@@ -224,9 +224,9 @@
         if (wi2 >= weeks.length) return;
         panels.forEach(function (p) { advance(p, wi2, 650, true); });
         wi2++;
-        var t = setTimeout(nextWeek, 820); (box._stops = box._stops || []).push(function () { clearTimeout(t); });
+        var t = setTimeout(nextWeek, 820 * U.pace(box)); (box._stops = box._stops || []).push(function () { clearTimeout(t); });
       }
-      var t0 = setTimeout(nextWeek, 500); (box._stops = box._stops || []).push(function () { clearTimeout(t0); });
+      var t0 = setTimeout(nextWeek, 500 * U.pace(box)); (box._stops = box._stops || []).push(function () { clearTimeout(t0); });
     },
     enter: function (box, k) { this.draw(box, k, false); box._k = k; },
     step: function (box, k) { if (box._k === k) return; box._k = k; this.draw(box, k, true); },
@@ -376,7 +376,7 @@
       if (k >= 1) {
         if (play && k === 1) {
           tween(box, 600, function (u) { select(ease(u)); }, function () {
-            var t = setTimeout(function () { tween(box, 1500, function (u) { drop(ease(u)); }, landed); }, 500);
+            var t = setTimeout(function () { tween(box, 1500, function (u) { drop(ease(u)); }, landed); }, 500 * U.pace(box));
             (box._stops = box._stops || []).push(function () { clearTimeout(t); });
           });
         } else { select(1); drop(1); landed(); }

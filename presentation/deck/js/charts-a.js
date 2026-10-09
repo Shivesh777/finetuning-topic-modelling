@@ -14,8 +14,12 @@
   function lin(d0, d1, r0, r1) { return function (v) { return r0 + (v - d0) / (d1 - d0) * (r1 - r0); }; }
   function ease(u) { return 1 - Math.pow(1 - u, 3); }
   var CALM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // pace: the deck plays every animation faster than it was drawn, 2x, and 4x in section 4 (how it works).
+  // The data-auto times in index.html are already the fast ones; tween durations are scaled here.
+  function pace(node) { var sl = node && node.closest ? node.closest('.slide') : null; return sl && sl.dataset.sec === '4' ? 0.25 : 0.5; }
   function tween(box, ms, fn, done) {
     if (CALM) { fn(1); if (done) done(); return function () {}; }   // reduced motion: the final state at once
+    ms = ms * pace(box);
     var t0 = null, id, stopped = false;
     function f(t) { if (stopped) return; if (t0 === null) t0 = t; var u = Math.min(1, (t - t0) / ms); fn(u); if (u < 1) id = requestAnimationFrame(f); else if (done) done(); }
     id = requestAnimationFrame(f);
@@ -35,7 +39,7 @@
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function day(s) { return Date.parse(s) / 864e5; }
   var COL = {ink: '#161616', grey: '#6F6F6F', mist: '#A8A8A6', rule: '#DEDEDE', wash: '#F3F3F1', cobalt: '#2C4BEF', red: '#E0442B'};
-  window.DECKUTIL = {el: el, tx: tx, surface: surface, lin: lin, ease: ease, tween: tween, halt: halt, reveal: reveal, pct: pct, signed: signed, day: day, MON: MON, COL: COL};
+  window.DECKUTIL = {el: el, tx: tx, surface: surface, lin: lin, ease: ease, tween: tween, halt: halt, reveal: reveal, pct: pct, signed: signed, day: day, MON: MON, COL: COL, pace: pace};
 
   // a chart built from a draw(state) function: steps re-draw, still draws the last state
   function stepped(build) {

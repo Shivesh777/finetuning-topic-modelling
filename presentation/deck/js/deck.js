@@ -89,13 +89,15 @@
     applyStep(sl); paint();
   }
   // autoplay: the steps of the slide just entered, each at its time from data-auto
-  // (default: the first after 0.6 s, then one every 1.6 s). Leaving the slide cancels the rest.
+  // (default: the first after 0.6 s, then one every 1.6 s, at the deck's pace: 2x, 4x in section 4).
+  // Leaving the slide cancels the rest.
   var timers = [];
   function stopAuto() { timers.forEach(clearTimeout); timers = []; }
   function autoplay(i) {
     var sl = slides[i], at = (sl.dataset.auto || '').split(/\s+/).filter(Boolean).map(Number);
     for (var k = 1; k <= maxStep(sl); k++) (function (k) {
-      timers.push(setTimeout(function () { if (cur === i && step === k - 1) go(i, k, true); }, at[k - 1] != null ? at[k - 1] : 600 + (k - 1) * 1600));
+      timers.push(setTimeout(function () { if (cur === i && step === k - 1) go(i, k, true); },
+        at[k - 1] != null ? at[k - 1] : (600 + (k - 1) * 1600) * window.DECKUTIL.pace(sl)));
     })(k);
   }
   function enter(i) { go(i, 0); autoplay(cur); }

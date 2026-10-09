@@ -30,7 +30,7 @@
       var b = t.getBoundingClientRect(); if (!b.width) return;
       texts.push({e: t, b: rel(b, o), svg: true});
     });
-    sl.querySelectorAll('.title, .src, .xnote, .list, ol.next li, .who-list, .meta, .panel-dark .cap, .tags').forEach(function (e) {
+    sl.querySelectorAll('.title, .src, .xnote, .list, ol.next li, .who-list, .takeaway, .meta, .panel-dark .cap, .tags').forEach(function (e) {
       if (!shown(e, sl)) return;
       var b = textBox(e); if (!b) return;
       var it = {e: e, b: rel(b, o), note: /\b(src|xnote|list)\b/.test(e.className) || e.tagName === 'LI'};

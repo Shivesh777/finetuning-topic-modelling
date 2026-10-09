@@ -99,6 +99,11 @@ svg .ln-axis { stroke: var(--mist); }
 .cover .meta { position: absolute; left: 140px; bottom: 76px; right: 1040px; font: 400 19px/1.5 var(--mono); color: var(--graphite); }
 .cover .panel-dark { right: 0; top: 0; bottom: 0; width: 960px; }
 .cover .panel-dark .cap { bottom: 56px; }
+/* the closing slide: thank you, a two-line takeaway, questions */
+.cover.end .title { top: 230px; }
+.cover.end .takeaway { position: absolute; left: 140px; top: 400px; right: 1040px; font: 400 33px/1.4 var(--sans); color: var(--ink); }
+.cover.end .takeaway .more { display: block; margin-top: 26px; font-size: 25px; line-height: 1.5; color: var(--graphite); }
+.cover.end .who-list { top: 800px; }
 
 /* chrome */
 #chrome { position: absolute; inset: 0; pointer-events: none; }

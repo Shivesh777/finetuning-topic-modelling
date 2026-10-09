@@ -1,6 +1,8 @@
 # Group presentation (MFE 230ZB)
 
-A browser deck of 21 slides and 17 backup slides. One click per slide: each slide's animations then play by themselves.
+A browser deck of 26 slides and 17 backup slides. One click per slide: each slide's animations then play by themselves, at twice the speed they were drawn at (four times in section 4: `pace` in `deck/js/charts-a.js`; the `data-auto` times in `index.html` are the fast ones).
+
+The title and closing slides show what the news was about, month by month: which of the 20 NoLBERT topics took more of the news than usual, with four callouts whose headline keywords were checked on the article file (`deck/js/panel.js`).
 
     pip install flask
     python presentation/app.py        # http://127.0.0.1:5055

@@ -6,6 +6,7 @@
           back: Left, Up, PageUp, Backspace (the previous slide, shown complete)
           R: replay this slide's animations    G then a number then Enter: jump to that slide
           I: index of slides (click one)    Home / End    F: full screen    T: timer    B or . : black screen
+          N: this slide's speaker notes (an <aside class="notes"> in the slide); ?still=1&notes=1 prints them under each slide
    A click anywhere goes forward, except on anything marked data-noadvance.
    #5 in the address opens slide 5 and plays it; #5.2 opens it at step 2 and holds there.
    ?still=1 shows every slide at its last step, one under another: the pre-read, printable to PDF.
@@ -20,35 +21,25 @@
   if (STILL) document.documentElement.classList.add('still');
   var stage = $('#stage'), slides = $$('.slide');
   slides.forEach(function (sl, i) { sl.id = 's' + (i + 1); });   // ?still=1#s12 opens the pre-read at slide 12
-  var SECTIONS = {1: 'Recap', 2: 'Look-ahead', 3: 'Fine-tuning', 4: 'Glass box', 5: 'Results', B: 'Backup'};
+  var SECTIONS = {1: 'Recap', 2: 'NoLBERT', 3: 'Fine-tuning', 4: 'How it works', 5: 'Results', B: 'Backup'};
   var cur = -1, step = 0, started = null, typed = null;
   var CHARTS = window.CHARTS || {};
 
-  // ------------------------------------------------------------------ rail (built from the slides)
+  // ------------------------------------------------------------------ progress marks: the five sections in the header row, the current one in cobalt
   slides.forEach(function (sl) {
-    var sec = sl.dataset.sec;
-    if (!sec || sec === '0') return;
-    var rail = document.createElement('div'); rail.className = 'rail';
-    var html = '';
-    Object.keys(SECTIONS).forEach(function (k) {
-      if (k === 'B' && sec !== 'B') return;
-      html += '<div class="sec' + (k === sec ? ' cur' : '') + '">' + (k === 'B' ? '' : k + '  ') + SECTIONS[k];
-      if (k === sec) {
-        html += '<div class="sub">';
-        slides.forEach(function (o) {
-          if (o.dataset.sec === sec) html += '<div class="' + (o === sl ? 'now' : '') + '">' + (o.dataset.num || '') + '  ' + (o.dataset.name || '') + '</div>';
-        });
-        html += '</div>';
-      }
-      html += '</div>';
-    });
-    rail.innerHTML = html;
-    sl.appendChild(rail);
+    var sec = sl.dataset.sec, tags = sl.querySelector('.tags');
+    if (!sec || sec === '0' || !tags) return;
+    var marks = document.createElement('div'); marks.className = 'marks';
+    marks.innerHTML = Object.keys(SECTIONS).filter(function (k) { return k !== 'B' || sec === 'B'; }).map(function (k) {
+      return '<span class="' + (k === sec ? 'cur' : '') + '">' + (k === 'B' ? '' : k + ' ') + SECTIONS[k] + '</span>';
+    }).join('');
+    var who = tags.querySelector('.who');
+    if (who) tags.insertBefore(marks, who); else tags.appendChild(marks);
   });
 
   // ------------------------------------------------------------------ chrome
   var chrome = document.createElement('div'); chrome.id = 'chrome';
-  chrome.innerHTML = '<div id="count"></div><div id="timer"></div><div id="goto"></div>';
+  chrome.innerHTML = '<div id="count"></div><div id="timer"></div><div id="goto"></div><div id="notes"></div>';
   stage.appendChild(chrome);
   var black = document.createElement('div'); black.id = 'black'; stage.appendChild(black);
   var index = document.createElement('div'); index.id = 'index'; stage.appendChild(index);
@@ -92,6 +83,7 @@
       if (cur === 0 && started == null) started = Date.now();
       cur = i; step = Math.max(0, Math.min(maxStep(sl), st || 0));
       sl.classList.add('on');
+      var nt = sl.querySelector('.notes'); $('#notes').textContent = nt ? nt.textContent : '';
       charts(sl, 'enter', step);
     } else step = Math.max(0, Math.min(maxStep(sl), st || 0));
     applyStep(sl); paint();
@@ -128,6 +120,7 @@
     else if (k === 'r' || k === 'R') enter(cur);
     else if (k === 'f' || k === 'F') { if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
     else if (k === 't' || k === 'T') $('#timer').classList.toggle('on');
+    else if (k === 'n' || k === 'N') $('#notes').classList.toggle('on');
     else if (k === 'b' || k === 'B' || k === '.') black.classList.add('on');
     else return false;
     return true;
@@ -136,9 +129,11 @@
   // ------------------------------------------------------------------ start
   if (STILL) {
     // every slide at its last step; charts draw their final frame. ?still=1&only=12 shows slide 12 alone
-    var only = /[?&]only=(\d+)/.exec(location.search);
+    var only = /[?&]only=(\d+)/.exec(location.search), notes = /[?&]notes=1/.test(location.search);
     slides.forEach(function (sl, i) {
       if (only && i + 1 !== +only[1]) { sl.style.display = 'none'; return; }
+      var nt = sl.querySelector('.notes');
+      if (notes && nt) { nt.classList.add('notes-out'); stage.insertBefore(nt, sl.nextSibling); }   // speaker notes under the slide
       sl.classList.add('on');
       $$('[data-step]', sl).forEach(function (e) { e.classList.add('shown'); });
       charts(sl, 'still', maxStep(sl));

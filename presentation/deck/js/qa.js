@@ -4,7 +4,7 @@
    into <pre id="qa-out"> at the top of the page and to the console. */
 (function () {
   'use strict';
-  var MARGIN = {left: 120, right: 1528, top: 290, bottom: 1036};
+  var MARGIN = {left: 120, right: 1728, top: 290, bottom: 1036};
 
   function shown(e, stop) {
     for (var n = e; n && n !== stop; n = n.parentNode) {

@@ -37,9 +37,9 @@ def index():
 
 @app.route("/<path:path>")
 def files(path):
-    if path == "js/portfolio.js" and not os.path.exists(os.path.join(DECK, path)):
-        # the stock-level ranks are never committed: without them slide 4.3 shows its fallback
-        return Response("/* no stock-level ranks on this machine */\n", mimetype="application/javascript")
+    if path in ("js/portfolio.js", "js/similarity.js") and not os.path.exists(os.path.join(DECK, path)):
+        # the stock-level ranks and the similarity matrices are never committed: without them 4.3 and 3.1 show their fallbacks
+        return Response("/* not built on this machine */\n", mimetype="application/javascript")
     return send_from_directory(DECK, path)
 
 

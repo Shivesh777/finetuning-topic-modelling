@@ -10,6 +10,7 @@
   var BEAD = '44,75,239', WIRE = 'rgba(64,92,240,0.5)';
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var CALM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var UNUSED = (window.DATA.facts && window.DATA.facts.splits && window.DATA.facts.splits.unused_from) || 2017;
 
   function Grid(box) {
     this.box = box; this.B = window.DATA.map.beads;
@@ -43,7 +44,8 @@
       var a = Math.max(0, Math.min(1, (y - (top - sx)) / (2.5 * sx)));   // the oldest rows fade out at the top
       if (j === k) a *= e;                                      // the new month fades in at the bottom
       if (a <= 0) continue;
-      c.fillStyle = 'rgba(' + BEAD + ',' + a.toFixed(3) + ')';
+      var mo = +B.months[j].slice(5, 7), dim = +B.months[j].slice(0, 4) >= UNUSED && mo >= 2 && mo <= 6;   // Feb–Jun: no complete return file
+      c.fillStyle = 'rgba(' + BEAD + ',' + (a * (dim ? 0.28 : 1)).toFixed(3) + ')';
       var row = B.rows[j];
       for (i = 0; i < n; i++) {
         if (!row[i]) continue;
@@ -51,6 +53,9 @@
       }
     }
     if (this.when) { var m = B.months[k]; this.when.textContent = MON[+m.slice(5, 7) - 1] + ' ' + m.slice(0, 4); }
+    c.globalAlpha = fade == null ? 1 : fade;
+    c.fillStyle = '#9C9C9A'; c.font = '400 15px "IBM Plex Mono", Menlo, monospace'; c.textBaseline = 'alphabetic';
+    c.fillText('dimmed rows: Feb to Jun, months without a complete return file', this.x0, 40);
   };
   Grid.prototype.tick = function (now) {
     var me = this, last = this.B.rows.length - 1 + MOVE, run = (last - this.first) * MS_PER_MONTH;

@@ -1,2 +1,4 @@
 # stock-level forecast ranks (derived from licensed CRSP data): built locally, never committed
 deck/js/portfolio.js
+# similarity matrices for 3.1 (tools/export_similarity.py): built locally
+deck/js/similarity.js

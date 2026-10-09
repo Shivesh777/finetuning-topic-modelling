@@ -59,7 +59,7 @@
     var g = surface(box), s = g.s, y = 110, xs = [240, 700, 1160];
     var names = ['230P', '230ZA', '230ZB'];
     var lines = [['Bybee, Kelly & Su pipeline on FNSPID news', 'LDA vs MiniLM topics'],
-                 ['Conditional replication with the', "authors' LDA outputs"],
+                 ['Multi-horizon exposures and spherical clustering', 'Paper replication using supplied LDA outputs'],
                  ['Rebuilt under train, validation', 'and test']];
     var line = el('line', {x1: 60, y1: y, x2: 60, y2: y, stroke: COL.mist, 'stroke-width': 2}, s);
     var nodes = [];
@@ -67,8 +67,8 @@
       var gg = el('g', {opacity: 0}, s);
       el('circle', {cx: x, cy: y, r: 13, fill: i === 2 ? COL.cobalt : COL.ink}, gg);
       tx(gg, x, y - 38, names[i], {'text-anchor': 'middle', 'font-size': 40, class: 't-serif', 'font-weight': 500});
-      tx(gg, x, y + 58, lines[i][0], {'text-anchor': 'middle', 'font-size': 24, class: 't-quiet'});
-      tx(gg, x, y + 90, lines[i][1], {'text-anchor': 'middle', 'font-size': 24, class: 't-quiet'});
+      tx(gg, x, y + 58, lines[i][0], {'text-anchor': 'middle', 'font-size': 20, class: 't-quiet'});
+      tx(gg, x, y + 88, lines[i][1], {'text-anchor': 'middle', 'font-size': 20, class: 't-quiet'});
       nodes.push(gg);
     });
     function showStations(u) {
@@ -99,8 +99,6 @@
     });
     var B = M.beads, i0 = months.indexOf(B.months[0]);
     B.rows.forEach(function (row, r) { if (row[ti]) el('circle', {cx: X(i0 + r), cy: Y(topEdge[i0 + r]) - 8, r: 4, fill: COL.cobalt}, gS); });
-    el('line', {x1: X(i0), x2: X(i0), y1: top - 10, y2: bot, stroke: COL.ink, 'stroke-width': 1.5, 'stroke-dasharray': '6 5'}, gA);
-    tx(gA, X(i0) + 8, top + 22, 'Sep 2020: every fitted part frozen', {'font-size': 17, class: 't-mono', stroke: '#fff', 'stroke-width': 6, 'stroke-linejoin': 'round', 'paint-order': 'stroke'});
     el('line', {x1: left, y1: bot, x2: right, y2: bot, class: 'ln-axis', 'stroke-width': 1.5}, gA);
     for (var yy = 2013; yy <= 2024; yy += 2) {
       var ix = months.indexOf(yy + '-01'); if (ix < 0) continue;

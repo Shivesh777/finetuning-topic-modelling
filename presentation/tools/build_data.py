@@ -692,6 +692,71 @@ def weights(pos):
     return {k: (1 / nl if v == 1 else -1 / ns) for k, v in pos.items() if v != 0}
 
 
+# ---------------------------------------------------------------- sections 1 and 5 after the 9 October briefs
+def vt_points():
+    """Slide 5.1: every experiment's validation and test rank IC, keyed by feature set and model, with the ten
+    highest validation ICs marked. The population and the selection are those of validation_drop()."""
+    f = pd.read_csv(REPO / "results/tables/forecast.csv")
+    out = []
+    for code, _, name, _ in FREQ:
+        g = f[(f.freq == code) & f.features.isin(MAIN_SETS) & f.model.isin(BASE)]
+        p = g.pivot_table(index=["features", "model"], columns="split", values="ic_mean").dropna()
+        top = set(p.sort_values("validation", ascending=False).head(10).index)
+        fav = p.loc[list(top), "test"].mean()
+        out.append({"freq": code, "name": name.capitalize(), "n": int(len(p)), "fav": rnd(fav, 3),
+                    "pts": [{"key": f"{k[0]}__{k[1]}", "val": rnd(v, 4), "test": rnd(t, 4), "top": int(k in top)}
+                            for k, (v, t) in zip(p.index, p[["validation", "test"]].values)]})
+    return {"source": "results/tables/forecast.csv; population and selection of validation_drop(): 8 base models x the main feature sets, "
+                      "experiments with both validation and test ic_mean; top ten by validation ic_mean", "panels": out}
+
+
+def weekly_r2():
+    """Slide 5.2: weekly out-of-sample R2 against the historical mean, price controls alone and with the news,
+    coefficients fitted before the test weeks."""
+    want = [("pilot_results.csv", "CL", "N_oil", "Crude · NoLBERT oil"), ("pilot_results.csv", "CL", "F_oil", "Crude · FinBERT oil"),
+            ("pilot_results.csv", "GC", "F_gold", "Gold · FinBERT gold"), ("btc_results.csv", "BTC", "F_fed", "Bitcoin · FinBERT Fed")]
+    rows = []
+    for fn, root, narr, label in want:
+        d = pd.read_csv(REPO / "commodities/phase2" / fn)
+        q = d[(d.kind == "forecasting") & (d.role == "primary") & (d.variant == "main") & (d.stage == "test: dev+val fit applied")
+              & (d.root == root) & (d.narrative == narr)]
+        assert len(q) == 1, (fn, root, narr, len(q))
+        r = q.iloc[0]
+        rows.append({"label": label, "file": fn, "root": root, "narrative": narr, "n": int(r.n),
+                     "controls": rnd(r.oos_r2_controls_vs_hist_mean, 6), "news": rnd(r.oos_r2_vs_hist_mean, 6)})
+    return {"source": "commodities/phase2/pilot_results.csv and btc_results.csv; kind=forecasting, role=primary, variant=main, "
+                      "stage='test: dev+val fit applied'; oos_r2_controls_vs_hist_mean, oos_r2_vs_hist_mean", "rows": rows, "weeks": rows[0]["n"]}
+
+
+def cross_asset():
+    """Slide 5.3: the same-month explanatory gain of the equity factors over the market alone, held-out, four assets."""
+    o = pd.read_csv(REPO / "commodities/phase2/ipca_oos.csv")
+    rows = []
+    for asset, label in [("CL", "Crude"), ("HG", "Copper"), ("BTC", "Bitcoin"), ("GC", "Gold")]:
+        q = o[(o.role == "primary") & (o.spec == "narr_finbert__sipca") & (o.scope == "asset-specific") & (o.asset == asset)]
+        assert len(q) == 1, (asset, len(q))
+        r = q.iloc[0]
+        rows.append({"asset": asset, "label": label, "n_fit": int(r.n_fit), "n_test": int(r.n_test), "gain": rnd(r.gain, 6),
+                     "lo": rnd(r.gain_lo, 6), "hi": rnd(r.gain_hi, 6), "mspe_ratio": rnd(r.mspe_ratio, 6),
+                     "cw_p": rnd(r.clark_west_p_onesided, 6), "p_holm_4": rnd(r.p_holm_4, 6)})
+    return {"source": "commodities/phase2/ipca_oos.csv; role=primary, spec=narr_finbert__sipca, scope=asset-specific, asset in CL HG BTC GC; "
+                      "gain, gain_lo, gain_hi, mspe_ratio, p_holm_4 (Clark-West, Holm over 4 tests)", "spec": "narr_finbert__sipca", "rows": rows}
+
+
+def text_models():
+    """Slide 5.4: the crude-oil result under three text models with the window and the factor count held fixed (post hoc, 63-day)."""
+    r = pd.read_csv(REPO / "commodities/phase2/ipca_robustness_results.csv")
+    rows = []
+    for spec, label in [("narr_finbert_s63__sipca", "FinBERT-20"), ("narr_nolbert20_s63__sipca", "NoLBERT-20"), ("narr_lda_all_s63__sipca", "LDA-60")]:
+        q = r[(r.analysis == "A: 63-day (post hoc)") & (r.scope == "asset-specific") & (r.asset == "CL") & (r.spec == spec)]
+        assert len(q) == 1, (spec, len(q))
+        x = q.iloc[0]
+        rows.append({"spec": spec, "label": label, "n_test": int(x.n_test), "gain": rnd(x.gain, 6), "lo": rnd(x.gain_lo, 6), "hi": rnd(x.gain_hi, 6),
+                     "holm12_analytic": rnd(x.holm12_analytic, 6), "holm12_calibrated": rnd(x.holm12_calibrated, 6)})
+    return {"source": "commodities/phase2/ipca_robustness_results.csv; analysis='A: 63-day (post hoc)', scope=asset-specific, asset=CL; "
+                      "gain, gain_lo, gain_hi, holm12_analytic, holm12_calibrated", "rows": rows}
+
+
 # ---------------------------------------------------------------- facts typed from FINDINGS.md and the papers
 FACTS = {
     "headlines": {"source": "FINDINGS.md:41-56", "rows": [
@@ -729,6 +794,17 @@ FACTS = {
              "test_from": "2025-08-01", "test_to": "2026-10-01", "retirement": "not before 2026-10-15",
              "ic_detectable": {"M": 0.06, "2W": 0.04, "W": 0.03}},
     "periods": {"source": "FINDINGS.md:499-501 (articles), 909 (training periods)", "articles": 1255289, "train": [69, 143, 290]},
+    # slide 1.2: Kevin's replication of Bybee, Kelly and Su with the authors' LDA outputs (230ZA app.py:51-52, the deck of 230ZA)
+    "replication": {"source": "230ZA 230P-Group/ZA/app/app.py:51-52 (sparse IPCA, out-of-sample Sharpe by K, paper vs ours)",
+                    "k": [1, 2, 3, 4, 5, 6], "paper": [0.480, 1.000, 1.100, 1.260, 1.320, 1.310], "replication": [0.480, 0.982, 1.106, 1.264, 1.315, 1.302]},
+    # slide 1.3: the earlier FNSPID portfolio and its audit (Project_Reference.pdf, sections 1.2 and 17)
+    "mvo": {"source": "Project_Reference.pdf 1.2 ('Out of sample (September 2020 to January 2024, 41 months) ... spherical clusters with multi-horizon "
+                      "exposures 1.03') and 17 ('Market position alone 0.30, zero-net narrative tilt 0.89; average net position in the equal-weighted "
+                      "market 4.1 times equity')",
+            "sharpe": 1.03, "market": 0.30, "tilt": 0.89, "exposure": 4.1, "from": "2020-09", "to": "2024-01", "months": 41},
+    # slide 1.2: the 230ZA pipeline (Project_Reference.pdf 1.2; 230ZA app.py PIPELINE: K = 3)
+    "za": {"source": "Project_Reference.pdf 1.2 (multi-horizon exposures, spherical clusters, K = 3 factors); 230ZA app.py PIPELINE",
+           "topics": 60, "half_lives": [20, 60, 120], "factors": 3},
     "ebm": {"source": "FINDINGS.md:1444 (boosting rounds kept for the main effects, biweekly)", "rounds_2w": 54},
 }
 
@@ -738,6 +814,7 @@ def build(check=False):
     facts["nolbert"] = dict(FACTS["nolbert"], **arch())
     data = {"pinned": PIN, "same_as_pin": same_as_pin(), "repo": REPO_URL,
             "map": news_map(), "training": training(), "stability": stability(), "pooling": pooling(),
+            "vt": vt_points(), "weekly": weekly_r2(), "xasset": cross_asset(), "textmodels": text_models(),
             "glassbox": glassbox(), "turnover": turnover(), "validation": validation_drop(),
             "search": search(), "race": race(), "buffer_paths": buffer_paths(),
             "placebo_series": placebo_series(), "alpha_rain": alpha_rain(), "tvp": text_vs_price(),
@@ -805,6 +882,11 @@ def build(check=False):
         print("pooling", [(r["label"], r["npmi"], r["ami"]) for r in data["pooling"]["rows"]], "expect 0.343/0.45 first, MiniLM 0.308/1.00 (FINDINGS.md:1066-1073)")
         print("arch", {k: data["facts"]["nolbert"][k] for k in ("layers", "heads", "hidden", "vocab_size")}, "expect 12 12 768 30000 (results/encoders/nolbert_ft/config.json)")
         print("loss log", len(t["log"]), "points; last", t["log"][-1], "expect [6200, 0.284, ...]; first", t["log"][0])
+        print("vt", [(q["name"], q["n"], q["fav"], sum(x["top"] for x in q["pts"])) for q in data["vt"]["panels"]], "expect 185/-0.001, 187/-0.010, 187/+0.004, ten each")
+        print("weekly", [(r["label"], r["controls"], r["news"], r["n"]) for r in data["weekly"]["rows"]], "expect CL -0.0742 -> -0.0575 / -0.0642; GC 0.0002 -> -0.0042; BTC -0.0135 -> -0.0151; 147 weeks")
+        print("xasset", [(r["label"], r["gain"], r["lo"], r["hi"], r["mspe_ratio"], r["p_holm_4"]) for r in data["xasset"]["rows"]], "expect CL 0.309 (-0.022, 0.526) ratio 0.691 p 0.103")
+        print("textmodels", [(r["label"], r["gain"], r["lo"], r["hi"], r["holm12_analytic"], r["holm12_calibrated"]) for r in data["textmodels"]["rows"]], "expect FinBERT 0.248 (0.040, 0.461) 0.054/0.043; NoLBERT -0.161; LDA 0.100")
+        rp = FACTS["replication"]; print("replication max abs diff", max(abs(a - b) for a, b in zip(rp["paper"], rp["replication"])), "expect 0.018")
         bd = data["map"]["beads"]
         print("beads", len(bd["rows"]), "months", bd["months"][0], "->", bd["months"][-1],
               "density", rnd(sum(map(sum, bd["rows"])) / (20 * len(bd["rows"])), 3))

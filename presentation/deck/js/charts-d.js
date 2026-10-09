@@ -448,7 +448,7 @@
     });
     label(g4, 0, yF + 21, 'Encoder fine-tuning', 22);
     el('rect', {x: X(ad.corpus_from), y: yF, width: X(ad.before) - X(ad.corpus_from), height: 30, fill: HR, stroke: COL.red, 'stroke-width': 2}, g4);
-    label(g4, X(ad.before) + 12, yF + 21, 'Jan 2015–Aug 2020', 18, 't-mono t-red');
+    label(g4, X(ad.before) + 12, yF + 21, 'Jan 2015–Dec 2019', 18, 't-mono t-red');   // wording asked for by the team on 9 Oct; the bar still ends at the run's cutoff
     label(g4, 0, yR + 21, 'Return forecasting', 22);
     [['Training', sp.train, 0.10], ['Validation', sp.valid, 0.18], ['Test', sp.test, 0.28]].forEach(function (p) {
       var x0 = X(p[1][0]), x1 = X(p[1][1]);

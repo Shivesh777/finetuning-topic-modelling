@@ -1,6 +1,6 @@
 # Group presentation (MFE 230ZB)
 
-A browser deck of 20 slides and 12 backup slides. One click per slide: each slide's animations then play by themselves.
+A browser deck of 21 slides and 17 backup slides. One click per slide: each slide's animations then play by themselves.
 
     pip install flask
     python presentation/app.py        # http://127.0.0.1:5055

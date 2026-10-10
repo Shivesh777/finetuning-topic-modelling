@@ -1,0 +1,29 @@
+{
+ "freq": "2W",
+ "features": "text_lda_s63",
+ "model": "rf",
+ "blocks": [
+  "narr_lda_s63",
+  "firm_lda"
+ ],
+ "n_features": 121,
+ "settings_tried": 3,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "max_depth": 6,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": -0.00016189634871599523,
+ "train_r2": 0.005044375502675558,
+ "seconds_tune": 12.6,
+ "seconds_final": 4.1
+}

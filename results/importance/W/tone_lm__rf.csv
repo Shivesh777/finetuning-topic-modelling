@@ -1,6 +1,6 @@
 feature,importance,kind
-lm_tone_1,0.19690092382242683,impurity_share
-lm_tone_5,0.19977965187567606,impurity_share
-lm_tone_21,0.19859283846488168,impurity_share
-lm_tone_252,0.19981135250209042,impurity_share
-lm_surprise_21,0.2049152333349251,impurity_share
+lm_tone_1,0.24101393025189735,impurity_share
+lm_tone_5,0.21076913284592533,impurity_share
+lm_tone_21,0.18152752837242297,impurity_share
+lm_tone_252,0.18605207103964258,impurity_share
+lm_surprise_21,0.18063733749011174,impurity_share

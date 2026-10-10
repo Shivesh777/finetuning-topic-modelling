@@ -8,16 +8,16 @@
  "n_features": 64,
  "settings_tried": 6,
  "rows": {
-  "train": 140333,
-  "validation": 26757,
-  "test": 41588
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
  },
  "params": {
-  "n_factors": 3,
-  "penalty": 0.3
+  "n_factors": 1,
+  "penalty": 0.1
  },
- "validation_r2": 4.841356646267947e-05,
- "train_r2": 4.613609817138986e-05,
- "seconds_tune": 2.9,
- "seconds_final": 0.3
+ "validation_r2": -2.394554726348197e-05,
+ "train_r2": 2.5240097864864808e-05,
+ "seconds_tune": 2.3,
+ "seconds_final": 0.2
 }

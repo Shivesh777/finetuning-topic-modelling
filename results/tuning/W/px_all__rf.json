@@ -8,18 +8,18 @@
   "tone_lm",
   "emb_fb",
   "npx",
-  "narr_nolbert_s1",
+  "narr_nolbert_s63",
   "firm_nolbert"
  ],
  "n_features": 212,
  "settings_tried": 3,
  "rows": {
-  "train": 284639,
-  "validation": 52518,
-  "test": 80216
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
  },
  "params": {
-  "max_depth": 10,
+  "max_depth": 3,
   "max_features": "sqrt",
   "n_estimators": 100,
   "min_samples_leaf": 50,
@@ -27,8 +27,8 @@
   "n_jobs": 4,
   "seed": 0
  },
- "validation_r2": 6.620001443968793e-05,
- "train_r2": 0.0061796419383931545,
- "seconds_tune": 20.1,
- "seconds_final": 10.6
+ "validation_r2": -7.051746166242268e-05,
+ "train_r2": 0.0009368158810330041,
+ "seconds_tune": 22.5,
+ "seconds_final": 3.9
 }

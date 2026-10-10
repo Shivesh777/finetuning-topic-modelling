@@ -115,3 +115,33 @@ def test_tilt_holds_the_universe_tilted_towards_the_forecast():
     w = strategies.weights_for("tilt_vw", np.array([0.1, np.nan, 0.2, 0.3]), cap)
     assert np.isclose(w.sum(), 1) and w[1] > 0 and w[0] == 0
     assert "tilt_vw" in strategies.LONG_ONLY
+
+
+def test_cap_weighted_buffer_holds_the_buffer_legs_weighted_by_market_value():
+    rng = np.random.default_rng(5)
+    n = 100
+    score, cap, order = rng.normal(size=n), rng.uniform(1, 10, n), rng.random(n)
+    none = np.zeros(n, dtype=bool)
+    w_ew, long, short = strategies.buffered_long_short(score, none, none, order)
+    w_vw, long_vw, short_vw = strategies.buffered_long_short(score, none, none, order, cap=cap)
+    assert (long == long_vw).all() and (short == short_vw).all()           # same legs as ls_buf
+    np.testing.assert_allclose(w_vw, strategies.weights_for("ls_vw", score, cap, order=order))
+    np.testing.assert_allclose(w_vw[long], cap[long] / cap[long].sum())
+    assert np.isclose(w_vw[short].sum(), -1.0)
+
+
+def test_cap_weighted_buffer_trades_less_than_the_cap_weighted_decile_rule():
+    rng = np.random.default_rng(6)
+    periods, stocks = 30, 200
+    signal = np.cumsum(rng.normal(size=(periods, stocks)), axis=0)
+    dates = pd.date_range("2020-01-31", periods=periods, freq="ME")
+    frame = pd.DataFrame({"date": np.repeat(dates, stocks), "permno": np.tile(np.arange(stocks), periods),
+                          "pred": signal.ravel(), "ret": rng.normal(0.01, 0.05, periods * stocks),
+                          "rf": 0.001, "me": np.tile(rng.uniform(1, 10, stocks), periods)})  # persistent caps
+    out = strategies.backtests(frame, ("ls_vw", "ls_buf", "ls_buf_vw"), cost_bps=10.0)
+    turnover = out.groupby("strategy")["turnover"].mean()
+    assert turnover["ls_buf_vw"] < 0.7 * turnover["ls_vw"]
+    first = out[out["date"] == dates[0]].set_index("strategy")
+    assert np.isclose(first.loc["ls_buf_vw", "gross"], first.loc["ls_vw", "gross"])
+    alone = strategies.backtests(frame, ("ls_buf",), cost_bps=10.0)        # the two buffers keep separate legs
+    np.testing.assert_allclose(alone["net"].to_numpy(), out.loc[out.strategy == "ls_buf", "net"].to_numpy())

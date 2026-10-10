@@ -1,0 +1,30 @@
+{
+ "freq": "W",
+ "features": "all_finbert_s63",
+ "model": "rf",
+ "blocks": [
+  "price",
+  "narr_finbert_s63",
+  "firm_finbert"
+ ],
+ "n_features": 49,
+ "settings_tried": 3,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {
+  "max_depth": 3,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 6.147219088759037e-05,
+ "train_r2": 0.0006450550300636237,
+ "seconds_tune": 12.5,
+ "seconds_final": 1.9
+}

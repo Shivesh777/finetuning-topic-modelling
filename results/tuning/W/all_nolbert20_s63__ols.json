@@ -1,0 +1,22 @@
+{
+ "freq": "W",
+ "features": "all_nolbert20_s63",
+ "model": "ols",
+ "blocks": [
+  "price",
+  "narr_nolbert20_s63",
+  "firm_nolbert20"
+ ],
+ "n_features": 49,
+ "settings_tried": 1,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {},
+ "validation_r2": -0.00045677654935172285,
+ "train_r2": 0.0006714406672773121,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

@@ -1,0 +1,24 @@
+{
+ "freq": "2W",
+ "features": "all_minilm_s63",
+ "model": "ipca",
+ "blocks": [
+  "price",
+  "narr_minilm_s63",
+  "firm_minilm"
+ ],
+ "n_features": 129,
+ "settings_tried": 4,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "n_factors": 5
+ },
+ "validation_r2": -0.00014044464987383876,
+ "train_r2": 0.00024663523796220055,
+ "seconds_tune": 4.7,
+ "seconds_final": 6.0
+}

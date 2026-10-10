@@ -13,11 +13,11 @@
  "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 1,
  "features_total": 8,
- "features_kept": 6,
+ "features_kept": 3,
  "periods": {
-  "train": 69,
-  "validation": 14,
-  "test": 21
+  "train": 84,
+  "validation": 24,
+  "test": 36
  },
  "holding_periods_start": {
   "train": [
@@ -34,21 +34,21 @@
   ]
  },
  "lambda": [
-  0.0004263780067034656
+  0.00013136833451353605
  ],
  "implied_coefficients": {
-  "fb_tone_1": 3.122392260966744e-05,
-  "fb_tone_5": 0.0,
-  "fb_tone_21": 0.00010837063765642788,
-  "fb_tone_252": 0.000407170062208456,
+  "fb_tone_1": 0.0,
+  "fb_tone_5": 5.581686516065847e-07,
+  "fb_tone_21": 3.474283084526794e-05,
+  "fb_tone_252": 0.00012668963440421545,
   "fb_surprise_21": 0.0,
-  "news_log_n5": 1.595218699862234e-05,
-  "news_log_n21": -4.9793584629393354e-05,
-  "news_abnormal_21": 2.3616588494189007e-05
+  "news_log_n5": 0.0,
+  "news_log_n21": 0.0,
+  "news_abnormal_21": 0.0
  },
  "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
  "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
  "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
  "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
- "test_forecasts_reproduced_max_abs_error": 2.9013320717273527e-11
+ "test_forecasts_reproduced_max_abs_error": 7.273336636746605e-12
 }

@@ -1,7 +1,7 @@
 feature,importance,kind
 firm_lda_news_count,0.0,gain_share
 firm_lda_news_t00,0.0,gain_share
-firm_lda_news_t01,0.14623643010467408,gain_share
+firm_lda_news_t01,0.0,gain_share
 firm_lda_news_t02,0.0,gain_share
 firm_lda_news_t03,0.0,gain_share
 firm_lda_news_t04,0.0,gain_share
@@ -9,7 +9,7 @@ firm_lda_news_t05,0.0,gain_share
 firm_lda_news_t06,0.0,gain_share
 firm_lda_news_t07,0.0,gain_share
 firm_lda_news_t08,0.0,gain_share
-firm_lda_news_t09,0.11634862673917384,gain_share
+firm_lda_news_t09,0.0,gain_share
 firm_lda_news_t10,0.0,gain_share
 firm_lda_news_t11,0.0,gain_share
 firm_lda_news_t12,0.0,gain_share
@@ -17,7 +17,7 @@ firm_lda_news_t13,0.0,gain_share
 firm_lda_news_t14,0.0,gain_share
 firm_lda_news_t15,0.0,gain_share
 firm_lda_news_t16,0.0,gain_share
-firm_lda_news_t17,0.0,gain_share
+firm_lda_news_t17,1.0,gain_share
 firm_lda_news_t18,0.0,gain_share
 firm_lda_news_t19,0.0,gain_share
 firm_lda_news_t20,0.0,gain_share
@@ -28,17 +28,17 @@ firm_lda_news_t24,0.0,gain_share
 firm_lda_news_t25,0.0,gain_share
 firm_lda_news_t26,0.0,gain_share
 firm_lda_news_t27,0.0,gain_share
-firm_lda_news_t28,0.11448887502994205,gain_share
+firm_lda_news_t28,0.0,gain_share
 firm_lda_news_t29,0.0,gain_share
 firm_lda_news_t30,0.0,gain_share
 firm_lda_news_t31,0.0,gain_share
 firm_lda_news_t32,0.0,gain_share
-firm_lda_news_t33,0.451654932498305,gain_share
+firm_lda_news_t33,0.0,gain_share
 firm_lda_news_t34,0.0,gain_share
 firm_lda_news_t35,0.0,gain_share
 firm_lda_news_t36,0.0,gain_share
 firm_lda_news_t37,0.0,gain_share
-firm_lda_news_t38,0.09276763655093043,gain_share
+firm_lda_news_t38,0.0,gain_share
 firm_lda_news_t39,0.0,gain_share
 firm_lda_news_t40,0.0,gain_share
 firm_lda_news_t41,0.0,gain_share
@@ -59,4 +59,4 @@ firm_lda_news_t55,0.0,gain_share
 firm_lda_news_t56,0.0,gain_share
 firm_lda_news_t57,0.0,gain_share
 firm_lda_news_t58,0.0,gain_share
-firm_lda_news_t59,0.07850349907697457,gain_share
+firm_lda_news_t59,0.0,gain_share

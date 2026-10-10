@@ -16,6 +16,7 @@ over several calls.
 """
 from pathlib import Path
 import argparse
+import json
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,13 +47,16 @@ def main():
     rows = []
     for freq in a.freq:
         ppy = metrics.PERIODS_PER_YEAR[freq]
-        panel = Panel.load(config.PANELS / freq)
+        # load only the blocks of the requested feature sets (all weekly blocks need > 4 GB)
+        names = json.loads((config.PANELS / freq / "names.json").read_text())["names"]
+        sets = experiments.feature_sets(names)
+        panel = Panel.load(config.PANELS / freq, sorted({b for f in a.features for b in sets[f]}))
         index = panel.index
         train, val, test = (panel.rows(s) for s in ("train", "validation", "test"))
         groups = index["period"].to_numpy()
         y = target_of(cls, index["y_rel"].to_numpy(), groups)
         for features in a.features:
-            X = panel.X(experiments.feature_sets(panel.blocks)[features])
+            X = panel.X(sets[features])
             for seed in a.seeds:
                 grid = [{**setting, "seed": seed} for setting in cls.grid()]
                 params, table, val_pred = tune(cls, X[train], y[train], X[val], y[val],

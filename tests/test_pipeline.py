@@ -43,7 +43,8 @@ def workspace(tmp_path_factory):
     attention.save_daily_sums(sums, data / "topics" / "toy" / "daily_sums.parquet")
     firm.to_parquet(data / "topics" / "toy" / "firm_daily.parquet", index=False)
     make_sentiment(data, truth["days"], truth["permnos"])
-    env = {**os.environ, "FTM_DATA": str(data), "FTM_RESULTS": str(results)}
+    env = {**os.environ, "FTM_DATA": str(data), "FTM_RESULTS": str(results),
+           "FTM_DAILY_COMPLETE_UNTIL": "2016"}                  # the toy file is incomplete from 2017
     run("05_build_panel.py", "--freq", "M", "--placebo", "toy", env=env)
     run("05_build_panel.py", "--freq", "M", "--tone", env=env)
     run("05_build_panel.py", "--freq", "M", "--shock-window", "1", env=env)

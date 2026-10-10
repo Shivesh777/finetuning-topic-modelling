@@ -1,0 +1,25 @@
+{
+ "freq": "W",
+ "features": "text_minilm_s63",
+ "model": "lasso",
+ "blocks": [
+  "narr_minilm_s63",
+  "firm_minilm"
+ ],
+ "n_features": 121,
+ "settings_tried": 40,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {
+  "alpha": 0.00012698203743186334,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 3.600885974663903e-05,
+ "train_r2": 0.00024684184287937505,
+ "seconds_tune": 0.7,
+ "seconds_final": 0.3
+}

@@ -8,9 +8,9 @@
  "n_features": 60,
  "settings_tried": 3,
  "rows": {
-  "train": 67791,
-  "validation": 13872,
-  "test": 20794
+  "train": 82558,
+  "validation": 23680,
+  "test": 35523
  },
  "params": {
   "max_depth": 3,
@@ -21,8 +21,8 @@
   "n_jobs": 4,
   "seed": 0
  },
- "validation_r2": -3.5352660368026534e-06,
- "train_r2": 0.004452344933980501,
- "seconds_tune": 8.8,
- "seconds_final": 1.5
+ "validation_r2": -5.266218379595955e-05,
+ "train_r2": 0.003638922406926648,
+ "seconds_tune": 10.1,
+ "seconds_final": 1.7
 }

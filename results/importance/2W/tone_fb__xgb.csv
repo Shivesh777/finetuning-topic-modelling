@@ -1,9 +1,9 @@
 feature,importance,kind
-fb_tone_1,0.08922215281149613,gain_share
-fb_tone_5,0.17272667786978077,gain_share
-fb_tone_21,0.0287632608236932,gain_share
-fb_tone_252,0.10951680401823467,gain_share
-fb_surprise_21,0.06865157596419562,gain_share
-news_log_n5,0.18768856762788305,gain_share
-news_log_n21,0.18014878355433936,gain_share
-news_abnormal_21,0.16328217733037717,gain_share
+fb_tone_1,0.14294384462208892,gain_share
+fb_tone_5,0.10796534400012826,gain_share
+fb_tone_21,0.0704376454713061,gain_share
+fb_tone_252,0.17785599755698211,gain_share
+fb_surprise_21,0.08901982421456019,gain_share
+news_log_n5,0.15906158922383595,gain_share
+news_log_n21,0.14645391594010118,gain_share
+news_abnormal_21,0.1062618389709973,gain_share

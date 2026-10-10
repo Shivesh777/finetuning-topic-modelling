@@ -3,7 +3,7 @@ beta,0.0,0.0,mean_abs_contribution
 ivol,-0.0,0.0,mean_abs_contribution
 vol_21,-0.0,0.0,mean_abs_contribution
 mom_12_1,0.0,0.0,mean_abs_contribution
-rev_21,-0.00026506700998199837,0.00013305012384834722,mean_abs_contribution
-rev_5,-0.0,0.0,mean_abs_contribution
+rev_21,-0.00022189079854153696,0.00011036147702162964,mean_abs_contribution
+rev_5,0.0,0.0,mean_abs_contribution
 size,0.0,0.0,mean_abs_contribution
 max_21,-0.0,0.0,mean_abs_contribution

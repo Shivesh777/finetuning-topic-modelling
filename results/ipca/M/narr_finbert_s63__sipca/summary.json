@@ -8,16 +8,16 @@
  "attention_shock_window_days": 63,
  "params": {
   "n_factors": 3,
-  "penalty": 0.03
+  "penalty": 0.1
  },
  "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 3,
  "features_total": 20,
  "features_kept": 20,
  "periods": {
-  "train": 69,
-  "validation": 14,
-  "test": 21
+  "train": 84,
+  "validation": 24,
+  "test": 36
  },
  "holding_periods_start": {
   "train": [
@@ -34,35 +34,35 @@
   ]
  },
  "lambda": [
-  0.0035534449434912615,
-  0.0018960811041148242,
-  0.0004400545749948811
+  9.590299251091951e-05,
+  0.0009371868607636585,
+  0.004163111858506033
  ],
  "implied_coefficients": {
-  "narr_finbert_s63_t00": -5.076196263281966e-06,
-  "narr_finbert_s63_t01": -0.00024123189379891285,
-  "narr_finbert_s63_t02": 0.0008680651986257725,
-  "narr_finbert_s63_t03": -0.000557693172695074,
-  "narr_finbert_s63_t04": 3.5008119135495564e-05,
-  "narr_finbert_s63_t05": -0.0007184843220126777,
-  "narr_finbert_s63_t06": 0.0018385534848114685,
-  "narr_finbert_s63_t07": 9.080446558781402e-06,
-  "narr_finbert_s63_t08": 0.0015091783805502152,
-  "narr_finbert_s63_t09": -0.0009430601499528577,
-  "narr_finbert_s63_t10": -0.0014273139317754625,
-  "narr_finbert_s63_t11": -0.00038804442916814144,
-  "narr_finbert_s63_t12": 0.00011707394760125688,
-  "narr_finbert_s63_t13": -0.0013515328274455807,
-  "narr_finbert_s63_t14": -0.0006422970773692699,
-  "narr_finbert_s63_t15": 0.00036393809005103717,
-  "narr_finbert_s63_t16": 0.0013983861748750118,
-  "narr_finbert_s63_t17": -0.0009160535567944059,
-  "narr_finbert_s63_t18": -0.000698192230156132,
-  "narr_finbert_s63_t19": 0.0006106708568290519
+  "narr_finbert_s63_t00": -0.0007221199090299451,
+  "narr_finbert_s63_t01": -0.0001489919732895683,
+  "narr_finbert_s63_t02": -0.0005424254793735621,
+  "narr_finbert_s63_t03": 0.00024042570136546213,
+  "narr_finbert_s63_t04": -0.0006892727049388248,
+  "narr_finbert_s63_t05": -0.00043982062671639807,
+  "narr_finbert_s63_t06": 0.0010628725944526042,
+  "narr_finbert_s63_t07": 0.0017008164252672326,
+  "narr_finbert_s63_t08": -0.0006320697335620895,
+  "narr_finbert_s63_t09": -0.001383344747064884,
+  "narr_finbert_s63_t10": -0.00024164451388766615,
+  "narr_finbert_s63_t11": -0.001005723204270086,
+  "narr_finbert_s63_t12": -0.0010443626643918235,
+  "narr_finbert_s63_t13": 1.0730798229252134e-05,
+  "narr_finbert_s63_t14": -0.0003556001560887111,
+  "narr_finbert_s63_t15": 5.334545478426725e-05,
+  "narr_finbert_s63_t16": -9.696288148253964e-05,
+  "narr_finbert_s63_t17": -0.0009877148657457175,
+  "narr_finbert_s63_t18": 0.0019744455844946094,
+  "narr_finbert_s63_t19": 0.0017736312792841786
  },
  "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
  "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
  "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
  "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
- "test_forecasts_reproduced_max_abs_error": 2.70571797605923e-10
+ "test_forecasts_reproduced_max_abs_error": 4.6541829244739485e-10
 }

@@ -1,7 +1,7 @@
 """Build data/crsp/ directly from WRDS (needs a WRDS account with CRSP access).
 
     pip install wrds
-    python scripts/00_pull_crsp.py [--first-year 2011] [--last-year 2024]
+    python scripts/00_pull_crsp.py [--first-year 2011] [--last-year 2024] [--out data/crsp_wrds]
 
 Writes the five files that ftm.data.returns.Market reads (see data/README.md):
 universe, daily, monthly, tickers and ff_daily. Compared with the files in the
@@ -73,6 +73,8 @@ def main():
     ap.add_argument("--first-year", type=int, default=2011,
                     help="one year before the news starts: features need a year of returns")
     ap.add_argument("--last-year", type=int, default=int(config.NEWS_END[:4]))
+    ap.add_argument("--out", type=Path, default=config.CRSP,
+                    help="folder for the five files (default data/crsp/, which this overwrites)")
     a = ap.parse_args()
     import wrds
 
@@ -93,12 +95,13 @@ def main():
     daily = daily.dropna(subset=["ret"]).astype({"permno": np.int64, "ret": np.float32})
     monthly = monthly.dropna(subset=["ret"]).astype({"permno": np.int64})
 
-    config.CRSP.mkdir(parents=True, exist_ok=True)
+    out = a.out if a.out.is_absolute() else ROOT / a.out
+    out.mkdir(parents=True, exist_ok=True)
     tables = {"universe": universe, "daily": daily.sort_values(["date", "permno"]),
               "monthly": monthly.sort_values(["permno", "date"]),
               "tickers": names.astype({"permno": np.int64}), "ff_daily": factors(a.first_year)}
     for name, table in tables.items():
-        table.to_parquet(config.CRSP / f"{name}.parquet", index=False)
+        table.to_parquet(out / f"{name}.parquet", index=False)
         print(f"{name}: {len(table):,} rows")
     print(f"{universe['permno'].nunique():,} stocks in {universe['formed'].nunique()} June lists; "
           f"daily returns {daily['date'].min().date()} to {daily['date'].max().date()}")

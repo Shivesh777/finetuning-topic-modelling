@@ -8,13 +8,13 @@
  "n_features": 61,
  "settings_tried": 1,
  "rows": {
-  "train": 140333,
-  "validation": 26757,
-  "test": 41588
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
  },
  "params": {},
- "validation_r2": -0.0007925716787029469,
- "train_r2": 0.0005026703656598741,
+ "validation_r2": -0.0004824292603742286,
+ "train_r2": 0.0005104237645544574,
  "seconds_tune": 0.1,
  "seconds_final": 0.1
 }

@@ -47,33 +47,32 @@ without bodies); the news after 2024, because returns end in December 2024.
 | Unique articles | 1,255,289 (2,490,572 article-ticker pairs) |
 | Left out | 16 December 2023 (a dump of tens of thousands of rows on one day). The source then has no articles until 8 January 2024 and 22 in January 2024 |
 | Text unit | Headline plus the first 500 characters of the body |
-| Universe | The 1,000 largest common stocks by market value at the end of June, used from the last trading day of that June until the next list |
+| Universe | The 1,000 largest ordinary common shares (CRSP share codes 10 and 11, NYSE, AMEX and Nasdaq) by market value at the end of June, used from the last trading day of that June until the next list |
 | Returns | 3 January 2011 to 31 December 2024 (2011 and 2012 only feed trailing windows) |
-| Stocks | 2,020 that are in at least one June list, 1,826 with a ticker |
+| Stocks | 2,062 that are in at least one June list (2010 to 2024), all with a ticker: from the earlier project's file for the 1,822 it covers, from the CRSP name history for the others |
 
 **Splits** (a holding period belongs to the split of the day its return starts):
 
 | Split | Dates | Monthly | Biweekly | Weekly | Role |
 |---|---|---|---|---|---|
-| Training | 2013 to 2019 | 69 | 143 | 290 | Fit models; fit topic models and vocabulary (text of 2012 to 2019) |
-| Validation | 2020 to 2021 | 14 | 27 | 53 | Choose hyperparameters; choose between experiments |
-| Test | 2022 to 2024 | 21 | 42 | 81 | Reported with the settings chosen on validation; also split into 2022-23 and 2024 |
+| Training | 2013 to 2019 | 84 | 182 | 365 | Fit models; fit topic models and vocabulary (text of 2012 to 2019) |
+| Validation | 2020 to 2021 | 24 | 52 | 104 | Choose hyperparameters and the shock window; choose between experiments |
+| Test | 2022 to 2024 | 36 | 78 | 156 | Reported with the settings chosen on validation; also split into 2022-23 and 2024 |
 
-The counts are periods. **From 2017 only part of each year is used**: our
-return file has daily returns for every stock up to 2016, and from 2017 only
-for the stocks of each calendar year's June list. Between January and the day
-the list changes, the stocks that have data are exactly those that will still
-be among the 1,000 largest in June, so any feature observed in those months is
-observed for a sample selected on the future. Formation days in that part of
-the year are left out (`DAILY_RETURNS_COMPLETE_UNTIL = 2016`,
-`Market.complete`). What remains from 2017 on is the formation days from the
-end of June to the end of December, that is the holding periods July to
-January. A complete daily file (`scripts/00_pull_crsp.py`) restores the full
-years: 84, 24 and 36 months.
+The counts are periods. **Every month of every year is used.** `data/crsp/`
+comes from WRDS (`scripts/00_pull_crsp.py`): daily returns of every member of
+every June list on every day, so `DAILY_RETURNS_COMPLETE_UNTIL = None`
+(`ftm/config.py`; the environment variable `FTM_DAILY_COMPLETE_UNTIL=2016`
+restores the behaviour for the earlier project's file, which from 2017 held
+daily returns only for the stocks of each calendar year's June list and forced
+the runs up to 8 October to drop January to June: 69, 14 and 21 months). On
+the 4.13 million stock-days both files hold, returns and market values agree
+exactly (FINDINGS.md, section 2.4). The earlier file is kept, outside git, in
+`data/crsp_legacy/`.
 
-Panel sizes: 102,457 stock-months, 208,678 stock-fortnights, 417,373
-stock-weeks; about 987 stocks per period (a listed stock must have a return
-in the last five trading days).
+Panel sizes: 141,761 stock-months, 306,746 stock-fortnights, 614,525
+stock-weeks; 984 stocks per period (a listed stock must have a return in the
+last five trading days).
 
 ## 3. Pipeline
 
@@ -81,7 +80,7 @@ Run the scripts in order. Times are for a 4-core laptop CPU.
 
 | Step | Script | Output | Time |
 |---|---|---|---|
-| 0 | `00_prepare_crsp.py` or `00_pull_crsp.py` | `data/crsp/` | 1 min |
+| 0 | `00_pull_crsp.py --out data/crsp` (WRDS login, Duo; the final run) or `00_prepare_crsp.py` (the earlier project's files) | `data/crsp/` | 3 min |
 | 1 | `01_download_news.py` | Extraction shards in `~/.cache/ftm` | 15 min, 3.6 GB download |
 | 2 | `02_build_articles.py` | `data/news/`, `results/data_audit/news_coverage.csv` | 2 min |
 | 3 | `03_embed.py` | `data/topics/embeddings/` | 45 min on 2 cores (200 articles a second) |
@@ -90,17 +89,19 @@ Run the scripts in order. Times are for a 4-core laptop CPU.
 | 3d | `03d_sentiment.py` | `data/sentiment/`: FinBERT tone and headline vectors, Loughran-McDonald counts | 90 min on 2 cores for 769,338 headlines (140 a second) |
 | 4 | `04_fit_topics.py` | `data/topics/<model>/` | LDA 10 min, applying it to every article 5 min, embedding clusters 3 min, classifier weights 1 min (as recorded in each `quality.json`) |
 | 5 | `05_build_panel.py` | `data/panels/<freq>/` | 2 min for all blocks and frequencies; `--tone` and `--shock-window W` add the blocks of section 3.3 |
-| 5b | `05b_tune_shocks.py` | `results/tuning/shock_window.csv` | 4 min |
-| 6 | `06_run_models.py` | `data/predictions/`, `data/models/`, `results/tuning/`, `results/importance/` | about 70 min for all 1,092 experiments (26 feature sets, 14 models) |
+| 5b | `05b_tune_shocks.py` | `results/tuning/shock_window.csv`; then `05_build_panel.py --shock-window 63` (the chosen window, every frequency) | 3 min |
+| 6 | `06_run_models.py` | `data/predictions/`, `data/models/`, `results/tuning/`, `results/importance/` | about 2.5 hours on four cores for the 1,692 experiments of the final run (per frequency 26 sets x 14 models and 25 sets x 8 base models); the weekly EBMs on 212 features need about 3 GB of memory |
 | 6b | `06b_ensemble.py` | `data/predictions/<freq>/<features>__ens.*` | under 1 min |
 | 6c | `06c_signals.py` | Forecasts that fit nothing: single tone features, `combo`, `best10` | under 1 min |
-| 7 | `07_evaluate.py` | `results/series/` | 2 min |
-| 8 | `08_report.py` | `results/tables/` | under 1 min |
+| 6d | `06d_grand_ensemble.py` | Combinations across topic models: `grand_s5`, `grand_s63`, `grand_text_s5`, `grand_text_s63` (model `ens`) | under 1 min |
+| 7 | `07_evaluate.py` | `results/series/` | 12 min |
+| 8 | `08_report.py` | `results/tables/` | 6 min; `strategies.csv` needs one run per frequency (`--freq M --tables strategies`, ...), which keeps the other frequencies' rows |
 | 9 | `09_explain.py` | `results/explain/` | under 1 min |
 | 9b | `09b_ipca_factors.py` | `results/ipca/<freq>/<features>__<model>/`: Gamma, factor returns, settings | 2 min for the 50 monthly sparse IPCA experiments |
 | 10 | `10_audit.py` | `results/data_audit/firm_coverage.csv`, `stale_rows.csv`, `donor_rows.csv` | under 1 min |
-| 11 | `11_missing_data_leak.py` | `results/data_audit/missing_data_leak.csv` | 1 min |
-| 12 | `12_tuning_noise.py` | `results/data_audit/tuning_noise.csv` | 3 min for XGBoost on two feature sets; EBMs take 1 min a seed |
+| 11 | `11_missing_data_leak.py` | `results/data_audit/missing_data_leak.csv` (computed on the earlier file with `FTM_DAILY_COMPLETE_UNTIL=2016`; with a complete file every period is complete and the audit has nothing to show) | 1 min |
+| 12 | `12_tuning_noise.py` | `results/data_audit/tuning_noise.csv` | 2 min for XGBoost on two weekly feature sets and five seeds; weekly EBMs 80 s a seed |
+| 13 | `13_sharpe_tests.py` | `results/tables/sharpe_tests.csv`: Sharpe ratios of the validated picks, the combinations across topic models and the price ensemble against zero (Newey-West t, probabilistic and deflated Sharpe) and against benchmarks (Ledoit-Wolf HAC and paired bootstrap) | under 10 s |
 
 ### 3.1 Articles (`ftm/data/`)
 
@@ -223,9 +224,8 @@ our data a missing value can depend on the future (FINDINGS.md, section 2), so
 a model must not be able to see it. The stock stays in the universe and in the
 portfolios with its true return. The draws are seeded per block, so a panel is
 reproducible. `results/data_audit/donor_rows.csv` counts the rows concerned:
-2% to 7% for price features (from 2017, stocks new to the June list, whose
-12-month momentum cannot be computed), 1% for narrative exposures, 39% to 51%
-for firm-level news. The column `stale` of a panel's index marks stocks without
+0.3% to 1.2% for price features (stocks with too short a history), under 1%
+for narrative exposures, 39% to 50% for firm-level news and tone. The column `stale` of a panel's index marks stocks without
 a daily return in the last 21 trading days; it is a diagnostic and never a
 feature.
 
@@ -235,7 +235,7 @@ feature.
 | `narr_<m>` | one per topic | Narrative exposure: exponentially weighted covariance (252 days, half-life 60, at least 120 returns) of the stock's daily return with the topic's attention shock. The shock is attention minus its mean over the previous 5 trading days, made orthogonal to the market return inside the window. News of non-trading days counts on the next trading day; a day with fewer than 20 articles has no reading |
 | `firm_<m>` | 1 + topics | The firm's own news over 21 trading days: log(1 + articles) and the share of them in each topic. Only articles filed under at most 3 tickers count. A firm with no article in the previous 126 trading days (`FIRM_COVERAGE_WINDOW`) is not covered by the source: its block is missing |
 | `narr_<m>_placebo` | one per topic | Narrative exposure to the attention shocks displaced by 126 trading days (the shock of day d-126 is paired with the return of day d) |
-| `narr_<m>_s<w>` | one per topic | `narr_<m>` with the shock taken over the previous w trading days instead of 5: w = 1 (weekly panels) and w = 63 (monthly), the windows chosen on validation by `05b_tune_shocks.py` (FINDINGS.md, section 10.1) |
+| `narr_<m>_s<w>` | one per topic | `narr_<m>` with the shock taken over the previous w trading days instead of 5: w = 63 at every frequency, the window chosen on validation by `05b_tune_shocks.py` (FINDINGS.md, section 5; on the earlier file the rule chose 1 day weekly and kept 5 biweekly) |
 | `tone_fb` | 8 | FinBERT tone of the firm's headlines, averaged over its articles of the last 1, 5, 21 and 252 trading days (0 without news); surprise = 21-day minus 252-day tone; log(1 + articles) of the last 5 and 21 days; abnormal news = log(1 + 21-day count) - log(1 + 252-day count x 21/252) |
 | `tone_lm` | 5 | Loughran-McDonald tone, (positive - negative words) / (positive + negative words) summed over the firm's articles of the last 1, 5, 21 and 252 days, and its surprise |
 | `emb_fb` | 64 | Mean FinBERT headline vector (principal components) of the firm's articles of the last holding period: 5, 10 or 21 trading days (weekly, biweekly, monthly; zero without news): the embedding regression of Chen, Kelly and Xiu (2022), with our models as the forecaster |
@@ -248,7 +248,7 @@ missing (donor features).
 
 Feature sets: `price`; `narr_<m>`; `firm_<m>`; `text_<m>` (both text blocks);
 `all_<m>` (price and text); `narr_`, `text_` and `all_<m>_s<w>` (the same with the
-tuned shock window, weekly and monthly); `tone_fb`, `tone_lm`, `emb_fb`;
+tuned shock window, at every frequency); `tone_fb`, `tone_lm`, `emb_fb`;
 `news_fb` (the three together); `px_tone` (price, both tones and `npx`);
 `px_news` (`px_tone` and `emb_fb`); `px_all` (`px_news` with the NoLBERT
 narrative block, tuned window where there is one, and firm-news block).
@@ -279,7 +279,7 @@ re-estimation inside the test period.
 | `sipca` | Sparse IPCA, the estimator of the earlier project: the loadings of a feature are penalised as a group, so whole features drop out; factors are ridge cross-sections | 1 or 3 factors; penalty 0.3, 0.1 or 0.03 of the value that switches every feature off |
 | `xgb` | XGBoost: histogram trees, learning rate 0.05, at most 600 rounds stopped early on validation (patience 50), half of the rows and of the columns per tree, at least 50 observations per leaf, L2 penalty 1, 64 histogram bins; refitted with the number of rounds that validation kept | depth 1, 2, 3, 5 |
 | `rf` | Random forest: 100 trees, each on at most 30,000 sampled rows, square root of the number of features per split, at least 50 observations per leaf | depth 3, 6, 10 |
-| `ebm` | Explainable boosting machine (interpret 0.7.8), the model of Bell, Kakhbod, Lettau and Nazemi (2024): additive step functions of each feature plus optional pairs. 64 bins (16 per feature in a pair), learning rate 0.02, trees of two leaves with at least 20 observations each, 50 smoothing rounds, at most 2,000 rounds per stage stopped early on validation (patience 50), 4 bags that each leave out a random 20% of the training rows and hold at most 100,000 | 0 or 10 pairwise interactions |
+| `ebm` | Explainable boosting machine (interpret 0.7.8), the model of Bell, Kakhbod, Lettau and Nazemi (2024): additive step functions of each feature plus optional pairs. 64 bins (16 per feature in a pair), learning rate 0.02, trees of two leaves with at least 20 observations each, 50 smoothing rounds (every term once per round, in a shuffled order) and after them the library's greedy steps (the terms that gain most are boosted; greedy ratio 10, the default), at most 2,000 rounds per stage stopped early on validation (patience 50), 4 bags that each leave out a random 20% of the training rows and hold at most 100,000 | 0 or 10 pairwise interactions |
 
 The linear models are solved on second moments (`linear.py`), so a whole
 regularisation path costs milliseconds. EBM bags stop early on our
@@ -331,16 +331,17 @@ portfolio whose weights are known at formation.
 Every experiment is run once, with seed 0. For the tree models that is one
 draw: `scripts/12_tuning_noise.py` repeats an experiment with other seeds,
 tuning included, and records how far the result moves (FINDINGS.md, section
-7.1).
+8.1).
 
-**Variants** (added with the NoLBERT run; FINDINGS.md, section 9):
+**Variants** (added with the NoLBERT run; FINDINGS.md, sections 6 and 8):
 
 | Name | What it is |
 |---|---|
 | `<model>_rk` | The model fitted on the cross-sectional rank of `y_rel`, scaled to [-1, 1] like the features (ties averaged), instead of `y_rel` itself, with the same grid and protocol. For `ols`, `ridge`, `lasso`, `ipca`, `sipca` and `xgb`; not for the forest and the EBM, which would add half an hour per run. Its forecasts are scores: R2 against returns means nothing for them, rank IC and portfolios do. `ftm.models.tuning.target_of` |
 | `ens` | The combination of the eight base models: in every period each model's forecast is turned into ranks scaled to [-1, 1] and the eight are averaged with equal weights. Nothing is estimated or chosen. `scripts/06b_ensemble.py` |
+| `grand_s<w>__ens`, `grand_text_s<w>__ens` | The combination across topic models: the within-period ranks of the six `ens` forecasts on `all_<m>` (or `text_<m>`) with shock window w, averaged with equal weights; w = 5 and 63. Kind `grand` (family "all" or "text"); not a candidate of the main run's pools, counted in the search. Added in the final run after its test results were seen (FINDINGS.md, section 6). `scripts/06d_grand_ensemble.py` |
 
-**Forecasts that fit nothing** (`scripts/06c_signals.py`; FINDINGS.md, section 10):
+**Forecasts that fit nothing** (`scripts/06c_signals.py`; FINDINGS.md, section 6):
 
 | Name | What it is |
 |---|---|
@@ -370,6 +371,7 @@ leaves the long-short rules flat and the long-only rules in the universe.
 | `mvo` | Mean-variance weights for the forecasts with a 5-factor covariance of the last 252 daily returns; dollar neutral; at most 1% per stock |
 | `long_ew`, `long_vw` | The top decile only, compared with the equal- or value-weighted universe |
 | `ls_buf` | `ls_ew` with a buffer: a stock enters the long (short) leg in the top (bottom) decile and stays until it leaves the top (bottom) fifth (`BUFFER_QUANTILES = 5`), equal weights; the buy/hold spread of Novy-Marx and Velikov (2016). With nothing held it is `ls_ew`. Its legs vary in size |
+| `ls_buf_vw` | The legs of `ls_buf`, weighted by market value within each leg (added in the final run) |
 | `tilt_vw` | Every stock of the universe at its market weight times (1 + s), s = the forecast rank scaled to [-1, 1] (highest forecast at twice, lowest at zero times its market weight): the value-weighted universe tilted towards the forecast, "enhanced indexing". Judged against `univ_vw` by information ratio and alpha |
 
 Long-short rules have longs of +1 and shorts of -1. Turnover is half the sum of
@@ -383,13 +385,14 @@ initial purchase. Each period (validation, test) starts from cash.
 |---|---|
 | R2 out of sample | 1 - sum((y - forecast)^2) / sum(y^2) on `y_rel`: against a forecast of zero, not against the sample mean. In the tables the two sums are sums over periods of per-period means, which is the same thing up to the small variation in the number of stocks |
 | Rank IC | Spearman correlation of forecast and `y_rel` across stocks, per period; reported as mean, Newey-West t statistic, and mean / standard deviation times sqrt(periods per year). A period in which the forecast is the same for every stock counts as zero if the experiment forecasts in other periods; an experiment that never forecasts has no IC |
-| Small samples | Newey-West t statistics are judged by the fixed-b critical values of Kiefer and Vogelsang (2005, Bartlett kernel), column `t_critical`: 2.39, 2.25 and 2.11 for the 21, 42 and 81 test periods. In simulations with these sample sizes the normal 1.96 rejects a true null 6% to 20% of the time |
+| Small samples | Newey-West t statistics are judged by the fixed-b critical values of Kiefer and Vogelsang (2005, Bartlett kernel), column `t_critical`: 2.29, 2.11 and 2.06 for the 36, 78 and 156 test periods. In simulations with these sample sizes the normal 1.96 rejects a true null 6% to 20% of the time |
 | Clark-West | t statistic of the per-period mean of 2 y forecast (one-sided test that the model beats the zero forecast, which it nests) |
 | Diebold-Mariano | t statistic of the difference in per-period mean squared error; positive favours the model |
 | Sharpe ratio | Annualised mean over volatility of the per-period excess return; standard error of Mertens (2002); 95% interval from a stationary bootstrap (5,000 resamples) |
 | Alpha | Intercept on the three Fama-French factors compounded over the holding period, Newey-West t statistic |
-| Sharpe difference | Paired stationary bootstrap of two return series |
-| Reality check, SPA | White (2000) and Hansen (2005) across the experiments on real features of a frequency (all models, variants included), on returns scaled to unit variance, so that the statistic is the best Sharpe ratio. Pool `main`: the 375 experiments of the main run; pool `all`: every experiment, the second part included (613 monthly, 451 biweekly, 613 weekly) |
+| Sharpe difference | Paired stationary bootstrap of two return series; and the test of Ledoit and Wolf (2008): delta method on the first two moments of both series with a Bartlett HAC covariance, fixed-b p-value (`inference.sharpe_difference_hac`, `sharpe_tests.csv`) |
+| Deflated Sharpe ratio | Probability that the true Sharpe ratio exceeds the best expected from N unskilled trials with the observed dispersion of Sharpe ratios (Bailey and Lopez de Prado 2014); N = the experiments of the frequency that hold a position under the rule (`sharpe_tests.csv`) |
+| Reality check, SPA | White (2000) and Hansen (2005) across the experiments on real features of a frequency (all models, variants included), on returns scaled to unit variance, so that the statistic is the best Sharpe ratio. Pool `main`: the 375 experiments of the main design; pool `all`: every experiment (617 a frequency in the final run) |
 | Expected best with no skill | The mean, over the bootstrap resamples of the reality check, of the best Sharpe ratio when every experiment's mean return is set to zero. It keeps the co-movement of the experiments, which the formula of Bailey and Lopez de Prado (2014) for independent trials does not |
 | False discovery rate | Benjamini-Hochberg adjustment of the one-sided p-values (positive mean, fixed-b) of the searched experiments |
 | Long-only portfolios | Also measured against the universe with the same weighting: active return, tracking error, information ratio, alpha and beta. In the multiple-testing table they are measured this way only, since against zero they would pass for earning the market's return |
@@ -418,8 +421,8 @@ The pools of the main run (`any`, the families, the topic models,
 made of validation choices, so their validation IC is partly that of the
 choice: they are not candidates of any pool and are reported on their own. Every other test result is shown for
 completeness and must be read with the multiple-testing rows, which count every
-experiment of a frequency. The counts of the news round are in FINDINGS.md,
-section 10.
+experiment of a frequency. The counts of the search are in FINDINGS.md,
+section 11.
 
 ## 4. Outputs
 
@@ -441,6 +444,7 @@ section 10.
 | `results/encoders/nolbert_ft/` | The run record of the NoLBERT adaptation (configuration, training log, pooling probe); the weights (434 MB) are not in git |
 | `results/tables/placebo.csv`, `text_vs_price.csv` | Exposures against the placebo; text against price |
 | `results/tables/multiple_testing.csv`, `tuning.csv`, `topic_models.csv` | The best of all experiments, given the search; what tuning chose; topic quality |
+| `results/tables/sharpe_tests.csv` | Tests of single Sharpe ratios and of Sharpe differences (section 3.6) |
 | `results/explain/` | Importance, shape functions and ablations of the chosen EBM |
 | `results/ipca/<freq>/<features>__<model>/` | Gamma (`gamma.csv`), factor returns in and out of sample (`factors.csv`), setting and schedule (`summary.json`) of IPCA models; all 50 monthly sparse IPCA experiments are there |
 
@@ -448,29 +452,22 @@ section 10.
 
 | | Previous | Here |
 |---|---|---|
-| Years | 2015 to 2023; 61 training and 41 test months, no validation set | 2013 to 2024; 69 training, 14 validation and 21 test months (84, 24 and 36 with a complete return file) |
+| Years | 2015 to 2023; 61 training and 41 test months, no validation set | 2013 to 2024; 84 training, 24 validation and 36 test months (69, 14 and 21 in the runs on the earlier file) |
 | Universe | 1,000 largest by June value of the same calendar year, used from January | The June list is used from the end of June |
 | Topic models | Fitted on the text of the whole sample | Fitted on text up to 2019, applied forward |
 | News timing | Same-day | Lagged one trading day |
 | Articles per day | 120 | 150 (and every article, as a check) |
 | Model | Sparse IPCA with tuning on the out-of-sample months | Eight models under one validation protocol, six of them also fitted on ranked returns, and their ensemble |
 | Portfolio | Tangency portfolio of the factors, in-sample scaling | Sorted, ranked, mean-variance and long-only portfolios with costs |
-| Missing data | Visible to the model | Incomplete months dropped; remaining gaps hidden from the model (sections 2 and 3.3) |
+| Missing data | Visible to the model | A complete return file; remaining gaps hidden from the model (sections 2 and 3.3) |
 | Articles | FNSPID | FinMultiTime's list, which adds 2024, with the text of FNSPID (section 1) |
 | Inference | Sharpe ratio | Standard errors, bootstrap intervals, multiple-testing corrections |
 
 ## 6. Known limitations
 
-- Our CRSP extract has no daily returns from January to June for stocks that
-  dropped out of the next June list (about 110 a year from 2017), which is why
-  those months are not used from 2017 on (section 2). One trace remains: a
-  holding period that starts in December and ends in January uses, for those
-  stocks, the January return of the monthly file spread evenly over the
-  month's days. `00_pull_crsp.py` removes the problem for anyone with WRDS
-  access.
-- The June lists from 2014 on are those of the earlier project's file. We
-  could check them against complete data only for 2014 to 2016 (962 to 971 of
-  1,000 stocks agree).
+- The universe is the CRSP June lists of ordinary common shares; the earlier
+  project's lists differ in 0% to 3% of each year's stocks. Tickers are taken
+  from the earlier file where it has the stock.
 - The news source holds only tickers that were listed when it was collected,
   only the latest articles of the most covered tickers, and no articles for
   some large companies. Between 43% (2013) and 72% (2023) of the universe has
@@ -478,17 +475,14 @@ section 10.
   features in the firm-news block. The covered firms are themselves a selected
   sample (they survived to the collection date), which the donor rule cannot
   undo: firm-level results are indicative at best.
-- From 2017, a stock new to the June list has daily returns in our file only
-  from January of that year, so its 12-month momentum is missing and it gets
-  donor price features until the momentum window holds 150 returns, from
-  about September (about 5% of stock-periods).
-- The test period has been looked at three times (FINDINGS.md, section 1).
-  The changes made after each run answered defects of the data and of the
-  method, not results, but they were made with a test period in view.
-- The audits of scripts 10 to 12 were not repeated after the last changes (EBM
-  protocol, tie rule); see FINDINGS.md, section 1.
+- The test period has been looked at in every run (four times). The changes
+  made after each run answered defects of the data and of the method, not
+  results, but they were made with a test period in view; the combinations
+  across topic models were added after the final run's test results were seen.
+- The audits of scripts 10 and 12 were rerun on the final data; script 11
+  describes the earlier file.
 - One seed per experiment. For tree models on many features the seed moves a
-  result as much as sampling error does (FINDINGS.md, section 7.1).
+  result as much as sampling error does (FINDINGS.md, section 8.1).
 - The MiniLM encoder was published in 2021 and the FinBERT classifier at the
   end of 2022: neither is point-in-time. NoLBERT's pretraining is (1976 to
   1995), but its adaptation used articles up to 1 September 2020, eight months
@@ -502,9 +496,9 @@ section 10.
 - The 2024 news comes from a different scrape: 22 articles before February,
   fewer tickers (1,769 against 4,347 in 2023), headlines rebuilt from the
   article addresses, 24 weekdays with fewer than 20 articles.
-- Further limits of the evaluation (one small validation period for three
-  jobs, tuning on squared error and selection on rank IC, no adjustment of the
-  IC for beta, flat costs) are listed in FINDINGS.md, section 9.
+- Further limits of the evaluation (one validation period for three jobs,
+  tuning on squared error and selection on rank IC, no adjustment of the IC
+  for beta, flat costs) are listed in FINDINGS.md, section 13.
 - Portfolios are formed at the closing prices that end the price signals, so
   short-term reversal includes bid-ask bounce.
 - The topic models are not refitted after 2019, so subjects that appeared

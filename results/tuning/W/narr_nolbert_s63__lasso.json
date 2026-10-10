@@ -1,0 +1,24 @@
+{
+ "freq": "W",
+ "features": "narr_nolbert_s63",
+ "model": "lasso",
+ "blocks": [
+  "narr_nolbert_s63"
+ ],
+ "n_features": 60,
+ "settings_tried": 40,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {
+  "alpha": 8.664739853566008e-05,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 0.00021166745207623627,
+ "train_r2": 0.0005241128045805343,
+ "seconds_tune": 0.3,
+ "seconds_final": 0.1
+}

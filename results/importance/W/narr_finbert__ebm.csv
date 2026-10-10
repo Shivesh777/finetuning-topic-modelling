@@ -1,31 +1,31 @@
 feature,importance,kind
-narr_finbert_t00,5.773532572175332e-05,mean_abs_contribution
-narr_finbert_t01,2.2648318108551925e-05,mean_abs_contribution
-narr_finbert_t02,5.8582941701531176e-05,mean_abs_contribution
-narr_finbert_t03,5.9791202669823846e-05,mean_abs_contribution
-narr_finbert_t04,7.524949182041334e-05,mean_abs_contribution
-narr_finbert_t05,3.3690811795870215e-05,mean_abs_contribution
-narr_finbert_t06,0.00012472263692269754,mean_abs_contribution
-narr_finbert_t07,7.859318013743471e-05,mean_abs_contribution
-narr_finbert_t08,4.3103635431204864e-05,mean_abs_contribution
-narr_finbert_t09,8.904330534217892e-05,mean_abs_contribution
-narr_finbert_t10,3.4070315638531944e-05,mean_abs_contribution
-narr_finbert_t11,2.433981894917076e-05,mean_abs_contribution
-narr_finbert_t12,1.0607266096677098e-05,mean_abs_contribution
-narr_finbert_t13,0.00011889919277625335,mean_abs_contribution
-narr_finbert_t14,2.281577690474749e-05,mean_abs_contribution
-narr_finbert_t15,6.626937034170842e-05,mean_abs_contribution
-narr_finbert_t16,4.482782394311082e-05,mean_abs_contribution
-narr_finbert_t17,0.00013460909345572734,mean_abs_contribution
-narr_finbert_t18,8.49218667661173e-05,mean_abs_contribution
-narr_finbert_t19,0.00011670966591566523,mean_abs_contribution
-narr_finbert_t01 & narr_finbert_t09,9.050978126502323e-05,mean_abs_contribution
-narr_finbert_t01 & narr_finbert_t13,5.795256277785373e-05,mean_abs_contribution
-narr_finbert_t01 & narr_finbert_t18,4.569140123438532e-05,mean_abs_contribution
-narr_finbert_t02 & narr_finbert_t05,9.246827551543723e-05,mean_abs_contribution
-narr_finbert_t02 & narr_finbert_t06,7.731124564967681e-05,mean_abs_contribution
-narr_finbert_t03 & narr_finbert_t11,5.755216054880554e-05,mean_abs_contribution
-narr_finbert_t04 & narr_finbert_t05,5.33786770178107e-05,mean_abs_contribution
-narr_finbert_t05 & narr_finbert_t11,6.332974001487337e-05,mean_abs_contribution
-narr_finbert_t11 & narr_finbert_t13,6.930634289520185e-05,mean_abs_contribution
-narr_finbert_t12 & narr_finbert_t15,9.687728761624007e-05,mean_abs_contribution
+narr_finbert_t00,3.965116198537671e-05,mean_abs_contribution
+narr_finbert_t01,1.2147368305373088e-05,mean_abs_contribution
+narr_finbert_t02,2.2623736516094298e-05,mean_abs_contribution
+narr_finbert_t03,4.347295340367175e-05,mean_abs_contribution
+narr_finbert_t04,5.6768645757422025e-05,mean_abs_contribution
+narr_finbert_t05,4.431134671314008e-05,mean_abs_contribution
+narr_finbert_t06,0.00016460986342576136,mean_abs_contribution
+narr_finbert_t07,7.481524763991292e-05,mean_abs_contribution
+narr_finbert_t08,4.457076008001016e-05,mean_abs_contribution
+narr_finbert_t09,8.06166828833109e-05,mean_abs_contribution
+narr_finbert_t10,1.8421234629216326e-05,mean_abs_contribution
+narr_finbert_t11,2.687457970027619e-05,mean_abs_contribution
+narr_finbert_t12,6.481132997469783e-05,mean_abs_contribution
+narr_finbert_t13,0.00010463290908679506,mean_abs_contribution
+narr_finbert_t14,7.704674365521566e-06,mean_abs_contribution
+narr_finbert_t15,6.276955146321294e-05,mean_abs_contribution
+narr_finbert_t16,3.044839541707982e-05,mean_abs_contribution
+narr_finbert_t17,5.3254303706898194e-05,mean_abs_contribution
+narr_finbert_t18,1.1202966050866681e-05,mean_abs_contribution
+narr_finbert_t19,5.9657177820096214e-05,mean_abs_contribution
+narr_finbert_t01 & narr_finbert_t12,2.1681835983354127e-05,mean_abs_contribution
+narr_finbert_t02 & narr_finbert_t06,2.5864094206960556e-05,mean_abs_contribution
+narr_finbert_t05 & narr_finbert_t17,2.2636150054987748e-05,mean_abs_contribution
+narr_finbert_t06 & narr_finbert_t07,3.022511605891571e-05,mean_abs_contribution
+narr_finbert_t06 & narr_finbert_t09,3.4422872737570096e-05,mean_abs_contribution
+narr_finbert_t07 & narr_finbert_t12,1.976128110700878e-05,mean_abs_contribution
+narr_finbert_t07 & narr_finbert_t16,2.3463635340816448e-05,mean_abs_contribution
+narr_finbert_t11 & narr_finbert_t16,1.9951860933837733e-05,mean_abs_contribution
+narr_finbert_t11 & narr_finbert_t17,1.96277516744402e-05,mean_abs_contribution
+narr_finbert_t14 & narr_finbert_t17,1.8568766291772826e-05,mean_abs_contribution

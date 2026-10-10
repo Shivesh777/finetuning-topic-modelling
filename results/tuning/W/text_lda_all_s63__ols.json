@@ -1,0 +1,21 @@
+{
+ "freq": "W",
+ "features": "text_lda_all_s63",
+ "model": "ols",
+ "blocks": [
+  "narr_lda_all_s63",
+  "firm_lda_all"
+ ],
+ "n_features": 121,
+ "settings_tried": 1,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {},
+ "validation_r2": -0.0003125428898778093,
+ "train_r2": 0.00159412527840741,
+ "seconds_tune": 0.5,
+ "seconds_final": 0.3
+}

@@ -8,21 +8,21 @@
   "tone_lm",
   "emb_fb",
   "npx",
-  "narr_nolbert",
+  "narr_nolbert_s63",
   "firm_nolbert"
  ],
  "n_features": 212,
  "settings_tried": 25,
  "rows": {
-  "train": 140333,
-  "validation": 26757,
-  "test": 41588
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
  },
  "params": {
-  "alpha": 24.668702254424698
+  "alpha": 0.781139478943457
  },
- "validation_r2": 6.050823645242787e-06,
- "train_r2": 0.00011701076705383784,
- "seconds_tune": 0.2,
- "seconds_final": 0.2
+ "validation_r2": 0.00032886795725695084,
+ "train_r2": 0.0015695017642148867,
+ "seconds_tune": 0.5,
+ "seconds_final": 0.3
 }

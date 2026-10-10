@@ -1,5 +1,5 @@
 feature,coef,importance,kind
-lm_tone_1,0.0,0.0,mean_abs_contribution
+lm_tone_1,-0.0,0.0,mean_abs_contribution
 lm_tone_5,0.0,0.0,mean_abs_contribution
 lm_tone_21,0.0,0.0,mean_abs_contribution
 lm_tone_252,-0.0,0.0,mean_abs_contribution

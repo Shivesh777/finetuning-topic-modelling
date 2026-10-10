@@ -56,7 +56,8 @@ class FirmTone:
         articles) and ticker; fb_tone (n,); lm (n, 3) words, positive, negative; emb (n, k)."""
         col = links["ticker"].map(market.tickers)
         article = links["position"].to_numpy()
-        day = np.searchsorted(market.dates.values, np.asarray(dates)[article], side="left")
+        day = np.searchsorted(market.dates.values, pd.to_datetime(np.asarray(dates)[article]).values,
+                              side="left")          # datetime64 whatever the input (Timestamps too)
         keep = col.notna().to_numpy() & (day < len(market.dates))
         order = np.argsort(day[keep], kind="stable")
         self.day = day[keep][order]

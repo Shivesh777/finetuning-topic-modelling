@@ -1,0 +1,24 @@
+{
+ "freq": "2W",
+ "features": "all_lda_s63",
+ "model": "ipca",
+ "blocks": [
+  "price",
+  "narr_lda_s63",
+  "firm_lda"
+ ],
+ "n_features": 129,
+ "settings_tried": 4,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "n_factors": 1
+ },
+ "validation_r2": -0.0006175079028465369,
+ "train_r2": 3.048387524262619e-05,
+ "seconds_tune": 4.7,
+ "seconds_final": 0.3
+}

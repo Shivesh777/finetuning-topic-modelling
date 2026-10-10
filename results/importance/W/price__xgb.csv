@@ -1,9 +1,9 @@
 feature,importance,kind
-beta,0.07153560868061148,gain_share
-ivol,0.08189528956536901,gain_share
-vol_21,0.0519179824339479,gain_share
-mom_12_1,0.2518263825053347,gain_share
-rev_21,0.14625739252604733,gain_share
-rev_5,0.2504854249924211,gain_share
-size,0.05385380167238259,gain_share
-max_21,0.09222811762388589,gain_share
+beta,0.05658672025826327,gain_share
+ivol,0.25703099847119276,gain_share
+vol_21,0.006698288427927395,gain_share
+mom_12_1,0.0,gain_share
+rev_21,0.3533434008904416,gain_share
+rev_5,0.3159336026472075,gain_share
+size,0.0,gain_share
+max_21,0.010406989304967484,gain_share

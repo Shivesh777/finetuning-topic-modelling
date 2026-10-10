@@ -8,16 +8,16 @@
  "attention_shock_window_days": 63,
  "params": {
   "n_factors": 3,
-  "penalty": 0.03
+  "penalty": 0.3
  },
  "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 3,
  "features_total": 20,
- "features_kept": 20,
+ "features_kept": 19,
  "periods": {
-  "train": 69,
-  "validation": 14,
-  "test": 21
+  "train": 84,
+  "validation": 24,
+  "test": 36
  },
  "holding_periods_start": {
   "train": [
@@ -34,35 +34,35 @@
   ]
  },
  "lambda": [
-  0.0005416879543099685,
-  0.0006743223985703727,
-  0.0015938763544505266
+  0.001277846135789092,
+  0.00019032576756771604,
+  0.0016675911750167552
  ],
  "implied_coefficients": {
-  "narr_nolbert20_s63_t00": 0.0005636377694775492,
-  "narr_nolbert20_s63_t01": 0.0004192977788021563,
-  "narr_nolbert20_s63_t02": -0.00018418784107362816,
-  "narr_nolbert20_s63_t03": -4.025503693644033e-05,
-  "narr_nolbert20_s63_t04": 0.00024842146215380885,
-  "narr_nolbert20_s63_t05": 0.00017713342359390022,
-  "narr_nolbert20_s63_t06": 0.0001456879867827746,
-  "narr_nolbert20_s63_t07": 0.0003391287026051676,
-  "narr_nolbert20_s63_t08": 0.00011660606025684674,
-  "narr_nolbert20_s63_t09": -0.00021719934142513223,
-  "narr_nolbert20_s63_t10": 0.0006525675979330935,
-  "narr_nolbert20_s63_t11": 0.0008008147333357886,
-  "narr_nolbert20_s63_t12": 9.592133489373394e-05,
-  "narr_nolbert20_s63_t13": -0.0006153834330355324,
-  "narr_nolbert20_s63_t14": 1.882897547633293e-05,
-  "narr_nolbert20_s63_t15": 0.0006939277230455756,
-  "narr_nolbert20_s63_t16": 6.700614487793848e-05,
-  "narr_nolbert20_s63_t17": -0.00014036204665028246,
-  "narr_nolbert20_s63_t18": 0.00013537699048717976,
-  "narr_nolbert20_s63_t19": -0.0006999889009053232
+  "narr_nolbert20_s63_t00": 0.0006652469936861055,
+  "narr_nolbert20_s63_t01": -1.4260872924366235e-05,
+  "narr_nolbert20_s63_t02": -0.0005858465297216259,
+  "narr_nolbert20_s63_t03": -0.0001659098190524687,
+  "narr_nolbert20_s63_t04": -4.767044971851167e-05,
+  "narr_nolbert20_s63_t05": 0.0002311173250340031,
+  "narr_nolbert20_s63_t06": 0.0006465681141265326,
+  "narr_nolbert20_s63_t07": 0.0001278790788721875,
+  "narr_nolbert20_s63_t08": -1.0878678119778337e-05,
+  "narr_nolbert20_s63_t09": 9.693649972324004e-05,
+  "narr_nolbert20_s63_t10": 0.00029641246938302823,
+  "narr_nolbert20_s63_t11": 0.0005657526193272597,
+  "narr_nolbert20_s63_t12": -0.00013357301982988725,
+  "narr_nolbert20_s63_t13": -0.00026150400766350294,
+  "narr_nolbert20_s63_t14": 0.0,
+  "narr_nolbert20_s63_t15": 0.0011361584195278126,
+  "narr_nolbert20_s63_t16": -0.0011389268741644333,
+  "narr_nolbert20_s63_t17": 0.00018750802296137458,
+  "narr_nolbert20_s63_t18": -1.2811179089225928e-05,
+  "narr_nolbert20_s63_t19": -0.00013918860146958255
  },
  "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
  "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
  "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
  "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
- "test_forecasts_reproduced_max_abs_error": 2.0979196331538663e-10
+ "test_forecasts_reproduced_max_abs_error": 2.259749982622128e-10
 }

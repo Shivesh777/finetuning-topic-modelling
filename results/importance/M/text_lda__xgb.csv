@@ -1,5 +1,5 @@
 feature,importance,kind
-narr_lda_t00,0.0,gain_share
+narr_lda_t00,0.050078301855932816,gain_share
 narr_lda_t01,0.0,gain_share
 narr_lda_t02,0.0,gain_share
 narr_lda_t03,0.0,gain_share
@@ -22,13 +22,13 @@ narr_lda_t19,0.0,gain_share
 narr_lda_t20,0.0,gain_share
 narr_lda_t21,0.0,gain_share
 narr_lda_t22,0.0,gain_share
-narr_lda_t23,1.0,gain_share
+narr_lda_t23,0.0,gain_share
 narr_lda_t24,0.0,gain_share
 narr_lda_t25,0.0,gain_share
 narr_lda_t26,0.0,gain_share
 narr_lda_t27,0.0,gain_share
 narr_lda_t28,0.0,gain_share
-narr_lda_t29,0.0,gain_share
+narr_lda_t29,0.29640666755215955,gain_share
 narr_lda_t30,0.0,gain_share
 narr_lda_t31,0.0,gain_share
 narr_lda_t32,0.0,gain_share
@@ -41,7 +41,7 @@ narr_lda_t38,0.0,gain_share
 narr_lda_t39,0.0,gain_share
 narr_lda_t40,0.0,gain_share
 narr_lda_t41,0.0,gain_share
-narr_lda_t42,0.0,gain_share
+narr_lda_t42,0.0948557767713346,gain_share
 narr_lda_t43,0.0,gain_share
 narr_lda_t44,0.0,gain_share
 narr_lda_t45,0.0,gain_share
@@ -57,7 +57,7 @@ narr_lda_t54,0.0,gain_share
 narr_lda_t55,0.0,gain_share
 narr_lda_t56,0.0,gain_share
 narr_lda_t57,0.0,gain_share
-narr_lda_t58,0.0,gain_share
+narr_lda_t58,0.08635189218492387,gain_share
 narr_lda_t59,0.0,gain_share
 firm_lda_news_count,0.0,gain_share
 firm_lda_news_t00,0.0,gain_share
@@ -95,11 +95,11 @@ firm_lda_news_t31,0.0,gain_share
 firm_lda_news_t32,0.0,gain_share
 firm_lda_news_t33,0.0,gain_share
 firm_lda_news_t34,0.0,gain_share
-firm_lda_news_t35,0.0,gain_share
-firm_lda_news_t36,0.0,gain_share
+firm_lda_news_t35,0.18830934339188224,gain_share
+firm_lda_news_t36,0.16390596541239544,gain_share
 firm_lda_news_t37,0.0,gain_share
 firm_lda_news_t38,0.0,gain_share
-firm_lda_news_t39,0.0,gain_share
+firm_lda_news_t39,0.12009205283137149,gain_share
 firm_lda_news_t40,0.0,gain_share
 firm_lda_news_t41,0.0,gain_share
 firm_lda_news_t42,0.0,gain_share

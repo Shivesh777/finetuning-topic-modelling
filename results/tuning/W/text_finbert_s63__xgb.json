@@ -1,0 +1,32 @@
+{
+ "freq": "W",
+ "features": "text_finbert_s63",
+ "model": "xgb",
+ "blocks": [
+  "narr_finbert_s63",
+  "firm_finbert"
+ ],
+ "n_features": 41,
+ "settings_tried": 4,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {
+  "max_depth": 3,
+  "learning_rate": 0.05,
+  "n_estimators": 48,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.00025801294504779193,
+ "train_r2": 0.003306024261732876,
+ "seconds_tune": 7.1,
+ "seconds_final": 1.0
+}

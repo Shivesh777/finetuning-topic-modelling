@@ -7,17 +7,17 @@
  ],
  "attention_shock_window_days": null,
  "params": {
-  "n_factors": 3,
+  "n_factors": 1,
   "penalty": 0.3
  },
  "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
- "factors": 3,
+ "factors": 1,
  "features_total": 8,
- "features_kept": 7,
+ "features_kept": 8,
  "periods": {
-  "train": 69,
-  "validation": 14,
-  "test": 21
+  "train": 84,
+  "validation": 24,
+  "test": 36
  },
  "holding_periods_start": {
   "train": [
@@ -34,23 +34,21 @@
   ]
  },
  "lambda": [
-  0.0013546720162531225,
-  0.0012286513923407847,
-  0.00039492646410112345
+  2.7095603557905942e-05
  ],
  "implied_coefficients": {
-  "beta": -0.0002136304743108232,
-  "ivol": 3.7816343892766015e-05,
-  "vol_21": -0.0001830059146378681,
-  "mom_12_1": 0.0017320603151144138,
-  "rev_21": 0.0006295712364772545,
-  "rev_5": -0.00012619473723870999,
-  "size": 8.83754414701982e-05,
-  "max_21": 0.0
+  "beta": -1.972054461872817e-05,
+  "ivol": -8.399337628187422e-06,
+  "vol_21": -5.826435674566692e-06,
+  "mom_12_1": 1.2295593168865116e-05,
+  "rev_21": 7.404089752674909e-06,
+  "rev_5": 5.039378024506234e-06,
+  "size": 2.6984752153420777e-06,
+  "max_21": -1.447885024512621e-06
  },
  "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
  "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
  "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
  "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
- "test_forecasts_reproduced_max_abs_error": 1.1623194811141713e-10
+ "test_forecasts_reproduced_max_abs_error": 2.8604105032931787e-12
 }

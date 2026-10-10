@@ -9,15 +9,15 @@
  "n_features": 41,
  "settings_tried": 25,
  "rows": {
-  "train": 67791,
-  "validation": 13872,
-  "test": 20794
+  "train": 82558,
+  "validation": 23680,
+  "test": 35523
  },
  "params": {
-  "alpha": 22.54224748309854
+  "alpha": 22.604007318035706
  },
- "validation_r2": -2.333042128155327e-06,
- "train_r2": 6.006760815968626e-05,
+ "validation_r2": -1.1037877821307163e-05,
+ "train_r2": 4.879577989236328e-05,
  "seconds_tune": 0.0,
  "seconds_final": 0.0
 }

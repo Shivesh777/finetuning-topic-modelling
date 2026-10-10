@@ -102,7 +102,9 @@ def load(series_dir: Path, freqs) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
 def family(features: str) -> str:
     """price, text (no price features), all (price and text, the px_ sets included) or
     control (the placebo)."""
-    return {"price": "price", "all": "all", "all_s": "all", "px": "all",
+    if features.startswith("grand_text"):
+        return "text"
+    return {"price": "price", "all": "all", "all_s": "all", "px": "all", "grand": "all",
             "placebo": "control"}.get(experiments.kind(features), "text")
 
 

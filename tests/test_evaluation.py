@@ -939,3 +939,35 @@ def test_nan_observations_are_dropped_pairwise_by_two_series_functions(function)
     a, b = 0.01 + 0.05 * g.standard_normal(80), 0.05 * g.standard_normal(80)
     keep = np.setdiff1d(np.arange(80), [2, 30, 31])
     assert function(with_gaps(a, [2, 30]), with_gaps(b, [30, 31])) == function(a[keep], b[keep])
+
+
+def test_sharpe_difference_hac_matches_closed_form_for_independent_normals():
+    # iid normal, independent: n Var(SR_1 - SR_2) = 2 + (SR_1^2 + SR_2^2) / 2 per period
+    rng = np.random.default_rng(3)
+    n = 20_000
+    a, b = rng.normal(0.1, 1.0, n), rng.normal(0.0, 2.0, n)
+    out = inf.sharpe_difference_hac(a, b, periods_per_year=1, lags=0)
+    assert out["se"] == pytest.approx(np.sqrt((2 + 0.1 ** 2 / 2) / n), rel=0.05)
+    assert out["diff"] == pytest.approx(a.mean() / a.std(ddof=0) - b.mean() / b.std(ddof=0))
+    assert out["t"] > 5 and out["p"] < 1e-6
+
+
+def test_sharpe_difference_hac_annualises_sees_correlation_and_agrees_with_the_bootstrap():
+    rng = np.random.default_rng(4)
+    common = rng.normal(0.0, 1.0, 400)
+    a = 0.02 + common + 0.3 * rng.normal(size=400)
+    b = common + 0.3 * rng.normal(size=400)
+    weekly = inf.sharpe_difference_hac(a, b, periods_per_year=52)
+    single = inf.sharpe_difference_hac(a, b, periods_per_year=1)
+    assert weekly["diff"] == pytest.approx(single["diff"] * np.sqrt(52))
+    assert weekly["t"] == pytest.approx(single["t"])
+    # highly correlated series: the difference is far more precise than either Sharpe ratio
+    assert single["se"] < 0.5 * inf.sharpe_se(a, 1)
+    boot = inf.sharpe_difference(a, b, periods_per_year=1, n_boot=4000, seed=1)
+    assert single["se"] == pytest.approx(boot["se"], rel=0.25)
+    # swapping the series flips the sign and keeps the p-value; NaN rows are dropped
+    swapped = inf.sharpe_difference_hac(b, a, periods_per_year=1)
+    assert swapped["t"] == pytest.approx(-single["t"]) and swapped["p"] == pytest.approx(single["p"])
+    a_nan = a.copy(); a_nan[5] = np.nan
+    assert inf.sharpe_difference_hac(a_nan, b, 1)["n"] == 399
+    assert np.isnan(inf.sharpe_difference_hac(a[:2], b[:2], 1)["diff"])

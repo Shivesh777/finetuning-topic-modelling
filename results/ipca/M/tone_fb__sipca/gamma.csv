@@ -1,9 +1,9 @@
 feature,block,kept,f1
-fb_tone_1,tone_fb,True,0.0732306
-fb_tone_5,tone_fb,False,0
-fb_tone_21,tone_fb,True,0.254166
-fb_tone_252,tone_fb,True,0.954951
+fb_tone_1,tone_fb,False,0
+fb_tone_5,tone_fb,True,0.00424888
+fb_tone_21,tone_fb,True,0.264469
+fb_tone_252,tone_fb,True,0.964385
 fb_surprise_21,tone_fb,False,0
-news_log_n5,tone_fb,True,0.0374133
-news_log_n21,tone_fb,True,-0.116783
-news_abnormal_21,tone_fb,True,0.0553889
+news_log_n5,tone_fb,False,0
+news_log_n21,tone_fb,False,0
+news_abnormal_21,tone_fb,False,0

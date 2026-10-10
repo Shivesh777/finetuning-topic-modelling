@@ -33,12 +33,13 @@ SPLITS = {
     "test": ("2022-01-01", "2024-12-31"),
 }
 FREQUENCIES = ("M", "2W", "W")     # monthly, biweekly, weekly rebalancing
-# Our return file (scripts/00_prepare_crsp.py) has daily returns of every stock up to this
-# year. In later years it has them only for the stocks of that calendar year's June list.
-# Between January and the day the list changes, the stocks with data are then exactly those
-# that will still be on the next list: any use of those days selects on the future, so the
-# panels leave them out. Set to None with a complete file (scripts/00_pull_crsp.py).
-DAILY_RETURNS_COMPLETE_UNTIL = 2016
+# The return file of scripts/00_prepare_crsp.py had daily returns of every stock only up to
+# 2016; later it had them only for the stocks of each calendar year's June list, so formation
+# days between January and the list change selected on the future and were left out (set this
+# to 2016 for that file). data/crsp/ now comes from WRDS (scripts/00_pull_crsp.py) with daily
+# returns of every listed stock on every day: None uses every formation day.
+DAILY_RETURNS_COMPLETE_UNTIL = (int(os.environ["FTM_DAILY_COMPLETE_UNTIL"])     # e.g. 2016 for the
+                                if os.environ.get("FTM_DAILY_COMPLETE_UNTIL") else None)  # old file, tests
 NEWS_LAG_DAYS = 1                  # article dates carry no time of day: use news up to t-1
 
 # --- text ----------------------------------------------------------------------------

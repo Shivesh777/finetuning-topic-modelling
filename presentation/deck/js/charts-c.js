@@ -334,7 +334,7 @@
     var g = surface(box), s = g.s, E = D().ebm;
     mtx(s, 0, 34, 'ŷ_{i} = β_{0} + f_{1}(z_{i1}) + f_{2}(z_{i2}) + … + f_{p}(z_{ip}) + Σ f_{jk}(z_{ij}, z_{ik})', serif({'font-size': 32}));
     tx(s, 0, 68, 'one curve per feature, a few pairwise surfaces; the forecast is their sum, so each term can be read', {'font-size': 18, class: 't-mono t-quiet'});
-    var steps = [['Cycle through the features, one at a time', 'round-robin, so no feature crowds out the rest'],
+    var steps = [['Score every feature, in a shuffled order', 'first rounds round-robin, then boost the most useful'],
                  ['Fit a two-leaf tree on that feature', 'to what the model still gets wrong'],
                  ['Add it, shrunk by the learning rate', '0.02: many small steps, up to 2,000 rounds'],
                  ['Stop at the lowest validation error', 'average four bagged copies'],

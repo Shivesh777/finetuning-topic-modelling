@@ -1,71 +1,71 @@
 feature,importance,kind
-narr_minilm_t00,7.772238746320056e-06,mean_abs_contribution
-narr_minilm_t01,1.2573563516245183e-05,mean_abs_contribution
-narr_minilm_t02,3.480425662604871e-05,mean_abs_contribution
-narr_minilm_t03,2.626440226303603e-05,mean_abs_contribution
-narr_minilm_t04,2.6527972435230137e-05,mean_abs_contribution
-narr_minilm_t05,3.383626909829922e-05,mean_abs_contribution
-narr_minilm_t06,2.1655461645014708e-05,mean_abs_contribution
-narr_minilm_t07,4.08030908846379e-05,mean_abs_contribution
-narr_minilm_t08,4.6786096274254284e-05,mean_abs_contribution
-narr_minilm_t09,4.124003666378121e-05,mean_abs_contribution
-narr_minilm_t10,1.491406968956994e-05,mean_abs_contribution
-narr_minilm_t11,3.4865769009442665e-05,mean_abs_contribution
-narr_minilm_t12,1.5825810473556592e-05,mean_abs_contribution
-narr_minilm_t13,2.9830856112532033e-05,mean_abs_contribution
-narr_minilm_t14,3.0544883986954916e-05,mean_abs_contribution
-narr_minilm_t15,1.6099134021435974e-05,mean_abs_contribution
-narr_minilm_t16,9.76298924111746e-06,mean_abs_contribution
-narr_minilm_t17,1.6668806891278657e-05,mean_abs_contribution
-narr_minilm_t18,2.630388438807527e-05,mean_abs_contribution
-narr_minilm_t19,2.437516408659506e-05,mean_abs_contribution
-narr_minilm_t20,1.1200013217931237e-05,mean_abs_contribution
-narr_minilm_t21,1.48675175218634e-05,mean_abs_contribution
-narr_minilm_t22,3.0143402800282155e-05,mean_abs_contribution
-narr_minilm_t23,7.1323847409016105e-06,mean_abs_contribution
-narr_minilm_t24,5.7097784609845653e-05,mean_abs_contribution
-narr_minilm_t25,5.496997412031877e-05,mean_abs_contribution
-narr_minilm_t26,1.5980185718943367e-05,mean_abs_contribution
-narr_minilm_t27,2.930566554046589e-05,mean_abs_contribution
-narr_minilm_t28,3.755818871582324e-05,mean_abs_contribution
-narr_minilm_t29,4.9582249322750854e-05,mean_abs_contribution
-narr_minilm_t30,2.830741686788961e-05,mean_abs_contribution
-narr_minilm_t31,3.298440077765418e-05,mean_abs_contribution
-narr_minilm_t32,1.2828202283169996e-05,mean_abs_contribution
-narr_minilm_t33,3.11105934915263e-05,mean_abs_contribution
-narr_minilm_t34,8.944981278365868e-06,mean_abs_contribution
-narr_minilm_t35,3.95058686815128e-05,mean_abs_contribution
-narr_minilm_t36,4.138122141014301e-05,mean_abs_contribution
-narr_minilm_t37,2.808824598967731e-05,mean_abs_contribution
-narr_minilm_t38,5.142473948742946e-06,mean_abs_contribution
-narr_minilm_t39,1.0373182593939597e-05,mean_abs_contribution
-narr_minilm_t40,3.554429798628289e-05,mean_abs_contribution
-narr_minilm_t41,1.6206197465362838e-05,mean_abs_contribution
-narr_minilm_t42,1.6806016589744093e-05,mean_abs_contribution
-narr_minilm_t43,2.5744708984883188e-05,mean_abs_contribution
-narr_minilm_t44,1.590178573834841e-05,mean_abs_contribution
-narr_minilm_t45,3.566790163447275e-05,mean_abs_contribution
-narr_minilm_t46,1.322691712986228e-05,mean_abs_contribution
-narr_minilm_t47,5.775237256424525e-05,mean_abs_contribution
-narr_minilm_t48,4.5078020960180814e-05,mean_abs_contribution
-narr_minilm_t49,1.1535324220962358e-05,mean_abs_contribution
-narr_minilm_t50,2.5186154897967207e-05,mean_abs_contribution
-narr_minilm_t51,1.7723320255851192e-05,mean_abs_contribution
-narr_minilm_t52,7.818003331330559e-05,mean_abs_contribution
-narr_minilm_t53,2.4394454305383918e-05,mean_abs_contribution
-narr_minilm_t54,3.229405078279284e-05,mean_abs_contribution
-narr_minilm_t55,4.117350368396797e-05,mean_abs_contribution
-narr_minilm_t56,9.007041836968616e-06,mean_abs_contribution
-narr_minilm_t57,2.562349560777259e-05,mean_abs_contribution
-narr_minilm_t58,8.242253629464597e-06,mean_abs_contribution
-narr_minilm_t59,3.255812181653234e-05,mean_abs_contribution
-narr_minilm_t02 & narr_minilm_t52,5.162728765847419e-05,mean_abs_contribution
-narr_minilm_t14 & narr_minilm_t25,4.759473305435675e-05,mean_abs_contribution
-narr_minilm_t20 & narr_minilm_t52,4.281944474014284e-05,mean_abs_contribution
-narr_minilm_t24 & narr_minilm_t52,5.9798253338761535e-05,mean_abs_contribution
-narr_minilm_t25 & narr_minilm_t52,5.397323298761956e-05,mean_abs_contribution
-narr_minilm_t26 & narr_minilm_t31,2.9562936361689448e-05,mean_abs_contribution
-narr_minilm_t29 & narr_minilm_t52,5.5853596822473965e-05,mean_abs_contribution
-narr_minilm_t31 & narr_minilm_t52,4.4796312508863625e-05,mean_abs_contribution
-narr_minilm_t41 & narr_minilm_t52,4.5128170765638655e-05,mean_abs_contribution
-narr_minilm_t47 & narr_minilm_t52,6.455255583869865e-05,mean_abs_contribution
+narr_minilm_t00,7.647301125030865e-06,mean_abs_contribution
+narr_minilm_t01,3.224281193097015e-06,mean_abs_contribution
+narr_minilm_t02,1.1799739352042216e-05,mean_abs_contribution
+narr_minilm_t03,1.0484168024404808e-05,mean_abs_contribution
+narr_minilm_t04,1.6793403397577752e-05,mean_abs_contribution
+narr_minilm_t05,3.454327530640388e-05,mean_abs_contribution
+narr_minilm_t06,5.38208612100067e-06,mean_abs_contribution
+narr_minilm_t07,2.1371088104517482e-05,mean_abs_contribution
+narr_minilm_t08,5.940544426949964e-06,mean_abs_contribution
+narr_minilm_t09,6.25579344011377e-06,mean_abs_contribution
+narr_minilm_t10,8.819811180701608e-06,mean_abs_contribution
+narr_minilm_t11,3.686131840378905e-05,mean_abs_contribution
+narr_minilm_t12,6.254430672363028e-06,mean_abs_contribution
+narr_minilm_t13,1.8296441667960853e-05,mean_abs_contribution
+narr_minilm_t14,1.1098193348756733e-05,mean_abs_contribution
+narr_minilm_t15,1.20973499164475e-05,mean_abs_contribution
+narr_minilm_t16,7.506601750801238e-06,mean_abs_contribution
+narr_minilm_t17,5.143010708628892e-06,mean_abs_contribution
+narr_minilm_t18,1.1207983370641902e-05,mean_abs_contribution
+narr_minilm_t19,2.5344162256417574e-05,mean_abs_contribution
+narr_minilm_t20,2.5377491619279114e-05,mean_abs_contribution
+narr_minilm_t21,1.4726379246332944e-05,mean_abs_contribution
+narr_minilm_t22,4.837792336262764e-06,mean_abs_contribution
+narr_minilm_t23,1.7817156593426362e-05,mean_abs_contribution
+narr_minilm_t24,2.9593462543997274e-05,mean_abs_contribution
+narr_minilm_t25,1.613651599040678e-05,mean_abs_contribution
+narr_minilm_t26,1.3819037417741192e-05,mean_abs_contribution
+narr_minilm_t27,9.410418873561211e-06,mean_abs_contribution
+narr_minilm_t28,2.568822355996741e-05,mean_abs_contribution
+narr_minilm_t29,4.1133552605544393e-05,mean_abs_contribution
+narr_minilm_t30,1.4968855152076318e-05,mean_abs_contribution
+narr_minilm_t31,1.2495718115559328e-05,mean_abs_contribution
+narr_minilm_t32,2.1591268007798944e-05,mean_abs_contribution
+narr_minilm_t33,1.3932959848085472e-05,mean_abs_contribution
+narr_minilm_t34,3.3320168081442645e-06,mean_abs_contribution
+narr_minilm_t35,3.402968346061943e-06,mean_abs_contribution
+narr_minilm_t36,6.773122677623768e-06,mean_abs_contribution
+narr_minilm_t37,2.5740096127072764e-05,mean_abs_contribution
+narr_minilm_t38,1.0432410517207307e-05,mean_abs_contribution
+narr_minilm_t39,3.2713282402618076e-06,mean_abs_contribution
+narr_minilm_t40,8.521861405962164e-06,mean_abs_contribution
+narr_minilm_t41,7.674575361034583e-06,mean_abs_contribution
+narr_minilm_t42,1.9495169341134623e-05,mean_abs_contribution
+narr_minilm_t43,1.7015826192642785e-05,mean_abs_contribution
+narr_minilm_t44,1.0172487096565558e-05,mean_abs_contribution
+narr_minilm_t45,2.6222705378047432e-05,mean_abs_contribution
+narr_minilm_t46,7.784867641734067e-06,mean_abs_contribution
+narr_minilm_t47,2.4144905774763344e-05,mean_abs_contribution
+narr_minilm_t48,2.0000503783120413e-05,mean_abs_contribution
+narr_minilm_t49,1.2002731406157668e-05,mean_abs_contribution
+narr_minilm_t50,1.900680808475051e-05,mean_abs_contribution
+narr_minilm_t51,4.109492312667058e-06,mean_abs_contribution
+narr_minilm_t52,3.6546817219650626e-05,mean_abs_contribution
+narr_minilm_t53,1.8368690816079028e-05,mean_abs_contribution
+narr_minilm_t54,1.0484631011370099e-05,mean_abs_contribution
+narr_minilm_t55,3.017761041145073e-05,mean_abs_contribution
+narr_minilm_t56,6.5590600657544665e-06,mean_abs_contribution
+narr_minilm_t57,3.943977388635503e-06,mean_abs_contribution
+narr_minilm_t58,2.18854635762654e-05,mean_abs_contribution
+narr_minilm_t59,2.5348992279635577e-05,mean_abs_contribution
+narr_minilm_t00 & narr_minilm_t29,4.334882409969935e-05,mean_abs_contribution
+narr_minilm_t06 & narr_minilm_t29,3.680380219650847e-05,mean_abs_contribution
+narr_minilm_t18 & narr_minilm_t43,6.267402145800843e-05,mean_abs_contribution
+narr_minilm_t21 & narr_minilm_t24,6.73936597224504e-05,mean_abs_contribution
+narr_minilm_t24 & narr_minilm_t29,5.766977578693094e-05,mean_abs_contribution
+narr_minilm_t24 & narr_minilm_t43,7.085394409223436e-05,mean_abs_contribution
+narr_minilm_t29 & narr_minilm_t37,8.069507189808133e-05,mean_abs_contribution
+narr_minilm_t29 & narr_minilm_t47,6.456407826401956e-05,mean_abs_contribution
+narr_minilm_t29 & narr_minilm_t52,7.369704922177781e-05,mean_abs_contribution
+narr_minilm_t31 & narr_minilm_t56,8.985799713204313e-05,mean_abs_contribution

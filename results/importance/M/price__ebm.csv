@@ -1,19 +1,9 @@
 feature,importance,kind
-beta,0.00022739560267141158,mean_abs_contribution
-ivol,0.00028607093864754487,mean_abs_contribution
-vol_21,0.00016987912643558233,mean_abs_contribution
-mom_12_1,0.00012971309714406945,mean_abs_contribution
-rev_21,0.000490512606738278,mean_abs_contribution
-rev_5,0.0003589688796022007,mean_abs_contribution
-size,0.0002180174200727195,mean_abs_contribution
-max_21,0.00018492160586900525,mean_abs_contribution
-beta & ivol,0.00020568452953389954,mean_abs_contribution
-beta & vol_21,0.00017794724501131893,mean_abs_contribution
-beta & rev_21,0.00019081933728537376,mean_abs_contribution
-ivol & vol_21,0.0001544657183032874,mean_abs_contribution
-ivol & mom_12_1,0.00014681039679875232,mean_abs_contribution
-vol_21 & rev_21,0.00018751111615463725,mean_abs_contribution
-mom_12_1 & rev_21,0.0002353572936781003,mean_abs_contribution
-mom_12_1 & max_21,0.00013207848843359323,mean_abs_contribution
-rev_21 & max_21,0.00017372609796847786,mean_abs_contribution
-rev_5 & max_21,0.00024510625054381056,mean_abs_contribution
+beta,2.694693308559191e-07,mean_abs_contribution
+ivol,1.3761791568321952e-07,mean_abs_contribution
+vol_21,0.0,mean_abs_contribution
+mom_12_1,0.0,mean_abs_contribution
+rev_21,6.274611424890637e-06,mean_abs_contribution
+rev_5,2.4394109644297395e-06,mean_abs_contribution
+size,8.409147677770627e-06,mean_abs_contribution
+max_21,0.0,mean_abs_contribution

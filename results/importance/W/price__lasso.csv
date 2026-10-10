@@ -1,9 +1,9 @@
 feature,coef,importance,kind
-beta,0.0,0.0,mean_abs_contribution
-ivol,-0.0,0.0,mean_abs_contribution
-vol_21,-0.0,0.0,mean_abs_contribution
-mom_12_1,0.0,0.0,mean_abs_contribution
-rev_21,-6.659716149602712e-05,3.334339243525229e-05,mean_abs_contribution
-rev_5,-4.0773435015131573e-05,2.044377819515068e-05,mean_abs_contribution
-size,0.0,0.0,mean_abs_contribution
-max_21,-0.0,0.0,mean_abs_contribution
+beta,0.0006273675022403462,0.00031339503191403083,mean_abs_contribution
+ivol,0.00015334108615554042,7.677309209345107e-05,mean_abs_contribution
+vol_21,-0.0008318212889567759,0.0004159963194310927,mean_abs_contribution
+mom_12_1,8.375263378043462e-05,4.181749062032434e-05,mean_abs_contribution
+rev_21,-0.0008186500893131742,0.0004092674173508721,mean_abs_contribution
+rev_5,-0.0006370160010455496,0.0003191375663764502,mean_abs_contribution
+size,0.00021715307542062486,0.00010871541966183903,mean_abs_contribution
+max_21,0.000475691182488577,0.00023827514531420702,mean_abs_contribution

@@ -1,0 +1,32 @@
+{
+ "freq": "W",
+ "features": "text_nolbert_s63",
+ "model": "xgb",
+ "blocks": [
+  "narr_nolbert_s63",
+  "firm_nolbert"
+ ],
+ "n_features": 121,
+ "settings_tried": 4,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {
+  "max_depth": 2,
+  "learning_rate": 0.05,
+  "n_estimators": 36,
+  "subsample": 0.5,
+  "colsample_bytree": 0.5,
+  "min_child_weight": 50,
+  "reg_lambda": 1.0,
+  "early_stopping_rounds": null,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.00016101493938924794,
+ "train_r2": 0.0013147648128625233,
+ "seconds_tune": 13.1,
+ "seconds_final": 2.8
+}

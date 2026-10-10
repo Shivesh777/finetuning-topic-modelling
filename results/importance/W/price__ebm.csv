@@ -1,19 +1,19 @@
 feature,importance,kind
-beta,3.9999947570901695e-05,mean_abs_contribution
-ivol,8.042510740214583e-05,mean_abs_contribution
-vol_21,3.7686909314832387e-05,mean_abs_contribution
-mom_12_1,3.594177889458636e-05,mean_abs_contribution
-rev_21,0.0001230721169432228,mean_abs_contribution
-rev_5,0.00011909441955510266,mean_abs_contribution
-size,7.35300713703695e-05,mean_abs_contribution
-max_21,4.4619737373807854e-05,mean_abs_contribution
-beta & vol_21,4.6215576633836495e-05,mean_abs_contribution
-ivol & rev_21,5.343245821675532e-05,mean_abs_contribution
-ivol & size,6.683687696209498e-05,mean_abs_contribution
-vol_21 & rev_5,5.3046276424898975e-05,mean_abs_contribution
-mom_12_1 & rev_5,5.451304454857281e-05,mean_abs_contribution
-rev_21 & rev_5,6.66872735593935e-05,mean_abs_contribution
-rev_21 & size,5.9635189488151604e-05,mean_abs_contribution
-rev_21 & max_21,5.0013185817415034e-05,mean_abs_contribution
-rev_5 & size,4.797032992699345e-05,mean_abs_contribution
-rev_5 & max_21,4.534457762861688e-05,mean_abs_contribution
+beta,1.7214369510470183e-05,mean_abs_contribution
+ivol,5.4720560219886084e-05,mean_abs_contribution
+vol_21,4.278325045638595e-05,mean_abs_contribution
+mom_12_1,1.7366587587900756e-05,mean_abs_contribution
+rev_21,7.952975035742888e-05,mean_abs_contribution
+rev_5,4.9736350846326776e-05,mean_abs_contribution
+size,1.6123958578511806e-05,mean_abs_contribution
+max_21,2.0542273738135208e-05,mean_abs_contribution
+beta & vol_21,1.0587318574804698e-05,mean_abs_contribution
+beta & rev_21,1.577382970223721e-05,mean_abs_contribution
+beta & rev_5,8.733103935926605e-06,mean_abs_contribution
+ivol & mom_12_1,1.3549626785044033e-05,mean_abs_contribution
+ivol & rev_5,1.1236291744992878e-05,mean_abs_contribution
+vol_21 & rev_5,1.5210745008739794e-05,mean_abs_contribution
+mom_12_1 & rev_21,1.2406457345146764e-05,mean_abs_contribution
+mom_12_1 & rev_5,8.804120355332404e-06,mean_abs_contribution
+rev_21 & size,1.2163801482386976e-05,mean_abs_contribution
+rev_5 & size,9.715839583216599e-06,mean_abs_contribution

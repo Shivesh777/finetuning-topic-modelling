@@ -337,6 +337,44 @@ def sharpe_difference(r1: ArrayLike, r2: ArrayLike, periods_per_year: float, n_b
     return out
 
 
+def sharpe_difference_hac(r1: ArrayLike, r2: ArrayLike, periods_per_year: float,
+                          lags: int | None = None) -> dict:
+    """Ledoit and Wolf (2008) test that two return series of the same periods have the same
+    Sharpe ratio, with a HAC standard error from the delta method.
+
+    With v = (mean_1, mean_2, E[r_1^2], E[r_2^2]) and f(v) = mean_1 / sqrt(E[r_1^2] - mean_1^2)
+    - mean_2 / sqrt(E[r_2^2] - mean_2^2), the per-period difference d = f(v_hat) has
+    variance grad' Psi grad / n, where Psi is the Bartlett (Newey-West) long-run covariance
+    of y_t = (r_1t - mean_1, r_2t - mean_2, r_1t^2 - E[r_1^2], r_2t^2 - E[r_2^2]) with lags
+    default_lags(n) when None. Returns diff and se annualised by sqrt(periods_per_year),
+    t = diff / se, the two-sided p-value under fixed-b critical values (p_value) and n.
+    Ledoit and Wolf use a prewhitened quadratic-spectral kernel; the Bartlett kernel keeps
+    this consistent with mean_test, and the fixed-b p-value allows for short samples.
+    """
+    a, b = complete_cases(r1, r2)
+    n = a.size
+    out = {"diff": np.nan, "se": np.nan, "t": np.nan, "p": np.nan, "n": n}
+    if n < 3:
+        return out
+    m1, m2, g1, g2 = a.mean(), b.mean(), (a * a).mean(), (b * b).mean()
+    v1, v2 = g1 - m1 * m1, g2 - m2 * m2
+    if not (v1 > 0 and v2 > 0):
+        return out
+    grad = np.array([g1 / v1 ** 1.5, -g2 / v2 ** 1.5, -0.5 * m1 / v1 ** 1.5, 0.5 * m2 / v2 ** 1.5])
+    y = np.column_stack([a - m1, b - m2, a * a - g1, b * b - g2])
+    psi = _bartlett_sum(y, _resolve_lags(lags, n)) / n
+    variance = float(grad @ psi @ grad) / n
+    scale = sqrt(periods_per_year)
+    diff = (m1 / sqrt(v1) - m2 / sqrt(v2)) * scale
+    out["diff"] = float(diff)
+    if not variance > 0:
+        return out
+    se = sqrt(variance) * scale
+    t = diff / se
+    out.update({"se": se, "t": t, "p": p_value(t, n, lags)})
+    return out
+
+
 def probabilistic_sharpe(r: ArrayLike, benchmark_sr: float = 0.0) -> float:
     """Probability that the true Sharpe ratio exceeds benchmark_sr (Bailey and Lopez de Prado 2012).
 

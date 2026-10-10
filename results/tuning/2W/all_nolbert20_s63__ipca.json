@@ -1,0 +1,24 @@
+{
+ "freq": "2W",
+ "features": "all_nolbert20_s63",
+ "model": "ipca",
+ "blocks": [
+  "price",
+  "narr_nolbert20_s63",
+  "firm_nolbert20"
+ ],
+ "n_features": 49,
+ "settings_tried": 4,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "n_factors": 3
+ },
+ "validation_r2": -0.00028371906101654076,
+ "train_r2": -5.271304290843659e-06,
+ "seconds_tune": 0.6,
+ "seconds_final": 0.1
+}

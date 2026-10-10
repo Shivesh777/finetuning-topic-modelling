@@ -1,9 +1,9 @@
 feature,importance,kind
-fb_tone_1,2.2980425900149034e-05,mean_abs_contribution
-fb_tone_5,3.400744209427135e-05,mean_abs_contribution
-fb_tone_21,2.7107498309678785e-05,mean_abs_contribution
-fb_tone_252,3.5703953733595754e-05,mean_abs_contribution
-fb_surprise_21,3.522396093144418e-05,mean_abs_contribution
-news_log_n5,6.0426504761030174e-05,mean_abs_contribution
-news_log_n21,1.8468897571794528e-05,mean_abs_contribution
-news_abnormal_21,7.401365177402121e-05,mean_abs_contribution
+fb_tone_1,1.7127488727776003e-05,mean_abs_contribution
+fb_tone_5,2.7185280464250523e-05,mean_abs_contribution
+fb_tone_21,7.877445027207474e-06,mean_abs_contribution
+fb_tone_252,5.926077950625275e-05,mean_abs_contribution
+fb_surprise_21,1.589785145997111e-05,mean_abs_contribution
+news_log_n5,5.1869071110362886e-05,mean_abs_contribution
+news_log_n21,2.6585358498132795e-05,mean_abs_contribution
+news_abnormal_21,6.531524540328733e-05,mean_abs_contribution

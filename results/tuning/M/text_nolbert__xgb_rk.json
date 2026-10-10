@@ -9,14 +9,14 @@
  "n_features": 121,
  "settings_tried": 4,
  "rows": {
-  "train": 67791,
-  "validation": 13872,
-  "test": 20794
+  "train": 82558,
+  "validation": 23680,
+  "test": 35523
  },
  "params": {
-  "max_depth": 1,
+  "max_depth": 2,
   "learning_rate": 0.05,
-  "n_estimators": 109,
+  "n_estimators": 10,
   "subsample": 0.5,
   "colsample_bytree": 0.5,
   "min_child_weight": 50,
@@ -25,8 +25,8 @@
   "n_jobs": 4,
   "seed": 0
  },
- "validation_r2": 0.000693483348171986,
- "train_r2": 0.0035017343028822534,
- "seconds_tune": 2.5,
- "seconds_final": 0.6
+ "validation_r2": 0.0006347683005737403,
+ "train_r2": 0.0011366564330324014,
+ "seconds_tune": 2.7,
+ "seconds_final": 0.5
 }

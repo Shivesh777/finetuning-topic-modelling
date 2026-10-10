@@ -7,6 +7,7 @@ so zipping `data/` is enough to hand the project to a teammate.
 | Folder | What it holds | Made by | In git? |
 |---|---|---|---|
 | `crsp/` | Daily and monthly returns, June lists of the 1,000 largest stocks, tickers, Fama-French daily factors | `00_prepare_crsp.py` or `00_pull_crsp.py` | **No (licensed)** |
+| `crsp_legacy/`, `crsp_wrds/` | The earlier project's file (runs up to 8 October) and the raw WRDS pull that `crsp/` was made from (`crsp/` = the pull, with the earlier tickers where it had them) | `00_prepare_crsp.py`, `00_pull_crsp.py --out data/crsp_wrds` | **No (licensed)** |
 | `news/articles/` | One row per unique article: date, headline, first 500 characters of the body. One file per quarter | `01_download_news.py`, `02_build_articles.py` | No (third-party text) |
 | `news/links.parquet` | The tickers each article is filed under | `02_build_articles.py` | No |
 | `topics/embeddings/` | Per-article vectors: sentence embeddings (`03_embed.py`) or class probabilities (`03b_classify_topics.py`), with the article ids | scripts 03 | No (hundreds of MB) |
@@ -32,7 +33,7 @@ so zipping `data/` is enough to hand the project to a teammate.
 - **Embeddings** are large (400 MB per encoder) and are rebuilt by `scripts/03`.
 
 To make the zip smaller, leave out `panels/`, `predictions/` and `models/`:
-scripts 05, 06 and 06b rebuild them from `crsp/` and `topics/` in about 70 minutes.
+scripts 05 to 06d rebuild them from `crsp/` and `topics/` in about three hours (final run).
 
 ## Files of a topic model (`topics/<model>/`)
 

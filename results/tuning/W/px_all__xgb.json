@@ -8,20 +8,20 @@
   "tone_lm",
   "emb_fb",
   "npx",
-  "narr_nolbert_s1",
+  "narr_nolbert_s63",
   "firm_nolbert"
  ],
  "n_features": 212,
  "settings_tried": 4,
  "rows": {
-  "train": 284639,
-  "validation": 52518,
-  "test": 80216
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
  },
  "params": {
-  "max_depth": 1,
+  "max_depth": 2,
   "learning_rate": 0.05,
-  "n_estimators": 151,
+  "n_estimators": 44,
   "subsample": 0.5,
   "colsample_bytree": 0.5,
   "min_child_weight": 50,
@@ -30,8 +30,8 @@
   "n_jobs": 4,
   "seed": 0
  },
- "validation_r2": 0.0006097036496244268,
- "train_r2": 0.0014981166951928415,
- "seconds_tune": 17.1,
- "seconds_final": 4.9
+ "validation_r2": 0.00043990367351776083,
+ "train_r2": 0.0018058619471004178,
+ "seconds_tune": 24.5,
+ "seconds_final": 4.5
 }

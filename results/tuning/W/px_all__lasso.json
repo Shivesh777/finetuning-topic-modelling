@@ -8,23 +8,23 @@
   "tone_lm",
   "emb_fb",
   "npx",
-  "narr_nolbert_s1",
+  "narr_nolbert_s63",
   "firm_nolbert"
  ],
  "n_features": 212,
  "settings_tried": 40,
  "rows": {
-  "train": 284639,
-  "validation": 52518,
-  "test": 80216
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
  },
  "params": {
-  "alpha": 0.00017502709220742962,
+  "alpha": 8.664739853566008e-05,
   "tol": 1e-08,
   "max_iter": 20000
  },
- "validation_r2": 0.00028059310180206243,
- "train_r2": 0.0005494643716117409,
- "seconds_tune": 0.7,
- "seconds_final": 0.5
+ "validation_r2": 0.00031289893367092425,
+ "train_r2": 0.0006810671618520114,
+ "seconds_tune": 3.9,
+ "seconds_final": 0.6
 }

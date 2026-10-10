@@ -1,6 +1,7 @@
 # --- licensed data: never commit, whatever the size --------------------------------------
 # CRSP / WRDS returns and everything stock-level that is derived from them.
 data/crsp/
+data/crsp_*/
 data/panels/
 data/predictions/
 data/models/

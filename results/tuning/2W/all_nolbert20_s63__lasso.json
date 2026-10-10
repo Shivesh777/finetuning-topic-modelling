@@ -1,0 +1,26 @@
+{
+ "freq": "2W",
+ "features": "all_nolbert20_s63",
+ "model": "lasso",
+ "blocks": [
+  "price",
+  "narr_nolbert20_s63",
+  "firm_nolbert20"
+ ],
+ "n_features": 49,
+ "settings_tried": 40,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "alpha": 0.0003220067727493042,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 9.50637264520715e-05,
+ "train_r2": 0.0001340796255413501,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

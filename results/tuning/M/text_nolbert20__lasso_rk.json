@@ -9,12 +9,12 @@
  "n_features": 41,
  "settings_tried": 40,
  "rows": {
-  "train": 67791,
-  "validation": 13872,
-  "test": 20794
+  "train": 82558,
+  "validation": 23680,
+  "test": 35523
  },
  "params": {
-  "alpha": 0.00671323431412553,
+  "alpha": 0.007592976790280323,
   "tol": 1e-08,
   "max_iter": 20000
  },

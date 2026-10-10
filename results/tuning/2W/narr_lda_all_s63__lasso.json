@@ -1,0 +1,24 @@
+{
+ "freq": "2W",
+ "features": "narr_lda_all_s63",
+ "model": "lasso",
+ "blocks": [
+  "narr_lda_all_s63"
+ ],
+ "n_features": 60,
+ "settings_tried": 40,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "alpha": 4.721674811370538e-05,
+  "tol": 1e-08,
+  "max_iter": 20000
+ },
+ "validation_r2": 0.00034509435633089947,
+ "train_r2": 0.0023761585160156917,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

@@ -13,11 +13,11 @@
  "params_note": "factors and penalty chosen for this feature set on the validation period from the grid of the model (see results/tuning/)",
  "factors": 1,
  "features_total": 5,
- "features_kept": 3,
+ "features_kept": 2,
  "periods": {
-  "train": 69,
-  "validation": 14,
-  "test": 21
+  "train": 84,
+  "validation": 24,
+  "test": 36
  },
  "holding_periods_start": {
   "train": [
@@ -34,18 +34,18 @@
   ]
  },
  "lambda": [
-  1.750378211871122e-05
+  0.00015553474350148716
  ],
  "implied_coefficients": {
   "lm_tone_1": 0.0,
-  "lm_tone_5": -6.851011709525084e-07,
-  "lm_tone_21": -1.6049296540434205e-06,
-  "lm_tone_252": -1.7416579045565932e-05,
+  "lm_tone_5": -3.8556857488705185e-05,
+  "lm_tone_21": 0.0,
+  "lm_tone_252": -0.0001506798764821271,
   "lm_surprise_21": 0.0
  },
  "target": "next-period excess return minus its cross-sectional mean (y_rel), decimals",
  "features_scaling": "cross-sectional ranks scaled to [-1, 1] each period; no constant",
  "normalisation": "Gamma'Gamma = I; factors orthogonal over the fit sample (sum of f f' diagonal), ordered by decreasing second moment, positive means (Kelly, Pruitt and Su 2019); applied after the fit, which leaves forecasts and kept features unchanged",
  "schedule": "every setting of the grid fitted on the training periods and scored by mean squared error on the validation periods; the chosen setting refitted once on training plus validation periods and applied unchanged to the test periods (no re-estimation inside the test period); forecast = z' Gamma lambda",
- "test_forecasts_reproduced_max_abs_error": 9.094224261456049e-13
+ "test_forecasts_reproduced_max_abs_error": 7.275629968286901e-12
 }

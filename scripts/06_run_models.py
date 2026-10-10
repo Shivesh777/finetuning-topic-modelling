@@ -101,6 +101,7 @@ def run(freq: str, features: str, blocks: list[str], model_name: str, retry: boo
     cls = get_model(model_name)
     period = panel.index["period"].to_numpy()
     X, y = panel.X(blocks), target_of(cls, panel.index["y_rel"].to_numpy(), period)
+    panel.blocks = {}                  # X holds a copy: free the blocks (weekly px_all EBM on 3.9 GB)
     train, val, test = (panel.rows(s) for s in ("train", "validation", "test"))
     if not tuned:
         t0 = time.time()

@@ -103,6 +103,17 @@ def main():
             traceback.print_exc()
             failed.append(name)
             continue
+        partial = set(a.freq) != set(config.FREQUENCIES)
+        if partial and len(table) and "freq" in table.columns and path.exists():
+            # --freq on part of the frequencies: keep the other frequencies' rows of the file,
+            # so that a table too slow for one run can be built a frequency at a time
+            kept = pd.read_csv(path)
+            kept = kept[~kept["freq"].astype(str).isin(a.freq)]
+            table = pd.concat([kept, table], ignore_index=True)
+            order = {f: i for i, f in enumerate(config.FREQUENCIES)}
+            table = table.sort_values("freq", key=lambda c: c.astype(str).map(order), kind="stable",
+                                      ignore_index=True)
+            made[name] = table
         if len(table):
             table.to_csv(path, index=False, float_format="%.6g")
         else:

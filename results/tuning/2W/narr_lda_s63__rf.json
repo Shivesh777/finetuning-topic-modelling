@@ -1,0 +1,28 @@
+{
+ "freq": "2W",
+ "features": "narr_lda_s63",
+ "model": "rf",
+ "blocks": [
+  "narr_lda_s63"
+ ],
+ "n_features": 60,
+ "settings_tried": 3,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "max_depth": 6,
+  "max_features": "sqrt",
+  "n_estimators": 100,
+  "min_samples_leaf": 50,
+  "max_rows": 30000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": -0.0002138544443128776,
+ "train_r2": 0.004266116190604019,
+ "seconds_tune": 11.2,
+ "seconds_final": 3.6
+}

@@ -3,20 +3,25 @@
 Do the topics that financial news is about help to forecast stock returns?
 This repository builds daily topic attention from 1.26 million Nasdaq.com
 articles (2012 to 2024), turns it into stock-level features, and tests those
-features with eight forecasting models (and variants of them) and eight
+features with eight forecasting models (and variants of them) and nine
 portfolio rules under a strict training / validation / test protocol. A second
 part adds the tone of each firm's news (FinBERT, Loughran-McDonald), an
 embedding regression, tuned attention-shock windows and a cap-weighted tilt.
-The short answer, on our data, is that we find no evidence that the news
-forecasts returns, in a test sample that could only have shown a large effect:
-`FINDINGS.md` says why and what the data would have to look like to say more.
+The short answer, on the final run with a complete CRSP file (three test years,
+2022 to 2024): picking one model on the validation period does not work, but
+attention shocks measured against the past quarter (a window chosen on
+validation) and an equal-weighted combination of every topic model and every
+model give positive and fairly steady results, best monthly (test rank IC
+0.039, t = 2.9; net Sharpe ratio 1.1). They do not beat the price features
+significantly, and nothing survives the count of what we tried; `FINDINGS.md`
+has the numbers and the caveats.
 
 It is a rebuild of our earlier project (latent Dirichlet allocation or
 sentence-embedding topics, IPCA, a Sharpe-optimised portfolio). The earlier
 pipeline had no validation set and several ways for future information to
 reach the model. This one separates training, validation and test periods, and
 says where information from the future can still get in (`FINDINGS.md`,
-sections 2 and 9).
+sections 2 and 13).
 
 - **`FINDINGS.md`**: what we found, with the numbers.
 - **`REFERENCE.md`**: data sources, every step and parameter, the statistics.
@@ -56,11 +61,12 @@ python -m pytest tests -q          # about a minute; needs no data
 Three things are needed, in `data/` (see `data/README.md` for the details):
 
 1. **Returns** (`data/crsp/`). CRSP is licensed and is **not in this
-   repository**. Either unzip the team's data folder (`data.zip`, shared
-   privately within the team), or, with a WRDS account, run
-   `python scripts/00_pull_crsp.py` (written for this purpose but not yet run
-   by us). `00_prepare_crsp.py` built our files from the folders of the earlier
-   project and is of use only to someone who has those.
+   repository**. With a WRDS account run `pip install wrds` and
+   `python scripts/00_pull_crsp.py --out data/crsp` (it asks for the WRDS login
+   and a Duo approval, and offers to save the login in `~/.pgpass`); this is
+   the file of the final run. `00_prepare_crsp.py` built the files of the runs
+   up to 8 October from the folders of the earlier project (incomplete from
+   2017; set `FTM_DAILY_COMPLETE_UNTIL=2016` to use such a file).
 2. **Articles** (`data/news/`). In the team's data folder; or rebuilt from the
    public FinMultiTime and FNSPID datasets with scripts 01 and 02 (a 3.6 GB
    download and a 23 GB file that is read in pieces without being stored).
@@ -78,7 +84,7 @@ With the team zip: unzip it so that `data/crsp/`, `data/news/` and
 ## Replicate
 
 ```bash
-python scripts/00_prepare_crsp.py          # or 00_pull_crsp.py; skip with the team zip
+python scripts/00_pull_crsp.py --out data/crsp   # WRDS; or 00_prepare_crsp.py (earlier file)
 python scripts/01_download_news.py --source finmultitime   # skip with the team zip
 python scripts/01_download_news.py --source fnspid         # (the right article text)
 python scripts/02_build_articles.py        # skip with the team zip
@@ -95,19 +101,19 @@ python scripts/04_fit_topics.py embedding --embeddings nolbert_ft_d150 --name no
 python scripts/04_fit_topics.py embedding --embeddings nolbert_ft_d150 --name nolbert20 --topics 20
 
 python scripts/05_build_panel.py --placebo lda     # monthly, biweekly and weekly panels
-python scripts/06_run_models.py            # tune, fit, forecast: 1,092 experiments, 70 min
+python scripts/06_run_models.py            # tune, fit, forecast: 1,092 experiments of the main design
 python scripts/06b_ensemble.py             # the ensemble of the eight base models, 1 min
 
 # second part (FINDINGS.md, section 10)
 python scripts/03d_sentiment.py            # FinBERT tone of 769,338 headlines, 90 min on 2 cores
 python scripts/05b_tune_shocks.py          # the attention-shock window on validation, 4 min
-python scripts/05_build_panel.py --shock-window 1 --freq W     # the chosen windows
-python scripts/05_build_panel.py --shock-window 63 --freq M
+python scripts/05_build_panel.py --shock-window 63            # the chosen window, every frequency
 python scripts/05_build_panel.py --tone                         # tone, embedding, news x price
 python scripts/06_run_models.py --models ols ridge lasso ipca sipca xgb rf ebm --features \
-    tone_fb tone_lm emb_fb news_fb px_tone px_news px_all      # and the *_s1 / *_s63 sets
+    tone_fb tone_lm emb_fb news_fb px_tone px_news px_all      # and the narr_/text_/all_*_s63 sets
 python scripts/06b_ensemble.py
 python scripts/06c_signals.py              # single-feature signals, combo, best10
+python scripts/06d_grand_ensemble.py       # combinations across the six topic models
 
 python scripts/07_evaluate.py              # forecast accuracy and backtests, 5 min
 python scripts/08_report.py                # tables in results/tables/ (--tables to split it)
@@ -116,19 +122,21 @@ python scripts/09b_ipca_factors.py         # Gamma and factor returns of the IPC
 python scripts/10_audit.py                 # news coverage, stale rows, donor rows
 python scripts/11_missing_data_leak.py     # what the missing-data leak is worth
 python scripts/12_tuning_noise.py          # one experiment under ten random seeds
+python scripts/13_sharpe_tests.py          # Sharpe ratios against zero and benchmarks
 ```
 
 `06_run_models.py --models ols ridge lasso ipca sipca xgb rf ebm` fits only the
-eight base models (624 experiments, 53 min); the six rank-target variants are
-the rest. `03c_finetune_encoder.py` draws its pairs from articles up to the end
+eight base models; the six rank-target variants are the rest. `03c_finetune_encoder.py` draws its pairs from articles up to the end
 of the training period by default; the committed `nolbert` topics come from the
 teammate's encoder, which used pairs up to September 2020 (FINDINGS.md, section
-8.1).
+9.1).
 
-Times are for four laptop CPU cores. With the team zip, start at
-`05_build_panel.py`: everything from there to the tables takes about an hour
-and a half, under an hour with the base models only (or start at
-`07_evaluate.py` if the zip includes `predictions/`).
+Times are for four laptop CPU cores. With the complete return file, everything
+from `05_build_panel.py` to the tables takes about three and a half hours
+(2.5 of them in `06_run_models.py`); the weekly EBMs on 212 features need about
+3 GB of memory. `08_report.py --tables strategies` is best run one frequency at
+a time (`--freq M`, then `2W`, then `W`): each run keeps the other
+frequencies' rows.
 The results in `results/` are committed, so the tables can be read and
 `08_report.py` rerun without fitting anything.
 

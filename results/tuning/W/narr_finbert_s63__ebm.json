@@ -1,0 +1,36 @@
+{
+ "freq": "W",
+ "features": "narr_finbert_s63",
+ "model": "ebm",
+ "blocks": [
+  "narr_finbert_s63"
+ ],
+ "n_features": 20,
+ "settings_tried": 2,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {
+  "interactions": 0,
+  "max_bins": 64,
+  "max_interaction_bins": 16,
+  "learning_rate": 0.02,
+  "max_rounds": 2000,
+  "early_stopping_rounds": 50,
+  "outer_bags": 4,
+  "inner_bags": 0,
+  "min_samples_leaf": 20,
+  "max_leaves": 2,
+  "smoothing_rounds": 50,
+  "bag_exclude": 0.2,
+  "max_rows": 100000,
+  "n_jobs": 4,
+  "seed": 0
+ },
+ "validation_r2": 0.0002407646747951686,
+ "train_r2": 0.00038336410343486893,
+ "seconds_tune": 6.6,
+ "seconds_final": 2.8
+}

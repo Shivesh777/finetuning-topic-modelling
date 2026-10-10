@@ -5,6 +5,7 @@
     ls_buf    ls_ew with a buffer: a stock enters a leg in the top (bottom) decile and
               stays until it leaves the top (bottom) fifth, so a signal that moves a
               stock within the fifth does not trade (Novy-Marx and Velikov 2016)
+    ls_buf_vw the legs of ls_buf, weighted by market value within each leg
     rank      every stock, weight proportional to its forecast rank minus the mean rank
     mvo       mean-variance weights for the forecasts under a factor covariance of the
               last year's daily returns, dollar neutral, with a cap per stock
@@ -28,9 +29,9 @@ import pandas as pd
 from .. import config
 from .backtest import run_backtest
 from .risk import factor_covariance
-from .weights import mean_variance, quantile_long_short, rank_weighted, tilted, top_quantile
+from .weights import _leg, mean_variance, quantile_long_short, rank_weighted, tilted, top_quantile
 
-LONG_SHORT = ("ls_ew", "ls_vw", "rank", "mvo", "ls_buf")
+LONG_SHORT = ("ls_ew", "ls_vw", "rank", "mvo", "ls_buf", "ls_buf_vw")
 LONG_ONLY = ("long_ew", "long_vw", "tilt_vw")
 BENCHMARKS = ("univ_ew", "univ_vw")
 STRATEGIES = LONG_SHORT + LONG_ONLY
@@ -81,14 +82,15 @@ def weights_for(strategy: str, score: np.ndarray, cap: np.ndarray, cov=None,
 
 def buffered_long_short(score: np.ndarray, was_long: np.ndarray, was_short: np.ndarray,
                         order: np.ndarray, q: int = config.QUANTILES,
-                        q_hold: int = config.BUFFER_QUANTILES):
+                        q_hold: int = config.BUFFER_QUANTILES, cap: np.ndarray | None = None):
     """Weights of ls_buf for one cross-section, and its two legs as boolean masks.
 
     A stock is long if it is among the floor(n / q) highest forecasts, or if it was long
     in the previous period (was_long) and is still among the floor(n / q_hold) highest;
     the short leg mirrors this at the bottom. n counts the stocks with a forecast, ties
-    are ranked by `order` as in weights_for, and each leg is equally weighted, +1 and -1
-    in total. With nothing held before, the legs are those of ls_ew. A flat forecast
+    are ranked by `order` as in weights_for, and each leg is equally weighted, or by
+    market value with `cap` (ls_buf_vw; weights._leg), +1 and -1 in total. With
+    nothing held before, the legs are those of ls_ew (ls_vw with `cap`). A flat forecast
     holds nothing and forgets the previous legs."""
     n = len(score)
     none = np.zeros(n, dtype=bool)
@@ -102,8 +104,8 @@ def buffered_long_short(score: np.ndarray, was_long: np.ndarray, was_short: np.n
         long = (rank >= valid - enter) | (was_long & (rank >= valid - hold))
         short = (rank < enter) | (was_short & (rank < hold))
     w = np.zeros(n)
-    w[long] = 1.0 / long.sum()
-    w[short] = -1.0 / short.sum()
+    w[long] = _leg(np.flatnonzero(long), cap)
+    w[short] = -_leg(np.flatnonzero(short), cap)
     return w, long, short
 
 
@@ -141,14 +143,16 @@ def backtests(frame: pd.DataFrame, strategies=STRATEGIES, covs: list | None = No
     weights = {s: np.zeros_like(returns) for s in strategies}
     bounds = np.flatnonzero(np.r_[True, row[1:] != row[:-1], True])
     order = np.random.default_rng(config.SEED).random(len(stocks))      # how ties are broken
-    was_long = np.zeros(len(stocks), dtype=bool)                         # legs of ls_buf
-    was_short = np.zeros(len(stocks), dtype=bool)
+    legs = {s: (np.zeros(len(stocks), dtype=bool), np.zeros(len(stocks), dtype=bool))
+            for s in ("ls_buf", "ls_buf_vw")}                            # legs of the buffered rules
     for t, (a, b) in enumerate(zip(bounds[:-1], bounds[1:])):
         cols = col[a:b]
         for s in strategies:
-            if s == "ls_buf":
+            if s in legs:
+                was_long, was_short = legs[s]
                 w, long, short = buffered_long_short(pred[a:b], was_long[cols], was_short[cols],
-                                                     order[cols], q)
+                                                     order[cols], q,
+                                                     cap=cap[a:b] if s == "ls_buf_vw" else None)
                 was_long[:], was_short[:] = False, False
                 was_long[cols], was_short[cols] = long, short
                 weights[s][t, cols] = w

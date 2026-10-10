@@ -32,6 +32,12 @@ Conventions
   training rows average zero (the library centres on all rows it is given). The bin
   edges are quantiles of the stacked features of both samples: they use validation
   features but no validation returns.
+* Order of the terms. Nothing is ordered by hand. During the smoothing rounds every
+  term gets one step per round, in an order the library shuffles with its seeded random
+  numbers. After them the library's defaults (greedy_ratio 10, cyclic_progress False)
+  apply: a pass over all terms in a shuffled order only measures how much each would
+  gain, and the steps that change the model then go, greedily, to the terms that gain
+  most. Strong features therefore receive more steps than weak ones.
 * Rounds. A round is one boosting step per term. The library reports the steps it RAN
   (best_iteration_, which includes the early_stopping_rounds of patience after the best
   model: about twice the best round when returns are mostly noise), so the best step of

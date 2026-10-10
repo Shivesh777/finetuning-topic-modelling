@@ -1,0 +1,24 @@
+{
+ "freq": "2W",
+ "features": "all_nolbert20_s63",
+ "model": "ridge",
+ "blocks": [
+  "price",
+  "narr_nolbert20_s63",
+  "firm_nolbert20"
+ ],
+ "n_features": 49,
+ "settings_tried": 25,
+ "rows": {
+  "train": 178572,
+  "validation": 51260,
+  "test": 76914
+ },
+ "params": {
+  "alpha": 13.684741122575902
+ },
+ "validation_r2": 8.144410846511185e-06,
+ "train_r2": 7.06031458825862e-05,
+ "seconds_tune": 0.1,
+ "seconds_final": 0.1
+}

@@ -1,9 +1,9 @@
 feature,coef,importance,kind
-fb_tone_1,3.122392260966741e-05,7.821659411993242e-06,mean_abs_contribution
-fb_tone_5,0.0,0.0,mean_abs_contribution
-fb_tone_21,0.0001083706376564278,5.417794543069164e-05,mean_abs_contribution
-fb_tone_252,0.00040717006220845566,0.0002044086315890226,mean_abs_contribution
+fb_tone_1,0.0,0.0,mean_abs_contribution
+fb_tone_5,5.581686516065843e-07,2.6091478443195505e-07,mean_abs_contribution
+fb_tone_21,3.4742830845267925e-05,1.7376296378586506e-05,mean_abs_contribution
+fb_tone_252,0.00012668963440421536,6.328872621511946e-05,mean_abs_contribution
 fb_surprise_21,0.0,0.0,mean_abs_contribution
-news_log_n5,1.595218699862233e-05,7.931812654341841e-06,mean_abs_contribution
-news_log_n21,-4.9793584629393313e-05,2.491283397053049e-05,mean_abs_contribution
-news_abnormal_21,2.361658849418899e-05,1.1809896162317282e-05,mean_abs_contribution
+news_log_n5,0.0,0.0,mean_abs_contribution
+news_log_n21,0.0,0.0,mean_abs_contribution
+news_abnormal_21,0.0,0.0,mean_abs_contribution

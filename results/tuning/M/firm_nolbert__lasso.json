@@ -8,12 +8,12 @@
  "n_features": 61,
  "settings_tried": 40,
  "rows": {
-  "train": 67791,
-  "validation": 13872,
-  "test": 20794
+  "train": 82558,
+  "validation": 23680,
+  "test": 35523
  },
  "params": {
-  "alpha": 0.0002508973661197575,
+  "alpha": 0.00038389515322420745,
   "tol": 1e-08,
   "max_iter": 20000
  },

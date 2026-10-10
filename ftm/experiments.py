@@ -100,9 +100,12 @@ def feature_sets(blocks) -> dict[str, list[str]]:
 def kind(features: str) -> str:
     """What a feature set is made of: price, narr, firm, text, all, placebo; narr_s, text_s
     and all_s for those made with another shock window; tone, emb, news (directional news
-    blocks) and px (price with them)."""
+    blocks) and px (price with them); grand for the combinations across topic models
+    (scripts/06d_grand_ensemble.py)."""
     if features.endswith("_placebo"):
         return "placebo"
+    if features.startswith("grand_"):
+        return "grand"
     prefix = features.partition("_")[0]
     if prefix in ("narr", "text", "all") and re.search(r"_s\d+$", features):
         return f"{prefix}_s"

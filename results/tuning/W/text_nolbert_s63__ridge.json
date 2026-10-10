@@ -1,0 +1,23 @@
+{
+ "freq": "W",
+ "features": "text_nolbert_s63",
+ "model": "ridge",
+ "blocks": [
+  "narr_nolbert_s63",
+  "firm_nolbert"
+ ],
+ "n_features": 121,
+ "settings_tried": 25,
+ "rows": {
+  "train": 358230,
+  "validation": 102495,
+  "test": 153800
+ },
+ "params": {
+  "alpha": 1.9182253361111616
+ },
+ "validation_r2": 8.469174204106533e-05,
+ "train_r2": 0.00032507160819650327,
+ "seconds_tune": 0.4,
+ "seconds_final": 0.3
+}

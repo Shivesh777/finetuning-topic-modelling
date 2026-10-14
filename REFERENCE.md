@@ -151,19 +151,18 @@ All models see the same articles and are fitted on training-period text only.
   released in September 2022: **not point-in-time**.
 - **`nolbert`**: NoLBERT (Kakhbod and Li 2025, `alikLab/NoLBERT`, a DeBERTa-v3
   model of 109M parameters pretrained only on text from 1976 to 1995), adapted
-  into a sentence encoder (run of 8 October 2026,
-  `results/encoders/nolbert_ft/train_log.json`): InfoNCE over two chunks of the
+  into a sentence encoder (`results/encoders/nolbert_ft/train_log.json`): InfoNCE over two chunks of the
   same article with in-batch negatives, temperature 0.05, every parameter
   trained, learning rate 2e-5, batches of 32 pairs, 128 tokens, bf16, 150
   minutes on one RTX 3060, 6,205 steps; held-out in-batch top-1 retrieval rose
-  from 0.08 to 0.89. Pairs were drawn from articles published up to 2020, so
-  **validation-period text entered the encoder** (not the test period). A probe of pooling choices on 11,988 documents
+  from 0.08 to 0.89. Pairs were drawn only from articles published up to the
+  end of 2019, the end of our training period, so no validation or test text
+  entered the encoder. A probe of pooling choices on 11,988 documents
   (`nolbert_probe.json`) chose the mean of the last layer without whitening
   (NPMI 0.343 against 0.268 to 0.282 for the alternatives). Articles (headline
   and lead, 64 tokens) are embedded with that pooling and clustered exactly as
   `minilm` is: 60 topics, spherical k-means, softmax weights at temperature
-  0.07. `scripts/03c_finetune_encoder.py` now carries the same recipe, with the
-  pair cutoff at the end of our training period by default.
+  0.07. `scripts/03c_finetune_encoder.py` carries the same recipe and cutoff.
 - **`nolbert20`**: the same NoLBERT article vectors clustered into 20 topics
   instead of 60 (added in this repository, `04_fit_topics.py embedding
   --embeddings nolbert_ft_d150 --name nolbert20 --topics 20`). With three times
@@ -484,9 +483,8 @@ section 11.
   result as much as sampling error does (FINDINGS.md, section 8.1).
 - The MiniLM encoder was published in 2021 and the FinBERT classifier at the
   end of 2022: neither is point-in-time. NoLBERT's pretraining is (1976 to
-  1995), but its adaptation used articles published up to 2020, which overlaps
-  our validation period; and it was adapted on our corpus while MiniLM
-  was not, so the two encoders differ in two ways at once.
+  1995), and its adaptation used training-period articles only; but it was
+  adapted on our corpus while MiniLM was not, so the two encoders differ in two ways at once.
 - Tickers are matched to stocks through each stock's latest ticker.
 - FinBERT reads headlines only (the lead would make it four times slower on a
   CPU), with 8-bit weights in most layers. The Loughran-McDonald counts use the

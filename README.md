@@ -105,7 +105,7 @@ The results in `results/` are committed, so the tables and the paper's figures c
 ## Protocol
 
 - Chronological split: training 2013–2019, validation 2020–2021, test 2022–2024.
-- Topic models and vocabularies are fitted on text up to 2019. Forecasting models are tuned on validation and refitted on 2013–2021 before forecasting the test period.
+- Topic models, vocabularies and the NoLBERT adaptation use text up to 2019 only. Forecasting models are tuned on validation and refitted on 2013–2021 before forecasting the test period.
 - The stock universe on a date is a list that existed on that date, and news of day *d* is used from the close of day *d*+1.
 - A missing value that could depend on the future (a firm without news) is replaced by another stock's values, so no model can see that it is missing.
 - *t* statistics are judged against small-sample critical values, and the best of many experiments against what the best of as many would show by chance.

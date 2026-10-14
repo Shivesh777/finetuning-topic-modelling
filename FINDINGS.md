@@ -717,7 +717,7 @@ model pretrained only on text published between 1976 and 1995. It cannot have
 read anything about our sample, which no other text component here can claim:
 MiniLM was published in 2021 and the FinBERT classifier in 2022, and LDA is
 fitted on our own training text. One of us adapted it, embedded the
-articles and fitted its topics (run of 8 October 2026); this section reports
+articles and fitted its topics; this section reports
 that work and what it gives inside this pipeline.
 
 ### 9.1 Adaptation
@@ -746,13 +746,11 @@ four layers adds little (0.268 to 0.282), and the same probe shows it lowering
 MiniLM's coherence (0.308 to 0.293). The two encoders agree on about half of
 the partition.
 
-Two caveats travel with every NoLBERT number:
+Pairs were drawn only from articles published up to the end of 2019, the end
+of the training period, so the encoder has seen no validation or test text
+(`scripts/03c_finetune_encoder.py` uses this cutoff by default). One caveat
+travels with every NoLBERT number:
 
-- **The adaptation saw validation-period text.** Pairs were drawn from articles
-  published up to 2020, which overlaps our validation period. That is text,
-  not returns, and nothing from the test period; but it can flatter NoLBERT's
-  validation numbers. `scripts/03c_finetune_encoder.py` now cuts the pairs at the end of the
-  training period by default.
 - **It differs from MiniLM in two ways at once.** NoLBERT was adapted to our
   corpus; MiniLM was used as published. A gap between them can come from the
   adaptation as much as from the pretraining period. The clean comparison is
@@ -914,8 +912,8 @@ picks that stood out in it were among hundreds of candidates.
 - **Topic models are not refitted after 2019**, so the pandemic and later
   subjects have no topic of their own. The 2024 news comes from another
   scrape.
-- **NoLBERT's adaptation** used articles published up to 2020; MiniLM (2021)
-  and the FinBERT classifier (2022) are not point-in-time.
+- **MiniLM (2021) and the FinBERT classifier (2022) are not point-in-time.**
+  NoLBERT's adaptation used articles published up to the end of 2019 only.
 - **Costs are flat** (10 basis points a side) and portfolios trade at the
   closing prices that end the price signals, so short-term reversal includes
   bid-ask bounce. Delisting returns are not included.

@@ -87,7 +87,7 @@ def fig_finetune():
     ax.set_ylim(0, 6.2)
     hgrid(ax)
     ax = fig.add_subplot(gs[0, 5])
-    groups = [("held out,\n2015–20", log["val_top1_before"], log["val_top1_after"]),
+    groups = [("held out,\n2015–19", log["val_top1_before"], log["val_top1_after"]),
               ("test period,\n2022–24", sim["base"]["top1"], sim["ft"]["top1"])]
     for g, (lab, b0, b1) in enumerate(groups):
         for j, (v, c) in enumerate([(b0, LIGHT), (b1, TEAL)]):

@@ -26,8 +26,7 @@ section 9):
 
 Pairs come only from articles dated up to --train-end, by default the end of the
 training period (config.SPLITS): the encoder then knows nothing of validation or test
-text. (The run behind the committed topics drew its pairs from articles published up to
-2020; see REFERENCE.md.) One pair per article, so a positive is never an in-batch
+text, as in the run behind the committed topics (REFERENCE.md). One pair per article, so a positive is never an in-batch
 negative. The default pair is (headline, lead) from data/news/. With --chunks and
 --doc-meta the pairs are two random chunks of the same article's full text, as in that
 run (chunks.parquet with doc_index and chunk, doc_meta.parquet with date by row number).

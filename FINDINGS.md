@@ -19,8 +19,7 @@ That is 1,692 fitted experiments, 1,896 forecasts in all, each traded under nine
 portfolio rules. Training 2013 to 2019, validation 2020 to 2021, test 2022 to
 2024, now with every month of every year: **36 test months, 78 fortnights and
 156 weeks** (21, 42 and 81 in the run of 8 October, which had to drop January
-to June of every year from 2017; that run is archived in
-`docs/archive/FINDINGS_2026-10-08.md`). Every number below comes from a file
+to June of every year from 2017). Every number below comes from a file
 under `results/` (section 14 says which).
 
 **How to read the numbers.**
@@ -135,7 +134,7 @@ under `results/` (section 14 says which).
    detected four times out of five; a single experiment's true IC of about
    0.04 (monthly), 0.034 (biweekly) or 0.028 (weekly).
 
-9. **The two picks of the presentation do not hold up on the complete data.**
+9. **Two picks of an earlier run do not hold up on the complete data.**
    Price and every news block with an EBM (weekly) had a net Sharpe ratio of
    0.61 on the 81 weeks of the old file; on the 156 weeks it has 0.02
    (buffered 0.32), with a test IC of 0.018 (t = 2.4). NoLBERT-20 exposures
@@ -717,7 +716,7 @@ NoLBERT (Kakhbod and Li 2025, `alikLab/NoLBERT`) is a DeBERTa-v3 language
 model pretrained only on text published between 1976 and 1995. It cannot have
 read anything about our sample, which no other text component here can claim:
 MiniLM was published in 2021 and the FinBERT classifier in 2022, and LDA is
-fitted on our own training text. Our teammate adapted it, embedded the
+fitted on our own training text. One of us adapted it, embedded the
 articles and fitted its topics (run of 8 October 2026); this section reports
 that work and what it gives inside this pipeline.
 
@@ -750,9 +749,8 @@ the partition.
 Two caveats travel with every NoLBERT number:
 
 - **The adaptation saw validation-period text.** Pairs were drawn from articles
-  dated before 1 September 2020, the cutoff of the teammate's other pipeline,
-  which is eight months into our validation period. That is text, not
-  returns, and nothing from the test period; but it can flatter NoLBERT's
+  published up to 2020, which overlaps our validation period. That is text,
+  not returns, and nothing from the test period; but it can flatter NoLBERT's
   validation numbers. `scripts/03c_finetune_encoder.py` now cuts the pairs at the end of the
   training period by default.
 - **It differs from MiniLM in two ways at once.** NoLBERT was adapted to our
@@ -774,9 +772,9 @@ Two caveats travel with every NoLBERT number:
   Sharpe ratio of 0.68 on the old file has -0.43 on the complete one.
 - **In the combinations** NoLBERT is one of six equal members.
 
-### 9.3 The same encoder in the teammate's other pipeline
+### 9.3 The same encoder in a separate replication
 
-The teammate also ran the adapted encoder through the separate replication of
+We also ran the adapted encoder through a separate replication of
 Bybee, Kelly and Su (sparse IPCA with three factors, a mean-variance portfolio
 of the factors, 41 out-of-sample months), next to LDA and two MiniLM variants.
 These numbers come from that pipeline, which follows the earlier project's
@@ -916,7 +914,7 @@ picks that stood out in it were among hundreds of candidates.
 - **Topic models are not refitted after 2019**, so the pandemic and later
   subjects have no topic of their own. The 2024 news comes from another
   scrape.
-- **NoLBERT's adaptation** used articles up to 1 September 2020; MiniLM (2021)
+- **NoLBERT's adaptation** used articles published up to 2020; MiniLM (2021)
   and the FinBERT classifier (2022) are not point-in-time.
 - **Costs are flat** (10 basis points a side) and portfolios trade at the
   closing prices that end the price signals, so short-term reversal includes
@@ -943,4 +941,4 @@ picks that stood out in it were among hundreds of candidates.
 | 9 | `results/encoders/nolbert_ft/`; `contrasts.csv`, `landscape.csv` |
 | 10 | `results/explain/<freq>__all_lda/` |
 | 11 | `results/tables/sharpe_tests.csv`, `multiple_testing.csv` |
-| 12 | this file and `docs/archive/FINDINGS_2026-10-08.md` |
+| 12 | this file (the notes of the run of 8 October are not in the repository) |

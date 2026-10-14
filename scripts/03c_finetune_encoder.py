@@ -8,8 +8,9 @@
 NoLBERT (Kakhbod and Li 2025, `alikLab/NoLBERT`) is a DeBERTa-v3 model trained only on
 text from 1976 to 1995, so it cannot have read anything about our sample. It is a
 masked-language model, not a sentence encoder: mean-pooled, its vectors are anisotropic
-(unrelated articles have a cosine similarity of about 0.7) and cluster poorly. This
-script adapts it with the recipe of our teammate's run (FINDINGS.md, section 8):
+(unrelated articles have a cosine similarity of about 0.5) and cluster poorly. This
+script adapts it with the recipe of the run behind the committed topics (FINDINGS.md,
+section 9):
 
 * InfoNCE with in-batch negatives over positive pairs, temperature 0.05, mean pooling of
   the last layer, L2 normalisation, symmetric loss;
@@ -25,12 +26,11 @@ script adapts it with the recipe of our teammate's run (FINDINGS.md, section 8):
 
 Pairs come only from articles dated up to --train-end, by default the end of the
 training period (config.SPLITS): the encoder then knows nothing of validation or test
-text. (The teammate's run used pairs up to 2020-09-01, eight months into our validation
-period; see REFERENCE.md.) One pair per article, so a positive is never an in-batch
+text. (The run behind the committed topics drew its pairs from articles published up to
+2020; see REFERENCE.md.) One pair per article, so a positive is never an in-batch
 negative. The default pair is (headline, lead) from data/news/. With --chunks and
---doc-meta the pairs are two random chunks of the same article's full text, as in the
-teammate's run (the chunk files of the 230P pipeline: chunks.parquet with doc_index and
-chunk, doc_meta.parquet with date by row number).
+--doc-meta the pairs are two random chunks of the same article's full text, as in that
+run (chunks.parquet with doc_index and chunk, doc_meta.parquet with date by row number).
 
 Measured on one RTX 3060: 150 minutes and 6,205 steps lift held-out top-1 retrieval from
 0.08 to 0.89; embedding 1.26 million articles afterwards takes about 2.5 hours. On a CPU

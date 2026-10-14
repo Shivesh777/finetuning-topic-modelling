@@ -4,18 +4,11 @@
     python scripts/00_pull_crsp.py [--first-year 2011] [--last-year 2024] [--out data/crsp_wrds]
 
 Writes the five files that ftm.data.returns.Market reads (see data/README.md):
-universe, daily, monthly, tickers and ff_daily. Compared with the files in the
-team's data folder, which scripts/00_prepare_crsp.py assembled from two older
-extracts, this pull has daily returns for every stock of every list in every
-month, so nothing has to be filled from monthly returns. Afterwards set
-DAILY_RETURNS_COMPLETE_UNTIL = None in ftm/config.py: the panels then use every
-month instead of leaving out January to June from 2017 on.
-
-NOT RUN for the results in FINDINGS.md: the environment that produced them had
-no WRDS login. The queries follow the CRSP schema (crsp.dsf, crsp.msf,
-crsp.msenames); check the row counts printed at the end against REFERENCE.md
-before relying on it. The universe will differ slightly from ours, because the
-older extract applied a share-code filter that we could not recover.
+universe, daily, monthly, tickers and ff_daily. Unlike the older extract that
+scripts/00_prepare_crsp.py assembled, this pull has daily returns for every stock
+of every list in every month, so nothing has to be filled from monthly returns.
+This is the file of the final run (FINDINGS.md, section 2.4); the row counts it
+prints should match REFERENCE.md, section 2.
 
 CRSP data are licensed: never commit data/crsp/ or anything derived from it at
 the stock level (data/panels/, data/predictions/).

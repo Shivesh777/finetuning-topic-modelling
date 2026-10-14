@@ -1,0 +1,183 @@
+\begin{tikzpicture}[
+    >=Stealth,
+    font=\sffamily,
+    clipping/.style={draw=bordergray!85, fill=white, rounded corners=0.5pt, line width=0.4pt, font=\fontsize{5}{6}\selectfont},
+    panel/.style={draw=bordergray!70, fill=white, rounded corners=3.5pt, line width=0.6pt},
+    header/.style={font=\bfseries\footnotesize\color{navyblue}},
+    annot/.style={font=\fontsize{6.5}{7.5}\selectfont\color{midgray}},
+    tiny/.style={font=\fontsize{5.4}{6.4}\selectfont},
+    reader/.style={draw=bordergray, fill=lightgray, rounded corners=1.5pt, line width=0.45pt, text width=3.05cm,
+                   minimum height=0.74cm, align=left, inner sep=2.4pt, font=\fontsize{5.4}{6.6}\selectfont},
+    model/.style={draw=bordergray, fill=white, rounded corners=1pt, line width=0.4pt, minimum width=1.32cm,
+                  minimum height=0.36cm, inner sep=1pt, font=\fontsize{5.2}{6}\selectfont},
+    dataflow/.style={->, line width=1.1pt, color=navyblue}
+]
+
+% =========================================================================
+% TOP PANEL: STAGES 1-3
+% =========================================================================
+\draw[panel] (-0.1, 5.80) rectangle (16.1, 12.20);
+\node[anchor=north west, font=\bfseries\scriptsize\color{navyblue}]
+    at (0.1, 12.02) {\textsc{Stages 1--3: Financial News $\longrightarrow$ Four Topic Readers $\longrightarrow$ Narrative Attention \& Shocks}};
+
+% ---------------- 1. news
+\node[header, anchor=north west] at (0.2, 11.55) {1. Financial News Stream};
+\node[annot, anchor=north west] at (0.2, 11.20) {1.26M articles, 2012--2024 (FinMultiTime, FNSPID)};
+
+\node[clipping, text width=4.0cm, inner sep=2.5pt, anchor=north west] (card1) at (0.2, 10.75) {
+    {\fontsize{4.2}{5.0}\selectfont\textsf{\textbf{\color{accentorange}ENERGY / COMMODITIES}}\hfill\color{midgray}\textsf{MAR 2022}}\\[1pt]
+    {\fontsize{5.2}{6.2}\selectfont\rmfamily\textbf{US Bans Russian Oil Imports}}\\[1pt]
+    {\color{bordergray!50}\rule{\linewidth}{0.25pt}}\\[1.5pt]
+    {\color{bordergray!40}\rule{2.6cm}{0.8pt}}\hspace{2pt}{\color{bordergray!25}\rule{0.9cm}{0.8pt}}\\[1.5pt]
+    {\color{bordergray!40}\rule{1.9cm}{0.8pt}}\hspace{2pt}{\color{bordergray!25}\rule{1.5cm}{0.8pt}}
+};
+\node[clipping, text width=4.0cm, inner sep=2.5pt, below=7pt of card1] (card2) {
+    {\fontsize{4.2}{5.0}\selectfont\textsf{\textbf{\color{accentteal}BIOTECH / HEALTH}}\hfill\color{midgray}\textsf{NOV 2020}}\\[1pt]
+    {\fontsize{5.2}{6.2}\selectfont\rmfamily\textbf{Vaccine Trial Shows 90\% Efficacy}}\\[1pt]
+    {\color{bordergray!50}\rule{\linewidth}{0.25pt}}\\[1.5pt]
+    {\color{bordergray!40}\rule{2.4cm}{0.8pt}}\hspace{2pt}{\color{bordergray!25}\rule{1.1cm}{0.8pt}}\\[1.5pt]
+    {\color{bordergray!40}\rule{2.0cm}{0.8pt}}\hspace{2pt}{\color{bordergray!25}\rule{1.4cm}{0.8pt}}
+};
+\node[clipping, text width=4.0cm, inner sep=2.5pt, below=7pt of card2] (card3) {
+    {\fontsize{4.2}{5.0}\selectfont\textsf{\textbf{\color{navyblue}TECHNOLOGY}}\hfill\color{midgray}\textsf{SEP 2023}}\\[1pt]
+    {\fontsize{5.2}{6.2}\selectfont\rmfamily\textbf{Apple Unveils New iPhone Lineup}}\\[1pt]
+    {\color{bordergray!50}\rule{\linewidth}{0.25pt}}\\[1.5pt]
+    {\color{bordergray!40}\rule{2.7cm}{0.8pt}}\hspace{2pt}{\color{bordergray!25}\rule{0.8cm}{0.8pt}}\\[1.5pt]
+    {\color{bordergray!40}\rule{1.7cm}{0.8pt}}\hspace{2pt}{\color{bordergray!25}\rule{1.6cm}{0.8pt}}
+};
+\node[annot, anchor=north west] at (0.2, 6.38) {headline + lead; news of day $d$ used from $d{+}1$};
+
+\draw[dataflow] (4.40, 9.0) -- node[above, font=\fontsize{5.5}{6.5}\selectfont\bfseries, color=navyblue] {Articles} (5.35, 9.0);
+
+% ---------------- 2. readers
+\node[header, anchor=north west] at (5.45, 11.55) {2. Four Topic Readers};
+\node[annot, anchor=north west] at (5.45, 11.20) {fitted on text to 2019, applied forward};
+
+\node[reader, anchor=north west] (lda) at (5.50, 10.75) {\textbf{\color{navyblue}LDA}\hfill 60 topics\\ word counts, Dirichlet mixture};
+\node[reader, anchor=north west, below=4pt of lda] (mini) {\textbf{\color{navyblue}MiniLM}\hfill 60 clusters\\ sentence embeddings, $k$-means};
+\node[reader, anchor=north west, below=4pt of mini] (fin) {\textbf{\color{navyblue}FinBERT}\hfill 20 classes\\ headline topic classifier};
+\node[reader, anchor=north west, below=4pt of fin, fill=softteal, draw=accentteal!70] (nol) {\textbf{\color{accentteal}NoLBERT}\hfill 60 / 20 clusters\\ 1976--95 text, contrastively adapted};
+\node[annot, anchor=north west] at (5.50, 6.55) {weights $\pi_{a,k}\ge 0$, $\textstyle\sum_k \pi_{a,k}=1$};
+
+\draw[dataflow] (8.85, 9.0) -- node[above, font=\fontsize{5.5}{6.5}\selectfont\bfseries, color=navyblue] {Attention} (9.85, 9.0);
+\node[font=\fontsize{5.6}{6.6}\selectfont, color=navyblue] at (9.35, 8.62) {$\theta_{k,d}$};
+
+% ---------------- 3. attention & shocks
+\node[header, anchor=north west] at (10.0, 11.55) {3. Daily Attention \& Shocks};
+\node[annot, anchor=north west] at (10.0, 11.20) {$s^{(w)}_{k,d} = \theta_{k,d} - \frac{1}{w}\sum_{j=1}^{w}\theta_{k,d-j}$};
+
+% attention panel
+\draw[->, line width=0.45pt, color=midgray] (10.2, 8.95) -- (15.8, 8.95) node[right, tiny] {$d$};
+\draw[->, line width=0.45pt, color=midgray] (10.2, 8.95) -- (10.2, 10.65);
+\node[tiny, anchor=east, color=midgray] at (10.15, 10.1) {$\theta_{k,d}$};
+\draw[line width=0.9pt, color=accentorange] plot[smooth, tension=0.6] coordinates {
+    (10.3,9.35) (10.8,9.25) (11.3,9.45) (11.8,9.3) (12.3,9.4) (12.7,9.9) (12.95,10.45) (13.2,10.05) (13.6,9.85)
+    (14.1,9.95) (14.6,9.75) (15.1,9.65) (15.6,9.6)};
+\draw[line width=0.7pt, color=midgray, dash pattern=on 2pt off 1.5pt] plot[smooth, tension=0.6] coordinates {
+    (10.3,9.3) (11.3,9.33) (12.3,9.36) (12.95,9.55) (13.6,9.82) (14.6,9.85) (15.6,9.75)};
+\node[tiny, color=accentorange, anchor=west] at (13.05, 10.5) {Energy \& oil, 8 Mar 2022};
+\node[tiny, color=midgray, anchor=west] at (14.3, 9.45) {trailing mean};
+
+% shock panels
+\draw[->, line width=0.45pt, color=midgray] (10.2, 7.65) -- (15.8, 7.65);
+\node[tiny, anchor=east, color=midblue] at (10.15, 7.65) {$w{=}5$};
+\foreach \x/\h in {10.5/0.08,10.9/-0.06,11.3/0.12,11.7/-0.1,12.1/0.05,12.5/0.3,12.9/0.62,13.3/-0.28,13.7/0.12,14.1/-0.15,14.5/0.06,14.9/-0.08,15.3/0.04}
+    \draw[line width=1.6pt, color=midblue!80] (\x, 7.65) -- ++(0, \h);
+\draw[->, line width=0.45pt, color=midgray] (10.2, 6.75) -- (15.8, 6.75);
+\node[tiny, anchor=east, color=accentteal] at (10.15, 6.75) {$w{=}63$};
+\foreach \x/\h in {10.5/-0.05,10.9/-0.04,11.3/0.02,11.7/-0.03,12.1/0.04,12.5/0.22,12.9/0.55,13.3/0.36,13.7/0.4,14.1/0.33,14.5/0.25,14.9/0.18,15.3/0.12}
+    \draw[line width=1.6pt, color=accentteal!85] (\x, 6.75) -- ++(0, \h);
+\node[annot, anchor=north west] at (10.0, 6.55) {63-day shocks: themes building over a quarter};
+
+% connection to bottom panel
+\draw[line width=1.1pt, color=navyblue] (12.95, 5.80) -- (12.95, 5.40);
+\draw[line width=1.1pt, color=navyblue] (12.95, 5.40) -- (2.75, 5.40);
+\draw[dataflow] (2.75, 5.40) -- (2.75, 4.92);
+\node[font=\fontsize{5.6}{6.6}\selectfont\bfseries, color=navyblue, fill=white, inner sep=1.5pt] at (7.8, 5.40)
+    {Shocks $s_{k,d}$, firm news, tone \;+\; daily returns $r_{i,d}$ (CRSP, 1{,}000 largest stocks)};
+
+% =========================================================================
+% BOTTOM PANEL: STAGES 4-6
+% =========================================================================
+\draw[panel] (-0.1, -0.45) rectangle (16.1, 4.92);
+\node[anchor=north west, font=\bfseries\scriptsize\color{navyblue}]
+    at (0.1, 4.74) {\textsc{Stages 4--6: Stock Features $\longrightarrow$ Return Forecasts $\longrightarrow$ Portfolios}};
+
+% ---------------- 4. features
+\node[header, anchor=north west] at (0.2, 4.30) {4. Stock Features};
+\node[annot, anchor=north west] at (0.2, 3.95) {cross-sectional ranks in $[-1,1]$, each period};
+\foreach \j/\lab/\col in {0/price/navyblue,1/exposure/accentteal,2/firm/midblue,3/tone/accentorange}
+    \node[tiny, anchor=south, color=\col, font=\bfseries\fontsize{5.2}{6}\selectfont] at (1.51+0.75*\j, 2.95) {\lab};
+\foreach \i/\stock in {0/XOM,1/DAL,2/AAPL,3/JPM}
+    \node[tiny, anchor=east, font=\bfseries\fontsize{5.2}{6}\selectfont] at (1.05, 2.72-0.45*\i) {\stock};
+\foreach \i/\a/\b/\c/\d in {0/0.4/0.85/0.1/0.2, 1/-0.3/-0.8/0.05/-0.1, 2/0.6/0.1/0.7/0.5, 3/0.1/-0.2/-0.6/0.0} {
+    \foreach \j/\v in {0/\a,1/\b,2/\c,3/\d} {
+        \pgfmathsetmacro{\pct}{int(abs(\v)*70)}
+        \pgfmathparse{\v>=0 ? 1 : 0}
+        \ifnum\pgfmathresult=1
+            \fill[accentteal!\pct!white] (1.15+0.75*\j, 2.5-0.45*\i) rectangle ++(0.72, 0.42);
+        \else
+            \fill[accentorange!\pct!white] (1.15+0.75*\j, 2.5-0.45*\i) rectangle ++(0.72, 0.42);
+        \fi
+        \node[tiny] at (1.51+0.75*\j, 2.71-0.45*\i) {\pgfmathprintnumber[fixed, precision=1, showpos]{\v}};
+    }
+}
+\draw[bordergray, line width=0.4pt] (1.15, 1.15) rectangle (4.15, 2.92);
+\node[annot, anchor=north west, text width=4.1cm] at (0.2, 0.98) {exposure: EW covariance of $r_{i,d}$ with $s_{k,d}$ over 252 days; missing values taken from a random stock};
+
+\draw[dataflow] (4.35, 1.80) -- node[above, font=\fontsize{5.5}{6.5}\selectfont\bfseries, color=navyblue] {$z_{i,t}$} (5.30, 1.80);
+
+% ---------------- 5. forecasts
+\node[header, anchor=north west] at (5.45, 4.30) {5. Return Forecasts};
+\node[annot, anchor=north west] at (5.45, 3.95) {target: next-period excess return, demeaned};
+\foreach \n/\lab [count=\c from 0] in {a/OLS,b/Ridge,c/Lasso,d/IPCA,e/Sparse IPCA,f/XGBoost,g/Random forest,h/EBM} {
+    \pgfmathsetmacro{\xx}{5.55 + mod(\c,2)*1.42}
+    \pgfmathsetmacro{\yy}{3.30 - floor(\c/2)*0.46}
+    \node[model, anchor=north west] at (\xx, \yy) {\lab};
+}
+\node[tiny, anchor=north west, color=midgray] at (5.50, 1.42) {+ ranked targets $\cdot$ ensemble of the eight};
+\node[draw=accentteal!70, fill=softteal, rounded corners=1.5pt, anchor=north west, align=left, inner sep=2.4pt,
+      font=\fontsize{5.4}{6.6}\selectfont, minimum width=2.85cm] at (5.55, 1.08)
+      {\textbf{\color{accentteal}Combination across readers}\\ equal-weighted ranks of 6 readers $\times$ 8 models};
+
+\draw[dataflow] (8.70, 1.80) -- node[above, font=\fontsize{5.5}{6.5}\selectfont\bfseries, color=navyblue] {$\hat y_{i,t+1}$} (9.85, 1.80);
+
+% ---------------- 6. portfolios
+\node[header, anchor=north west] at (10.0, 4.30) {6. Portfolios \& Evaluation};
+\node[annot, anchor=north west] at (10.0, 3.95) {10 bp per dollar traded; test 2022--2024};
+% decile dots
+\foreach \x in {0,...,19} {
+    \pgfmathsetmacro{\cc}{\x<2 ? 1 : (\x>17 ? 2 : 0)}
+    \ifdim\cc pt=1pt \fill[navyblue] (10.25+0.135*\x, 3.38) circle (0.045);
+    \else\ifdim\cc pt=2pt \fill[accentteal] (10.25+0.135*\x, 3.38) circle (0.045);
+    \else \fill[bordergray] (10.25+0.135*\x, 3.38) circle (0.045);
+    \fi\fi
+}
+\node[tiny, anchor=west] at (13.0, 3.38) {decile long-short};
+\fill[softteal] (12.42, 2.98) rectangle (12.92, 3.16);
+\foreach \x in {0,...,19} {
+    \pgfmathsetmacro{\cc}{\x<2 ? 1 : (\x>17 || \x==16 ? 2 : 0)}
+    \ifdim\cc pt=1pt \fill[navyblue] (10.25+0.135*\x, 3.07) circle (0.045);
+    \else\ifdim\cc pt=2pt \fill[accentteal] (10.25+0.135*\x, 3.07) circle (0.045);
+    \else \fill[bordergray] (10.25+0.135*\x, 3.07) circle (0.045);
+    \fi\fi
+}
+\draw[accentteal, line width=0.4pt] (10.25+0.135*16, 3.07) circle (0.075);
+\node[tiny, anchor=west] at (13.0, 3.07) {buffered: hold within the fifth};
+\node[tiny, anchor=west, color=midgray] at (13.0, 2.78) {cap-weighted legs $\cdot$ cap-weighted tilt};
+% cumulative curve
+\draw[->, line width=0.45pt, color=midgray] (10.2, 0.15) -- (15.8, 0.15) node[right, tiny] {$t$};
+\draw[->, line width=0.45pt, color=midgray] (10.2, 0.15) -- (10.2, 2.45);
+\fill[navyblue!8] (13.0, 0.15) rectangle (15.6, 2.35);
+\node[tiny, color=navyblue, anchor=north] at (14.3, 2.33) {test};
+\fill[accentorange!10] (12.2, 0.15) rectangle (13.0, 2.35);
+\node[tiny, color=accentorange, anchor=north] at (12.6, 2.33) {valid.};
+\draw[line width=0.9pt, color=navyblue] plot[smooth, tension=0.5] coordinates {
+    (13.0,0.75) (13.3,0.9) (13.6,0.82) (13.9,1.08) (14.2,1.2) (14.5,1.15) (14.8,1.45) (15.1,1.62) (15.5,1.82)};
+\draw[line width=0.7pt, color=midgray, dash pattern=on 1pt off 1pt] plot[smooth, tension=0.5] coordinates {
+    (13.0,0.75) (13.3,0.62) (13.6,0.55) (13.9,0.7) (14.2,0.82) (14.5,0.95) (14.8,1.05) (15.1,1.2) (15.5,1.32)};
+\node[tiny, color=navyblue, anchor=west] at (15.0, 1.95) {portfolio};
+\node[tiny, color=midgray, anchor=west] at (15.1, 1.1) {market};
+\node[tiny, color=midgray, anchor=south] at (11.2, 0.2) {train 2013--19};
+\node[annot, anchor=north west] at (10.0, -0.05) {rank IC, net Sharpe, Ledoit--Wolf and SPA tests};
+\end{tikzpicture}

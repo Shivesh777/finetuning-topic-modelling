@@ -6,7 +6,7 @@ data/panels/
 data/predictions/
 data/models/
 
-# --- third-party article text (rebuild with scripts/01 and 02, or take it from the team zip)
+# --- third-party article text (rebuild with scripts/01 and 02)
 data/news/
 
 # --- large derived files (over GitHub's 100 MB limit) -------------------------------------
@@ -20,7 +20,6 @@ data/sentiment/*.done
 # --- downloads, caches, scratch -------------------------------------------------------------
 data/raw/
 .cache/
-.sync/
 logs/
 __pycache__/
 *.pyc

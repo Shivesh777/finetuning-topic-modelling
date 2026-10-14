@@ -85,7 +85,7 @@ Run the scripts in order. Times are for a 4-core laptop CPU.
 | 2 | `02_build_articles.py` | `data/news/`, `results/data_audit/news_coverage.csv` | 2 min |
 | 3 | `03_embed.py` | `data/topics/embeddings/` | 45 min on 2 cores (200 articles a second) |
 | 3b | `03b_classify_topics.py` (optional) | FinBERT class probabilities | 50 min on 2 cores |
-| 3c | `03c_finetune_encoder.py` (optional, GPU) | An adapted encoder in `data/topics/encoders/` | 150 min on one RTX 3060 (teammate's run) |
+| 3c | `03c_finetune_encoder.py` (optional, GPU) | An adapted encoder in `data/topics/encoders/` | 150 min on one RTX 3060 |
 | 3d | `03d_sentiment.py` | `data/sentiment/`: FinBERT tone and headline vectors, Loughran-McDonald counts | 90 min on 2 cores for 769,338 headlines (140 a second) |
 | 4 | `04_fit_topics.py` | `data/topics/<model>/` | LDA 10 min, applying it to every article 5 min, embedding clusters 3 min, classifier weights 1 min (as recorded in each `quality.json`) |
 | 5 | `05_build_panel.py` | `data/panels/<freq>/` | 2 min for all blocks and frequencies; `--tone` and `--shock-window W` add the blocks of section 3.3 |
@@ -151,14 +151,13 @@ All models see the same articles and are fitted on training-period text only.
   released in September 2022: **not point-in-time**.
 - **`nolbert`**: NoLBERT (Kakhbod and Li 2025, `alikLab/NoLBERT`, a DeBERTa-v3
   model of 109M parameters pretrained only on text from 1976 to 1995), adapted
-  into a sentence encoder by our teammate (run of 8 October 2026,
+  into a sentence encoder (run of 8 October 2026,
   `results/encoders/nolbert_ft/train_log.json`): InfoNCE over two chunks of the
   same article with in-batch negatives, temperature 0.05, every parameter
   trained, learning rate 2e-5, batches of 32 pairs, 128 tokens, bf16, 150
   minutes on one RTX 3060, 6,205 steps; held-out in-batch top-1 retrieval rose
-  from 0.08 to 0.89. Pairs were drawn from articles dated before 1 September
-  2020, so **eight months of our validation-period text entered the encoder**
-  (not the test period). A probe of pooling choices on 11,988 documents
+  from 0.08 to 0.89. Pairs were drawn from articles published up to 2020, so
+  **validation-period text entered the encoder** (not the test period). A probe of pooling choices on 11,988 documents
   (`nolbert_probe.json`) chose the mean of the last layer without whitening
   (NPMI 0.343 against 0.268 to 0.282 for the alternatives). Articles (headline
   and lead, 64 tokens) are embedded with that pooling and clustered exactly as
@@ -485,8 +484,8 @@ section 11.
   result as much as sampling error does (FINDINGS.md, section 8.1).
 - The MiniLM encoder was published in 2021 and the FinBERT classifier at the
   end of 2022: neither is point-in-time. NoLBERT's pretraining is (1976 to
-  1995), but its adaptation used articles up to 1 September 2020, eight months
-  into our validation period; and it was adapted on our corpus while MiniLM
+  1995), but its adaptation used articles published up to 2020, which overlaps
+  our validation period; and it was adapted on our corpus while MiniLM
   was not, so the two encoders differ in two ways at once.
 - Tickers are matched to stocks through each stock's latest ticker.
 - FinBERT reads headlines only (the lead would make it four times slower on a

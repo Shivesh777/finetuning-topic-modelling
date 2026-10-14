@@ -2,7 +2,7 @@
 
 Everything the scripts read and write that is not a result table lives here.
 Nothing in this folder is needed from outside the repository once it is filled,
-so zipping `data/` is enough to hand the project to a teammate.
+so zipping `data/` is enough to move the project to another machine.
 
 | Folder | What it holds | Made by | In git? |
 |---|---|---|---|
@@ -11,7 +11,7 @@ so zipping `data/` is enough to hand the project to a teammate.
 | `news/articles/` | One row per unique article: date, headline, first 500 characters of the body. One file per quarter | `01_download_news.py`, `02_build_articles.py` | No (third-party text) |
 | `news/links.parquet` | The tickers each article is filed under | `02_build_articles.py` | No |
 | `topics/embeddings/` | Per-article vectors: sentence embeddings (`03_embed.py`) or class probabilities (`03b_classify_topics.py`), with the article ids | scripts 03 | No (hundreds of MB) |
-| `topics/encoders/` | Adapted encoders, such as NoLBERT (`03c_finetune_encoder.py`; the teammate's is `nolbert_ft`, 434 MB) | script 03c | No |
+| `topics/encoders/` | Adapted encoders, such as NoLBERT (`03c_finetune_encoder.py`; ours is `nolbert_ft`, 434 MB) | script 03c | No |
 | `topics/<model>/` | A fitted topic model and what the panels need from it (see below): `lda`, `lda_all`, `minilm`, `finbert`, `nolbert`, `nolbert20` | `04_fit_topics.py` | Yes |
 | `sentiment/` | Per firm-level article: FinBERT tone probabilities and headline vectors (768 dimensions, and 64 principal components), Loughran-McDonald word counts, with the article ids; `finbert_pca.npz` holds the principal components (fitted on training-period articles). The FinBERT model is exported to `sentiment/model/` | `03d_sentiment.py` | Only `finbert_pca.npz` (the rest is large or rebuilt in 90 minutes) |
 | `panels/<freq>/` | Stock-period panels: `index.parquet` and one `.npy` per feature block | `05_build_panel.py` | **No (derived from CRSP)** |
@@ -25,7 +25,7 @@ so zipping `data/` is enough to hand the project to a teammate.
 - **CRSP** comes from WRDS under a licence that does not allow redistribution.
   `data/crsp/` and every stock-level file derived from it (`panels/`,
   `predictions/`, `models/`) are ignored by git whatever their size. Share
-  them only with teammates who are covered by the same licence. The result
+  them only with people covered by the same licence. The result
   tables in `results/` hold portfolio-level numbers only and are committed.
 - **Article text** comes from two public research datasets (see REFERENCE.md);
   the articles themselves belong to their publishers. We keep excerpts out of

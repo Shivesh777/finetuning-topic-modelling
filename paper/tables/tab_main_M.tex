@@ -1,0 +1,21 @@
+\multicolumn{13}{l}{\textit{Experiments selected within each family}}\\
+Overall $\cdot$ Price\,+\,text $\cdot$ Every set $\cdot$ LDA & Price + text, LDA $\cdot$ \textit{EBM} & $+$1.5 & 0.53 & $-$0.23 & $-$0.37 & 0.06 & 0.05 & $-$7.9 & 21.2 & $-$40 & 80 & $-$0.26 \\
+Price & Price $\cdot$ \textit{OLS} & $-$0.0 & $-$0.02 & $-$0.24 & $-$0.21 & 0.23 & 0.42 & $-$3.6 & 17.0 & $-$28 & 117 & $-$0.80 \\
+Text $\cdot$ NoLBERT & Exposures, NoLBERT $\cdot$ \textit{IPCA} & $-$3.5 & $-$1.48 & $-$0.62 & $-$0.82 & $-$0.36 & $-$0.36 & $-$13.5 & 16.4 & $-$40 & \topC{63} & $-$1.55 \\
+Tone/emb. & Price + all news $\cdot$ \textit{IPCA} & $+$2.5 & 1.64 & \topB{0.94} & \topB{1.04} & 0.26 & 0.32 & \topB{11.4} & 10.9 & $-$13 & 75 & \topC{1.54} \\
+63\,d shocks & Text, LDA, 63 d $\cdot$ \textit{EBM} & $+$0.3 & 0.12 & $-$0.18 & $-$0.29 & \topA{0.63} & 0.45 & $-$6.0 & 20.5 & $-$34 & 100 & $-$0.03 \\
+Ranked targets & Price + text, NoLBERT $\cdot$ \textit{IPCA, ranked} & $+$1.0 & 1.07 & $-$0.02 & 0.38 & $-$0.00 & \topC{0.46} & 3.1 & \topA{8.2} & $-$11 & 66 & 0.62 \\
+Ensembles & Exposures, NoLBERT $\cdot$ \textit{Ensemble} & $+$0.1 & 0.06 & 0.04 & 0.00 & $-$0.51 & $-$0.69 & 0.0 & 11.1 & $-$20 & 68 & 0.32 \\
+LDA (all articles) & Text, LDA (all articles) $\cdot$ \textit{EBM} & $-$0.7 & $-$0.33 & $-$0.62 & $-$0.61 & $-$0.46 & $-$0.43 & $-$10.7 & 17.5 & $-$42 & 88 & $-$0.82 \\
+MiniLM & Price + text, MiniLM $\cdot$ \textit{EBM} & $-$6.8 & $-$2.71 & $-$1.76 & $-$1.71 & $-$1.02 & $-$0.63 & $-$33.6 & 19.6 & $-$68 & 103 & $-$3.79 \\
+FinBERT & Text, FinBERT $\cdot$ \textit{IPCA} & $-$2.6 & $-$1.79 & $-$1.05 & $-$0.96 & $-$0.34 & $-$0.24 & $-$10.5 & 11.0 & $-$29 & 71 & $-$1.93 \\
+NoLBERT-20 & Text, NoLBERT-20 $\cdot$ \textit{EBM} & $+$1.4 & 1.18 & 0.31 & 0.57 & \topC{0.38} & \topA{0.51} & 5.9 & \topB{10.3} & \topC{$-$10} & 79 & 1.25 \\
+\addlinespace[2pt]\midrule
+\multicolumn{13}{l}{\textit{Equal-weight combinations}}\\
+Price ensemble & Price $\cdot$ \textit{Ensemble} & \topB{$+$3.3} & \topB{2.41} & 0.66 & 0.53 & \topB{0.40} & \topB{0.46} & 7.7 & 14.5 & $-$14 & 95 & 0.63 \\
+All readers, 5 d & Price + text, all readers, 5 d $\cdot$ \textit{Ensemble} & $+$2.5 & 1.40 & 0.39 & 0.34 & $-$0.46 & $-$0.35 & 4.6 & 13.7 & $-$18 & 66 & 0.59 \\
+All readers, 63 d & Price + text, all readers, 63 d $\cdot$ \textit{Ensemble} & \topA{$+$3.9} & \topA{2.91} & \topA{1.12} & \topA{1.19} & 0.03 & 0.12 & \topA{12.4} & \topC{10.4} & \topA{$-$8} & \topA{60} & \topA{2.21} \\
+All readers, text, 5 d & Text, all readers, 5 d $\cdot$ \textit{Ensemble} & $-$1.0 & $-$0.82 & $-$0.45 & $-$0.48 & $-$0.23 & $-$0.20 & $-$5.8 & 12.3 & $-$20 & 65 & $-$0.70 \\
+All readers, text, 63 d & Text, all readers, 63 d $\cdot$ \textit{Ensemble} & $+$2.5 & 1.90 & \topC{0.86} & \topC{0.84} & 0.32 & 0.30 & \topC{9.1} & 10.8 & \topB{$-$9} & \topB{61} & 1.48 \\
+Best ten & Ten experiments $\cdot$ \textit{Best ten} & $+$2.4 & 1.58 & 0.33 & 0.57 & $-$0.07 & $-$0.13 & 6.3 & 10.9 & $-$12 & 77 & \topB{1.58} \\
+Price ens. + tone & Price + tone $\cdot$ \textit{Combo} & \topC{$+$3.0} & \topC{2.37} & 0.69 & 0.70 & 0.34 & 0.41 & 8.5 & 12.2 & $-$11 & 119 & 1.04 \\

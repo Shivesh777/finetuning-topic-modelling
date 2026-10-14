@@ -1,0 +1,157 @@
+% NoLBERT: (a) the pretrained encoder, (b) our contrastive adaptation. Colours from the preamble.
+\begin{tikzpicture}[
+    >=Stealth,
+    font=\sffamily,
+    panel/.style={draw=bordergray!70, fill=white, rounded corners=3.5pt, line width=0.6pt},
+    header/.style={font=\bfseries\footnotesize\color{navyblue}},
+    annot/.style={font=\fontsize{6.2}{7.4}\selectfont\color{midgray}},
+    small/.style={font=\fontsize{6.4}{7.6}\selectfont},
+    tok/.style={draw=bordergray, fill=white, rounded corners=1pt, line width=0.4pt, minimum width=1.25cm,
+                minimum height=0.40cm, inner sep=1pt, font=\fontsize{6.2}{7}\selectfont},
+    op/.style={draw=bordergray, fill=lightgray, rounded corners=1.5pt, line width=0.45pt, minimum width=3.3cm,
+               minimum height=0.40cm, inner sep=1.5pt, font=\fontsize{6.2}{7}\selectfont},
+    opk/.style={op, fill=softteal, draw=accentteal!70},
+    flow/.style={->, line width=0.5pt, color=midgray},
+    dataflow/.style={->, line width=1.0pt, color=navyblue}
+]
+
+% =====================================================================
+% (a) pretrained NoLBERT
+% =====================================================================
+\draw[panel] (0, 6.15) rectangle (16.2, 12.45);
+\node[header, anchor=north west] at (0.15, 12.33) {(a) NoLBERT: a DeBERTa-v3 encoder pretrained on text of 1976--1995};
+
+\foreach \w [count=\i] in {The, company, reported, higher, {\color{accentorange}[MASK]}, .} {
+  \pgfmathsetmacro{\y}{11.35 - 0.56*\i}
+  \node[tok] (t\i) at (0.95, \y) {\w};
+  \foreach \c in {0,...,5} {
+     \pgfmathsetmacro{\x}{1.95 + 0.11*\c}
+     \fill[midblue!35] (\x, \y-0.12) rectangle ++(0.08, 0.24);
+  }
+  \draw[flow] (1.6, \y) -- (1.9, \y);
+  \draw[flow] (2.62, \y) -- (3.12, \y);
+  \draw[flow] (6.62, \y) -- (7.05, \y);
+  \draw[draw=bordergray, fill=white, line width=0.35pt] (7.1, \y-0.19) rectangle (8.75, \y+0.19);
+  \foreach \c in {1,...,10} { \draw[bordergray!45, line width=0.25pt] (7.1+0.15*\c, \y-0.17) -- (7.1+0.15*\c, \y+0.17); }
+}
+\node[annot, anchor=south] at (0.95, 10.97) {tokens};
+\node[annot, anchor=south] at (2.25, 10.97) {embeddings};
+\node[annot, anchor=south] at (7.93, 10.97) {token vectors, 768 each};
+\node[annot, anchor=north west] at (0.3, 7.6) {30{,}000-token vocabulary};
+
+% the twelve layers
+\draw[draw=navyblue!60, fill=softblue, rounded corners=2pt, line width=0.5pt] (3.15, 7.65) rectangle (6.6, 11.1);
+\foreach \j in {0,...,11} {
+  \pgfmathsetmacro{\x}{3.33 + 0.268*\j}
+  \ifnum\j=11
+    \fill[accentteal] (\x, 7.82) rectangle ++(0.2, 3.1);
+  \else
+    \fill[navyblue!55] (\x, 7.82) rectangle ++(0.2, 3.1);
+  \fi
+}
+\node[font=\bfseries\fontsize{6.6}{7.6}\selectfont, color=navyblue, anchor=south] at (4.875, 11.13) {12 encoder layers};
+\node[annot, anchor=north] at (4.875, 7.6) {hidden size 768 $\cdot$ 109M parameters};
+
+% masked-token objective
+\draw[dataflow, color=accentorange] (8.75, 8.55) -- (9.25, 8.55);
+\node[draw=accentorange!70, fill=softorange, rounded corners=1.5pt, line width=0.45pt, align=left,
+      font=\fontsize{6.2}{7.4}\selectfont, anchor=west, inner sep=2.5pt] at (9.28, 8.55)
+      {pretraining: predict the\\masked word $\rightarrow$ \textit{earnings}};
+
+% one layer enlarged
+\draw[accentteal, dash pattern=on 2pt off 1.5pt, line width=0.5pt] (6.38, 10.92) -- (6.38, 11.7) -- (11.75, 11.7);
+\draw[draw=accentteal!70, fill=white, rounded corners=3pt, line width=0.5pt] (11.75, 7.0) rectangle (15.95, 11.95);
+\node[font=\bfseries\fontsize{6.6}{7.6}\selectfont, color=accentteal, anchor=north west] at (11.85, 11.88) {one layer};
+\node[tok, minimum width=1.55cm, fill=lightgray] (cnt) at (12.95, 11.05) {content};
+\node[tok, minimum width=1.75cm, fill=lightgray] (pos) at (14.75, 11.05) {relative position};
+\node[opk] (att) at (13.85, 10.15) {disentangled self-attention, 12 heads};
+\node[op]  (n1)  at (13.85, 9.35) {add \& normalize};
+\node[opk] (ff)  at (13.85, 8.55) {feed-forward, 3{,}072 units};
+\node[op]  (n2)  at (13.85, 7.75) {add \& normalize};
+\draw[flow] (cnt.south) -- (att.north -| cnt.south);
+\draw[flow] (pos.south) -- (att.north -| pos.south);
+\draw[flow] (att) -- (n1); \draw[flow] (n1) -- (ff); \draw[flow] (ff) -- (n2);
+\draw[flow, rounded corners=3pt] (12.05, 10.75) -- (11.95, 10.75) -- (11.95, 9.35) -- (n1.west);
+\draw[flow, rounded corners=3pt] (n1.south west) ++(0.05,0) -- ++(0,-0.08) -- (11.95, 9.1) -- (11.95, 7.75) -- (n2.west);
+\node[annot, anchor=north] at (13.85, 7.47) {residual paths around both blocks};
+
+% pretraining window
+\begin{scope}[shift={(0, 6.75)}]
+  \draw[midgray, line width=0.45pt] (0.4, 0) -- (6.6, 0);
+  \draw[midgray, line width=0.45pt] (7.0, 0) -- (11.4, 0);
+  \draw[midgray, line width=0.6pt] (6.66, -0.12) -- (6.78, 0.12);
+  \draw[midgray, line width=0.6pt] (6.82, -0.12) -- (6.94, 0.12);
+  \fill[navyblue] (0.6, -0.14) rectangle (5.6, 0.14);
+  \node[font=\fontsize{5.8}{6.6}\selectfont, color=white] at (3.1, 0) {pretraining text 1976--1995};
+  \fill[accentorange!70] (5.65, -0.14) rectangle (5.9, 0.14);
+
+  \fill[bordergray] (7.6, -0.14) rectangle (11.2, 0.14);
+  \node[font=\fontsize{5.8}{6.6}\selectfont, color=darkgray] at (9.4, 0) {our news, 2012--2024};
+  \node[annot, anchor=north] at (0.6, -0.16) {1976};
+  \node[annot, anchor=north east] at (5.62, -0.16) {1995};
+  \node[annot, anchor=north west, color=accentorange] at (5.66, -0.16) {1996};
+  \node[annot, anchor=north] at (7.6, -0.16) {2012};
+  \node[annot, anchor=north] at (11.2, -0.16) {2024};
+\end{scope}
+\node[annot, anchor=west, align=left] at (11.75, 6.62) {\citet{kakhbod2025nolbert};\\1996 text held out for validation};
+
+% =====================================================================
+% (b) adaptation
+% =====================================================================
+\draw[panel] (0, 0) rectangle (16.2, 5.85);
+\node[header, anchor=north west] at (0.15, 5.73) {(b) Contrastive adaptation: two chunks of one article should be nearest neighbours};
+
+% article card
+\draw[draw=bordergray, fill=white, rounded corners=1.5pt, line width=0.45pt] (0.3, 0.75) rectangle (3.25, 4.85);
+\node[font=\fontsize{5.2}{6}\selectfont\bfseries, color=midgray, anchor=north west] at (0.4, 4.78) {ARTICLE $i$, 2015--2020};
+\draw[draw=navyblue!70, fill=softblue, rounded corners=1pt, line width=0.4pt] (0.45, 3.0) rectangle (3.1, 4.3);
+\node[font=\fontsize{6}{7}\selectfont\bfseries, color=navyblue, anchor=north west] at (0.5, 4.27) {chunk A};
+\foreach \k in {0,1,2} { \draw[navyblue!30, line width=0.9pt] (0.6, 3.75-0.22*\k) -- (2.95-0.35*\k, 3.75-0.22*\k); }
+\draw[draw=accentorange!70, fill=softorange, rounded corners=1pt, line width=0.4pt] (0.45, 1.0) rectangle (3.1, 2.75);
+\node[font=\fontsize{6}{7}\selectfont\bfseries, color=accentorange, anchor=north west] at (0.5, 2.72) {chunk B};
+\foreach \k in {0,1,2,3} { \draw[accentorange!35, line width=0.9pt] (0.6, 2.2-0.22*\k) -- (2.95-0.3*\k, 2.2-0.22*\k); }
+
+% shared encoder
+\node[draw=navyblue!60, fill=softblue, rounded corners=2pt, line width=0.5pt, minimum width=2.2cm, minimum height=0.85cm,
+      font=\fontsize{6.4}{7.4}\selectfont, align=center] (ea) at (4.95, 3.65) {NoLBERT\\[-1pt]{\color{midgray}\fontsize{5.6}{6.4}\selectfont 128 tokens}};
+\node[draw=navyblue!60, fill=softblue, rounded corners=2pt, line width=0.5pt, minimum width=2.2cm, minimum height=0.85cm,
+      font=\fontsize{6.4}{7.4}\selectfont, align=center] (eb) at (4.95, 1.85) {NoLBERT\\[-1pt]{\color{midgray}\fontsize{5.6}{6.4}\selectfont 128 tokens}};
+\draw[<->, accentteal, line width=0.5pt, dash pattern=on 2pt off 1.5pt] (ea.south) -- node[right, annot, color=accentteal] {shared weights} (eb.north);
+\draw[dataflow] (3.1, 3.65) -- (ea.west);
+\draw[dataflow, color=accentorange] (3.1, 1.85) -- (eb.west);
+
+% pooling
+\node[op, minimum width=2.15cm, align=center] (pa) at (7.75, 3.65) {mean of last layer,\\[-1pt] unit length};
+\node[op, minimum width=2.15cm, align=center] (pb) at (7.75, 1.85) {mean of last layer,\\[-1pt] unit length};
+\draw[flow] (ea) -- (pa); \draw[flow] (eb) -- (pb);
+\node[font=\fontsize{6.6}{7.6}\selectfont, color=navyblue] (za) at (9.4, 3.65) {$z^A_i$};
+\node[font=\fontsize{6.6}{7.6}\selectfont, color=accentorange] (zb) at (9.4, 1.85) {$z^B_j$};
+\draw[flow] (pa) -- (za); \draw[flow] (pb) -- (zb);
+
+% similarity matrix of a batch
+\begin{scope}[shift={(10.25, 1.05)}]
+  \foreach \r in {0,...,7} {
+    \foreach \c in {0,...,7} {
+      \pgfmathsetmacro{\v}{int(mod(37*\r + 53*\c + 11*\r*\c, 23))}
+      \ifnum\r=\c
+        \fill[accentteal] (0.38*\c, 2.66-0.38*\r) rectangle ++(0.36, 0.36);
+      \else
+        \fill[midblue!\v] (0.38*\c, 2.66-0.38*\r) rectangle ++(0.36, 0.36);
+      \fi
+    }
+  }
+  \node[annot, anchor=south] at (1.51, 3.05) {pairs $j$ of the batch $\rightarrow$};
+  \node[annot, anchor=south, rotate=90] at (-0.05, 1.51) {$\leftarrow$ pairs $i$};
+  \node[annot, anchor=north] at (1.51, -0.02) {$S_{ij}=\cos(z^A_i, z^B_j)/\tau$};
+\end{scope}
+\draw[flow] (za.east) -- (10.15, 3.65);
+\draw[flow] (zb.east) -- (10.15, 1.85);
+
+% loss
+\node[draw=accentteal!70, fill=softteal, rounded corners=2pt, line width=0.5pt, align=center,
+      font=\fontsize{6.4}{7.6}\selectfont, minimum width=2.55cm, inner sep=3pt] (loss) at (14.6, 2.85)
+      {symmetric InfoNCE\\[2pt] $\mathcal{L}=\tfrac12\left[\mathrm{CE}(S)+\mathrm{CE}(S^{\top})\right]$\\[2pt]
+       {\color{midgray}\fontsize{5.6}{6.6}\selectfont diagonal = the right match}};
+\draw[flow] (13.4, 2.6) -- (loss.west |- 13.4, 2.6);
+\node[annot, anchor=south, align=center] at (14.6, 0.25) {32 pairs per batch, $\tau=0.05$,\\every weight trained};
+\end{tikzpicture}

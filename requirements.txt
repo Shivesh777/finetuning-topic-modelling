@@ -16,3 +16,6 @@ pytest>=8.0
 tomotopy>=0.13                  # Gibbs-sampled LDA; without it scripts/04 falls back to scikit-learn
 sentence-transformers>=3.0     # brings torch and transformers
 # onnxruntime>=1.18             # only for scripts/03b_classify_topics.py
+
+# Paper figures (paper/scripts only)
+matplotlib>=3.8

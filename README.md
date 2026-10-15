@@ -124,14 +124,17 @@ The results in `results/` are committed, so the tables and the paper's figures c
 This paper builds on our earlier study:
 
 ```bibtex
-@misc{foley2026wordcountscontexttopic,
-  title         = {From Word Counts to Context: Topic Models for Asset Pricing},
-  author        = {Kevin Foley and Jonathan Hartadi and Shivesh Prakash and Swapnil Vatsal},
-  year          = {2026},
-  eprint        = {2609.34169},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.CE},
-  url           = {https://arxiv.org/abs/2609.34169}
+@article{foley2026wordcountscontexttopic,
+  title        = {From Word Counts to Context: Topic Models for Asset Pricing},
+  author       = {Foley, Kevin and Hartadi, Jonathan and Prakash, Shivesh and Vatsal, Swapnil},
+  year         = {2026},
+  month        = {9},
+  eprint       = {2609.34169},
+  archiveprefix = {arXiv},
+  primaryclass = {cs.CE},
+  doi          = {10.2139/ssrn.7534559},
+  url          = {https://arxiv.org/abs/2609.34169},
+  note         = {Available at SSRN: \url{https://ssrn.com/abstract=7534559}}
 }
 ```
 
